@@ -30,34 +30,35 @@ class Trade extends Admin
         $map = $this->getMap();
 
         // 数据列表
-        $data_list = TradeModel::where($map)->order('tid desc')->paginate();
+        $data_list = TradeModel::where($map)->order('id desc')->paginate();
 
         // 分页数据
         $page = $data_list->render();
 
         //机构列表
-        $agency_list = AgencyModel::where('status', 0)->column('id,title');
+        $agency_list = AgencyModel::where('status', 1)->column('id,title');
         //用户列表
-        $counsellor_list =  CounsellorModel::where('status', 0)->column('id,username');
+        $counsellor_list =  CounsellorModel::where('status', 1)->column('id,username');
 
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setPageTitle('订单管理') // 设置页面标题
             ->setTableName('trade') // 设置数据表名
-            ->setSearch(['tid' => '订单编号']) // 设置搜索参数
+            ->setSearch(['id' => '订单编号']) // 设置搜索参数
+            ->hideCheckbox()
             ->addColumns([ // 批量添加列
-                ['tid', 'ID'],
+                ['id', 'ID'],
                 ['title', '交易标题'],
                 ['shopid', '机构', 'select', $agency_list],
                 ['memberid', '用户', 'select', $counsellor_list],
                 ['mid', '咨询师', 'select', $counsellor_list],
-                ['create_time', '创建时间', 'datetime'],
+                ['created_time', '创建时间', 'datetime'],
                 ['status', '状态', 'text', '', ['待支付', '已支付']],
                 ['right_button', '操作', 'btn']
             ])
             // ->addTopButtons('delete') // 批量添加顶部按钮
-            ->addRightButtons('delete') // 批量添加右侧按钮
+            // ->addRightButtons('delete') // 批量添加右侧按钮
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面

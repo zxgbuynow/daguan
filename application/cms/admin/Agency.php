@@ -7,6 +7,7 @@ use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\cms\model\Counsellor as CounsellorModel;
 use app\cms\model\Agency as AgencyModel;
+use app\shop\model\User as UserModel;
 use util\Tree;
 use think\Db;
 use think\Hook;
@@ -35,10 +36,9 @@ class Agency extends Admin
         // 分页数据
         $page = $data_list->render();
 
-        $btnAdd = ['icon' => 'fa fa-plus', 'title' => '添加管理员', 'href' => url('add', ['aid' => '__id__'])];
+        $btnAdd = ['icon' => 'fa fa-plus', 'title' => '添加管理员', 'href' => url('admin', ['id' => '__id__'])];
 
-        $list_type = CounsellorModel::where('status', 0)->column('id,username');
-
+        $list_type = UserModel::where('status', 1)->column('id,username');
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setPageTitle('咨询机构管理') // 设置页面标题
@@ -53,9 +53,10 @@ class Agency extends Admin
                 ['status', '状态', 'switch'],
                 ['right_button', '操作', 'btn']
             ])
-            ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
+            ->addTopButtons('enable,disable,delete,add') // 批量添加顶部按钮
             ->addRightButtons('delete') // 批量添加右侧按钮
             ->addRightButton('custom', $btnAdd)
+            ->replaceRightButton(['adminid' => ['<>', 0]], '', ['custom'])
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
@@ -72,31 +73,26 @@ class Agency extends Admin
         if ($this->request->isPost()) {
             $data = $this->request->post();
             // 验证
-            $result = $this->validate($data, 'User');
+            $result = $this->validate($data, 'Agency');
             // 验证失败 输出错误信息
             if(true !== $result) $this->error($result);
-
-            if ($user = UserModel::create($data)) {
-                Hook::listen('user_add', $user);
-                // 记录行为
-                action_shop_log('user_add', 'shop_user', $user['id'], UID);
+            $data['create_time'] = time();
+            if ($data = AgencyModel::create($data)) {
                 $this->success('新增成功', url('index'));
             } else {
                 $this->error('新增失败');
             }
         }
-
+        $map['status'] = 1;
+        $map['shopid'] = 0;
+        $list = UserModel::where($map)->column('id,username');
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['text', 'username', '用户名', '必填，可由英文字母、数字组成'],
-                ['text', 'nickname', '昵称', '可以是中文'],
-                ['select', 'role', '角色', '', RoleModel::getTree(null, false)],
-                ['text', 'email', '邮箱', ''],
-                ['password', 'password', '密码', '必填，6-20位'],
-                ['text', 'mobile', '手机号'],
-                ['image', 'avatar', '头像'],
+                ['text', 'title', '分机构名'],
+                ['text', 'description', '描述'],
+                ['select', 'adminid', '分机构管理员', '', $list],
                 ['radio', 'status', '状态', '', ['禁用', '启用'], 1]
             ])
             ->fetch();
@@ -168,44 +164,46 @@ class Agency extends Admin
             ->fetch();
     }
 
-   public function point($id = null)
+   public function admin($id = null)
    {
        if ($id === null) $this->error('缺少参数');
 
-        cookie('__forward__', $_SERVER['REQUEST_URI']);
+        // 保存数据
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+            // 验证
+            $data['role'] = 1;
+            $data['access'] = 1;
+            $data['shopid'] = $id;
+            $result = $this->validate($data, 'User');
+            // 验证失败 输出错误信息
+            if(true !== $result) $this->error($result);
+            
+            if ($user = UserModel::create($data)) {
+                //更新字段
+                $adata['adminid'] = $user;
+                $adata['id'] = $id;
+                AgencyModel::update($adata);
+                
+                // 记录行为
+                $this->success('新增成功', url('index'));
+            } else {
+                $this->error('新增失败');
+            }
+        }
 
-        // 获取查询条件
-        $map = $this->getMap();
-
-        $map['memberid'] = $id;
-        // 数据列表
-        $data_list = PointModel::where($map)->order('id desc')->paginate();
-
-        // 分页数据
-        $page = $data_list->render();
-
-
-        $list_type = CounsellorModel::where('status', 0)->column('id,username');
-
-        // 使用ZBuilder快速创建数据表格
-        return ZBuilder::make('table')
-            ->setPageTitle('咨询师管理') // 设置页面标题
-            ->setTableName('member_point') // 设置数据表名
-            ->setSearch(['mobile' => '手机号']) // 设置搜索参数
-            ->addColumns([ // 批量添加列
-                ['id', 'ID'],
-                ['behavior_type', '行为类型',['获得','消费']],
-                ['behavior', '行为描述'],
-                ['memberid', '会员', 'select', $list_type],
-                ['point', '积分值'],
-                ['create_time', '创建时间', 'datetime'],
-                ['right_button', '操作', 'btn']
+        // 使用ZBuilder快速创建表单
+        return ZBuilder::make('form')
+            ->setPageTitle('新增') // 设置页面标题
+            ->addFormItems([ // 批量添加表单项
+                ['text', 'username', '用户名', '必填，可由英文字母、数字组成'],
+                ['text', 'nickname', '昵称', '可以是中文'],
+                ['text', 'email', '邮箱', ''],
+                ['password', 'password', '密码', '必填，6-20位'],
+                ['text', 'mobile', '手机号'],
+                ['radio', 'status', '状态', '', ['禁用', '启用'], 1]
             ])
-            ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
-            ->addRightButtons('delete') // 批量添加右侧按钮
-            ->setRowList($data_list) // 设置表格数据
-            ->setPages($page) // 设置分页数据
-            ->fetch(); // 渲染页面
+            ->fetch();
    }
     /**
      * 删除用户

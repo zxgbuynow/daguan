@@ -30,6 +30,7 @@ class User extends shop
         // 获取查询条件
         $map = $this->getMap();
 
+        $map['shopid'] = session('shop_auth.shopid');
         // 数据列表
         $data_list = UserModel::where($map)->order('sort,id desc')->paginate();
 
