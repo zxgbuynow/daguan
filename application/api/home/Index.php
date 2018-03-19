@@ -258,7 +258,7 @@ class Index
      */
     public function category_custom($params)
     {
-        $category = db('cms_category')->where('status',1)->order('id DESC')->select();
+        $category['list'] = db('cms_category')->where('status',1)->order('id DESC')->limit(8)->select();
 
         //返回信息
         $data = [
