@@ -182,10 +182,13 @@ class Index
         $map['status'] = 1;
         //用户信息
         $user = db('member')->where($map)->find();
+        if (!$user) {
+            return $this->error('用户不存在');
+        }
         //用户积分
-        $pmap['memberid'] = $username;
+        $pmap['memberid'] = $user['id'];
         $pmap['behavior_type'] = 0;
-        $user['point'] = db('member')->where($pmap)->sum('point');
+        $user['point'] = db('member_point')->where($pmap)->sum('point');
 
          //返回信息
         $data = [
@@ -248,6 +251,91 @@ class Index
             'code'=>'1',
             'msg'=>'',
             'data'=>$category
+        ];
+        return json($data);
+    }
+    /**
+     * [recommend_custom 推荐咨询师]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function recommend_custom($params)
+    {
+        $recommend = db('member')->where('status',1)->order('recommend DESC')->select();
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$recommend
+        ];
+        return json($data);
+    }
+    /**
+     * [counsellor_custom 咨询师]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function counsellor_custom($params)
+    {
+
+        if (!trim($params['id'])) {
+            return $this->error('参数缺失！');
+        }
+        $counsellor =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where(array('a.id'=>$params['id']))->find();
+
+        if (!$counsellor) {
+            return $this->error('咨询师不存在或是已注销');
+        }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$counsellor
+        ];
+        return json($data);
+    }
+    /**
+     * [point 积分明细]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function point($params)
+    {
+       if (!trim($params['account'])) {
+            return $this->error('参数缺失！');
+        }
+        $member =  db('member')->alias('a')->field('a.*,b.*')->join(' member_point b',' b.memberid = a.id','LEFT')->where(array('a.username'=>$params['account']))->find();
+
+        if (!$member) {
+            return $this->error('用户不存在');
+        }
+        $pmap['memberid'] = $member['memberid'];
+        $pmap['behavior_type'] = 0;
+        $member['point'] = db('member')->where($pmap)->sum('point');
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$member
+        ];
+        return json($data);
+    }
+
+    /**
+     * [trade 订单]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function trade($params)
+    {
+        $trade = db('trade')->where(1)->order('id DESC')->select();
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$trade
         ];
         return json($data);
     }
