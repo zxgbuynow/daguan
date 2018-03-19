@@ -208,7 +208,7 @@ class Index
     public function article_custom($params)
     {
 
-        $article = db('cms_page')->where('status',1)->order('view DESC')->limit(10)->select();
+        $article['list'] = db('cms_page')->where('status',1)->order('view DESC')->limit(10)->select();
 
         //返回信息
         $data = [
