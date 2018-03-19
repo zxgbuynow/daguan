@@ -324,7 +324,7 @@ class Index
      * @param  [type] $params [description]
      * @return [type]         [description]
      */
-    public function point($params)
+    public function point_custom($params)
     {
        if (!trim($params['account'])) {
             return $this->error('参数缺失！');
@@ -351,7 +351,7 @@ class Index
      * @param  [type] $params [description]
      * @return [type]         [description]
      */
-    public function trade($params)
+    public function trade_custom($params)
     {
         $trade = db('trade')->where(1)->order('id DESC')->select();
 
