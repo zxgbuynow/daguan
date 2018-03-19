@@ -225,10 +225,20 @@ class Index
      * @param  [type] $params [description]
      * @return [type]         [description]
      */
-    public function lunbo_custom($params)
+     public function lunbo_custom($params)
     {
-        $lunbo['pic'] = db('cms_advert')->where('status',1)->order('id DESC')->limit(10)->select();
-
+        $map['tagname'] = 'custom';
+        $map['status'] = 1;
+        $lunbo['pic'] = db('cms_advert')->where($map)->order('id DESC')->limit(10)->select();
+        foreach ($lunbo['pic'] as $key => $value) {
+            if (strstr($value['link'], 'article')) {//文章
+                $lunbo['pic'][$key]['webview'] = '_www/view/article/detail.html';
+                $lunbo['pic'][$key]['webparam'] = ['id'=>explode('.',explode('/', $value['link'])[1])[0]]; 
+            }else if (strstr($value['link'], 'counsellor') {
+                $lunbo['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
+                $lunbo['pic'][$key]['webparam'] = ['id'=>explode('.',explode('/', $value['link'])[1])[0]];
+            }
+        }
         //返回信息
         $data = [
             'code'=>'1',
