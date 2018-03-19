@@ -336,7 +336,7 @@ class Index
         }
         $pmap['memberid'] = $member['memberid'];
         $pmap['behavior_type'] = 0;
-        $member['point'] = db('member')->where($pmap)->sum('point');
+        $member['point'] = db('member_point')->where($pmap)->sum('point');
         //返回信息
         $data = [
             'code'=>'1',
