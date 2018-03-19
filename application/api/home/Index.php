@@ -210,6 +210,9 @@ class Index
 
         $article['list'] = db('cms_page')->where('status',1)->order('view DESC')->limit(10)->select();
 
+        foreach ($article['list'] as $key => $value) {
+            $article['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
+        }
         //返回信息
         $data = [
             'code'=>'1',
