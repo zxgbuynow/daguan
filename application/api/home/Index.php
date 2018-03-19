@@ -238,7 +238,6 @@ class Index
                 $lunbo['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
                 $lunbo['pic'][$key]['webparam'] = ['id'=>explode('.',explode('/', $value['link'])[1])[0]];
             }
-            $lunbo['pic'][$key]['cover'] = 'http://'.$_SERVER['SERVER_NAME'].$value['cover'];
         }
         //返回信息
         $data = [
