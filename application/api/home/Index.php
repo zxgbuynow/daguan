@@ -227,7 +227,7 @@ class Index
      */
     public function lunbo_custom($params)
     {
-        $lunbo = db('cms_advert')->where('status',1)->order('id DESC')->limit(10)->select();
+        $lunbo['pic'] = db('cms_advert')->where('status',1)->order('id DESC')->limit(10)->select();
 
         //返回信息
         $data = [
