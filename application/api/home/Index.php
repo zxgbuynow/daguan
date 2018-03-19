@@ -234,7 +234,7 @@ class Index
             if (strstr($value['link'], 'article')) {//文章
                 $lunbo['pic'][$key]['webview'] = '_www/view/article/detail.html';
                 $lunbo['pic'][$key]['webparam'] = ['id'=>explode('.',explode('/', $value['link'])[1])[0]]; 
-            }else if (strstr($value['link'], 'counsellor') {
+            }else if (strstr($value['link'], 'counsellor')) {
                 $lunbo['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
                 $lunbo['pic'][$key]['webparam'] = ['id'=>explode('.',explode('/', $value['link'])[1])[0]];
             }
