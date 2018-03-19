@@ -275,7 +275,17 @@ class Index
      */
     public function recommend_custom($params)
     {
-        $recommend = db('member')->where('status',1)->order('recommend DESC')->select();
+        $recommend['list'] = db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where(array('a.status'=>1,'a.type'=>1))->order('a.recommond DESC')->select();
+
+        foreach ($recommend['list'] as $key => $value) {
+            //订单数
+            $recommend['list'][$key]['trade'] = db('trade')->where(array('status'=>1,'mid'=>$value['memberid']))->count();
+            //标识
+            $smap['id'] = array('in',$value['tags']);
+            $recommend['list'][$key]['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
+            //从业时间
+            $recommend['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
+        }
 
         //返回信息
         $data = [
