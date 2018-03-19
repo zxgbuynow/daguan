@@ -329,7 +329,7 @@ class Index
        if (!trim($params['account'])) {
             return $this->error('参数缺失！');
         }
-        $member =  db('member')->alias('a')->field('a.*,b.*')->join(' member_point b',' b.memberid = a.id','LEFT')->where(array('a.username'=>$params['account']))->find();
+        $member['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_point b',' b.memberid = a.id','LEFT')->where(array('a.username'=>$params['account']))->select();
 
         if (!$member) {
             return $this->error('用户不存在');
