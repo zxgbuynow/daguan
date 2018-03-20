@@ -369,7 +369,7 @@ class Index
      * @param  [type] $params [description]
      * @return [type]         [description]
      */
-    public function checkpassword($params)
+    public function checkpassword_custom($params)
     {
         $password = trim($params['password']);
         $account = trim($params['account']);
