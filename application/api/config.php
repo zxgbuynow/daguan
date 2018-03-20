@@ -17,5 +17,7 @@ return [
         'ondate'=>'counsellor.ondate',//预约
         'point'=>'user.point',//积分明细
         'trade'=>'user.trade',//订单信息
+        'uppw'=>'user.uppw',//密码修改
+        'checkpassword'=>'user.checkpassword'//确认密码
     ]
 ];

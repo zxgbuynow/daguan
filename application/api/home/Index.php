@@ -364,6 +364,68 @@ class Index
         return json($data);
     }
 
+     /**
+     * [checkpassword 验证密码]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function checkpassword($params)
+    {
+        $password = trim($params['password']);
+        $account = trim($params['account']);
+
+        //设置密码
+        $data['password'] =  Hash::make((string)trim($password));
+
+
+        //更新
+        $map['id'] = $account;
+        $map['password'] = $data['password'];
+        if(!db('member')->where($map)->find()){
+            return $this->error('密码不正确');
+        }
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+
+    }
+
+    /**
+     * [uppw_custom 更新密码]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function uppw_custom($params)
+    {
+        $password = trim($params['password']);
+        $password_confirmation = trim($params['password_confirmation']);
+        $account = trim($params['account']);
+        if ($password!=$password_confirmation) {
+            return $this->error('二次密码不一致');
+        }
+        //设置密码
+        $data['password'] =  Hash::make((string)trim($password));
+
+        //更新
+        $map['id'] = $account;
+        if(!db('member')->where($map)->update($data)){
+            return $this->error('服务器忙，请稍后');
+        }
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+    
     /*
     |--------------------------------------------------------------------------
     | 商家版API
