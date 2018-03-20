@@ -512,6 +512,23 @@ class Index
         return json($data);
 
     }
+    /**
+     * [category_custom 咨询分类]
+     * @param  string $value [description]
+     * @return [type]        [description]
+     */
+    public function allcategory_custom($params)
+    {
+        $category['list'] = db('cms_category')->where('status',1)->order('id DESC')->select();
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$category
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API
