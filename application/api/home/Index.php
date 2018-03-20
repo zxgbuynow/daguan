@@ -375,15 +375,16 @@ class Index
         $account = trim($params['account']);
 
         //设置密码
-        $data['password'] =  Hash::make((string)trim($password));
+        // $data['password'] =  Hash::make((string)$password);
 
 
         //更新
         $map['id'] = $account;
-        $map['password'] = $data['password'];
-        if(!db('member')->where($map)->find()){
-            return $this->error('密码不正确');
+        $user =  db('member')->where($map)->find();
+        if (!Hash::check((string)$password, $user['password'])) {
+           return $this->error( '密码错误！');
         }
+
         
         //返回信息
         $data = [
