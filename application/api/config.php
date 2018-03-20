@@ -20,6 +20,7 @@ return [
         'uppw'=>'user.uppw',//密码修改
         'checkpassword'=>'user.checkpassword',//确认密码
         'updatenickname'=>'user.updatenickname',//更新Nickname
-        'updategender'=>'user.updategender'//更新性别
+        'updategender'=>'user.updategender',//更新性别
+        'contentinfo'=>'article.contentinfo'//文章祥情
     ]
 ];
