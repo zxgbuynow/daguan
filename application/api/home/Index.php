@@ -425,7 +425,68 @@ class Index
         ];
         return json($data);
     }
-    
+    /**
+     * [updatenickname 更新Nickname]
+     * @param  string $value [description]
+     * @return [type]        [description]
+     */
+    public function updatenickname_custom($params)
+    {
+        //参数
+        $account = trim($params['account']);
+        $nickname = trim($params['nickname']);
+        
+        if (!$nickname) {
+            return $this->error('参数必填');
+        }
+        
+
+        //更新状态
+        $data['nickname'] = $nickname;
+        $map['username'] = $account;
+        if(!db('member')->where($map)->update($data)){
+            return $this->error('服务器忙，请稍后');
+        }
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+    /**
+     * [updategender_custom 更新性别]
+     * @param  string $value [description]
+     * @return [type]        [description]
+     */
+    public function updategender_custom($value='')
+    {
+        //参数
+        $account = trim($params['account']);
+        $sex = trim($params['sex']);
+        
+        if (!$sex) {
+            return $this->error('参数必填');
+        }
+        
+
+        //更新状态
+        $data['sex'] = $sex;
+        $map['username'] = $account;
+        if(!db('member')->where($map)->update($data)){
+            return $this->error('服务器忙，请稍后');
+        }
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API

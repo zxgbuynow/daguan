@@ -18,6 +18,8 @@ return [
         'point'=>'user.point',//积分明细
         'trade'=>'user.trade',//订单信息
         'uppw'=>'user.uppw',//密码修改
-        'checkpassword'=>'user.checkpassword'//确认密码
+        'checkpassword'=>'user.checkpassword',//确认密码
+        'updatenickname'=>'user.updatenickname',//更新Nickname
+        'updategender'=>'user.updategender'//更新性别
     ]
 ];
