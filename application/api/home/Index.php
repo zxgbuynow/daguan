@@ -467,9 +467,9 @@ class Index
         $account = trim($params['account']);
         $sex = trim($params['sex']);
         
-        if (!$sex) {
-            return $this->error('参数必填');
-        }
+        // if (!$sex) {
+        //     return $this->error('参数必填');
+        // }
         
 
         //更新状态
