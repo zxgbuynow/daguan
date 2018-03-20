@@ -334,7 +334,7 @@ class Index
         if (!$member) {
             return $this->error('用户不存在');
         }
-        $pmap['memberid'] = $member['memberid'];
+        $pmap['memberid'] = $member['list']['memberid'];
         $pmap['behavior_type'] = 0;
         $member['points'] = db('member_point')->where($pmap)->sum('point');
         //返回信息
