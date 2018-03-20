@@ -461,7 +461,7 @@ class Index
      * @param  string $value [description]
      * @return [type]        [description]
      */
-    public function updategender_custom($value='')
+    public function updategender_custom($params)
     {
         //参数
         $account = trim($params['account']);
