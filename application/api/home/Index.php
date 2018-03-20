@@ -237,10 +237,10 @@ class Index
         foreach ($lunbo['pic'] as $key => $value) {
             if (strstr($value['link'], 'article')) {//文章
                 $lunbo['pic'][$key]['webview'] = '_www/view/article/detail.html';
-                $lunbo['pic'][$key]['webparam'] = ['id'=>explode('.',explode('/', $value['link'])[1])[0]]; 
+                $lunbo['pic'][$key]['webparam'] = ['article_id'=>explode('.',explode('/', $value['link'])[1])[0]]; 
             }else if (strstr($value['link'], 'counsellor')) {
                 $lunbo['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
-                $lunbo['pic'][$key]['webparam'] = ['id'=>explode('.',explode('/', $value['link'])[1])[0]];
+                $lunbo['pic'][$key]['webparam'] = ['counsellor_id'=>explode('.',explode('/', $value['link'])[1])[0]];
             }
         }
         //返回信息
@@ -353,7 +353,7 @@ class Index
      */
     public function trade_custom($params)
     {
-        $trade = db('trade')->where(1)->order('id DESC')->select();
+        $trade['list'] = db('trade')->where(1)->order('id DESC')->select();
 
         //返回信息
         $data = [
