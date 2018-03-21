@@ -591,7 +591,7 @@ class Index
         ];
         return json($data);
     }
-    }
+    
     /**
      * [agency_custom 机构列表]
      * @param  [type] $params [description]
