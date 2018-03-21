@@ -82,6 +82,7 @@ class Index
         $data['nickname'] = trim($params['account']);
         $data['email'] = trim($params['email']);
         $data['mobile'] = trim($params['mobile']);
+        $data['shopid'] = trim($params['agency']);
         $data['create_time'] = time();
 
         //生成密码
@@ -526,6 +527,79 @@ class Index
             'code'=>'1',
             'msg'=>'',
             'data'=>$category
+        ];
+        return json($data);
+    }
+    /**
+     * [counsellorlist_custom 咨询师列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function counsellorlist_custom($params)
+    {
+
+        //参数
+        $category = trim($params['cat_id']);
+        $keyword = trim($params['search_keywords']);
+
+        $map['a.nickname'] = array('like','%'.$keyword.'%');
+        $map['a.status'] = 1;
+
+        $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->select();
+        
+        if ($category) {
+            foreach ($counsellor['list'] as $key => $value) {
+                if (!in_array($category, explode(',', $value['tags']))) {
+                    unset($counsellor['list'][$key]);
+                    continue;
+                }
+            }    
+        }
+        
+
+        // if (!$counsellor) {
+        //     return $this->error('咨询师不存在或是已注销');
+        // }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$counsellor
+        ];
+        return json($data);
+    }
+    /**
+     * [articallist_custom 文章列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function articallist_custom($params)
+    {
+
+        $article['list'] = db('cms_page')->where('status',1)->order('view DESC')->select();
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$article
+        ];
+        return json($data);
+    }
+    /**
+     * [agency_custom 机构列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function agency_custom($params)
+    {
+        $agency['list'] = db('shop_agency')->where('status',1)->select();
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$agency
         ];
         return json($data);
     }

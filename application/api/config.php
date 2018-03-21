@@ -22,6 +22,9 @@ return [
         'updatenickname'=>'user.updatenickname',//更新Nickname
         'updategender'=>'user.updategender',//更新性别
         'contentinfo'=>'article.contentinfo',//文章祥情
-        'allcategory'=>'all.category'//文章祥情
+        'allcategory'=>'all.category',//文章祥情
+        'counsellorlist'=>'counsellor.list',//咨询师列表
+        'articallist'=>'artical.list',//文章列表
+        'agency'=>'agency.list'//机构列表
     ]
 ];
