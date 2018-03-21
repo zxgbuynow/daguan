@@ -316,7 +316,7 @@ class Index
         $counsellor['trade'] = db('trade')->where(array('status'=>1,'mid'=>$counsellor['memberid']))->count();
         //标识
         $smap['id'] = array('in',$counsellor['tags']);
-        $counsellor['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
+        $counsellor['sign'] =  db('cms_category')->where($smap)->column('title') ;
         //从业时间
         $counsellor['employment'] = '从业'.ceil(date('Y',time())-date('Y',$counsellor['employment'])).'年';
         //返回信息
