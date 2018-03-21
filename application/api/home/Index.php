@@ -312,6 +312,13 @@ class Index
         if (!$counsellor) {
             return $this->error('咨询师不存在或是已注销');
         }
+        //订单数
+        $counsellor['trade'] = db('trade')->where(array('status'=>1,'mid'=>$value['memberid']))->count();
+        //标识
+        $smap['id'] = array('in',$counsellor['tags']);
+        $counsellor['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
+        //从业时间
+        $counsellor['employment'] = '从业'.ceil(date('Y',time())-date('Y',$counsellor['employment'])).'年';
         //返回信息
         $data = [
             'code'=>'1',
