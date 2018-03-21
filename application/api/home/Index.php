@@ -553,14 +553,16 @@ class Index
                     unset($counsellor['list'][$key]);
                     continue;
                 }
-                //订单数
-                $counsellor['list'][$key]['trade'] = db('trade')->where(array('status'=>1,'mid'=>$value['memberid']))->count();
-                //标识
-                $smap['id'] = array('in',$value['tags']);
-                $counsellor['list'][$key]['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
-                //从业时间
-                $counsellor['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
             }    
+        }
+        foreach ($counsellor['list'] as $key => $value) {
+            //订单数
+            $counsellor['list'][$key]['trade'] = db('trade')->where(array('status'=>1,'mid'=>$value['memberid']))->count();
+            //标识
+            $smap['id'] = array('in',$value['tags']);
+            $counsellor['list'][$key]['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
+            //从业时间
+            $counsellor['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
         }
         
         // if (!$counsellor) {
@@ -593,7 +595,7 @@ class Index
             unset($article['list'][$key]['content']);
             $article['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
         }
-        
+
         //返回信息
         $data = [
             'code'=>'1',
