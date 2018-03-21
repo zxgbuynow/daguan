@@ -313,7 +313,7 @@ class Index
             return $this->error('咨询师不存在或是已注销');
         }
         //订单数
-        $counsellor['trade'] = db('trade')->where(array('status'=>1,'mid'=>$value['memberid']))->count();
+        $counsellor['trade'] = db('trade')->where(array('status'=>1,'mid'=>$counsellor['memberid']))->count();
         //标识
         $smap['id'] = array('in',$counsellor['tags']);
         $counsellor['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
