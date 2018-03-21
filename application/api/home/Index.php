@@ -576,7 +576,12 @@ class Index
     public function articallist_custom($params)
     {
 
-        $article['list'] = db('cms_page')->where('status',1)->order('view DESC')->select();
+        $keyword = trim($params['search_keywords']);
+
+        $map['title'] = array('like','%'.$keyword.'%');
+        $map['status'] = 1;
+        
+        $article['list'] = db('cms_page')->where($map)->order('view DESC')->select();
 
         //返回信息
         $data = [
@@ -585,6 +590,7 @@ class Index
             'data'=>$article
         ];
         return json($data);
+    }
     }
     /**
      * [agency_custom 机构列表]
