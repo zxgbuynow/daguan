@@ -936,7 +936,7 @@ class Index
      */
     public function lunbo_shop($params)
     {
-        $map['tagname'] = 'custom';
+        $map['tagname'] = 'shop';
         $map['status'] = 1;
         $lunbo['pic'] = db('cms_advert')->where($map)->order('id DESC')->limit(10)->select();
         foreach ($lunbo['pic'] as $key => $value) {
@@ -965,7 +965,9 @@ class Index
     public function category_shop($params)
     {
         $category['list'] = db('cms_category')->where('status',1)->order('id DESC')->limit(8)->select();
-
+        foreach ($category['list'] as $key => $value) {
+            $category['list'][$key]['cover'] = get_file_path($value['cover']);
+        }
         //返回信息
         $data = [
             'code'=>'1',
