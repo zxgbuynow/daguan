@@ -95,6 +95,7 @@ class Category extends Admin
                 ['select', 'pid', '父类', '<code>必选</code>', CategoryModel::getTreeList(),$pid],
                 ['text', 'title', '分类标题'],
                 ['text', 'sort', '排序', '', 100],
+                ['image', 'cover', '分类图片'],
                 ['radio', 'status', '立即启用', '', ['否', '是'], 1]
             ])
             ->fetch();
@@ -134,6 +135,7 @@ class Category extends Admin
                 ['select', 'pid', '父类', '<code>必选</code>', CategoryModel::getTreeList(0)],
                 ['text', 'title', '分类标题'],
                 ['text', 'sort', '排序', '', 100],
+                ['image', 'cover', '分类图片'],
                 ['radio', 'status', '立即启用', '', ['否', '是'], 1]
             ])
             ->setFormData(CategoryModel::get($id))
