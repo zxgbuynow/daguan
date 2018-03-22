@@ -98,7 +98,8 @@ class Advert extends Admin
                     $data['content'] .= '">'.$data['title'].'</a>';
                     break;
                 case 2: // 图片
-                    $data['content'] = '<a href="'.$data['link'].'" target="_blank"><img src="'.get_file_path($data['src']).'" style="';
+                    $srcpath = get_file_path($data['src']);
+                    $data['content'] = '<a href="'.$data['link'].'" target="_blank"><img src="'.$srcpath.'" style="';
                     if ($data['width'] != '') {
                         $data['content'] .= 'width:'.$data['width'].'px;';
                     }
@@ -109,7 +110,7 @@ class Advert extends Admin
                         $data['content'] .= '" alt="'.$data['alt'];
                     }
                     $data['content'] .= '" /></a>';
-                    $data['src'] = get_file_path($data['src']);
+                    $data['cover'] = $srcpath;
                     $data['link'] = $data['link'];
                     break;
                 case 3: // flash
