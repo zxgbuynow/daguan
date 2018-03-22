@@ -319,6 +319,27 @@ class Index
         $counsellor['sign'] =  db('cms_category')->where($smap)->column('title') ;
         //从业时间
         $counsellor['employment'] = '从业'.ceil(date('Y',time())-date('Y',$counsellor['employment'])).'年';
+        
+        //沟通方式
+        $counsellor['chartArr'] = array(
+            array(
+                'iswordchart'=>$counsellor['iswordchart'],
+                'wordchart'=>$counsellor['wordchart']
+            ),
+            array(
+                'isspeechchart'=>$counsellor['isspeechchart'],
+                'speechchart'=>$counsellor['speechchart']
+            ),
+            array(
+                'isvideochart'=>$counsellor['isvideochart'],
+                'videochart'=>$counsellor['videochart']
+            ),
+            array(
+                'isfacechart'=>$counsellor['isfacechart'],
+                'facechart'=>$counsellor['facechart']
+            )
+        );
+        
         //返回信息
         $data = [
             'code'=>'1',
