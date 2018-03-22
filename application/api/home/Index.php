@@ -348,7 +348,7 @@ class Index
                 'show'=>'面对面咨询'
             )
         );
-        
+
         //返回信息
         $data = [
             'code'=>'1',
@@ -656,6 +656,81 @@ class Index
             'code'=>'1',
             'msg'=>'',
             'data'=>$agency
+        ];
+        return json($data);
+    }
+    /**
+     * [createTrade_custom 生成订单]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function createTrade_custom($params)
+    {
+        $counsellor_id = trim($params['counsellor_id']);
+        $price = trim($params['price']);
+        $chart = trim($params['chart']);
+        $account = trim($params['account']);
+        $num = trim($params['num']);
+
+        //shopid mid uid tid payment title
+        
+        $data['mid'] = $counsellor_id;
+        $data['memberid'] = $account;
+        $data['payment'] = $price;
+        $data['created_time'] = time();
+        $data['num'] = $num;
+
+        //交易标题
+        
+        $str = '文字咨询';
+        switch ($chart) {
+            case 'speechchart':
+                $str = '语音咨询';
+                break;
+            case 'videochart':
+                $str = '视频咨询';
+                break;
+            case 'facechart':
+                $str = '面对面咨询';
+                break;
+            
+            default:
+                break;
+        }
+
+        $counsellor = db('member')->where('id',$counsellor_id)->column('nickname');
+
+        $data['title'] = '预约'.$counsellor.$str;
+        //机构
+        $data['shopid'] = db('member')->where('id',$account)->column('shopid');
+        //订单号
+        $data['tid'] = date('YmdHis',time()).rand(1000,9999);
+        
+        //插入数据
+        $trade = db('trade')->insert($data);
+        if (!$trade) {
+            return $this->error('生成订单');
+        }
+
+        $ret = array('tid'=>$trade);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$ret
+        ];
+        return json($data);
+
+
+    }
+
+    public function tradepay_custom($params)
+    {
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
         ];
         return json($data);
     }

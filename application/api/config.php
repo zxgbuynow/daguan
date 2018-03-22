@@ -25,6 +25,8 @@ return [
         'allcategory'=>'all.category',//文章祥情
         'counsellorlist'=>'counsellor.list',//咨询师列表
         'articallist'=>'artical.list',//文章列表
-        'agency'=>'agency.list'//机构列表
+        'agency'=>'agency.list',//机构列表
+        'createTrade'=>'create.trade',//生成订单
+        'tradepay'=>'trade.pay'//生成订单
     ]
 ];
