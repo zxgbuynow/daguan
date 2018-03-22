@@ -700,7 +700,7 @@ class Index
 
         $counsellor = db('member')->where('id',$counsellor_id)->column('nickname');
 
-        $data['title'] = '预约'.$counsellor.$str;
+        $data['title'] = '预约'.$counsellor[0].$str;
         //机构
         $data['shopid'] = db('member')->where('id',$account)->column('shopid');
         //订单号
