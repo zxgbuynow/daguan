@@ -323,20 +323,29 @@ class Index
         //沟通方式
         $counsellor['chartArr'] = array(
             array(
-                'iswordchart'=>$counsellor['iswordchart'],
-                'wordchart'=>$counsellor['wordchart']
+                'chart'=>'wordchart',
+                'status'=>$counsellor['iswordchart'],
+                'price'=>$counsellor['wordchart'],
+                'show'=>'文字咨询'
             ),
             array(
-                'isspeechchart'=>$counsellor['isspeechchart'],
-                'speechchart'=>$counsellor['speechchart']
+                'chart'=>'speechchart',
+                'status'=>$counsellor['isspeechchart'],
+                'price'=>$counsellor['speechchart'],
+                'show'=>'语音咨询'
+
             ),
             array(
-                'isvideochart'=>$counsellor['isvideochart'],
-                'videochart'=>$counsellor['videochart']
+                'chart'=>'videochart',
+                'status'=>$counsellor['isvideochart'],
+                'price'=>$counsellor['videochart'],
+                'show'=>'视频咨询'
             ),
             array(
-                'isfacechart'=>$counsellor['isfacechart'],
-                'facechart'=>$counsellor['facechart']
+                'chart'=>'facechart',
+                'status'=>$counsellor['isfacechart'],
+                'price'=>$counsellor['facechart'],
+                'show'=>'面对面咨询'
             )
         );
         
