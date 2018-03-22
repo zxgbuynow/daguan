@@ -1100,4 +1100,28 @@ class Index
         ];
         return json($data);
     }
+
+    /**
+     * [contentinfo_shop 文章祥情]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function contentinfo_shop($params)
+    {
+
+        $id = $params['id'];
+        if (!$id) {
+            return $this->error('参数必填');
+        }
+        $article = db('cms_page')->where('id',$id)->find();
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$article
+        ];
+        return json($data);
+
+    }
 }
