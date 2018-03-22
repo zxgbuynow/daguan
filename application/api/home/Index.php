@@ -261,7 +261,9 @@ class Index
     public function category_custom($params)
     {
         $category['list'] = db('cms_category')->where('status',1)->order('id DESC')->limit(8)->select();
-
+        foreach ($category['list'] as $key => $value) {
+            $category['list'][$key]['cover'] = get_file_path($value['cover']);
+        }
         //返回信息
         $data = [
             'code'=>'1',
@@ -559,7 +561,9 @@ class Index
     public function allcategory_custom($params)
     {
         $category['list'] = db('cms_category')->where('status',1)->order('id DESC')->select();
-
+        foreach ($category['list'] as $key => $value) {
+            $category['list'][$key]['cover'] = get_file_path($value['cover']);
+        }
         //返回信息
         $data = [
             'code'=>'1',
@@ -632,6 +636,7 @@ class Index
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
             $article['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
+            $article['list'][$key]['cover'] = get_file_path($value['cover']);
         }
 
         //返回信息
