@@ -214,6 +214,7 @@ class Index
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
             $article['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
+            $article['list'][$key]['cover'] = get_file_path($value['cover']);
         }
         //返回信息
         $data = [
@@ -712,7 +713,7 @@ class Index
             return $this->error('生成订单');
         }
 
-        $ret = array('tid'=>$trade);
+        $ret = array('tid'=>$data['tid']);
         //返回信息
         $data = [
             'code'=>'1',
