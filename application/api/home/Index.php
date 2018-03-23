@@ -1125,4 +1125,67 @@ class Index
         return json($data);
 
     }
+
+    /**
+     * [checkpassword 验证密码]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function checkpassword_shop($params)
+    {
+        $password = trim($params['password']);
+        $account = trim($params['account']);
+
+        //设置密码
+        // $data['password'] =  Hash::make((string)$password);
+
+
+        //更新
+        $map['id'] = $account;
+        $user =  db('member')->where($map)->find();
+        if (!Hash::check((string)$password, $user['password'])) {
+           return $this->error( '密码错误！');
+        }
+
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+
+    }
+
+    /**
+     * [uppw_shop 更新密码]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function uppw_shop($params)
+    {
+        $password = trim($params['password']);
+        $password_confirmation = trim($params['password_confirmation']);
+        $account = trim($params['account']);
+        if ($password!=$password_confirmation) {
+            return $this->error('二次密码不一致');
+        }
+        //设置密码
+        $data['password'] =  Hash::make((string)trim($password));
+
+        //更新
+        $map['id'] = $account;
+        if(!db('member')->where($map)->update($data)){
+            return $this->error('服务器忙，请稍后');
+        }
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
 }
