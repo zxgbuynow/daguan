@@ -764,6 +764,7 @@ class Index
         if (!$user) {
             return $this->error('用户不存在或被禁用！');
         }
+        $user['agency'] = db('shop_agency')->where('id',$user['shopid'])->find();
         //密码是否正确
         if (!Hash::check((string)$password, $user['password'])) {
            return $this->error( '密码错误！');
