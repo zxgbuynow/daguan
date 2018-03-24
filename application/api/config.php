@@ -29,5 +29,7 @@ return [
         'createTrade'=>'create.trade',//生成订单
         'tradepay'=>'trade.pay',//生成订单
         'msg'=>'msg.list'//消息列表
+        'msginfo'=>'msg.info'//消息祥情
+        'msgup'=>'msg.up'//消息更新
     ]
 ];

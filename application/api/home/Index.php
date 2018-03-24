@@ -1225,6 +1225,54 @@ class Index
         return json($data);
     }
 
+    /**
+     * [msginfo_shop 消息祥情]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function msginfo_shop($params)
+    {
+        $id = trim($params['id']);
+
+        //查询消息
+        $map['id'] = $id;
+        $msg =  db('msg')->where($map)->find();
+        
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$msg
+        ];
+        return json($data);
+    }
+
+    /**
+     * [msgup_shop 消息状态更新]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function msgup_shop($params)
+    {
+        $id = trim($params['id']);
+
+        //查询消息
+        $map['id'] = $id;
+        $data['status'] = 1;
+        if (!db('msg')->where($map)->update($data)) {
+            $this->error('更新失败！');
+        }
+        
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 公用方法
