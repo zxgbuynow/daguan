@@ -1282,6 +1282,32 @@ class Index
         ];
         return json($data);
     }
+    /**
+     * [counsellorindex_shop 咨询师信息]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function counsellorindex_shop($params)
+    {
+        $account = trim($params['account']);
+
+        //收入
+        $map['mid'] = $account;
+        $user['income'] =db('trade')->where($map)->sum('payment'); 
+
+        //积分
+        $pmap['memberid'] = $account;
+        $pmap['behavior_type'] = 0;
+        $user['points'] = db('member_point')->where($pmap)->sum('point');
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$user
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 公用方法

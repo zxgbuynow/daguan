@@ -31,6 +31,7 @@ return [
         'msg'=>'msg.list',//消息列表
         'msginfo'=>'msg.info',//消息祥情
         'msgup'=>'msg.up',//消息更新
-        'income'=>'income'//收入
+        'income'=>'income',//收入
+        'counsellorindex'=>'counsellor.index'//咨询师中心
     ]
 ];
