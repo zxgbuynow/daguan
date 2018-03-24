@@ -27,6 +27,7 @@ return [
         'articallist'=>'artical.list',//文章列表
         'agency'=>'agency.list',//机构列表
         'createTrade'=>'create.trade',//生成订单
-        'tradepay'=>'trade.pay'//生成订单
+        'tradepay'=>'trade.pay',//生成订单
+        'msg'=>'msg.list'//消息列表
     ]
 ];

@@ -665,6 +665,7 @@ class Index
         ];
         return json($data);
     }
+
     /**
      * [createTrade_custom 生成订单]
      * @param  [type] $params [description]
@@ -705,6 +706,7 @@ class Index
         }
 
         $counsellor = db('member')->where('id',$counsellor_id)->column('nickname');
+        $username = db('member')->where('id',$account)->column('nickname');
 
         $data['title'] = '预约'.$counsellor[0].$str;
         //机构
@@ -717,7 +719,16 @@ class Index
         if (!$trade) {
             return $this->error('生成订单');
         }
+        //生成消息
+        $msg['type'] = 1;
+        $msg['subtitle'] = '预约'.$counsellor[0].$str;
+        $msg['title'] = '预约您的'.$str;
+        $msg['descrption'] = $username[0].'预约您的'.$str;
+        $msg['sendid'] = $account;
+        $msg['reciveid'] = $counsellor_id;
 
+        $this->create_msg($msg);
+        
         $ret = array('tid'=>$data['tid']);
         //返回信息
         $data = [
@@ -1187,5 +1198,57 @@ class Index
             'data'=>1
         ];
         return json($data);
+    }
+
+    /**
+     * [msg_shop 消息列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function msg_shop($params)
+    {
+        $id = trim($params['account']);
+
+        //查询消息
+        $map['reciveid'] = $id;
+        $user =  db('msg')->where($map)->select();
+        $ret = [];
+        foreach ($user as $key => $value) {
+            $ret[$value['type']][$key] = $value;
+        }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$ret
+        ];
+        return json($data);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | 公用方法
+    |--------------------------------------------------------------------------
+     */ 
+    /**
+     * [create_msg 创建消息]
+     * @param  [type] $data [description]
+     * @return [type]       [description]
+     */
+    public function create_msg($data)
+    {
+        
+        //消息类型 0 系统消息  1订单系统
+        $save['type'] = $data['type'];
+        $save['subtitle'] = trim($data['subtitle']);
+        $save['title'] = trim($data['title']);
+        $save['descrption'] = trim($data['descrption']);
+        $save['sendid'] = trim($data['sendid']);
+        $save['reciveid'] = trim($data['reciveid']);
+        $save['create_time'] = time();
+
+        //插入数据
+        db('msg')->insert($save);
+        
     }
 }
