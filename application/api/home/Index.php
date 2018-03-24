@@ -394,8 +394,12 @@ class Index
      */
     public function trade_custom($params)
     {
-        $trade['list'] = db('trade')->where(1)->order('id DESC')->select();
+        $account = trim($params['account']);
+        $map['memberid'] = $account;
 
+        $trade['list'] = db('trade')->where($map)->order('id DESC')->select();
+
+       
         //返回信息
         $data = [
             'code'=>'1',
@@ -1066,23 +1070,7 @@ class Index
         return json($data);
     }
 
-    /**
-     * [trade 订单]
-     * @param  [type] $params [description]
-     * @return [type]         [description]
-     */
-    public function trade_shop($params)
-    {
-        $trade = db('trade')->where(1)->order('id DESC')->select();
-
-        //返回信息
-        $data = [
-            'code'=>'1',
-            'msg'=>'',
-            'data'=>$trade
-        ];
-        return json($data);
-    }
+   
     /**
      * [articallist_shop 文章列表]
      * @param  [type] $params [description]
@@ -1270,6 +1258,27 @@ class Index
             'code'=>'1',
             'msg'=>'',
             'data'=>1
+        ];
+        return json($data);
+    }
+    /**
+     * [income_shop 收入]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function income_shop($params)
+    {
+        $account = trim($params['account']);
+        $map['mid'] = $account;
+        
+        $trade['list'] = db('trade')->where($map)->order('id DESC')->select();
+
+       $trade['income'] =db('trade')->where($map)->sum('payment'); 
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$trade
         ];
         return json($data);
     }
