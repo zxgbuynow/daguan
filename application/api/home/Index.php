@@ -1357,6 +1357,7 @@ class Index
                 unset($calendar['list'][$key]);
             }
         }
+        $calendar['list'] = array_values($calendar['list']);
         //返回信息
         $data = [
             'code'=>'1',
