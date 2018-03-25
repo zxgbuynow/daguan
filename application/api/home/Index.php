@@ -1385,7 +1385,7 @@ class Index
         $save['memberid'] = $account;
 
         $save['start_time'] =strtotime($start_time);
-        $save['end_time'] = strtotime($end_time)
+        $save['end_time'] = strtotime($end_time);
         $save['tid'] = $tid;
 
         $save['title'] = db('trade')->where('id',$tid)->column('title')[0];
