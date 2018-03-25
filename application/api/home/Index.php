@@ -1366,9 +1366,34 @@ class Index
         return json($data);
     }
 
+    /**
+     * [calendaadd_shop 添加日程]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
     public function calendaadd_shop($params)
     {
         //title des tid createtime start_time memberid
+        $account = trim($params['account']);
+        $start_time = trim($params['start_time']);
+        $end_time = trim($params['end_time']);
+        $tid = trim($params['tid']);
+
+
+        //添加
+        $save['create_time'] = time();
+        $save['memberid'] = $account;
+
+        $save['start_time'] = $start_time;
+        $save['end_time'] = $end_time;
+        $save['tid'] = $tid;
+
+        $save['title'] = db('trade')->where('id',$tid)->column('title')[0];
+        $save['descrption'] = db('trade')->where('id',$tid)->column('title')[0];
+
+        if (!db('calendar')->insert($save)) {
+            $this->error('保存失败！');
+        }
         //返回信息
         $data = [
             'code'=>'1',
