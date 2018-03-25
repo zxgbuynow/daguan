@@ -32,6 +32,9 @@ return [
         'msginfo'=>'msg.info',//消息祥情
         'msgup'=>'msg.up',//消息更新
         'income'=>'income',//收入
-        'counsellorindex'=>'counsellor.index'//咨询师中心
+        'counsellorindex'=>'counsellor.index',//咨询师中心
+        'calendatoday'=>'calenda.today',//当日日程安排
+        'calendaall'=>'calenda.all',//所有日程安排
+        'calendaadd'=>'calenda.add'//日程添加
     ]
 ];

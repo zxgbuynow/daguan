@@ -1308,6 +1308,75 @@ class Index
         ];
         return json($data);
     }
+    /**
+     * [calendatoday_shop 获得当前时间日程数据]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function calendatoday_shop($params)
+    {
+       $account = trim($params['account']);
+       $cstime =  trim($params['day']);
+
+       //当晚24点时间
+       $cetime = strtotime(date('Y-m-d',$cstime))+24 * 60 * 60;
+
+       //日程
+        $pmap['memberid'] = $account;
+
+        $calendar['list'] = db('calendar')->where($pmap)->whereTime('start_time', 'between', [$cstime, $cetime])->select();
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$calendar
+        ];
+        return json($data);
+    }
+
+    /**
+     * [calendaall_shop 当月到月底的数据]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function calendaall_shop($params)
+    {
+       $account = trim($params['account']);
+       $cstime =  trim($params['day']);
+
+       
+
+       //日程
+        $pmap['memberid'] = $account;
+
+        $calendar['list'] = db('calendar')->where($pmap)->whereTime('start_time', 'm')->select();
+
+        foreach ($calendar['list'] as $key => $value) {
+            if ($value['start_time']<$cstime) {
+                unset($calendar['list'][$key]);
+            }
+        }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$calendar
+        ];
+        return json($data);
+    }
+
+    public function calendaadd_shop($params)
+    {
+        //title des tid createtime start_time memberid
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 公用方法
