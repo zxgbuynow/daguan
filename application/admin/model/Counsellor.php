@@ -19,4 +19,11 @@ class Counsellor extends Model
      // 自动写入时间戳
     protected $autoWriteTimestamp = true;
 
+
+    public function getCounsellorList($id)
+    {
+        $counsellor =  db('member')->alias('a')->field('a.*,b.*,b.id as bid')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where(array('a.id'=>$id))->find();
+
+        return $counsellor;
+    }
 }

@@ -52,7 +52,7 @@ class Counsellor extends shop
                 ['right_button', '操作', 'btn']
             ])
             ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
-            ->addRightButtons('delete') // 批量添加右侧按钮
+            ->addRightButtons('delete,edit') // 批量添加右侧按钮
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
@@ -111,31 +111,11 @@ class Counsellor extends shop
         if ($this->request->isPost()) {
             $data = $this->request->post();
 
-            // 禁止修改分中心超级管理员的角色和状态
-            if ($data['id'] == 1 && $data['role'] != 1) {
-                $this->error('禁止修改分中心超级管理员角色');
-            }
 
-            // 禁止修改分中心超级管理员的状态
-            if ($data['id'] == 1 && $data['status'] != 1) {
-                $this->error('禁止修改分中心超级管理员状态');
-            }
-
-            // 验证
-            $result = $this->validate($data, 'User.update');
-            // 验证失败 输出错误信息
-            if(true !== $result) $this->error($result);
-
-            // 如果没有填写密码，则不更新密码
-            if ($data['password'] == '') {
-                unset($data['password']);
-            }
-
-            if (UserModel::update($data)) {
-                $user = UserModel::get($data['id']);
-                Hook::listen('user_edit', $user);
+            if (CounsellorModel::update($data)) {
+                $user = CounsellorModel::get($data['id']);
                 // 记录行为
-                action_shop_log('user_edit', 'shop_user', $user['id'], UID, get_shop_nickname($user['id']));
+                action_shop_log('user_edit', 'admin_counsellor', $user['id'], UID, get_nickname($user['id']));
                 $this->success('编辑成功', cookie('__forward__'));
             } else {
                 $this->error('编辑失败');
@@ -143,21 +123,21 @@ class Counsellor extends shop
         }
 
         // 获取数据
-        $info = UserModel::where('id', $id)->field('password', true)->find();
+        // $info = CounsellorModel::where('id', $id)->find();
+        $info = CounsellorModel::getCounsellorList($id);
+        print_r($info);exit;
 
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
-                ['static', 'username', '用户名', '不可更改'],
+                ['text', 'username', '用户名', '必填，可由英文字母、数字组成'],
                 ['text', 'nickname', '昵称', '可以是中文'],
-                ['select', 'role', '角色', '', RoleModel::getTree(null, false)],
-                ['text', 'email', '邮箱', ''],
                 ['password', 'password', '密码', '必填，6-20位'],
                 ['text', 'mobile', '手机号'],
-                ['image', 'avatar', '头像'],
-                ['radio', 'status', '状态', '', ['禁用', '启用']]
+                ['radio', 'status', '状态', '', ['禁用', '启用']],
+                ['radio', 'recommond', '推荐', '', ['不推荐', '推荐']]
             ])
             ->setFormData($info) // 设置表单数据
             ->fetch();

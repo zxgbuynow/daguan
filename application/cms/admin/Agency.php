@@ -6,6 +6,8 @@ namespace app\cms\admin;
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\cms\model\Counsellor as CounsellorModel;
+use app\cms\model\Category as CategoryModel;
+use app\cms\model\CateAccess as CateAccessModel;
 use app\cms\model\Agency as AgencyModel;
 use app\shop\model\User as UserModel;
 use util\Tree;
@@ -37,6 +39,7 @@ class Agency extends Admin
         $page = $data_list->render();
 
         $btnAdd = ['icon' => 'fa fa-plus', 'title' => '添加管理员', 'href' => url('admin', ['id' => '__id__'])];
+        $cateAdd = ['icon' => 'fa fa-list', 'title' => '设置业务分类', 'href' => url('cate', ['id' => '__id__'])];
 
         $list_type = UserModel::where('status', 1)->column('id,username');
         // 使用ZBuilder快速创建数据表格
@@ -57,6 +60,7 @@ class Agency extends Admin
             ->addRightButtons('delete') // 批量添加右侧按钮
             ->addRightButton('custom', $btnAdd)
             ->replaceRightButton(['adminid' => ['<>', 0]], '', ['custom'])
+            ->addRightButton('custom1', $cateAdd)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
@@ -203,6 +207,55 @@ class Agency extends Admin
                 ['text', 'mobile', '手机号'],
                 ['radio', 'status', '状态', '', ['禁用', '启用'], 1]
             ])
+            ->fetch();
+   }
+
+   public function cate($id = null)
+   {
+        if ($id === null) $this->error('缺少参数');
+
+        // 保存数据
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+            
+            if (CateAccessModel::where('shopid',$id)->find()) {//编辑
+                $map['shopid'] = $id;
+                if (db('shop_cate_access')->where($map)->update($save)) {
+                    
+                    // 记录行为
+                    $this->success('编辑成功', url('index'));
+                } else {
+                    $this->error('编辑失败');
+                }  
+                
+            }else{//添加
+
+                $save['cids'] = implode(',', $data['cids']);
+                $save['shopid'] = $id;
+                if (db('shop_cate_access')->insert($save)) {
+                    
+                    // 记录行为
+                    $this->success('新增成功', url('index'));
+                } else {
+                    $this->error('新增失败');
+                }
+            }
+            
+            
+        }
+
+        $info = CateAccessModel::where('shopid',$id)->find();
+
+        $list_type = CategoryModel::where('status', 1)->column('id,title');
+
+        // 使用ZBuilder快速创建表单
+        return ZBuilder::make('form')
+            ->setPageTitle('业务分类') // 设置页面标题
+            ->addFormItems([ // 批量添加表单项
+                
+            ])
+            ->addSelect('cids', '业务分类', '', $list_type,'','multiple')
+            ->setFormData($info) // 设置表单数据
             ->fetch();
    }
     /**
