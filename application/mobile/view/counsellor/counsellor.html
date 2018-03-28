@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__M_CSS__/style.css">
+    <link rel="stylesheet" href="__M_CSS__/widgets.css">
+    <style>
+      html,
+      body {
+        background-color: #efeff4;
+      }
+
+      p {
+        text-indent: 22px;
+      }
+
+      span.mui-icon {
+        font-size: 14px;
+        color: #007aff;
+        margin-left: -15px;
+        padding-right: 10px;
+      }
+      .goods-filters {
+        top: 44px;
+      }
+      .mui-bar-nav {
+        background: #FFF;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .main{
+          margin-right: 10px;
+        }
+        .mui-table-view .mui-media-object{
+        max-width: 72px; 
+          height: 72px;
+        }
+        .mui-media-text {
+          color: #646464;
+          font-size: 15px;
+        }
+        .mui-media-author { 
+          font-size: 13px;
+          margin-top: 5px;
+        } 
+        .mui-media-action{
+          font-size: 13px;
+        }
+        .float-right{
+          float: right;
+        }
+        .mui-scroll-wrapper{
+          margin-top: 45px;
+        }
+    </style>
+  </head>
+
+  <body>
+
+    <header class="mui-bar-nav">
+      <header class="home-header">
+        <i class="icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+        <div class="main">
+          <form onsubmit="return false;">
+            <div class="mui-input-row header-search-form ">
+              <input type="search" class="header-search mui-input-clear " placeholder="寻找咨询师">
+            </div>
+          </form>
+        </div>
+      </header>
+      
+    </header>
+    
+    <div class="mui-content">
+        <div id="pullrefresh" class="mui-scroll-wrapper">
+        <div class="mui-scroll">
+          <ul class="mui-table-view  counsellor-list">
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script type="text/html" id="counsellor_list">
+        <section class="widgets-category-nav section-white">
+            <div class="mui-table-view">
+              <ul class="mui-table-view mui-table-view-chevron">
+                <% for(var i=0; i<list.length; i++) { %>
+          <li class="mui-table-view-cell mui-media action-clickview" data-webview="{:url('Counsellor/detail')}" data-webparam='<%= list[i].memberid %>'>
+            <a class="mui-navigate-right"> 
+              <img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].avar) %>">
+              <div class="mui-media-body">
+                <p>
+                  <span class="mui-text-left"><%= list[i].nickname %></span>
+                  <span class="mui-text-right mui-media-action float-right mui-hidden">立即预约</span>
+                </p>
+                <p class='mui-ellipsis mui-media-text'><%= list[i].employment %>|<%= list[i].sign %></p>
+                <p class="mui-ellipsis mui-media-text mui-media-author">我在大观心理温暖过<%= list[i].trade %>人次</p>
+              </div>
+            </a>
+          </li>
+          <% } %>
+          </ul>   
+            </div>
+          </section>
+    </script>
+
+    <script>
+       
+
+        var result = window.location.href;
+        var keyword = $.getUrlParam(result,'keyword');
+        var cat_id = $.getUrlParam(result,'cat_id');
+
+        if(keyword) {
+          $('input[type="search"]').val(keyword);
+          cat_id = '';
+        }
+        var state = app.getState();
+        getclist();
+        function getclist(){
+          var param = {
+                  'method': config.apimethod.counsellorlist,
+                  'cat_id': cat_id,
+                  'source':config.source,
+                  'search_keywords': keyword
+             }
+              $.dataRequest(param, function(rs) {
+                  var widgets = template('counsellor_list', rs);
+                  $('.counsellor-list').append(widgets);
+                     // 
+                   mui('.mui-scroll-wrapper').scroll({
+                    indicators: false
+                  });
+
+              })
+        }
+        
+        
+        window.addEventListener('getlist', function(event) {
+          if(event.detail.search_keywords!=''){
+            keyword = event.detail.search_keywords;
+          }
+          cat_id = event.detail.cat_id;
+          $('.goods-list').empty();
+          //获取数据
+          getclist();
+        });
+
+        $(window).on('tap', '.action-clickview', function() {
+            var webview = $(this).data('webview');
+            var webparam = $(this).data('webparam');
+            if (webparam) {
+              window.location.href = webview+'?counsellor_id='+webparam;
+             
+            }
+            
+          })
+
+
+        var hlist = localStorage.getItem('_history');
+        var form = $('input[type="search"]').parents('form');
+        var sinput = $('input[type="search"]');
+        $(form).submit(function() {
+          var search_val = $('input[type="search"]').val();
+          if(hlist != null) {
+            var list = hlist.split(",");
+          }
+          var flag = true;
+          if(search_val != '') {
+            if(hlist != null) {
+              for(var i = 0; i < list.length; i++) {
+                if(list[i] == search_val) {
+                  flag = false;
+                }
+              }
+            }
+            if(flag == true) {
+              if(hlist != null) {
+                hlist += (search_val + ',');
+                localStorage.setItem('_history', hlist);
+              } else {
+                localStorage.setItem('_history', search_val + ',');
+              }
+            }
+
+            keyword = search_val;
+            $('.goods-list').empty();
+            //获取数据
+            getclist();
+
+            sinput.blur();
+          }
+        });
+        
+
+    </script>
+  </body>
+
+</html>

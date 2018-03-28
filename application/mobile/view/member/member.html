@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__M_CSS__/style.css">
+    <style type="text/css">
+    .box {
+      height: 13rem;
+      position: relative;
+      overflow: hidden;
+      background: #FFF;
+      transform: translate3d(0, 0, 0); }
+
+     .box:after {
+      content: '';
+      display: block;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, #ee88aa, rgba(221, 238, 255, 0) 80%, rgba(255, 255, 255, 0.5));
+      z-index: 5;
+      transform: translate3d(0, 0, 0); }
+
+    	 .wave {
+      opacity: .4;
+      position: absolute;
+      top: 3%;
+      left: 50%;
+      background: #0af;
+      width: 800px;
+      height: 800px;
+      margin-left: -400px;
+      margin-top: -600px;
+      transform-origin: 50% 48%;
+      border-radius: 43%;
+      animation: drift 20000ms infinite linear; }
+
+    .wave.three {
+      animation: drift 19500ms infinite linear; }
+
+    .wave.two {
+      animation: drift 22000ms infinite linear;
+      opacity: .1;
+      background: yellow; }
+
+    @keyframes drift {
+      from {
+        transform: rotate(0deg); }
+      from {
+        transform: rotate(360deg); } }
+
+      .user-header {
+        min-height: 11rem;
+      }
+      .user-accout{
+      	color: #555555;
+      }
+    </style>
+  </head>
+
+  <body class="body-padding-xs">
+    <div class="user-header box">
+      <a id="setting" data-view="{:url('Member/setting')}" class="user-setting bbc-icon bbc-icon-setting action-clickview" style="right: 4rem;"></a>
+      <a id="msg" data-view="{:url('Member/msg')}" class="user-setting bbc-icon bbc-icon-message-gap " ></a>
+      
+      <div id="user_info" class="user-logined " data-view="_www/view/member/userinfo/userinfo.html">
+        <div class="login-avatar"><i class="bbc-icon bbc-icon-member fontB"></i></div>
+        <div  class="user-accout">您好，<span id="account"></span></div>
+        <div><span id="grade_name" class="fontS font-yellow"></span></div>
+      </div>
+    </div>
+   
+    <section class="section-white">
+      <ul class="mui-table-view">
+        <li data-needlog="true" data-view="{:url('Member/trade')}" class="mui-table-view-cell action-clickview">
+          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-history user-returns"></i> 预约咨询</a>
+        </li>
+        <li data-needlog="true" data-view="" class="mui-table-view-cell ">
+          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-password user-safe"></i> 测试管理</a>
+        </li>
+        <li data-needlog="true" data-view="_www/view/member/favorite/favorite.html" class="mui-table-view-cell ">
+          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-history-gap user-favorite"></i> 我的课程/活动</a>
+        </li>
+      </ul>
+    </section>
+	
+	<section class="section-white">
+      <ul class="mui-table-view">
+        <li data-needlog="true" data-view="{:url('Member/safe')}" class="mui-table-view-cell action-clickview">
+          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-rate-empty user-rate"></i> 账户管理</a>
+        </li>
+        <li data-needlog="true" data-view="{:url('Member/point')}" class="mui-table-view-cell action-clickview">
+          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-communication user-complain"></i> 积分/优惠券</a>
+        </li>
+        <li data-needlog="true" data-view="_www/view/member/favorite/favorite.html" class="mui-table-view-cell ">
+          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-star-empty user-favorite"></i> 我的收藏</a>
+        </li>
+      </ul>
+    </section>
+    
+    <nav class="mui-bar bbc-bar-tab">
+      <a class="bbc-tab-item " href="{:url('Index/index')}">
+        <span class="mui-icon bbc-icon bbc-icon-home"></span>
+        <span class="mui-tab-label">首页</span>
+      </a>
+      <a class="bbc-tab-item " href="{:url('Counsellor/index')}">
+        <span class="mui-icon bbc-icon bbc-icon-view"></span>
+        <span class="mui-tab-label">咨询</span>
+      </a>
+      <!-- <a class="bbc-tab-item" href="{:url('Counsellor/index')}">
+        <span class="mui-icon bbc-icon bbc-icon-message"></span>
+        <span class="mui-tab-label">消息</span>
+      </a> -->
+      <a class="bbc-tab-item bbc-active" >
+        <span class="mui-icon bbc-icon bbc-icon-user-empty"></span>
+        <span class="mui-tab-label">我的</span>
+      </a>
+    </nav> 
+    
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script type="text/javascript" charset="utf-8">
+		  //用户名
+		  $('#account').html(app.getState().account);
+      $(window).on('tap', '.action-clickview', function() {
+        var state = app.getState();
+        var _this = $(this).data('view');
+        if(_this && _this != '') {
+        	// clicked(_this);
+          window.location.href = _this
+
+        }
+      });
+
+    </script>
+  </body>
+
+</html>

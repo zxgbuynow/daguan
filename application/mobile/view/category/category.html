@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__M_CSS__/style.css" />
+    <link rel="stylesheet" href="__M_CSS__/widgets.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">咨询分类</div>
+
+    </header>
+    <div class="container">
+      <div class="mui-scroll-wrapper bbc-pullrefresh-top">
+        <div class="mui-scroll">
+          <div class="mui-content content-bottom-padded-nav">
+    			</div>
+		</div>
+		</div>	
+    </div>
+  </body>
+  <script src="__M_JS__/zepto.js"></script>
+  <script src="__M_JS__/mui.min.js"></script>
+  <script src="__M_JS__/template.min.js"></script>
+  <script src="__M_JS__/config.js"></script>
+  <script src="__M_JS__/app.js"></script>
+  <script type="text/html" id="widget_category">
+	<section class="widgets-category-nav section-white">
+        <ul class="widgets-icons-nav">
+        	<% for(var i=0; i<list.length; i++) { %>
+          <li class="action-clickview" data-webview="{:url('Counsellor/counsellor')}" data-webparam='<%= list[i].id %>'><i><a href="#"><img src="<%= $add_server(list[i].cover) %>"></a></i><span><%= list[i].title %></li>
+       	<% } %>
+        </ul>
+      </section>
+	</script>	
+	
+  <script>
+
+      var param = {
+          'method': config.apimethod.allcategory,
+          'source':config.source
+      }
+      $.dataRequest(param, function(rs) {
+        var tempEl = template('widget_category', rs);
+        $('.mui-content').html(tempEl);
+        $(window).on('tap', '.action-clickview', function() {
+            var webview = $(this).data('webview');
+            var webparam = $(this).data('webparam');
+            window.location.href = webview+'?cat_id='+webparam;
+            
+          })
+      });
+  </script>
+</html>

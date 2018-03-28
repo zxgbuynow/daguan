@@ -51,6 +51,8 @@ class Index
         
         $username = trim($params['account']);
         $password = trim($params['password']);
+        $ismobile = trim($params['ismobile']);
+
 
         //是否存在
         $map['username'] = $username;
@@ -63,7 +65,10 @@ class Index
         if (!Hash::check((string)$password, $user['password'])) {
            return $this->error( '密码错误！');
         }
-
+        //
+        if ($ismobile) {
+             session('user_mobile_auth',$user);
+        }
         $data = [
             'code'=>'1',
             'msg'=>'',
@@ -214,6 +219,10 @@ class Index
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
             $article['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
+        }
+        foreach ($article['list'] as $key => $value) {
+            unset($article['list'][$key]['content']);
+            $article['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
             $article['list'][$key]['cover'] = get_file_path($value['cover']);
         }
         //返回信息
@@ -226,7 +235,8 @@ class Index
 
     }
 
-    /**
+   
+     /**
      * [lunbo 首页轮播]
      * @param  [type] $params [description]
      * @return [type]         [description]
@@ -235,14 +245,29 @@ class Index
     {
         $map['tagname'] = 'custom';
         $map['status'] = 1;
+        $ismobile = trim($params['ismobile']);
         $lunbo['pic'] = db('cms_advert')->where($map)->order('id DESC')->limit(10)->select();
         foreach ($lunbo['pic'] as $key => $value) {
             if (strstr($value['link'], 'article')) {//文章
-                $lunbo['pic'][$key]['webview'] = '_www/view/article/detail.html';
-                $lunbo['pic'][$key]['webparam'] = ['article_id'=>explode('.',explode('/', $value['link'])[1])[0]]; 
+                if ($ismobile) {
+                    $lunbo['pic'][$key]['webview'] = "/mobile.php/artical/detail.html";
+                    $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                }else{
+                    $lunbo['pic'][$key]['webview'] = '_www/view/article/detail.html';
+                    $lunbo['pic'][$key]['webparam'] = ['article_id'=>explode('.',explode('/', $value['link'])[1])[0]];
+                }
+                
+                 
             }else if (strstr($value['link'], 'counsellor')) {
-                $lunbo['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
-                $lunbo['pic'][$key]['webparam'] = ['counsellor_id'=>explode('.',explode('/', $value['link'])[1])[0]];
+                if ($ismobile) {
+                    $lunbo['pic'][$key]['webview'] = "/mobile.php/counsellor/detail.html";
+                     $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                }else{
+                    $lunbo['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
+                     $lunbo['pic'][$key]['webparam'] = ['counsellor_id'=>explode('.',explode('/', $value['link'])[1])[0]];
+                }
+                
+               
             }
         }
         //返回信息
@@ -290,7 +315,6 @@ class Index
             //从业时间
             $recommend['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
         }
-
         //返回信息
         $data = [
             'code'=>'1',
@@ -319,7 +343,7 @@ class Index
         $counsellor['trade'] = db('trade')->where(array('status'=>1,'mid'=>$counsellor['memberid']))->count();
         //标识
         $smap['id'] = array('in',$counsellor['tags']);
-        $counsellor['sign'] =  db('cms_category')->where($smap)->column('title') ;
+        $counsellor['sign'] = db('cms_category')->where($smap)->column('title') ;
         //从业时间
         $counsellor['employment'] = '从业'.ceil(date('Y',time())-date('Y',$counsellor['employment'])).'年';
         
@@ -351,7 +375,7 @@ class Index
                 'show'=>'面对面咨询'
             )
         );
-
+        
         //返回信息
         $data = [
             'code'=>'1',
@@ -408,8 +432,7 @@ class Index
         ];
         return json($data);
     }
-
-     /**
+    /**
      * [checkpassword 验证密码]
      * @param  [type] $params [description]
      * @return [type]         [description]
@@ -471,6 +494,7 @@ class Index
         ];
         return json($data);
     }
+
     /**
      * [updatenickname 更新Nickname]
      * @param  string $value [description]
@@ -557,6 +581,7 @@ class Index
         return json($data);
 
     }
+
     /**
      * [category_custom 咨询分类]
      * @param  string $value [description]
@@ -601,15 +626,6 @@ class Index
                 }
             }    
         }
-        foreach ($counsellor['list'] as $key => $value) {
-            //订单数
-            $counsellor['list'][$key]['trade'] = db('trade')->where(array('status'=>1,'mid'=>$value['memberid']))->count();
-            //标识
-            $smap['id'] = array('in',$value['tags']);
-            $counsellor['list'][$key]['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
-            //从业时间
-            $counsellor['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
-        }
         
         // if (!$counsellor) {
         //     return $this->error('咨询师不存在或是已注销');
@@ -622,6 +638,7 @@ class Index
         ];
         return json($data);
     }
+   
     /**
      * [articallist_custom 文章列表]
      * @param  [type] $params [description]
@@ -651,7 +668,6 @@ class Index
         ];
         return json($data);
     }
-    
     /**
      * [agency_custom 机构列表]
      * @param  [type] $params [description]
@@ -1070,7 +1086,8 @@ class Index
         return json($data);
     }
 
-   
+    
+
     /**
      * [articallist_shop 文章列表]
      * @param  [type] $params [description]
@@ -1124,7 +1141,6 @@ class Index
         return json($data);
 
     }
-
     /**
      * [checkpassword 验证密码]
      * @param  [type] $params [description]
@@ -1212,7 +1228,6 @@ class Index
         ];
         return json($data);
     }
-
     /**
      * [msginfo_shop 消息祥情]
      * @param  [type] $params [description]
@@ -1282,6 +1297,7 @@ class Index
         ];
         return json($data);
     }
+
     /**
      * [counsellorindex_shop 咨询师信息]
      * @param  [type] $params [description]
@@ -1308,6 +1324,7 @@ class Index
         ];
         return json($data);
     }
+
     /**
      * [calendatoday_shop 获得当前时间日程数据]
      * @param  [type] $params [description]
@@ -1366,7 +1383,6 @@ class Index
         ];
         return json($data);
     }
-
     /**
      * [calendaadd_shop 添加日程]
      * @param  [type] $params [description]
@@ -1417,16 +1433,17 @@ class Index
     {
         
         //消息类型 0 系统消息  1订单系统
-        $save['type'] = $data['type'];
-        $save['subtitle'] = trim($data['subtitle']);
-        $save['title'] = trim($data['title']);
-        $save['descrption'] = trim($data['descrption']);
-        $save['sendid'] = trim($data['sendid']);
-        $save['reciveid'] = trim($data['reciveid']);
-        $save['create_time'] = time();
+        $data['type'] = $data['type'];
+        $data['subtitle'] = trim($data['subtitle']);
+        $data['title'] = trim($data['title']);
+        $data['descrption'] = trim($data['descrption']);
+        $data['sendid'] = trim($data['sendid']);
+        $data['reciveid'] = trim($data['reciveid']);
+        $data['create_time'] = time();
 
         //插入数据
-        db('msg')->insert($save);
-        
+        $me = db('msg')->insert($data);
+
     }
+    
 }

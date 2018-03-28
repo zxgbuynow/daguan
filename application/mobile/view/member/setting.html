@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__M_CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__M_CSS__/mui.picker.min.css" />
+  </head>
+
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">设置</div>
+    </header>
+    
+    <section class="container">
+      <section class="section-white">
+        <ul class="mui-table-view function-list font-gray-20">
+          <li class="mui-table-view-cell" >
+            <a href="#forward" class="mui-navigate-right">
+              <div class="mui-table">
+                <div class="mui-table-cell mui-col-xs-4">头像:</div>
+                <div id="avatar" class="mui-table-cell mui-col-xs-8 mui-text-right">
+                  <img class="userinfo-avatar" id="head-img" src="" />
+                </div>
+              </div>
+            </a>
+          </li>
+          <li class="mui-table-view-cell" id="account">
+            <div class="mui-table">
+              <div class="mui-table-cell mui-col-xs-4">用户名:</div>
+              <div id="account_info" class="mui-table-cell mui-col-xs-8 mui-text-right"></div>
+            </div>
+          </li>
+          <!--<li id="username" class="mui-table-view-cell">
+            <a class="mui-navigate-right">
+              <div class="mui-table">
+                <div class="mui-table-cell mui-col-xs-4">姓名：</div>
+                <div id="username_info" class="mui-table-cell mui-col-xs-8 mui-text-right"></div>
+              </div>
+            </a>
+          </li>-->
+          <li id="nickname" class="mui-table-view-cell">
+            <a class="mui-navigate-right">
+              <div class="mui-table">
+                <div class="mui-table-cell mui-col-xs-4">昵称：</div>
+                <div id="nickname_info" class="mui-table-cell mui-col-xs-8 mui-text-right"></div>
+              </div>
+            </a>
+          </li>
+          <li id="gender" class="mui-table-view-cell">
+            <a class="mui-navigate-right">
+              <div class="mui-table">
+                <div class="mui-table-cell mui-col-xs-4">性别：</div>
+                <div id="gender_info" class="mui-table-cell mui-col-xs-8 mui-text-right"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </section>
+    </section>
+    <section class="mui-content-padded form-op-section">
+      <button id="exit" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">退出登录</button>
+    </section>
+    <div id="forward" class="mui-popover mui-popover-action mui-popover-bottom">
+      <ul class="mui-table-view">
+        <!-- <li class="mui-table-view-cell">
+          <a onclick="getImage()">拍照</a>
+        </li> -->
+        <li class="mui-table-view-cell">
+          <a onclick="galleryImg()">从手机相册选择</a>
+        </li>
+      </ul>
+      <ul class="mui-table-view">
+        <li class="mui-table-view-cell">
+          <a href="#forward"><b>取消</b></a>
+        </li>
+      </ul>
+    </div>
+
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/mui.picker.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      mui.init({
+        swipeBack: true, //启用右滑关闭功能
+      });
+	    var birthday = null;
+      var state = app.getState();
+      var ret = null;
+      var param = {
+          'method': config.apimethod.userinfo,
+          'account': state.account,
+          'source':config.source
+      }
+      $.dataRequest(param, function(rs) {
+        var data = rs;
+        ret = rs;
+        document.getElementById('account_info').innerText = data.username;
+        document.getElementById('nickname_info').innerText = data.nickname;
+        if(data.sex == 0) {
+          document.getElementById('gender_info').innerText = '女';
+        }
+        if(data.sex == 1) {
+          document.getElementById('gender_info').innerText = '男';
+        }
+        if(data.sex == 2) {
+          document.getElementById('gender_info').innerText = '保密';
+        }
+        defaultImg();
+        
+      });
+
+     
+		
+      document.getElementById('account').addEventListener('tap', function() {
+        var name = $("#account_info").text();
+        if(name == '') {
+          window.location.href = "{:url('Member/account')}";
+          // clicked('_www/view/member/userinfo/account.html');
+        }
+      });
+//    document.getElementById('username').addEventListener('tap', function() {
+//      clicked('_www/view/member/userinfo/username.html');
+//    });
+      document.getElementById('nickname').addEventListener('tap', function() {
+        // clicked('_www/view/member/userinfo/nickname.html');
+        window.location.href = "{:url('Member/nickname')}";
+      });
+      document.getElementById('gender').addEventListener('tap', function() {
+        // clicked('_www/view/member/userinfo/gender.html');
+        window.location.href = "{:url('Member/gender')}";
+      });
+     
+
+      
+
+		function galleryImg() {
+			
+			mui('#forward').popover('hide');
+		};
+		function defaultImg() {
+			if(ret.avar){
+				document.getElementById("head-img").src = ret.avar;
+			}else{
+				document.getElementById("head-img").src = '__M_IMG__/shop_logo.gif';
+			}
+			
+		}
+		document.getElementById('exit').addEventListener('tap', function() {
+        mui.confirm('亲，确定退出登录吗？', '', ['取消', '确认'], function(e) {
+          if(e.index == 1) {
+              var state = app.getState();
+              app.setState({});
+              setTimeout(function(){
+                  window.location.href = "{:url('Passort/login')}";
+              },300)
+          } else {
+            return false;
+          }
+        })
+      }, false);
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__M_CSS__/counsellor.css" />
+    <link rel="stylesheet" href="__M_CSS__/style.css" />
+    
+    
+  </head>
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">咨询师</div>
+
+    </header>
+    <section class="container section-white counsellor-info">
+    		<!--<div class="counsellor-homepage-content">
+			<div class="brief-info">
+				<div class="avatar-container">
+					<img src="https://ossimg.xinli001.com/20170823/c91ab41f014b8df7bb2e8d4df9b594ca.png!120x120" class="avatar">			
+				</div>
+				<h2 class="teacher-name">朱志慧</h2>
+			</div>
+			<div class="zixun-time-block">
+				<p class="txt">我在大观心理温暖过<span class="times">95</span>人次</p>
+			</div>
+			<div class="qualification-block">
+				<div class="section">
+					<h3 class="title">从业资质<span class="year">从业10年</span></h3>
+					<p class="certification">国家二级咨询师 | 博士学位证书 | 博士毕业证书</p>
+					<i class="icon-teacherpage-new ic-stamp"></i>
+				</div>
+				<div class="section">
+					<h3 class="title">擅长领域</h3>
+					<div class="tags">
+						<span class="tag1">婚姻家庭</span>
+						<span class="tag1">心理健康</span>
+						<span class="tag1">亲子教育</span>
+					</div>
+				</div>
+				<div class="section obj" style="margin-top: 1.5rem;">
+					<div class="zixun-way-section">
+						<div class="zixun-way">
+							<img src="../../img/wenzi.png" />
+							<span class="label">文字聊天</span>
+							<span class="price"><span class="symbol">￥</span><span class="num">300</span>/次</span>
+						</div>
+						<div class="zixun-way">
+							<img src="../../img/yuying.png" />
+							<span class="label">语音通话</span>
+							<span class="price"><span class="symbol">￥</span><span class="num">500</span>/次</span>
+						</div>
+						<div class="zixun-way">
+							<img src="../../img/video.png" />
+							<span class="label">视频聊天</span>
+							<span class="price"><span class="symbol">￥</span><span class="num">600</span>/次</span>
+						</div>
+						<div class="zixun-way">
+							<img src="../../img/face.png" />
+							<span class="label">面对面</span>
+							<span class="price"><span class="symbol">￥</span><span class="num">800</span>/次</span>
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>-->
+		
+    </section>
+    <section class="action-bar-mini op-group mui-hidden">
+        <div class="op-group-item col-half trade-confirm">立即预约</a></div>
+    </section>
+  </body>
+  <script src="__M_JS__/zepto.js"></script>
+  <script src="__M_JS__/mui.min.js"></script>
+  <script src="__M_JS__/template.min.js"></script>
+  <script src="__M_JS__/config.js"></script>
+  <script src="__M_JS__/app.js"></script>
+  
+  <script type="text/html" id="counsellor_info">
+  	<div class="counsellor-homepage-content">
+			<div class="brief-info">
+				<div class="avatar-container">
+					<img src="<%= avar %>" class="avatar">			
+				</div>
+				<h2 class="teacher-name"><%= nickname %></h2>
+			</div>
+			<div class="zixun-time-block">
+				<p class="txt">我在大观心理温暖过<span class="times"><%= trade %></span>人次</p>
+			</div>
+			<div class="qualification-block">
+				<div class="section">
+					<h3 class="title">从业资质<span class="year"><%= employment %></span></h3>
+					<p class="certification"><%= intro %></p>
+					<i class="icon-teacherpage-new ic-stamp"></i>
+				</div>
+				<div class="section">
+					<h3 class="title">擅长领域</h3> 
+					<div class="tags">
+						<% for(var i=0; i<sign.length; i++) { %>
+						<span class="tag1"><%= sign[i] %></span>
+						<% } %>
+						<!--<span class="tag1">心理健康</span>
+						<span class="tag1">亲子教育</span>-->
+					</div>
+				</div>
+				<div class="section obj" style="margin-top: 1.5rem;">
+					<div class="zixun-way-section">
+						<% for(var i=0; i<chartArr.length; i++) { %>
+		  					<% if(chartArr[i].status){ %>
+								<div class="zixun-way">
+									<% if(chartArr[i].chart == 'wordchart'){ %>
+										<img src="__M_IMG__/wenzi.png" />
+									<% }else if(chartArr[i].chart == 'speechchart'){ %>
+										<img src="__M_IMG__/yuying.png" />
+									<% }else if(chartArr[i].chart == 'videochart'){ %>
+										<img src="__M_IMG__/video.png" />
+									<% }else{ %>
+										<img src="__M_IMG__/face.png" />
+									<% } %>
+									
+									<span class="label"><%= chartArr[i].show %></span>
+									<span class="price"><span class="symbol">￥</span><span class="num"><%= chartArr[i].price %></span>/次</span>
+								</div>
+							<% } %>
+						<% } %>	
+					</div>
+				</div>	
+			</div>
+		</div>
+  </script>	
+  <script>
+      var result = window.location.href;
+      var counsellor_id = $.getUrlParam(result,'counsellor_id');
+
+      var param = {
+          'method': config.apimethod.counsellor,
+          'source':config.source,
+          'id': counsellor_id
+      }
+      $.dataRequest(param, function(rs) {
+      	log(rs) 
+      	if(!rs.avar){
+      		rs.avar = '__M_IMG__/widgets_02_19.png';
+      	}
+      	var widgets = template('counsellor_info', rs);
+        $('.counsellor-info').append(widgets);
+        $('.op-group').removeClass('mui-hidden')
+         mui('.mui-scroll-wrapper').scroll({
+          indicators: false
+        });
+      });
+      //
+      $(window).on('tap', '.trade-confirm', function() {
+        window.location.href = "{:url('Checkout/index')}"+'?counsellor_id='+counsellor_id;
+      })
+  </script>
+</html>
