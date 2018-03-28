@@ -22,11 +22,11 @@
       <section class="section-white">
         <ul class="mui-table-view function-list font-gray-20">
           <li class="mui-table-view-cell" >
-            <a href="#forward" class="mui-navigate-right">
+            <a  class="mui-navigate-right">
               <div class="mui-table">
                 <div class="mui-table-cell mui-col-xs-4">头像:</div>
                 <div id="avatar" class="mui-table-cell mui-col-xs-8 mui-text-right">
-                  <img class="userinfo-avatar" id="head-img" src="" />
+                  <img class="userinfo-avatar" id="head-img" src="" onclick="galleryImg()"/>
                 </div>
               </div>
             </a>
@@ -144,8 +144,8 @@
       
 
 		function galleryImg() {
-			
-			mui('#forward').popover('hide');
+			window.location.href = "{:url('Member/avar')}";
+			// mui('#forward').popover('hide');
 		};
 		function defaultImg() {
 			if(ret.avar){
@@ -161,7 +161,7 @@
               var state = app.getState();
               app.setState({});
               setTimeout(function(){
-                  window.location.href = "{:url('Passort/login')}";
+                  window.location.href = "{:url('Passport/login')}";
               },300)
           } else {
             return false;
