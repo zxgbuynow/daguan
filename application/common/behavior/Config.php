@@ -65,6 +65,16 @@ class Config
             '__HOME_JS__'   => PUBLIC_PATH. 'static/home/js',
             // 前台IMG目录
             '__HOME_IMG__'  => PUBLIC_PATH. 'static/home/img',
+
+            // mobile CSS目录
+            '__M_CSS__'  => PUBLIC_PATH. 'static/mobile/css',
+            // mobile JS目录
+            '__M_JS__'   => PUBLIC_PATH. 'static/mobile/js',
+            // mobile IMG目录
+            '__M_IMG__'  => PUBLIC_PATH. 'static/mobile/img',
+            // mobile fonts目录
+            '__M_FONT__'  => PUBLIC_PATH. 'static/mobile/fonts',
+
             // 表单项扩展目录
             '__EXTEND_FORM__' => $base_dir.'extend/form'
         ];
