@@ -75,6 +75,15 @@ class Config
             // mobile fonts目录
             '__M_FONT__'  => PUBLIC_PATH. 'static/mobile/fonts',
 
+            // counsellor CSS目录
+            '__C_CSS__'  => PUBLIC_PATH. 'static/counsellor/css',
+            // mobile JS目录
+            '__C_JS__'   => PUBLIC_PATH. 'static/counsellor/js',
+            // mobile IMG目录
+            '__C_IMG__'  => PUBLIC_PATH. 'static/counsellor/img',
+            // mobile fonts目录
+            '__C_FONT__'  => PUBLIC_PATH. 'static/counsellor/fonts',
+
             // 表单项扩展目录
             '__EXTEND_FORM__' => $base_dir.'extend/form'
         ];
