@@ -81,7 +81,7 @@ class Index
      * @param  [type] $params [description]
      * @return [type]         [description]
      */
-    public function logout_coustom($params)
+    public function logout_custom($params)
     {
         $username = trim($params['account']);
         $ismobile = trim($params['ismobile']);
