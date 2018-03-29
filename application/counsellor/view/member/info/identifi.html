@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__C_CSS__/mui.picker.min.css" />
+    <link rel="stylesheet" href="__M_CSS__/feedback-page.css">
+  </head>
+
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">实名认证</div>
+    </header>
+    <section class="container">
+      <div class="form-container" action="" id="user_form">
+        <div id="feedback" class="mui-page feedback">
+
+          <div class="mui-page-content">
+            <p>身份证ID</p>
+            <div class="item-field">
+              <input id='identifi' name="identifi" type="text" class="mui-input-clear mui-input" placeholder="">
+            </div>
+            <p>上传身份证正面照片</p>
+            <div id='cerfornt' class="row image-list" style="margin-bottom: 20px;">
+            </div>
+            <p>上传身份证反面照片</p>
+            <div id='cerback' class="row image-list" style="margin-bottom: 20px;">
+            </div>
+          </div>
+
+          
+        </div>
+        <section class="mui-content-padded form-op-section">
+          <button id="save" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">保存</button>
+        </section>
+      </div>
+    </section>
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script src="__C_JS__/custRegUpCard.js"></script>
+    <script src="__M_JS__/binaryajax.js"></script>
+    <script src="__M_JS__/exif.js"></script>
+    <script src="__M_JS__/canvasResize.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      var state = app.getState();
+
+      var param = {
+          'method': config.apimethod.userinfo,
+          'account': state.account,
+          'source':config.source
+      }
+      $.dataRequest(param, function(rs) {
+        var data = rs;
+        if (data.cerfornt) {
+          if ($('.image-item')) {
+            $('#cerfornt').find(".image-item").css("background-image","url(" + config.imgser+'/'+data.cerfornt + ")");
+          }
+          // $('#cerfornt').backgroundImage='url('+config.imgser+'/'+data.cerfornt+')';
+        }
+        if (data.cerback) {
+          if ($('.image-item')) {
+            $('#cerback').find(".image-item").css("background-image","url(" + config.imgser+'/'+data.cerback + ")");
+          }
+          // $('#cerback').backgroundImage='url('+config.imgser+'/'+data.cerback+')';
+        }
+        document.getElementById('identifi').value = data.identifi;
+      });
+
+      document.getElementById('save').addEventListener('tap', function() {
+        var identifi = document.getElementById('identifi').value;
+        if(identifi == "") {
+            mui.alert('请输入手机号');
+            return;
+        }
+        if (!isCardNo(identifi)) {
+            mui.alert('身份证格式不对');
+            return;
+        }
+
+        var param = {
+            'method': config.apimethod.identifi,
+            'account': state.token,
+            'source':config.source,
+            'identifi':document.getElementById('identifi').value,
+            'cerfornt': $('#image-1').attr('vase'),
+            'cerback': $('#image1-1').attr('vase1')
+        }
+        $.dataRequestpost(param, function(rs) {
+          var data = rs.data;
+            mui.toast('更新成功');
+            history.go(-1)
+            // var parent = plus.webview.getWebviewById('_www/view/member/setting.html');
+            // parent.reload();
+            // parent.onloaded = function(){
+            //   mui.back();
+            // }
+        });
+      }, false)
+
+      function isCardNo(card) 
+        { 
+          // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X 
+          var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 
+          if(reg.test(card) === false) 
+          { 
+            return false; 
+          }
+          return true; 
+        }
+    </script>
+  </body>
+
+</html>

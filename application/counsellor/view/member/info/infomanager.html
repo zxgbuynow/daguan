@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__C_CSS__/mui.picker.min.css" />
+  </head>
+
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">资料管理</div>
+    </header>
+    
+    <section class="container">
+      <section class="section-white">
+        <ul class="mui-table-view function-list font-gray-20">
+          <li class="mui-table-view-cell" >
+            <a  class="mui-navigate-right">
+              <div class="mui-table">
+                <div class="mui-table-cell mui-col-xs-4">头像:</div>
+                <div id="avatar" class="mui-table-cell mui-col-xs-8 mui-text-right">
+                  <img class="userinfo-avatar" id="head-img" src="" onclick="galleryImg()"/>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li class="mui-table-view-cell" id="identifi">
+            <a class="mui-navigate-right">
+              <div class="mui-table">
+                <div class="mui-table-cell mui-col-xs-4">实名认证:</div>
+                <div id="identifi_val" class="mui-table-cell mui-col-xs-8 mui-text-right"></div>
+              </div>
+            </a>
+          </li>
+          <li id="bind" class="mui-table-view-cell">
+            <a class="mui-navigate-right">
+              <div class="mui-table">
+                <div class="mui-table-cell mui-col-xs-4">绑定手机：</div>
+                <div id="bind_val" class="mui-table-cell mui-col-xs-8 mui-text-right"></div>
+              </div>
+            </a>
+          </li>
+          <li id="social" class="mui-table-view-cell">
+            <a class="mui-navigate-right">
+              <div class="mui-table">
+                <div class="mui-table-cell mui-col-xs-4">微信、QQ、支付宝：</div>
+                <div id="social_val" class="mui-table-cell mui-col-xs-8 mui-text-right"></div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </section>
+    </section>
+    <div id="forward" class="mui-popover mui-popover-action mui-popover-bottom">
+      <ul class="mui-table-view">
+        <!-- <li class="mui-table-view-cell">
+          <a onclick="getImage()">拍照</a>
+        </li> -->
+        <li class="mui-table-view-cell">
+          <a onclick="galleryImg()">从手机相册选择</a>
+        </li>
+      </ul>
+      <ul class="mui-table-view">
+        <li class="mui-table-view-cell">
+          <a href="#forward"><b>取消</b></a>
+        </li>
+      </ul>
+    </div>
+
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/mui.picker.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script type="text/javascript" charset="utf-8">
+     
+      var state = app.getState();
+      var ret = null;
+      var mobile = null;
+      var param = {
+          'method': config.apimethod.userinfo,
+          'account': state.account,
+          'source':config.source
+      }
+      $.dataRequest(param, function(rs) {
+        var data = rs;
+        ret = rs;
+        mobile = ret.mobile;
+        // document.getElementById('account_info').innerText = data.username;
+        // document.getElementById('nickname_info').innerText = data.nickname;
+        
+        defaultImg();
+        
+      });
+
+     
+
+      document.getElementById('identifi').addEventListener('tap', function() {
+        window.location.href = "{:url('Member/identifi')}";
+      });
+      document.getElementById('social').addEventListener('tap', function() {
+
+        window.location.href = "{:url('Member/social')}";
+      });
+      document.getElementById('bind').addEventListener('tap', function() {
+        sendSms(mobile);
+        // window.location.href = "{:url('Member/bind')}";
+      });
+      
+      function sendSms(account){
+            var param = {
+              'method': config.apimethod.vcode,
+              'source':config.source,
+              'mobile': account
+           }
+          $.dataRequest(param, function(rs) {
+            window.location.href = "{:url('Member/bind')}"+'?mobile='+account+'&vcode='+rs;
+            // clicked('_www/view/passport/verificationsms.html', {
+           //      'mobile': account,
+           //      'vcode': rs
+           //    });
+          })
+        }
+
+      function galleryImg() {
+            window.location.href = "{:url('Member/avar')}";
+      };
+      function defaultImg() {
+        if(ret.avar){
+            document.getElementById("head-img").src = config.imgser+'/'+ret.avar;
+        }else{
+            document.getElementById("head-img").src = '__M_IMG__/shop_logo.gif';
+        }
+            
+      }
+       
+    </script>
+  </body>
+
+</html>

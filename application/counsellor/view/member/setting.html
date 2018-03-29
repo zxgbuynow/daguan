@@ -25,13 +25,13 @@
             </a>
           </li>
           <!-- 头像、微信、实名认证 -->
-          <li id="log_password" class="mui-table-view-cell">
+          <li id="info" class="mui-table-view-cell">
             <a class="mui-navigate-right">
               资料管理<br>
             </a>
           </li>
-          <li id="log_password" class="mui-table-view-cell">
-            <a class="mui-navigate-right">
+          <li id="share" class="mui-table-view-cell mui-hidden">
+            <a class="mui-navigate-right" href="#forward">
               分享转发<br><span class="fontS font-gray-40">分享可以获得积或分优惠券</span>
             </a>
           </li>
@@ -41,21 +41,41 @@
 	      <button id="exit" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">退出登录</button>
 	    </section>
     </section>
+    <input type="hidden" name="timestamp" id="timestamp" value="">
+    <input type="hidden" name="noncestr" id="noncestr" value="">
+    <input type="hidden" name="signature" id="signature" value="">
+    <div id="forward" class="mui-popover mui-popover-action mui-popover-bottom">
+      <ul class="mui-table-view">
+        <li class="mui-table-view-cell">
+          <a onclick="xinlan()">新浪微博</a>
+        </li>
+      </ul>
+      <ul class="mui-table-view">
+        <li class="mui-table-view-cell">
+          <a href="#forward"><b>取消</b></a>
+        </li>
+      </ul>
+    </div>
     <script src="__C_JS__/zepto.js"></script>
     <script src="__C_JS__/mui.min.js"></script>
     <script src="__C_JS__/template.min.js"></script>
     <script src="__C_JS__/config.js"></script>
     <script src="__C_JS__/app.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script type="text/javascript" charset="utf-8">
-      mui.init({
-        swipeBack: true, //启用右滑关闭功能
-      });
+      
       var mobile = "";
       var state = app.getState();
       
       document.getElementById('log_password').addEventListener('tap', function() {
          window.location.href = "{:url('Member/checkpassword')}";
       });
+      document.getElementById('info').addEventListener('tap', function() {
+         window.location.href = "{:url('Member/infomanager')}";
+      });
+      // document.getElementById('share').addEventListener('tap', function() {
+      //    window.location.href = "{:url('Member/sharesth')}";
+      // });
 	    document.getElementById('exit').addEventListener('tap', function() {
         mui.confirm('亲，确定退出登录吗？', '', ['取消', '确认'], function(e) {
           if(e.index == 1) {
@@ -78,6 +98,70 @@
           }
         })
       }, false);
+
+      function xinlan() {
+        var _url = null;
+        var _title = null;
+        var _source = null;
+        var _sourceUrl = null;
+        var _pic = null;
+        var _width = 600;
+        var _height = 600;
+        var _shareUrl = 'http://v.t.sina.com.cn/share/share.php?&appkey=895033136';     //真实的appkey ，必选参数
+        _shareUrl += '&url='+ encodeURIComponent(_url||document.location);     //参数url设置分享的内容链接|默认当前页location，可选参数
+        _shareUrl += '&title=' + encodeURIComponent(_title||document.title);    //参数title设置分享的标题|默认当前页标题，可选参数
+        _shareUrl += '&source=' + encodeURIComponent(_source||'');
+        _shareUrl += '&sourceUrl=' + encodeURIComponent(_sourceUrl||'');
+        _shareUrl += '&content=' + 'utf-8';   //参数content设置页面编码gb2312|utf-8，可选参数
+        _shareUrl += '&pic=' + encodeURIComponent(_pic||'');  //参数pic设置图片链接|默认为空，可选参数
+        window.open(_shareUrl,'_blank','toolbar=no,menubar=no,scrollbars=no,resizable=1,location=no,status=0,' + 'width=' + _width + ',height=' + _height + ',top=' + (screen.height-_height)/2 + ',left=' + (screen.width-_width)/2);
+
+      }
+
+      $(function() {
+            var timestamp = $("#timestamp").val();//时间戳
+            var nonceStr = $("#noncestr").val();//随机串
+            var signature = $("#signature").val();//签名
+            wx.config({
+                debug : true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId : 'wx12ddc64d7e01faaf', // 必填，公众号的唯一标识
+                timestamp : timestamp, // 必填，生成签名的时间戳
+                nonceStr : nonceStr, // 必填，生成签名的随机串
+                signature : signature,// 必填，签名，见附录1
+                jsApiList : [ 
+                'checkJsApi',
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage',
+                'onMenuShareQQ',
+                'onMenuShareWeibo',
+                'onMenuShareQZone', ]
+            // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+
+            wx.ready(function(){
+                // 分享事件必须放在这里
+                wx.onMenuShareAppMessage({
+                      title: '大观心理',
+                      desc: '大观心理',
+                      link: "{$url}",
+                      imgUrl: 'https://www.baidu.com/img/bd_logo1.png',
+                      trigger: function (res) {
+                        // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
+                        // alert('用户点击发送给朋友');
+                      },
+                      success: function (res) {
+                          alert('分享成功');
+                      },
+                      cancel: function (res) {
+                        alert('你没有分享');
+                      },
+                      fail: function (res) {
+                        alert(JSON.stringify(res));
+                      }
+                    });
+                    //alert('已注册获取“发送给朋友”状态事件');
+            });
+        });
     </script>
   </body>
 

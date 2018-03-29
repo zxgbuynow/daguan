@@ -6,8 +6,7 @@ document.addEventListener("plusready", onPlusReady, false);
 function onPlusReady() {
   document.addEventListener("netchange", onNetChange, false);
 }
-
-
+    
 function onNetChange() {
   var nt = plus.networkinfo.getCurrentType();
 
@@ -884,6 +883,34 @@ function preateClear() {
     
     mui.ajax(config.server, {
       data: data,
+      success: function(response) {
+        var data = response.data;
+        log(response)
+        if(response.code) {
+          if(response.code == 1) {
+            if($.isFunction(renderCallback)) {
+              renderCallback(data);
+            }
+          } else {
+            mui.alert(response.msg);
+          }
+        } else {
+          if($.isFunction(renderCallback)) {
+            renderCallback(data);
+          }
+        }
+      },
+      error: function(xhr, type, errorThrown) {
+        //异常处理；
+        log(xhr.response) 
+      }
+    });
+  }
+
+  $.dataRequestpost = function(data, renderCallback) {
+    mui.ajax(config.server, {
+      data: data,
+      type: 'POST',
       success: function(response) {
         var data = response.data;
         log(response)

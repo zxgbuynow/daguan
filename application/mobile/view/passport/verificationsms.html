@@ -8,8 +8,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+    <link rel="stylesheet" href="__M_CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__M_CSS__/mui.picker.min.css" />
   </head>
 
   <body>
@@ -36,18 +36,17 @@
         </section>
       </form>
     </section>
-    <script src="../../js/zepto.js"></script>
-    <script src="../../js/mui.min.js"></script>
-    <script src="../../js/template.min.js"></script>
-    <script src="../../config.js"></script>
-    <script src="../../js/app.js"></script>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
     <script>
-      mui.plusReady(function() {
-        var mobile = plus.webview.currentWebview().mobile;
-        var vcode = plus.webview.currentWebview().vcode;
-
+        var result = window.location.href;
+        var mobile = $.getUrlParam(result,'mobile');
+        var vcode = $.getUrlParam(result,'vcode');
         document.getElementById('txt_mobile').innerHTML = mobile.substring(0, 3) + '****' + mobile.substring(7);
-		document.getElementById('vcode').value = vcode;
+		    document.getElementById('vcode').value = vcode;
         
         var btnVCode = $('#action_get_vcode');
         btnVCode.html('<i>0<i>');
@@ -65,7 +64,6 @@
             mui.alert('请输入验证码');
             return;
           }
-          
             var param = {
                 'method': config.apimethod.confirm,
                 'source':config.source,
@@ -73,13 +71,22 @@
                 'code': vcode
           	}
           	$.dataRequest(param, function(rs) {
-            		setTimeout(function() {
-	              clicked('_www/view/passport/login.html', {}, 'slide-in-bottom')
-	            }, 1000);
+            		var state = app.getState();
+              var param = {
+                  'method': config.apimethod.logout,
+                  'account': state.account,
+                  'ismobile': 1,
+                  'source':config.source
+              }
+              $.dataRequest(param, function(rs) {
+                app.setState({});
+                setTimeout(function(){
+                    window.location.href = "{:url('Passport/login')}";
+                },300)
+              })
         		});
         
        });
-     });
     </script>
   </body>
 

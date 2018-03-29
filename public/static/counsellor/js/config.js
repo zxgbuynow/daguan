@@ -39,6 +39,8 @@ var config = {
         counsellorindex:'counsellor.index',//会员信息
         calendatoday:'calenda.today',//当日日程安排
         calendaall:'calenda.all',//所有日程安排
-        calendaadd:'calenda.add'//日程添加
+        calendaadd:'calenda.add',//日程添加
+        social:'social',
+        identifi:'identifi'
     }
 }

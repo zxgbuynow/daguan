@@ -21,28 +21,28 @@
     <section class="container">
       <div class="form-container" action="" id="user_form">
         <div id="feedback" class="mui-page feedback">
-        <div class="mui-page-content">
-          <!-- <p>上传身份证正面照片</p> -->
-          <div id='avatar' class="row image-list" style="margin-bottom: 20px;">
+          <div class="mui-page-content">
+            <!-- <p>上传身份证正面照片</p> -->
+            <div id='avatar' class="row image-list" style="margin-bottom: 20px;">
+            </div>
           </div>
+          <!-- <div class="mui-content-padded">
+            <button id='sendMail' class="mui-btn mui-btn-block mui-btn-primary">确认提交</button>
+            <div class="newage-spinner mui-hidden">
+              <div id="rpwait" class="mui-icon mui-spinner"></div>
+            </div>
+          </div> -->
         </div>
-        <!-- <div class="mui-content-padded">
-          <button id='sendMail' class="mui-btn mui-btn-block mui-btn-primary">确认提交</button>
-          <div class="newage-spinner mui-hidden">
-            <div id="rpwait" class="mui-icon mui-spinner"></div>
-          </div>
-        </div> -->
-      </div>
         <section class="mui-content-padded form-op-section">
           <button id="save" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">保存</button>
         </section>
       </div>
     </section>
-    <script src="__M_JS__/zepto.js"></script>
-    <script src="__M_JS__/mui.min.js"></script>
-    <script src="__M_JS__/template.min.js"></script>
-    <script src="__M_JS__/config.js"></script>
-    <script src="__M_JS__/app.js"></script>
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
     <script src="__M_JS__/custRegUpCard.js"></script>
     <script src="__M_JS__/binaryajax.js"></script>
     <script src="__M_JS__/exif.js"></script>
@@ -58,7 +58,10 @@
       $.dataRequest(param, function(rs) {
         var data = rs;
         if (data.avar) {
-          $('#avatar').backgroundImage='url('+data.avar+')';
+          if ($('.image-item')) {
+            $(".image-item").css("background-image","url(" + config.imgser+'/'+data.avar + ")");
+          }
+          
           // document.getElementById('avatar').value = data.avar;  
         }
       });
@@ -73,7 +76,7 @@
         $.dataRequest(param, function(rs) {
           var data = rs.data;
             mui.toast('更新成功');
-            window.reload();
+            history.go(-1)
             // var parent = plus.webview.getWebviewById('_www/view/member/setting.html');
             // parent.reload();
             // parent.onloaded = function(){

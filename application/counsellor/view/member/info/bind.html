@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Shopex Onex B2B2C</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__C_CSS__/mui.picker.min.css" />
+  </head>
+
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">绑定手机</div>
+    </header>
+    <section class="container">
+      <form class="form-container">
+        <section class="mui-input-group">
+          <div class="mui-input-row">
+            <label>手机号：</label>
+            <input id="account" type="text" value="" class="mui-input-clear mui-input" placeholder="请输入手机号">
+          </div>
+
+          <div class="form-inline">
+            <div class="mui-input-row form-inline-adaptive">
+              <label>验证码：</label> 
+              <input id="vcode" type="text" class="mui-input-clear" placeholder="请输入短信验证码" required data-caution="请输入短信验证码">
+            </div>
+            <div class="form-inline-unadaptive"><button type="button" class="mui-btn mui-btn-warning bbc-btn-warning mui-btn-block btn-action action-get-vcode" id="action_get_vcode" disabled>重发验证码</button></div>
+          </div>
+        </section>
+        <section class="mui-content-padded form-op-section">
+          <button id="bind_finished" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">完成</button>
+        </section>
+      </form>
+    </section>
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script>
+        var result = window.location.href;
+        var mobile = $.getUrlParam(result,'mobile');
+        var vcode = $.getUrlParam(result,'vcode');
+        document.getElementById('vcode').value = vcode;
+        
+        var btnVCode = $('#action_get_vcode');
+        btnVCode.html('<i>0<i>');
+        var countDown = new countdown(btnVCode.find('i'), {
+          start: 120,
+          secondOnly: true,
+          callback: function(e) {
+            $('.action-get-vcode').removeAttr('disabled');
+            btnVCode.html('重发验证码');
+          }
+        });
+        document.getElementById('bind_finished').addEventListener('tap', function() {
+          var vcode1 = document.getElementById('vcode').value;
+          var  mobile1 = document.getElementById('account').value
+          if(vcode1 == "") {
+            mui.alert('请输入验证码');
+            return;
+          }
+          if(mobile1 == "") {
+            mui.alert('请输入手机号');
+            return;
+          }
+          
+            var param = {
+                'method': config.apimethod.confirm,
+                'source':config.source,
+                'mobile': document.getElementById('account').value,
+                'code': vcode1
+            }
+            $.dataRequest(param, function(rs) {
+                var state = app.getState();
+                var param = {
+                    'method': config.apimethod.logout,
+                    'account': state.account,
+                    'isshop': 1,
+                    'source':config.source
+                }
+                $.dataRequest(param, function(rs) {
+                  app.setState({});
+                  setTimeout(function(){
+                      window.location.href = "{:url('Passport/login')}";
+                  },300)
+                })
+            });
+        
+       });
+        
+    </script>
+  </body>
+
+</html>

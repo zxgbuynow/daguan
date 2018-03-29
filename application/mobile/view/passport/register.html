@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="__M_CSS__/style.css">
   </head>
 
   <body>
@@ -55,11 +55,11 @@
         </section>
       </form>
     </section>
-    <script src="../../js/zepto.js"></script>
-    <script src="../../js/mui.min.js"></script>
-    <script src="../../js/template.min.js"></script>
-    <script src="../../config.js"></script>
-    <script src="../../js/app.js"></script>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
 	<script type="text/html" id="agency_list">
     		<% for(var i in list) { %>	
       		<option value="<%= list[i].id %>"><%= list[i].title %></option>
@@ -67,13 +67,11 @@
     </script>
 
     <script>
-      mui.plusReady(function() {
-//      var entrance = plus.webview.currentWebview().entrance;
        //机构
         var param = {
 		      'method': config.apimethod.agency,
 		      'source':config.source
-		}
+		    }
 		//机构列表
 	    $.dataRequest(param, function (rs) { 
 			
@@ -123,14 +121,14 @@
               'mobile': account
            }
           $.dataRequest(param, function(rs) {
-          	clicked('_www/view/passport/verificationsms.html', {
-                'mobile': account,
-                'vcode': rs
-              });
+            window.location.href = "{:url('Passport/verificationsms')}"+'?mobile='+account+'&vcode='+rs;
+          	// clicked('_www/view/passport/verificationsms.html', {
+           //      'mobile': account,
+           //      'vcode': rs
+           //    });
           })
         }
         
-      });
 
       
 
