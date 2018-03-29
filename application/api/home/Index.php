@@ -1640,6 +1640,25 @@ class Index
         ];
         return json($data);
     }
+
+    /**
+     * [agency_custom 机构列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function agency_shop($params)
+    {
+        $agency['list'] = db('shop_agency')->where('status',1)->select();
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$agency
+        ];
+        return json($data);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | 公用方法

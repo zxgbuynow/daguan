@@ -156,6 +156,7 @@
 			
 		}
 		document.getElementById('exit').addEventListener('tap', function() {
+    
         mui.confirm('亲，确定退出登录吗？', '', ['取消', '确认'], function(e) {
           if(e.index == 1) {
               var state = app.getState();

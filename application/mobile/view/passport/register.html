@@ -60,7 +60,7 @@
     <script src="__M_JS__/template.min.js"></script>
     <script src="__M_JS__/config.js"></script>
     <script src="__M_JS__/app.js"></script>
-	<script type="text/html" id="agency_list">
+	 <script type="text/html" id="agency_list">
     		<% for(var i in list) { %>	
       		<option value="<%= list[i].id %>"><%= list[i].title %></option>
       	<% } %>
@@ -76,7 +76,6 @@
 	    $.dataRequest(param, function (rs) { 
 			
 			var _html = template('agency_list', rs);
-
 			$('#agency').append(_html);
 
 	    });
