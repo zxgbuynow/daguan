@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+  </head>
+
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">设置</div>
+    </header>
+    <section class="container">
+      <section class="section-white">
+        <ul class="mui-table-view">
+          <li id="log_password" class="mui-table-view-cell">
+            <a class="mui-navigate-right">
+              修改密码<br>
+            </a>
+          </li>
+          <!-- 头像、微信、实名认证 -->
+          <li id="log_password" class="mui-table-view-cell">
+            <a class="mui-navigate-right">
+              资料管理<br>
+            </a>
+          </li>
+          <li id="log_password" class="mui-table-view-cell">
+            <a class="mui-navigate-right">
+              分享转发<br><span class="fontS font-gray-40">分享可以获得积或分优惠券</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+      <section class="mui-content-padded form-op-section">	
+	      <button id="exit" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">退出登录</button>
+	    </section>
+    </section>
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      mui.init({
+        swipeBack: true, //启用右滑关闭功能
+      });
+      var mobile = "";
+      var state = app.getState();
+      
+      document.getElementById('log_password').addEventListener('tap', function() {
+         window.location.href = "{:url('Member/checkpassword')}";
+      });
+	    document.getElementById('exit').addEventListener('tap', function() {
+        mui.confirm('亲，确定退出登录吗？', '', ['取消', '确认'], function(e) {
+          if(e.index == 1) {
+              var state = app.getState();
+              var param = {
+                  'method': config.apimethod.logout,
+                  'account': state.account,
+                  'isshop': 1,
+                  'source':config.source
+              }
+              $.dataRequest(param, function(rs) {
+                app.setState({});
+                setTimeout(function(){
+                    window.location.href = "{:url('Passport/login')}";
+                },300)
+              })
+              
+          } else {
+            return false;
+          }
+        })
+      }, false);
+    </script>
+  </body>
+
+</html>

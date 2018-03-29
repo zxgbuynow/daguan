@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../../../css/style.css">
+    <style type="text/css">
+      .scroll-top {
+        top: 189px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="user-header integral-header">
+    		<div class="box-display content-vertical-padded">
+	        <i class="bbc-icon bbc-icon-integral"></i>
+	        <div class="box-item-flex1">
+	          <div>可用积分：<span class="point"></span></div>
+	           </div>
+	      </div>
+    </div>
+    <div>
+      <div class="section-white section-title user-title">
+        <div class="title-txt">积分明细</div>
+      </div>
+      <div id="pullrefresh" class="section-white mui-scroll-wrapper scroll-top">
+        <div class="mui-scroll">
+          <ul class="mui-table-view integral-details fontS">
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../../js/zepto.js"></script>
+    <script src="../../../js/mui.min.js"></script>
+    <script src="../../../js/template.min.js"></script>
+    <script src="../../../config.js"></script>
+    <script src="../../../js/app.js"></script>
+
+    <script type="text/html" id="point_detail">
+      <% if(list != null){ %>
+        <% for(var i=0; i<list.length; i++) { %>
+        <li class="mui-table-view-cell">
+          <div class="box-display">
+            <div class="box-item-flex1">
+              <%= list[i].behavior%><br>
+              <span class="fontS font-gray-60 fonts"><%= list[i].remark%></span>
+              <span class="fontS font-gray-60 fonts"><%= $timestamp_To_Date(list[i].create_time)%></span>
+            </div>
+            <div class="box-item-flex1 content-right deposit-detail-amount  <%if (list[i].behavior_type=='0'){%>font-red<% }else{ %>font-green<% } %>">
+              <%if (list[i].behavior_type=='0'){%>+
+              <% } %>
+              <%if (list[i].behavior_type=='1'){%>-
+              <% } %>
+              <%= list[i].point%>
+            </div>
+          </div>
+        </li>
+        <% } %>
+      <% } %>
+    </script>
+
+    <script>
+      var state = app.getState();
+      var param = {
+          'method': config.apimethod.point,
+          'account': state.account,
+          'source':config.source
+      }
+      mui.plusReady(function() {
+        $.dataRequest(param, function(rs) {
+        		$('.point').html(rs.points);
+        		//明细
+        		log(rs) 
+        		var widgets = template('point_detail', rs);
+            $('.integral-details').append(widgets);
+        })
+      });
+    </script>
+  </body>
+
+</html>

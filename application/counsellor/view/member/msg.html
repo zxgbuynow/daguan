@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <link rel="stylesheet" href="__C_CSS__/widgets.css">
+    <style>
+    		.main{
+    			margin-right: 10px;
+    		}
+    		.mui-table-view .mui-media-object{
+		    max-width: 72px; 
+    			height: 72px;
+    		}
+    		.mui-media-text {
+    			color: #646464;
+    			font-size: 15px;
+    		}
+    		.mui-media-author {
+    			font-size: 13px;
+    			margin-top: 5px;
+    		} 
+    		.msg-badge{
+		    height: 13px;
+		    margin-left: -8px;
+    		}
+    </style>
+  </head>
+
+  <body>
+    <header class="page-header">
+    	  <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>	
+      <div class="header-title">消息</div>
+    </header>
+    <div class="container" id="container">
+       <ul class="mui-table-view" style="background-color: #FFFFFF;">
+        <li data-webview="{:url('Member/msg_list')}" class="mui-table-view-cell action-webview">
+	        <a class='mui-navigate-right' href="javascript:;">
+	        <span>订单消息</span>
+            <span  class="msg-badge msg-order-badge mui-icon mui-badge mui-badge-danger mui-hidden"></span>
+           </a>
+        </li>
+        <li data-view="_www/view/counsellor/detail.html" class="mui-table-view-cell ">
+        		<a class='mui-navigate-right' href="javascript:;">
+		        <span>系统消息</span>
+	            <span  class="msg-badge msg-sys-badge mui-icon mui-badge mui-badge-danger mui-hidden"></span>
+	        	</a>
+        </li>
+      </ul>
+    </div> 
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script>
+      	//查询是否有消息 是否已读
+	  		//msg
+	  		var state = app.getState();
+		  	var param = {
+	            'method': config.apimethod.msg,
+	            'source':config.source,
+	            'account':state.token
+	       }
+	        $.dataRequest(param, function(rs) {
+	        		//订单消息
+	        		if (rs['1']) {
+	        			$('.msg-order-badge').removeClass('mui-hidden')
+	        		}
+	        		if (rs['0']) {
+	        			$('.msg-sys-badge').removeClass('mui-hidden')
+	        		}
+	        })
+          $(window).on('tap', '.action-webview', function() {
+            var _this = $(this).data('webview');
+            if(_this && _this != '') {
+               window.location.href = _this
+            }
+          });
+    </script>
+  </body>
+
+</html>

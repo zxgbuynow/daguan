@@ -21,6 +21,7 @@ return [
         'checkpassword'=>'user.checkpassword',//确认密码
         'updatenickname'=>'user.updatenickname',//更新Nickname
         'updategender'=>'user.updategender',//更新性别
+        'upavar'=>'user.upavar',//
         'contentinfo'=>'article.contentinfo',//文章祥情
         'allcategory'=>'all.category',//文章祥情
         'counsellorlist'=>'counsellor.list',//咨询师列表

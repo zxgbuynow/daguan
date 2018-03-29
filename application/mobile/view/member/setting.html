@@ -149,7 +149,7 @@
 		};
 		function defaultImg() {
 			if(ret.avar){
-				document.getElementById("head-img").src = ret.avar;
+				document.getElementById("head-img").src = config.imgser+'/'+ret.avar;
 			}else{
 				document.getElementById("head-img").src = '__M_IMG__/shop_logo.gif';
 			}
@@ -159,10 +159,19 @@
         mui.confirm('亲，确定退出登录吗？', '', ['取消', '确认'], function(e) {
           if(e.index == 1) {
               var state = app.getState();
-              app.setState({});
-              setTimeout(function(){
-                  window.location.href = "{:url('Passport/login')}";
-              },300)
+              var param = {
+                  'method': config.apimethod.logout,
+                  'account': state.account,
+                  'ismobile': 1,
+                  'source':config.source
+              }
+              $.dataRequest(param, function(rs) {
+                app.setState({});
+                setTimeout(function(){
+                    window.location.href = "{:url('Passport/login')}";
+                },300)
+              })
+              
           } else {
             return false;
           }

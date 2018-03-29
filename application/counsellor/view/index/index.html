@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__C_CSS__/style.css" />
+    <link rel="stylesheet" href="__C_CSS__/widgets.css" />
+    <style>
+    		.main{
+    			margin-right: 10px;
+    		}
+    		.mui-table-view .mui-media-object{
+		    max-width: 72px; 
+    			height: 72px;
+    		}
+    		.mui-media-text {
+    			color: #646464;
+    			font-size: 15px;
+    		}
+    		.mui-media-author {
+    			font-size: 13px;
+    			margin-top: 5px;
+    		} 
+    		.mui-icon .mui-badge{
+			    height: 10px;
+			    margin-left: -8px;
+    		}
+    </style>
+  </head>
+
+  <body>
+    <header class="home-header">
+      <div class="header-logo"><img src="__C_IMG__/shop_logo.gif"></div>
+      <div class="main">
+        <form onsubmit="return false;">
+          <div class="mui-input-row header-search-form"><input type="search" onfocus="toSearch(this,'/mobile.php/artical/index.html')" class="header-search mui-input-clear" placeholder="寻找感兴趣的文章"></div>
+        </form>
+      </div>
+      <i class="search-hide icon-func bbc-icon"></i>
+      <a href="#" class="txt-func search-cancel" style="display:none;">取消</a>
+    </header>
+    <div class="container">
+      <div class="mui-scroll-wrapper bbc-pullrefresh-top">
+        <div class="mui-scroll">
+          <div class="mui-content content-bottom-padded-nav">
+		      
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="mui-bar bbc-bar-tab">
+      <a class="bbc-tab-item bbc-active" >
+        <span class="mui-icon bbc-icon bbc-icon-home"></span>
+        <span class="mui-tab-label">首页</span>
+      </a>
+      <a class="bbc-tab-item" href="{:url('Counsellor/index')}">
+        <span class="mui-icon bbc-icon bbc-icon-package"><span class="mui-badge mui-badge-danger"></span></span>
+        <span class="mui-tab-label">工作台</span>
+      </a>
+      <!-- <a class="bbc-tab-item" data-webview="_www/view/msg/index.html">
+        <span class="mui-icon bbc-icon bbc-icon-message"></span>
+        <span class="mui-tab-label">消息</span>
+      </a> -->
+      <a class="bbc-tab-item " href="{:url('Member/member')}">
+        <span class="mui-icon bbc-icon bbc-icon-user-empty"></span>
+        <span class="mui-tab-label">我的</span>
+      </a>
+    </nav>
+    
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script src="__C_JS__/mipush.js"></script>
+    
+	<script type="text/html" id="widget_slider">
+        <div id="slider" class="mui-slider">
+            <div class="mui-slider-group mui-slider-loop widgets-slider">
+                <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+                <div class="mui-slider-item mui-slider-item-duplicate">
+                    <a class="action-clickview" data-webview="<%= pic[pic.length-1].webview %>" data-webparam='<%= pic[pic.length-1].webparam %>'>
+              <img src="<%= $add_server(pic[pic.length-1].cover) %>">
+            </a>
+                </div>
+                <% for(var i in pic) { %>
+                    <div class="mui-slider-item">
+                        <a class="action-clickview" data-webview="<%= pic[i].webview %>" data-webparam='<%= pic[i].webparam %>'>
+                          <img src="<%= $add_server(pic[i].cover) %>">
+                        </a>
+                    </div>
+                    <% } %>
+                        <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+                        <div class="mui-slider-item mui-slider-item-duplicate">
+                            <a class="action-clickview" data-webview="<%= pic[0].webview %>" data-webparam='<%= pic[0].webparam %>'>
+              <img src="<%= $add_server(pic[0].cover) %>">
+            </a>
+                        </div>
+            </div>
+            <div class="mui-slider-indicator">
+                <% for(var i=0; i<pic.length; i++) { %>
+                    <div class="mui-indicator <%= (i==0) ? 'mui-active' : ' ' %> "></div>
+                    <% } %>
+            </div>
+        </div>
+    </script>
+    
+    <script type="text/html" id="widget_article">
+        <section>  
+            <!--文章 start-->
+          <section class="widgets-category-nav section-white">
+            <div class="section-title">
+              <div class="title-txt">好文推荐</div>
+              <a href="{:url('Artical/index')}"><div class="more-link" ><i class="bbc-icon bbc-icon-forward"></i></div></a>
+            </div>
+            <div class="mui-table-view">
+              <ul class="mui-table-view mui-table-view-chevron">
+                <% for(var i=0; i<list.length; i++) { %>
+
+                <li class="mui-table-view-cell mui-media action-clickview" data-webview="{:url('Artical/detail')}" data-webparam = '<%= list[i].id %>'>
+                  <a class="mui-navigate-right">
+                    <img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].cover) %>">
+                    <div class="mui-media-body">
+                      <%= list[i].title %>
+                      <p class='mui-ellipsis mui-media-text'><%= list[i].description %></p>
+                      <p class="mui-ellipsis mui-media-text mui-media-author">作者：<%= list[i].author %></p>
+                    </div>
+                  </a>
+                </li>
+           <% } %>
+          </ul>   
+            </div>
+          </section>
+          <!--文章 end-->
+        </section>  
+    </script>
+    
+
+    <script type="text/javascript">
+      var param = {
+          'method': config.apimethod.lunbo,
+          'isshop': 1,
+          'source':config.source
+     }
+      $.dataRequest(param, function(rs) {
+          if (rs.pic.length>0) {
+            var widgets = template('widget_slider', rs);
+            $('.mui-content').append(widgets);
+            var gallery = mui("#slider");
+            gallery.slider({
+              interval: 5000 //自动轮播周期，若为0则不自动播放，默认为0；
+            });
+          }
+        //article
+        var aparam = {
+            'method': config.apimethod.article,
+            'isshop': 1,
+            'source':config.source
+        }
+        $.dataRequest(aparam, function(rs) {
+            var widgets = template('widget_article', rs);
+            $('.mui-content').append(widgets);
+             mui('.mui-scroll-wrapper').scroll({
+              indicators: false
+            });
+            $(window).on('tap', '.action-clickview', function() {
+              var webview = $(this).data('webview');
+              var webparam = $(this).data('webparam');
+              if(webview.indexOf("artical") != -1) {
+                window.location.href = webview+'?article_id='+webparam;
+              } 
+              if (webview.indexOf("counsellor") != -1)  {
+                return false;
+              }
+              
+            })
+        })
+        
+      })
+    </script>
+  </body>
+
+</html>

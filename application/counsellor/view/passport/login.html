@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+  <head>
+    <meta charset="utf-8">
+    <title>咨询师</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <style>
+      .oauth-area {
+        position: absolute;
+        bottom: 20px;
+        left: 0px;
+        text-align: center;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+      }
+
+      .oauth-area .oauth-btn {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        background-size: 30px 30px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        margin: 0px 20px;
+        /*-webkit-filter: grayscale(100%); */
+        border: solid 1px #ddd;
+        border-radius: 25px;
+      }
+
+      .oauth-area .oauth-btn:active {
+        border: solid 1px #aaa;
+      }
+
+      .oauth-area .oauth-btn.disabled {
+        background-color: #ddd;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="page-header">
+      <div class="header-title">咨询师登录</div>
+    </header>
+    <section class="container">
+      <form class="form-container" id="login_form">
+        <section class="mui-input-group">
+          <div class="mui-input-row">
+            <label>帐号：</label>
+            <input id="account" type="text" value="" class="mui-input-clear mui-input" placeholder="请输入手机号">
+          </div>
+          <div class="mui-input-row">
+            <label>密码：</label>
+            <input id="password" type="password" class="mui-input-password" placeholder="请输入密码">
+          </div>
+          <div id="vcode_form" class="form-inline" style="display: none;">
+            <div class="mui-input-row form-inline-adaptive">
+              <label>验证码：</label>
+              <input id="vcode" type="text" class="mui-input-clear" placeholder="请输入验证码">
+            </div>
+            <div class="form-inline-unadaptive">
+              <img id="vcode_img" width="100" height="30" src="">
+            </div>
+          </div>
+        </section>
+      </form>
+      <!--<section class="content-horizontal-padded content-right">
+        <a id='forgetPassword' class="fontS font-orange">忘记密码</a>
+      </section>-->
+      <section class="content-horizontal-padded form-op-section">
+        <button id='login' type="submit" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">登录</button>
+      </section>
+      <section class="content-horizontal-padded mui-hidden">
+        <button id="reg" class="mui-btn mui-btn-block">快速注册</button>
+      </section>
+      
+      <!--<section class="font-gray-20 sns-login">
+        <div class="section-title font-gray-60">使用其他账号</div>
+        <div class="section-container">
+          
+        </div>
+      </section>-->
+      
+    </section>
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/mui.enterfocus.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script>
+          var settings = app.getSettings();
+          var state = app.getState();
+          // app.setState({});
+          var toMain = function() {
+            window.location.href = "{:url('Index/index')}";
+          };
+          //检查 "登录状态/锁屏状态" 开始
+          if(state.token) {
+            document.getElementById('account').value = state.account;
+            toMain();
+          } else {
+	          //检查 "登录状态/锁屏状态" 结束
+	          var loginButton = document.getElementById('login');
+	          var accountBox = document.getElementById('account');
+	          var passwordBox = document.getElementById('password');
+	         
+	          var loginErrTime = 0;
+	          loginButton.addEventListener('tap', function(event) {
+	            var loginInfo = {
+	              account: accountBox.value,
+	              password: passwordBox.value
+	            };
+	            app.login(loginInfo, function(err) {
+	              if(err) {
+	                mui.toast(err);
+	                return;
+	              }
+	              toMain();
+	            });
+	          });
+          
+		    }
+
+		      // var regButton = document.getElementById('reg');
+        //   regButton.addEventListener('tap', function(event) {
+        //     window.location.href = "{:url('Passport/register')}";
+        //   }, false);
+
+
+
+    </script>
+  </body>
+
+</html>

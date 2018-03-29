@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <link rel="stylesheet" href="__C_CSS__/widgets.css">
+    <style>
+    		.main{
+    			margin-right: 10px;
+    		}
+    		.mui-table-view .mui-media-object{
+		    max-width: 72px; 
+    			height: 72px;
+    		}
+    		.mui-media-text {
+    			color: #646464;
+    			font-size: 15px;
+    		}
+    		.mui-media-author {
+    			font-size: 13px;
+    			margin-top: 5px;
+    		} 
+    		.msg-badge{
+		    height: 13px;
+		    margin-left: -8px;
+    		}
+    </style>
+  </head>
+
+  <body>
+    <header class="page-header">
+    	  <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>	
+      <div class="header-title">消息列表</div>
+    </header>
+    <div class="container" id="container">
+       <ul class="mui-table-view msg-list" style="background-color: #FFFFFF;">
+        
+      </ul>
+    </div> 
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script type="text/html" id="msg_list">
+      <% if(list != null){ %>
+        <% for(var i=0; i<list.length; i++) { %>
+        <li class="mui-table-view-cell action-webview" data-webview="{:url('Member/msg_detail')}" data-webparam = '<%= list[i].id %>'>
+          <div class="box-display">
+            <div class="box-item-flex1">
+              <%= list[i].title%><br>
+              <!--<span class="fontS font-gray-60 fonts"><%= list[i].descrption%></span>-->
+              <span class="fontS font-gray-60 fonts"><%= $timestamp_To_Date(list[i].create_time)%></span>
+            </div>
+            <% if( list[i].status==0){ %>
+            <div class="box-item-flex1 content-right deposit-detail-amount font-red">
+              未读
+            </div>
+            <% } %>
+          </div>
+        </li>
+        <% } %>
+      <% } %>
+    </script>
+    <script>
+      	//查询是否有消息 是否已读
+      		
+	  		//msg
+	  		var state = app.getState();
+		  	var param = {
+	            'method': config.apimethod.msg,
+	            'source':config.source,
+	            'account':state.token
+	       }
+	        $.dataRequest(param, function(rs) {
+	        		 var ret = {};
+	        		if(rs[1]){
+	        			ret.list = rs[1];
+	        		}
+	        		//订单消息
+	        		var widgets = template('msg_list', ret);
+            		$('.msg-list').append(widgets);
+                $(window).on('tap', '.action-webview', function() {
+                  var _this = $(this).data('webview');
+                  var webparam = $(this).data('webparam');
+
+                  if(_this && _this != '') {
+                     window.location.href = _this+'?msg_id='+webparam
+                  }
+                });
+	        })
+	        
+	        //退回刷新
+		      // var oldBack = mui.back;
+		      // mui.back = function() {
+		      // 	var fw = plus.webview.getWebviewById('_www/view/member/msg.html');
+		      // 	fw.reload();
+		      //   oldBack();
+		      // };
+      	
+    </script>
+  </body>
+
+</html>

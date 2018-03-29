@@ -40,6 +40,10 @@ class Member extends Home
     {
         return $this->fetch('member/userinfo/nickname'); // 渲染模板
     }
+    public function avar()
+    {
+        return $this->fetch('member/userinfo/avar'); // 渲染模板
+    }
     public function gender()
     {
         return $this->fetch('member/userinfo/gender'); // 渲染模板

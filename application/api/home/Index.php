@@ -77,6 +77,27 @@ class Index
         return json($data);
     }
     /**
+     * [logout_coustom description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function logout_coustom($params)
+    {
+        $username = trim($params['account']);
+        $ismobile = trim($params['ismobile']);
+        if ($ismobile) {
+             session('user_mobile_auth',null);
+        }
+
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+
+    }
+    /**
      * 注册
      * @return [type] [description]
      */
@@ -771,6 +792,37 @@ class Index
         ];
         return json($data);
     }
+
+    public function upavar_custom($params)
+    {
+        //参数
+        $account = trim($params['account']);
+        $avar = trim($params['avar']);
+        
+        if (!$avar) {
+            return $this->error('参数必填');
+        }
+        
+
+        //更新状态
+        $data['avar'] =$this->_seve_img($avar);
+        if (!$data['avar']) {
+            return $this->error('头像上传失败，请稍后重试');
+        }
+        $map['id'] = $account;
+
+        if(!db('member')->where($map)->update($data)){
+            return $this->error('服务器忙，请稍后');
+        }
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API
@@ -787,6 +839,7 @@ class Index
         
         $username = trim($params['account']);
         $password = trim($params['password']);
+        $isshop = trim($params['isshop']);
 
         //是否存在
         $map['username'] = $username;
@@ -801,12 +854,37 @@ class Index
            return $this->error( '密码错误！');
         }
 
+        if ($isshop) {
+             session('user_counsellor_auth',$user);
+        }
         $data = [
             'code'=>'1',
             'msg'=>'',
             'data'=>$user
         ];
         return json($data);
+    }
+
+    /**
+     * [logout_shop description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function logout_shop($params)
+    {
+        $username = trim($params['account']);
+        $isshop = trim($params['isshop']);
+        if ($isshop) {
+             session('user_counsellor_auth',null);
+        }
+
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+
     }
     /**
      * 注册
@@ -971,15 +1049,38 @@ class Index
     {
         $map['tagname'] = 'shop';
         $map['status'] = 1;
+        $isshop = trim($params['isshop']);
         $lunbo['pic'] = db('cms_advert')->where($map)->order('id DESC')->limit(10)->select();
         foreach ($lunbo['pic'] as $key => $value) {
             if (strstr($value['link'], 'article')) {//文章
-                $lunbo['pic'][$key]['webview'] = '_www/view/article/detail.html';
-                $lunbo['pic'][$key]['webparam'] = ['id'=>explode('.',explode('/', $value['link'])[1])[0]]; 
+                if ($isshop) {
+                    $lunbo['pic'][$key]['webview'] = "/counsellor.php/artical/detail.html";
+                    $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                }else{
+                    $lunbo['pic'][$key]['webview'] = '_www/view/article/detail.html';
+                    $lunbo['pic'][$key]['webparam'] = ['article_id'=>explode('.',explode('/', $value['link'])[1])[0]];
+                }
+                
+                 
             }else if (strstr($value['link'], 'counsellor')) {
-                $lunbo['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
-                $lunbo['pic'][$key]['webparam'] = ['id'=>explode('.',explode('/', $value['link'])[1])[0]];
+                if ($isshop) {
+                    $lunbo['pic'][$key]['webview'] = "/counsellor.php/counsellor/detail.html";
+                     $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                }else{
+                    $lunbo['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
+                     $lunbo['pic'][$key]['webparam'] = ['counsellor_id'=>explode('.',explode('/', $value['link'])[1])[0]];
+                }
+                
+               
             }
+
+            // if (strstr($value['link'], 'article')) {//文章
+            //     $lunbo['pic'][$key]['webview'] = '_www/view/article/detail.html';
+            //     $lunbo['pic'][$key]['webparam'] = ['id'=>explode('.',explode('/', $value['link'])[1])[0]]; 
+            // }else if (strstr($value['link'], 'counsellor')) {
+            //     $lunbo['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
+            //     $lunbo['pic'][$key]['webparam'] = ['id'=>explode('.',explode('/', $value['link'])[1])[0]];
+            // }
 
         }
         //返回信息
@@ -1444,6 +1545,29 @@ class Index
         //插入数据
         $me = db('msg')->insert($data);
 
+    }
+    /**
+     * [_seve_img 上传头像]
+     * @param  [type] $avar [description]
+     * @return [type]       [description]
+     */
+    public function _seve_img($avar)
+    {
+        $imageName = "25220_".date("His",time())."_".rand(1111,9999).'.png';
+        
+
+        $path = "public/uploads/images/".date("Ymd",time());
+        if (!is_dir($path)){ //判断目录是否存在 不存在就创建
+            mkdir($path,0777,true);
+        }
+        $imageSrc=  $path."/". $imageName;  //图片名字
+
+        $r = file_put_contents(ROOT_PATH ."public/".$imageSrc, base64_decode($avar));//返回的是字节数
+        if (!$r) {
+            return false;
+        }else{
+            return $imageSrc;
+        }
     }
     
 }

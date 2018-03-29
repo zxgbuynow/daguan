@@ -25,6 +25,7 @@ var config = {
         checkpassword:'user.checkpassword',//检查密码
         updatenickname:'user.updatenickname',//更新密码
         updategender:'user.updategender',//检查密码
+        upavar:'user.upavar',//
         contentinfo:'article.contentinfo',//文章
         allcategory: 'all.category', //咨询分类
         counsellorlist:'counsellor.list',//咨询列表

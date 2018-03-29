@@ -116,8 +116,13 @@
 	              toMain();
 	            });
 	          });
+
+            var regButton = document.getElementById('reg');
+            regButton.addEventListener('tap', function(event) {
+              window.location.href = "{:url('Passport/register')}";
+            }, false);
                 
-      }
+          }
           
 
     </script>
