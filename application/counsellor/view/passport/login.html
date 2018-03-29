@@ -75,7 +75,7 @@
       <section class="content-horizontal-padded form-op-section">
         <button id='login' type="submit" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">登录</button>
       </section>
-      <section class="content-horizontal-padded mui-hidden">
+      <section class="content-horizontal-padded ">
         <button id="reg" class="mui-btn mui-btn-block">快速注册</button>
       </section>
       
@@ -127,10 +127,10 @@
           
 		    }
 
-		      // var regButton = document.getElementById('reg');
-        //   regButton.addEventListener('tap', function(event) {
-        //     window.location.href = "{:url('Passport/register')}";
-        //   }, false);
+		      var regButton = document.getElementById('reg');
+          regButton.addEventListener('tap', function(event) {
+            window.location.href = "{:url('Passport/register')}";
+          }, false);
 
 
 

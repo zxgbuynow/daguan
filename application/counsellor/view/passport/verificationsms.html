@@ -8,8 +8,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__C_CSS__/mui.picker.min.css" />
   </head>
 
   <body>
@@ -36,28 +36,18 @@
         </section>
       </form>
     </section>
-    <script src="../../js/zepto.js"></script>
-    <script src="../../js/mui.min.js"></script>
-    <script src="../../js/template.min.js"></script>
-    <script src="../../config.js"></script>
-    <script src="../../js/app.js"></script>
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
     <script>
-      mui.plusReady(function() {
-        var entrance = plus.webview.currentWebview().entrance;
-        var mobile = plus.webview.currentWebview().mobile;
-        var actiontype = plus.webview.currentWebview().actiontype;
-
-        var state = app.getState();
-        var actionmethod = "";
+        var result = window.location.href;
+        var mobile = $.getUrlParam(result,'mobile');
+        var vcode = $.getUrlParam(result,'vcode');
         document.getElementById('txt_mobile').innerHTML = mobile.substring(0, 3) + '****' + mobile.substring(7);
-
-        if(actiontype == "bindphone" || actiontype == "bindnewphone") {
-          document.getElementById('bind_finished').innerHTML = "完成";
-          document.getElementsByClassName('header-title')[0].innerHTML = "手机验证";
-        } else {
-          document.getElementById('bind_finished').innerHTML = "下一步";
-          document.getElementsByClassName('header-title')[0].innerHTML = "修改密码";
-        }
+        document.getElementById('vcode').value = vcode;
+        
         var btnVCode = $('#action_get_vcode');
         btnVCode.html('<i>0<i>');
         var countDown = new countdown(btnVCode.find('i'), {
@@ -66,131 +56,39 @@
           callback: function(e) {
             $('.action-get-vcode').removeAttr('disabled');
             btnVCode.html('重发验证码');
-            cd.stop();
           }
         });
         document.getElementById('bind_finished').addEventListener('tap', function() {
-          var vcode = document.getElementById('vcode').value;
-          if(vcode == "") {
+          var vcode1 = document.getElementById('vcode').value;
+          if(vcode1 == "") {
             mui.alert('请输入验证码');
             return;
           }
-          if( actiontype == "register" || actiontype == "forgot" ){
-            var smstype = actiontype == "register" ? 'signup' : 'forgot';
             var param = {
-              queryData: {
-                'method': config.apimethod.userVerifySms,
+                'method': config.apimethod.confirm,
+                'source':config.source,
                 'mobile': mobile,
-                'type': smstype,
-                'vcode': vcode
-              },
-              method: 'POST'
-            };
-          }else {
-            actionmethod = actiontype == "paypwdmodify" ? config.apimethod.setpwdbymobile : actiontype == "bindphone" || actiontype == "bindnewphone" ? config.apimethod.savemobile : config.apimethod.savemobile;
-            var param = {
-              queryData: {
-                'method': actionmethod,
-                'accessToken': state.token,
-                'mobile': mobile,
-                'vcode': vcode
-              },
-              method: 'POST'
-            };
-          }
-          $.dataRequest(param, function(rs) {
-            if(actiontype == "bindphone") {
-              mui.toast("绑定成功");
-              var safewv = plus.webview.getWebviewById('_www/view/member/safe/safe.html');
-              safewv.reload(true);
-              safewv.addEventListener('loaded', function(){
-                plus.webview.close('_www/view/member/safe/checkpassword.html');
-                plus.webview.close('_www/view/member/safe/bindphone.html');
-                plus.webview.close('_www/view/member/safe/verificationsms.html');
-                plus.webview.close('_www/view/member/safe/safe.html');
-                mui.back();
-              });
-            } else if(actiontype == 'bindnewphone') {
-              mui.toast("绑定成功");
-              var safewv = plus.webview.getWebviewById('_www/view/member/safe/safe.html');
-              safewv.reload(true);
-              safewv.addEventListener('loaded', function(){
-                plus.webview.close('_www/view/member/safe/checkpassword.html');
-                plus.webview.close('_www/view/member/safe/viewbind.html');
-                plus.webview.close('_www/view/member/safe/bindphone.html');
-                plus.webview.close('_www/view/member/safe/verificationsms.html');
-                mui.back();
-              });
-            } else if( actiontype == "register" ) {//注册
-              var signup_token = plus.webview.currentWebview().signup_token;
-              clicked('_www/view/member/safe/logpasswordset.html', {
-                'accesstoken': signup_token,
-                'account': mobile,
-                'isphone': true,
-                'entrance': entrance
-              });
-            }else if( actiontype == "forgot" ) {//忘记密码
-              var forgot_token = plus.webview.currentWebview().forgot_token;
-              clicked('_www/view/passport/resetpassword.html', {
-                'mobile': mobile,
-                'forgot_token': forgot_token
-              });
-            } else if(actiontype == "paypwdmodify"){ //修改支付密码
-              clicked('_www/view/member/safe/paypasswordmodify.html', {
-                'enterpage': 'verificationsms'
-              });
+                'code': vcode
             }
-          });
-        });
-        document.getElementById('action_get_vcode').addEventListener('tap', function() {
-          if($(this).attr('disabled')) return;
-          var $el = $(this);
-          var textCont = $el;
+            $.dataRequest(param, function(rs) {
 
-          if( actiontype == 'register' || actiontype == "forgot" ){
-            if( actiontype == 'register' ){
-              var send_sms_token = plus.webview.currentWebview().signup_token;
-              var smstype = 'signup';
-            }else{
-              var send_sms_token = plus.webview.currentWebview().forgot_token;
-              var smstype = 'forgot';
-            }
-            var param = {
-              queryData: {
-                'method': config.apimethod.usersendSms,
-                'mobile': mobile,
-                'type': smstype,
-                'send_sms_token': send_sms_token
-              },
-              method: 'POST'
-            };
-          }else{
-            actionmethod = actiontype == "paypwdmodify" ? config.apimethod.setpwdbymobile : actiontype == "bindphone" ? config.apimethod.updatemobile : config.apimethod.updatemobile;
-            var param = {
-              queryData: {
-                'method': actionmethod,
-                'accessToken': state.token,
-                'mobile': mobile
-              },
-              method: 'POST'
-            };
-          }
-
-          $.dataRequest(param, function(rs) {
-            textCont.html('<i>0</i>');
-            $el.attr('disabled', 'disabled');
-            var cd = new countdown(textCont.find('i'), {
-              start: 120,
-              secondOnly: true,
-              callback: function(e) {
-                $el.removeAttr('disabled');
-                textCont.html('重发验证码');
+                var state = app.getState();
+              var param = {
+                  'method': config.apimethod.logout,
+                  'account': state.account,
+                  'isshop': 1,
+                  'source':config.source
               }
+              $.dataRequest(param, function(rs) {
+                mui.toast('注册成功！');
+                app.setState({});
+                setTimeout(function(){
+                    window.location.href = "{:url('Passport/login')}";
+                },500)
+              })
             });
-            mui.toast('发送成功，请查收');
-          });
-        });
-      });
+        
+       });
     </script>
   </body>
 

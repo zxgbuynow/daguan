@@ -36,6 +36,8 @@ return [
         'counsellorindex'=>'counsellor.index',//咨询师中心
         'calendatoday'=>'calenda.today',//当日日程安排
         'calendaall'=>'calenda.all',//所有日程安排
-        'calendaadd'=>'calenda.add'//日程添加
+        'calendaadd'=>'calenda.add',//日程添加
+        'social'=>'social',
+        'identifi'=>'identifi'
     ]
 ];

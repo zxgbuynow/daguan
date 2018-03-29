@@ -177,6 +177,7 @@ class Index
         $data['status'] = 1;
         
         $map['username'] = $username;
+
         if(!db('member')->where($map)->update($data)){
             return $this->error('服务器忙，请稍后');
         }
@@ -792,7 +793,11 @@ class Index
         ];
         return json($data);
     }
-
+    /**
+     * [upavar_custom 头像]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
     public function upavar_custom($params)
     {
         //参数
@@ -898,6 +903,8 @@ class Index
         $data['email'] = trim($params['email']);
         $data['mobile'] = trim($params['mobile']);
         $data['create_time'] = time();
+
+        $data['type'] = 1;
 
         //生成密码
         $data['password'] =  Hash::make((string)trim($params['password']));
@@ -1512,6 +1519,119 @@ class Index
         if (!db('calendar')->insert($save)) {
             $this->error('保存失败！');
         }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+
+    /**
+     * [upavar_shop 头像]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function upavar_shop($params)
+    {
+        //参数
+        $account = trim($params['account']);
+        $avar = trim($params['avar']);
+        
+        if (!$avar) {
+            return $this->error('参数必填');
+        }
+        
+
+        //更新状态
+        $data['avar'] =$this->_seve_img($avar);
+        if (!$data['avar']) {
+            return $this->error('头像上传失败，请稍后重试');
+        }
+        $map['id'] = $account;
+
+        if(!db('member')->where($map)->update($data)){
+            return $this->error('服务器忙，请稍后');
+        }
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+    /**
+     * [social_shop 社交信息]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function social_shop($params)
+    {
+        //参数
+        $account = trim($params['account']);
+        $weixin = trim($params['weixin']);
+        $qq = trim($params['qq']);
+        $alipay = trim($params['alipay']);
+        
+        if (!$weixin||!$qq||!$alipay) {
+            return $this->error('参数必填');
+        }
+        
+
+        //更新状态
+        $data['weixin'] = $weixin;
+        $data['qq'] = $qq;
+        $data['alipay'] = $alipay;
+        $map['username'] = $account;
+        if(!db('member')->where($map)->update($data)){
+            return $this->error('服务器忙，请稍后');
+        }
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+    /**
+     * [identifi_shop description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function identifi_shop($params)
+    {
+        //参数
+        $account = trim($params['account']);
+        $identifi = trim($params['identifi']);
+        $cerfornt = trim($params['cerfornt']);
+        $cerback = trim($params['cerback']);
+        
+        if (!$identifi||!$cerfornt||!$cerback) {
+            return $this->error('参数必填');
+        }
+        
+
+        //更新状态
+        $data['cerfornt'] =$this->_seve_img($cerfornt);
+        if (!$data['cerfornt']) {
+            return $this->error('身份正面上传失败，请稍后重试');
+        }
+        $data['cerback'] =$this->_seve_img($cerback);
+        if (!$data['cerback']) {
+            return $this->error('身份反面上传失败，请稍后重试');
+        }
+        $data['cerback'] = $identifi;
+        $map['id'] = $account;
+
+        if(!db('member')->where($map)->update($data)){
+            return $this->error('服务器忙，请稍后');
+        }
+        
         //返回信息
         $data = [
             'code'=>'1',
