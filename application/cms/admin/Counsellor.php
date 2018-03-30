@@ -154,7 +154,8 @@ class Counsellor extends Admin
                     $save1['videochart'] = $data['videochart'];
                     $save1['facechart'] = $data['facechart'];
                     $save1['intro'] = $data['intro'];
-                    $save1['employment'] = $strtotime(data['employment']);
+                    $save1['employment'] = strtotime($data['employment']);
+                    
                     $save1['remark'] = $data['remark'];
                     //业务类弄
                     $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
