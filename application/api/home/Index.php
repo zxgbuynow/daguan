@@ -275,7 +275,7 @@ class Index
                     $lunbo['pic'][$key]['webview'] = "/mobile.php/artical/detail.html";
                     $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
                 }else{
-                    $lunbo['pic'][$key]['webview'] = '_www/view/article/detail.html';
+                    $lunbo['pic'][$key]['webview'] = '_www/view/artical/detail.html';
                     $lunbo['pic'][$key]['webparam'] = ['article_id'=>explode('.',explode('/', $value['link'])[1])[0]];
                 }
                 
@@ -1064,7 +1064,7 @@ class Index
                     $lunbo['pic'][$key]['webview'] = "/counsellor.php/artical/detail.html";
                     $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
                 }else{
-                    $lunbo['pic'][$key]['webview'] = '_www/view/article/detail.html';
+                    $lunbo['pic'][$key]['webview'] = '_www/view/artical/detail.html';
                     $lunbo['pic'][$key]['webparam'] = ['article_id'=>explode('.',explode('/', $value['link'])[1])[0]];
                 }
                 
