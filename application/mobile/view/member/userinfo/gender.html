@@ -80,7 +80,7 @@
           $.dataRequest(param, function(rs) {
             var data = rs;
             mui.toast('更新成功');
-            window.reload();
+            history.go(-1)
           });
         }else{
           mui.back();
