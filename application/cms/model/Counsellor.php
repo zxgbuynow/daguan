@@ -22,7 +22,7 @@ class Counsellor extends Model
 
     public static function getCounsellorList($id)
     {
-        $counsellor =  db('member')->alias('a')->field('a.*,b.*,b.id as bid')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where(array('a.id'=>$id))->find();
+        $counsellor =  db('member')->alias('a')->field('a.*,b.*,b.id as bid,a.id as aid')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where(array('a.id'=>$id))->find();
 
         return $counsellor;
     }

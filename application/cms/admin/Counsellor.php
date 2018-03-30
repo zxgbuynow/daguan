@@ -119,7 +119,7 @@ class Counsellor extends Admin
         if ($this->request->isPost()) {
             $data = $this->request->post();
 
-            $save['id'] = $data['id'];
+            $save['id'] = $data['aid'];
             $save['username'] = $data['username'];
             $save['nickname'] = $data['nickname'];
             $save['password'] = $data['password'];
@@ -138,7 +138,7 @@ class Counsellor extends Admin
                     $save1['videochart'] = $data['videochart'];
                     $save1['facechart'] = $data['facechart'];
                     $save1['intro'] = $data['intro'];
-                    $save1['employment'] = $data['employment'];
+                    $save1['employment'] = strtotime($data['employment']);
                     $save1['remark'] = $data['remark'];
                     //业务类弄
                     $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
@@ -147,14 +147,14 @@ class Counsellor extends Admin
                 }else{
                     //添加
                     $save1['status'] = $data['status'];
-                    $save1['memberid'] = $data['id'];
+                    $save1['memberid'] = $data['aid'];
                     $save1['per'] = $data['per'];
                     $save1['wordchart'] = $data['wordchart'];
                     $save1['speechchart'] = $data['speechchart'];
                     $save1['videochart'] = $data['videochart'];
                     $save1['facechart'] = $data['facechart'];
                     $save1['intro'] = $data['intro'];
-                    $save1['employment'] = $data['employment'];
+                    $save1['employment'] = $strtotime(data['employment']);
                     $save1['remark'] = $data['remark'];
                     //业务类弄
                     $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
@@ -180,7 +180,7 @@ class Counsellor extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['hidden', 'id'],
+                ['hidden', 'aid'],
                 ['hidden', 'bid'],
                 ['hidden', 'shopid'],
                 ['text', 'username', '用户名', '必填，可由英文字母、数字组成'],
