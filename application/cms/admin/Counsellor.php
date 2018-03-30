@@ -189,7 +189,7 @@ class Counsellor extends Admin
                 ['radio', 'status', '状态', '', ['禁用', '启用']],
                 ['radio', 'recommond', '推荐', '', ['不推荐', '推荐']],
                 // ['date', 'employment', '从业时间'],
-                ['number', 'per', '每次单价'],
+                ['number', 'per', '单次时长'],
                 ['text', 'wordchart', '文字咨询'],
                 ['text', 'speechchart', '语音咨询'],
                 ['text', 'videochart', '视频咨询'],
