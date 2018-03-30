@@ -70,7 +70,7 @@
             'source':config.source,
             'avar': $('#image-1').attr('vase')
         }
-        $.dataRequest(param, function(rs) {
+        $.dataRequestpost(param, function(rs) {
           var data = rs.data;
             mui.toast('更新成功');
             window.reload();
