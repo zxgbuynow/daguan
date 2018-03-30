@@ -45,6 +45,10 @@ class Member extends Home
     {
         return $this->fetch(); // 渲染模板
     }
+    public function msg_detail()
+    {
+        return $this->fetch(); // 渲染模板
+    }
     public function income()
     {
         return $this->fetch('member/income/index'); // 渲染模板

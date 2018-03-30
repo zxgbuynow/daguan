@@ -68,7 +68,7 @@ class Counsellor extends Admin
 
     /**
      * 新增
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function add()
@@ -108,7 +108,7 @@ class Counsellor extends Admin
     /**
      * 编辑
      * @param null $id 用户id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function edit($id = null)
@@ -129,19 +129,38 @@ class Counsellor extends Admin
 
             if (CounsellorModel::update($save)) {
                 $user = CounsellorModel::get($save['id']);
-                //更新属表
-                $save1['id'] = $data['bid'];
-                $save1['per'] = $data['per'];
-                $save1['wordchart'] = $data['wordchart'];
-                $save1['speechchart'] = $data['speechchart'];
-                $save1['videochart'] = $data['videochart'];
-                $save1['facechart'] = $data['facechart'];
-                $save1['intro'] = $data['intro'];
-                $save1['employment'] = $data['employment'];
-                $save1['remark'] = $data['remark'];
-                //业务类弄
-                $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
-                CounsellorotModel::update($save1);
+                if ($data['bid']) {
+                    //更新属表
+                    $save1['id'] = $data['bid'];
+                    $save1['per'] = $data['per'];
+                    $save1['wordchart'] = $data['wordchart'];
+                    $save1['speechchart'] = $data['speechchart'];
+                    $save1['videochart'] = $data['videochart'];
+                    $save1['facechart'] = $data['facechart'];
+                    $save1['intro'] = $data['intro'];
+                    $save1['employment'] = $data['employment'];
+                    $save1['remark'] = $data['remark'];
+                    //业务类弄
+                    $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
+                    CounsellorotModel::update($save1);
+
+                }else{
+                    //添加
+                    // $save1['id'] = $data['bid'];
+                    $save1['per'] = $data['per'];
+                    $save1['wordchart'] = $data['wordchart'];
+                    $save1['speechchart'] = $data['speechchart'];
+                    $save1['videochart'] = $data['videochart'];
+                    $save1['facechart'] = $data['facechart'];
+                    $save1['intro'] = $data['intro'];
+                    $save1['employment'] = $data['employment'];
+                    $save1['remark'] = $data['remark'];
+                    //业务类弄
+                    $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
+                    CounsellorotModel::create($save1);
+                }
+                
+                
                 // 记录行为
                 action_log('user_edit', 'admin_counsellor', $user['id'], UID, get_nickname($user['id']));
                 $this->success('编辑成功', cookie('__forward__'));
@@ -232,7 +251,7 @@ class Counsellor extends Admin
     /**
      * 删除用户
      * @param array $ids 用户id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function delete($ids = [])
@@ -244,7 +263,7 @@ class Counsellor extends Admin
     /**
      * 启用用户
      * @param array $ids 用户id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function enable($ids = [])
@@ -256,7 +275,7 @@ class Counsellor extends Admin
     /**
      * 禁用用户
      * @param array $ids 用户id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function disable($ids = [])
@@ -269,7 +288,7 @@ class Counsellor extends Admin
      * 设置用户状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function setStatus($type = '', $record = [])
@@ -282,7 +301,7 @@ class Counsellor extends Admin
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function quickEdit($record = [])
