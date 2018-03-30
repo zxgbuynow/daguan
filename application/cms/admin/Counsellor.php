@@ -146,7 +146,8 @@ class Counsellor extends Admin
 
                 }else{
                     //添加
-                    // $save1['id'] = $data['bid'];
+                    $save1['status'] = $data['status'];
+                    $save1['memberid'] = $data['id'];
                     $save1['per'] = $data['per'];
                     $save1['wordchart'] = $data['wordchart'];
                     $save1['speechchart'] = $data['speechchart'];
