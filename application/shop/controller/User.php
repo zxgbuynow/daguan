@@ -3,7 +3,6 @@
 
 namespace app\shop\controller;
 
-use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\shop\model\User as UserModel;
 use app\shop\model\Role as RoleModel;
