@@ -10,7 +10,7 @@ use app\shop\model\User;
 if (!function_exists('is_shop_signin')) {
     /**
      * 判断是否登录
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     function is_shop_signin()
@@ -41,7 +41,7 @@ if (!function_exists('shop_data_auth_sign')) {
     /**
      * 数据签名认证
      * @param array $data 被认证的数据
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     function shop_data_auth_sign($data = [])
@@ -64,7 +64,7 @@ if (!function_exists('shop_data_auth_sign')) {
 if (!function_exists('shop_role_auth')) {
     /**
      * 读取当前用户权限
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     function shop_role_auth() {
         session('shop_role_menu_auth', model('shop/role')->roleAuth());
@@ -75,7 +75,7 @@ if (!function_exists('get_shop_file_path')) {
     /**
      * 获取附件路径
      * @param int $id 附件id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     function get_shop_file_path($id = 0)
@@ -92,7 +92,7 @@ if (!function_exists('get_shop_files_path')) {
     /**
      * 批量获取附件路径
      * @param array $ids 附件id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array
      */
     function get_shop_files_path($ids = [])
@@ -106,7 +106,7 @@ if (!function_exists('get_shop_thumb')) {
     /**
      * 获取图片缩略图路径
      * @param int $id 附件id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     function get_shop_thumb($id = 0)
@@ -123,7 +123,7 @@ if (!function_exists('get_shop_avatar')) {
     /**
      * 获取用户头像路径
      * @param int $uid 用户id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @alter 小乌 <82950492@qq.com>
      * @return string
      */
@@ -142,7 +142,7 @@ if (!function_exists('get_shop_file_name')) {
     /**
      * 根据附件id获取文件名
      * @param string $id 附件id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     function get_shop_file_name($id = '')
@@ -160,7 +160,7 @@ if (!function_exists('get_shop_auth_node')) {
      * 获取用户授权节点
      * @param int $uid 用户id
      * @param string $group 权限分组，可以以点分开模型名称和分组名称，如user.group
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array|bool
      */
     function get_shop_auth_node($uid = 0, $group = '')
@@ -175,7 +175,7 @@ if (!function_exists('check_shop_auth_node')) {
      * @param int $uid 用户id
      * @param string $group $group 权限分组，可以以点分开模型名称和分组名称，如user.group
      * @param int $node 需要检查的节点id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return bool
      */
     function check_shop_auth_node($uid = 0, $group = '', $node = 0)
@@ -238,7 +238,7 @@ if (!function_exists('action_shop_log')) {
      * @param null $user_id 执行行为的用户id
      * @param string $details 详情
      * @author huajie <banhuajie@163.com>
-     * @alter 蔡伟明 <314013107@qq.com>
+     * @alter action_shop_log
      * @return bool|string
      */
     function action_shop_log($action = null, $model = null, $record_id = '', $user_id = null, $details = '')
@@ -337,7 +337,7 @@ if (!function_exists('shop_parse_action')) {
      * @param string $action 行为id或者name
      * @param int $self 替换规则里的变量为执行用户的id
      * @author huajie <banhuajie@163.com>
-     * @alter 蔡伟明 <314013107@qq.com>
+     * @alter action_shop_log
      * @return boolean|array: false解析出错 ， 成功返回规则数组
      */
     function shop_parse_action($action = null, $self){
@@ -388,7 +388,7 @@ if (!function_exists('shop_execute_action')) {
      * @param int $action_id 行为id
      * @param array $user_id 执行的用户id
      * @author huajie <banhuajie@163.com>
-     * @alter 蔡伟明 <314013107@qq.com>
+     * @alter action_shop_log
      * @return boolean false 失败 ， true 成功
      */
     function shop_execute_action($rules = false, $action_id = null, $user_id = null){
@@ -424,7 +424,7 @@ if (!function_exists('get_shop_location')) {
      * @param string $id 节点id，如果没有指定，则取当前节点id
      * @param bool $del_last_url 是否删除最后一个节点的url地址
      * @param bool $check 检查节点是否存在，不存在则抛出错误
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     function get_shop_location($id = '', $del_last_url = false, $check = true)

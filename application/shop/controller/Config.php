@@ -15,7 +15,7 @@ class Config extends Shop
     /**
      * 配置首页
      * @param string $group 分组
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function index($group = 'base')
@@ -69,7 +69,7 @@ class Config extends Shop
     /**
      * 新增配置项
      * @param string $group 分组
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function add($group = '')
@@ -134,7 +134,7 @@ class Config extends Shop
     /**
      * 编辑
      * @param int $id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function edit($id = 0)
@@ -209,7 +209,7 @@ class Config extends Shop
     /**
      * 删除配置
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function delete($record = [])
@@ -220,7 +220,7 @@ class Config extends Shop
     /**
      * 启用配置
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function enable($record = [])
@@ -231,7 +231,7 @@ class Config extends Shop
     /**
      * 禁用配置
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function disable($record = [])
@@ -243,7 +243,7 @@ class Config extends Shop
      * 设置配置状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function setStatus($type = '', $record = [])
@@ -257,7 +257,7 @@ class Config extends Shop
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function quickEdit($record = [])

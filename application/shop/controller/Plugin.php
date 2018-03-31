@@ -21,7 +21,7 @@ class Plugin extends Shop
      * 首页
      * @param string $group 分组
      * @param string $type 显示类型
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function index($group = 'local', $type = '')
@@ -74,7 +74,7 @@ class Plugin extends Shop
     /**
      * 安装插件
      * @param string $name 插件标识
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function install($name = '')
     {
@@ -141,7 +141,7 @@ class Plugin extends Shop
     /**
      * 卸载插件
      * @param string $name 插件标识
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function uninstall($name = '')
     {
@@ -194,7 +194,7 @@ class Plugin extends Shop
     /**
      * 插件管理
      * @param string $name 插件名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function manage($name = '')
@@ -284,7 +284,7 @@ class Plugin extends Shop
     /**
      * 插件新增方法
      * @param string $plugin_name 插件名称
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function add($plugin_name = '')
@@ -340,7 +340,7 @@ class Plugin extends Shop
      * 编辑插件方法
      * @param string $id 数据id
      * @param string $plugin_name 插件名称
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function edit($id = '', $plugin_name = '')
@@ -404,7 +404,7 @@ class Plugin extends Shop
     /**
      * 插件参数设置
      * @param string $name 插件名称
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function config($name = '')
     {
@@ -445,7 +445,7 @@ class Plugin extends Shop
      * 设置状态
      * @param string $type 状态类型:enable/disable
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return void
      */
     public function setStatus($type = '', $record = [])
@@ -475,7 +475,7 @@ class Plugin extends Shop
     /**
      * 禁用插件/禁用插件数据
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return void
      */
     public function disable($record = [])
@@ -486,7 +486,7 @@ class Plugin extends Shop
     /**
      * 启用插件/启用插件数据
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return void
      */
     public function enable($record = [])
@@ -497,7 +497,7 @@ class Plugin extends Shop
     /**
      * 删除插件数据
      * @param array $record
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return void
      */
     public function delete($record = [])
@@ -507,7 +507,7 @@ class Plugin extends Shop
 
     /**
      * 执行插件内部方法
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function execute()
@@ -530,7 +530,7 @@ class Plugin extends Shop
     /**
      * 分析后台字段信息
      * @param array $data 字段信息
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array
      */
     private function parseAdmin($data = [])
@@ -569,7 +569,7 @@ class Plugin extends Shop
      * 解析按钮链接
      * @param string $button 按钮名称
      * @param array $data 字段信息
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array
      */
     private function parseButton($button = '', &$data)

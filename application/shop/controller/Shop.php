@@ -21,11 +21,11 @@ class Shop extends Common
 {
     /**
      * 初始化方法
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     /**
      * 初始化
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     protected function _initialize()
     {
@@ -83,7 +83,7 @@ class Shop extends Common
 
     /**
      * 获取当前操作模型
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return object|\think\db\Query
      */
     final protected function getCurrModel()
@@ -121,7 +121,7 @@ class Shop extends Common
 
     /**
      * 设置分页参数
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     final protected function setPageParam()
     {
@@ -133,7 +133,7 @@ class Shop extends Common
 
     /**
      * 检查是否登录，没有登录则跳转到登录页面
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return int
      */
     final protected function isLogin()
@@ -151,7 +151,7 @@ class Shop extends Common
     /**
      * 禁用
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function disable($record = [])
@@ -162,7 +162,7 @@ class Shop extends Common
     /**
      * 启用
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function enable($record = [])
@@ -173,7 +173,7 @@ class Shop extends Common
     /**
      * 启用
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function delete($record = [])
@@ -184,7 +184,7 @@ class Shop extends Common
     /**
      * 快速编辑
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function quickEdit($record = [])
     {
@@ -380,7 +380,7 @@ class Shop extends Common
      * 禁用、启用、删除都是调用这个内部方法
      * @param string $type 操作类型：enable,disable,delete
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function setStatus($type = '', $record = [])
@@ -440,7 +440,7 @@ class Shop extends Common
 
     /**
      * 模块设置
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function moduleConfig()

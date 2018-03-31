@@ -35,7 +35,7 @@ class Role extends Model
      * 获取树形角色
      * @param null $id 需要隐藏的角色id
      * @param string $default 默认第一个菜单项，默认为“顶级角色”，如果为false则不显示，也可传入其他名称
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public static function getTree($id = null, $default = '')
@@ -70,7 +70,7 @@ class Role extends Model
     /**
      * 获取所有子角色id
      * @param string $pid 父级id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array
      */
     public static function getChildsId($pid = '')
@@ -86,7 +86,7 @@ class Role extends Model
      * 检查访问权限
      * @param int $id 需要检查的节点ID，默认检查当前操作节点
      * @param bool $url 是否为节点url，默认为节点id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return bool
      */
     public static function checkAuth($id = 0, $url = false)
@@ -120,7 +120,7 @@ class Role extends Model
 
     /**
      * 读取当前角色权限
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function roleAuth()
@@ -142,7 +142,7 @@ class Role extends Model
      * 根据节点id获取所有角色id和权限
      * @param string $menu_id 节点id
      * @param bool $menu_auth 是否返回所有节点权限
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array
      */
     public static function getRoleWithMenu($menu_id = '', $menu_auth = false)
@@ -157,7 +157,7 @@ class Role extends Model
     /**
      * 根据角色id获取权限
      * @param array $role 角色id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array
      */
     public static function getAuthWithRole($role = [])

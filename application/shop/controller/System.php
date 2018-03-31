@@ -16,7 +16,7 @@ class System extends Shop
     /**
      * 系统设置
      * @param string $group 分组
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function index($group = 'base')

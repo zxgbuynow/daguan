@@ -53,7 +53,7 @@ class Attachment extends Model
     /**
      * 根据图片id获取缩略图路径，如果缩略图不存在，则返回原图路径
      * @param string $id 图片id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function getThumbPath($id = '')
