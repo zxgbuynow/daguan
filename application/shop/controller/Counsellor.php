@@ -59,6 +59,9 @@ class Counsellor extends Shop
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
                 ['mobile', '手机号'],
+                ['qq', 'QQ'],
+                ['weixin', '微信'],
+                ['alipay', '支付宝'],
                 ['shopid', '机构', 'select', $list_type],
                 ['create_time', '创建时间', 'datetime'],
                 ['status', '状态', 'switch'],
@@ -132,6 +135,11 @@ class Counsellor extends Shop
             $save['nickname'] = $data['nickname'];
             $save['password'] = $data['password'];
             $save['mobile'] = $data['mobile'];
+            
+            $save['qq'] = $data['qq'];
+            $save['weixin'] = $data['weixin'];
+            $save['alipay'] = $data['alipay'];
+
             $save['status'] = $data['status'];
             $save['recommond'] = $data['recommond'];
 
@@ -176,6 +184,9 @@ class Counsellor extends Shop
                 ['text', 'nickname', '昵称', '可以是中文'],
                 ['password', 'password', '密码', '必填，6-20位'],
                 ['text', 'mobile', '手机号'],
+                ['text', 'qq', 'QQ'],
+                ['text', 'weixin', '微信'],
+                ['text', 'alipay', '支付宝'],
                 ['radio', 'status', '状态', '', ['禁用', '启用']],
                 ['radio', 'recommond', '推荐', '', ['不推荐', '推荐']],
                 // ['date', 'employment', '从业时间'],
