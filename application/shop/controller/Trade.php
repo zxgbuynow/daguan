@@ -53,12 +53,13 @@ class Trade extends Shop
             ->addColumns([ // 批量添加列
                 ['tid', 'ID'],
                 ['title', '交易标题'],
+                ['payment', '支付金额']
                 ['shopid', '机构', 'select', $agency_list],
                 ['memberid', '用户', 'select', $counsellor_list],
                 ['mid', '咨询师', 'select', $counsellor_list],
                 ['created_time', '创建时间', 'datetime'],
                 ['status', '状态', 'text', '', ['待支付', '已支付']],
-                ['right_button', '操作', 'btn']
+                // ['right_button', '操作', 'btn']
             ])
             // ->addTopButtons('delete') // 批量添加顶部按钮
             // ->addRightButtons('delete') // 批量添加右侧按钮
