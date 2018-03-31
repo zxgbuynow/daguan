@@ -50,7 +50,7 @@ class Trade extends Admin
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
                 ['title', '交易标题'],
-                ['payment', '支付金额']
+                ['payment', '支付金额'],
                 ['shopid', '机构', 'select', $agency_list],
                 ['memberid', '用户', 'select', $counsellor_list],
                 ['mid', '咨询师', 'select', $counsellor_list],
