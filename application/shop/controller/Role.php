@@ -14,7 +14,7 @@ use think\Db;
  * 角色控制器
  * @package app\admin\controller
  */
-class Role extends shop
+class Role extends Shop
 {
     /**
      * 角色列表页

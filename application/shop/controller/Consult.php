@@ -17,7 +17,7 @@ use think\Hook;
  * 咨询默认控制器
  * @package app\member\admin
  */
-class Consult extends shop
+class Consult extends Shop
 {
     /**
      * 咨询师首页

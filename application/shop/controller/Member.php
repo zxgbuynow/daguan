@@ -17,7 +17,7 @@ use think\Hook;
  * 会员默认控制器
  * @package app\member\admin
  */
-class Member extends shop
+class Member extends Shop
 {
     /**
      * 用户首页

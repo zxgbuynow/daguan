@@ -18,7 +18,7 @@ use think\Hook;
  * 订单默认控制器
  * @package app\member\admin
  */
-class Trade extends shop
+class Trade extends Shop
 {
     /**
      * 咨询师首页
