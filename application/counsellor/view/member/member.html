@@ -74,7 +74,10 @@
       <a id="setting" data-view="{:url('Member/setting')}" class="user-setting bbc-icon bbc-icon-setting action-clickview" style="right: 4rem;"></a>
       <a id="msg" data-view="{:url('Member/msg')}" class="user-setting bbc-icon bbc-icon-message-gap action-clickview" ></a>
       <div id="user_info" class="user-logined " data-view="_www/view/member/userinfo/userinfo.html">
-        <div class="login-avatar"><i class="bbc-icon bbc-icon-member fontB"></i></div>
+        <div class="login-avatar">
+          <img class="userinfo-avatar" id="head-img" src="" />
+          <!-- <i class="bbc-icon bbc-icon-member fontB"></i> -->
+        </div>
         <div  class="user-accout"><span id="account"></span></div>
         <div><span id="grade_name" class="fontS " style="color: #646464;" ><sm class="agency">浦东中心</sm>，中级心理咨询师</span></div>
       </div>
@@ -166,6 +169,22 @@
   	        		$('#income').text(Currency.format(rs.income))
   	        		$('#integral').text(rs.points)
   	        })
+            var param = {
+                'method': config.apimethod.userinfo,
+                'account': state.account,
+                'source':config.source
+            }
+            $.dataRequest(param, function(rs) {
+              var data = rs;
+              ret = rs;
+              if(ret.avar){
+                  document.getElementById("head-img").src = config.imgser+'/'+ret.avar;
+              }else{
+                  document.getElementById("head-img").src = '../../shop_logo.gif';
+              }
+
+            });
+
   		}
         $(window).on('tap', '.action-clickview', function() {
           var state = app.getState();

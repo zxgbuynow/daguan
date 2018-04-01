@@ -49,7 +49,7 @@ return [
     // +----------------------------------------------------------------------
 
     // 应用调试模式
-    'app_debug'              => true,
+    'app_debug'              => false,
     // 应用Trace
     'app_trace'              => false,
     // 应用模式状态
@@ -271,4 +271,6 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+    'TMPL_CACHE_ON'     => false,
+    'HTML_CACHE_ON'     =>false,
 ];

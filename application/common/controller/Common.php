@@ -13,27 +13,30 @@ class Common extends Controller
 {
     /**
      * 初始化
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     protected function _initialize()
     {
         // 后台公共模板
+        if ($this->request->module()=='admin') {
+           $this->assign('_admin_base_layout', config('admin_base_layout'));
+        }else{
+            $this->assign('_admin_base_layout', config('shop_base_layout'));
+        }
         
-        $this->assign('_admin_base_layout', config('admin_base_layout'));
         // 当前配色方案
         $this->assign('system_color', config('system_color'));
 
         // 商家公共模板
-        $this->assign('_shop_base_layout', config('shop_base_layout'));
+        // $this->assign('_shop_base_layout', config('shop_base_layout'));
         // 输出弹出层参数
         $this->assign('_pop', $this->request->param('_pop'));
-
         $this->assign('_module', $this->request->module());
     }
 
     /**
      * 获取筛选条件
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @alter 小乌 <82950492@qq.com>
      * @return array
      */
@@ -113,7 +116,7 @@ class Common extends Controller
      * 获取字段排序
      * @param string $extra_order 额外的排序字段
      * @param bool $before 额外排序字段是否前置
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     final protected function getOrder($extra_order = '', $before = false)
@@ -137,7 +140,7 @@ class Common extends Controller
      * 渲染插件模板
      * @param string $template 模板名称
      * @param string $suffix 模板后缀
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     final protected function pluginView($template = '', $suffix = '', $vars = [], $replace = [], $config = [])
