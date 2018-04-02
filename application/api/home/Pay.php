@@ -61,7 +61,7 @@ class Pay
     public function __construct(){
         
         $this->submit_charset = 'utf-8';
-        $this->notify_url = url('Pay/callback');
+        $this->notify_url = 'http://'.$_SERVER['HTTP_HOST'].url('Pay/callback');
     }
 
     /**
@@ -82,7 +82,7 @@ class Pay
         $mer_key = $this->mer_key;
         $seller_account_name = $this->seller_account_name;
 
-        $payment['payment'] = 1;
+        $payment['payment'] = 0.01;
 
         $parameter = array(
             'service'        => 'mobile.securitypay.pay',                        // 必填，接口名称，固定值
@@ -124,33 +124,20 @@ class Pay
         #键名与pay_setting中设置的一致
         $mer_id = $this->mer_id;
         $mer_key = $this->mer_key;
-        error_log(json_encode($_POST),3,'/home/wwwroot/daguan/pay.log');
-        // if($this->is_return_vaild($recv,$mer_key,$this->sec_id)){
-        //     $ret['payment_id'] = $recv['out_trade_no'];
-        //     $ret['account'] = $mer_id;
-        //     $ret['bank'] = '支付宝应用';
-        //     $ret['pay_account'] = '付款帐号';
-        //     $ret['currency'] = 'CNY';
-        //     $ret['money'] = $recv['total_fee'];
-        //     $ret['paycost'] = '0.000';
-        //     $ret['cur_money'] = $recv['total_fee'];
-        //     $ret['trade_no'] = $recv['trade_no'];
-        //     $ret['t_payed'] = strtotime($recv['notify_time']) ? strtotime($recv['notify_time']) : time();
-        //     $ret['pay_app_id'] = "alipayApp";
-        //     $ret['pay_type'] = 'online';
-        //     $ret['memo'] = $recv['body'];
 
-        //     if($recv['trade_status'] == 'TRADE_SUCCESS') {
-        //         $ret['status'] = 'succ';
-        //     }else {
-        //         $ret['status'] =  'failed';
-        //     }
-        // }else{
-        //     $message = 'Invalid Sign';
-        //     $ret['status'] = 'invalid';
-        // }
-
-        // return $ret;
+        $request = Request::instance();
+        $params = $request->param();
+        if ($params['trade_status']=='TRADE_SUCCESS') {
+            $where['tid'] = $params['out_trade_no'];
+            $data['status'] = 1;
+            $data['pay_type'] = 'alipay';
+            $data['buyer_email'] = $params['buyer_email'];
+            $data['trade_no'] = $params['trade_no'];
+            db('trade')->where($where)->update($data);//修改订单状态
+            echo 'success';
+            exit;
+        }
+        
     }
 
     /**
