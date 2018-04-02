@@ -1,0 +1,211 @@
+<?php
+namespace app\api\home;
+
+use \think\Request;
+use \think\Db;
+use think\Model;
+use think\helper\Hash;
+
+/**
+ * pay控制器
+ * @package app\index\controller
+ */
+class Pay
+{
+    /**
+     * @var string 支付方式名称
+     */
+    public $name = '支付宝支付手机APP支付';
+    /**
+     * @var string 支付方式接口名称
+     */
+    public $app_name = '支付宝支付手机APP接口';
+     /**
+     * @var string 支付方式key
+     */
+    public $app_key = 'alipayApp';
+    /**
+     * @var string 中心化统一的key
+     */
+    public $app_rpc_key = 'alipayApp';
+    /**
+     * @var string 统一显示的名称
+     */
+    public $display_name = '支付宝（手机APP）';
+    /**
+     * @var string 货币名称
+     */
+    public $curname = 'CNY';
+    /**
+     * @var string 当前支付方式的版本号
+     */
+    public $ver = '1.0';
+    /**
+     * @var string 当前支付方式所支持的平台
+     */
+    public $platform = 'isapp';
+
+    /**
+     * @var array 扩展参数
+     */
+    public $supportCurrency = array("CNY"=>"01");
+
+    public $mer_key = 'f403tsml33nuktahd70wph2kh9zj37p4';
+    public $mer_id = '2088031695418481';
+    public $seller_account_name = 'dg5889@dingtalk.com';
+    /**
+     * 构造方法
+     * @param null
+     * @return boolean
+     */
+    public function __construct(){
+        
+        $this->submit_charset = 'utf-8';
+        $this->notify_url = url('Pay/callback');
+    }
+
+    /**
+     * 提交支付信息的接口
+     * @param array 提交信息的数组
+     * @return mixed false or null
+     */
+    public function dopay()
+    {
+        $where['id'] = input('post.order_sn');
+        //查询订单信息
+        $payment = db('trade')->where($where)->find();
+
+        $mer_id = $this->mer_id;
+        $mer_key = $this->mer_key;
+        $seller_account_name = $this->seller_account_name;
+
+        $parameter = array(
+            'service'        => 'mobile.securitypay.pay',                        // 必填，接口名称，固定值
+            'partner'        => $mer_id,                            // 必填，合作商户号
+            '_input_charset' => 'UTF-8',                                         // 必填，参数编码字符集
+            'out_trade_no'   => $payment['tid'],                          // 必填，商户网站唯一订单号
+            'subject'        => $payment['title'].'...',                    // 必填，商品名称
+            'payment_type'   => '1',                                             // 必填，支付类型
+            'seller_id'      => $seller_account_name,                                         // 必填，卖家支付宝账号
+            'total_fee'      => number_format($payment['payment'],2,".",""),   // 必填，总金额，取值范围为[0.01,100000000.00]
+            'body'           => $payment['title'].'...',                    // 必填，商品详情
+            'notify_url'     => $this->notify_url,                               // 可选，服务器异步通知页面路径
+        );
+
+        //签名
+        $orderInfo = $this->createLinkstring($parameter);
+        $sign = $this->md5Sign($orderInfo, $mer_key);
+
+        echo $orderInfo.'&sign="'.$sign.'"&sign_type="MD5"';
+        exit;
+    }
+
+    /**
+     * 校验方法
+     * @param null
+     * @return boolean
+     */
+    public function is_fields_valiad(){
+        return true;
+    }
+
+    /**
+     * 支付后返回后处理的事件的动作
+     * @params array - 所有返回的参数，包括POST和GET
+     * @return null
+     */
+    public function callback()
+    {
+        #键名与pay_setting中设置的一致
+        $mer_id = $this->mer_id;
+        $mer_key = $this->mer_key;
+        error_log(json_encode($_POST),3,'/home/wwwroot/daguan/pay.log');
+        // if($this->is_return_vaild($recv,$mer_key,$this->sec_id)){
+        //     $ret['payment_id'] = $recv['out_trade_no'];
+        //     $ret['account'] = $mer_id;
+        //     $ret['bank'] = '支付宝应用';
+        //     $ret['pay_account'] = '付款帐号';
+        //     $ret['currency'] = 'CNY';
+        //     $ret['money'] = $recv['total_fee'];
+        //     $ret['paycost'] = '0.000';
+        //     $ret['cur_money'] = $recv['total_fee'];
+        //     $ret['trade_no'] = $recv['trade_no'];
+        //     $ret['t_payed'] = strtotime($recv['notify_time']) ? strtotime($recv['notify_time']) : time();
+        //     $ret['pay_app_id'] = "alipayApp";
+        //     $ret['pay_type'] = 'online';
+        //     $ret['memo'] = $recv['body'];
+
+        //     if($recv['trade_status'] == 'TRADE_SUCCESS') {
+        //         $ret['status'] = 'succ';
+        //     }else {
+        //         $ret['status'] =  'failed';
+        //     }
+        // }else{
+        //     $message = 'Invalid Sign';
+        //     $ret['status'] = 'invalid';
+        // }
+
+        // return $ret;
+    }
+
+    /**
+     * 检验返回数据合法性
+     * @param mixed $form 包含签名数据的数组
+     * @param mixed $key 签名用到的私钥
+     * @access private
+     * @return boolean
+     */
+    public function is_return_vaild($form,$key)
+    {
+        ksort($form);
+        foreach($form as $k=>$v){
+            if($k!='sign'&&$k!='sign_type'){
+                $signstr .= "&$k=$v";
+            }
+        }
+
+        $signstr = ltrim($signstr,"&");
+        $signstr = $signstr.$key;
+
+        if($form['sign']==md5($signstr)){
+            return true;
+        }
+        #记录返回失败的情况
+        logger::error(app::get('ectools')->_('支付单号：') . $form['out_trade_no'] . app::get('ectools')->_('签名验证不通过，请确认！')."\n");
+        logger::error(app::get('ectools')->_('本地产生的加密串：') . $signstr);
+        logger::error(app::get('ectools')->_('支付宝传递打过来的签名串：') . $form['sign']);
+        $str_xml .= "<alipayform>";
+        foreach ($form as $key=>$value)
+        {
+            $str_xml .= "<$key>" . $value . "</$key>";
+        }
+        $str_xml .= "</alipayform>";
+
+        return false;
+    }
+
+    // 对签名字符串转义
+    public function createLinkstring($para) {
+        $arg  = "";
+        while (list ($key, $val) = each ($para)) {
+            $arg.=$key.'="'.$val.'"&';
+        }
+        //去掉最后一个&字符
+        $arg = substr($arg,0,count($arg)-2);
+        //如果存在转义字符，那么去掉转义
+        if(get_magic_quotes_gpc()){$arg = stripslashes($arg);}
+        return $arg;
+    }
+
+    // 签名生成订单信息--MD5加密方式
+    public function md5Sign($data, $key)
+    {
+        return md5($data.$key);
+    }
+
+    public function gen_form()
+    {
+
+        return '';
+    }
+}    
