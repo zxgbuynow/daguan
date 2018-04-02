@@ -71,13 +71,18 @@ class Pay
      */
     public function dopay()
     {
-        $where['id'] = input('post.order_sn');
+        $request = Request::instance();
+        $params = $request->param();
+
+        $where['tid'] = $params['payment_id'];
         //查询订单信息
         $payment = db('trade')->where($where)->find();
 
         $mer_id = $this->mer_id;
         $mer_key = $this->mer_key;
         $seller_account_name = $this->seller_account_name;
+
+        $payment['payment'] = 1;
 
         $parameter = array(
             'service'        => 'mobile.securitypay.pay',                        // 必填，接口名称，固定值
