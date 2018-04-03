@@ -110,5 +110,28 @@ gwIDAQAB",
 
         return ;
     }
+
+    /**
+     * 支付后返回后处理的事件的动作
+     * @params array - 所有返回的参数，包括POST和GET
+     * @return null
+     */
+    public function callback()
+    {
+
+        $request = Request::instance();
+        $params = $request->param();
+        if ($params['trade_status']=='TRADE_SUCCESS') {
+            $where['tid'] = $params['out_trade_no'];
+            $data['status'] = 1;
+            $data['pay_type'] = 'alipay';
+            $data['buyer_email'] = $params['buyer_email'];
+            $data['trade_no'] = $params['trade_no'];
+            db('trade')->where($where)->update($data);//修改订单状态
+            echo 'success';
+            exit;
+        }
+        
+    }
     
 }    
