@@ -9,6 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <link rel="stylesheet" href="__C_CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__C_CSS__/mui.picker.min.css" />
   </head>
 
   <body>
@@ -27,11 +28,11 @@
           </div>
           <div class="mui-input-row ">
             <label>开始时间：</label>
-      		<input id="start_time" type="datetime" class="mui-input-clear" placeholder="开始时间">
+      		<input id="start_time" type="datetime"  data-options='{"beginYear":2018,"endYear":2025}' class="mui-input-clear pickTime" placeholder="开始时间">
           </div>
           <div class="mui-input-row ">
             <label>结束时间：</label>
-      		<input id="end_time" type="datetime" class="mui-input-clear" placeholder="结束时间">
+      		<input id="end_time" type="datetime" data-options='{"beginYear":2018,"endYear":2025}' class="mui-input-clear pickTime" placeholder="结束时间">
           </div>
         </section>
         <div class="content-padded font-gray-20 fontS">选择需关联的订单，添加相应日程，时间间距参考订单购买时长</div>
@@ -45,6 +46,7 @@
     <script src="__C_JS__/template.min.js"></script>
     <script src="__C_JS__/config.js"></script>
     <script src="__C_JS__/app.js"></script>
+    <script src="__C_JS__/mui.picker.min.js"></script>
 	  <script type="text/html" id="trade_list">
     		<% for(var i in list) { %>	
       		<option value="<%= list[i].id %>"><%= list[i].title %></option>
@@ -96,34 +98,51 @@
           });
         });
         
-        	document.getElementById("start_time").addEventListener('tap', function() {
-    				var dTime = new Date();
-    				dTime.setHours(6, 0);
-    				plus.nativeUI.pickTime(function(e) {
-    					var d = e.date;
-    					$('#start_time').val( d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()+' '+d.getHours() + ":" + d.getMinutes());
-    				}, function(e) {
-    					mui.toast('请选择时间')
-    				}, {
-    					title: "请选择时间",
-    					is24Hour: true,
-    					time: dTime
-    				});
-    			});
-      		document.getElementById("end_time").addEventListener('tap', function() {
-      				var dTime = new Date();
-      				dTime.setHours(6, 0);
-      				plus.nativeUI.pickTime(function(e) {
-      					var d = e.date;
-      					$('#end_time').val(d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()+' '+d.getHours() + ":" + d.getMinutes());
-      				}, function(e) {
-      					mui.toast('请选择时间')
-      				}, {
-      					title: "请选择时间",
-      					is24Hour: true,
-      					time: dTime
-      				});
-      			});	
+        //时间选择
+        var btns = mui('.pickTime');
+        btns.each(function(i, btn) {
+          btn.addEventListener('tap', function() {
+            var optionsJson = this.getAttribute('data-options') || '{}';
+            var options = JSON.parse(optionsJson);
+            var that = this;
+            var picker = new mui.DtPicker(options);
+            picker.show(function(rs) {
+              that.value = rs.text
+              // result.innerText = '选择结果: ' + rs.text;
+              
+              picker.dispose();
+            });
+          }, false);
+        });
+
+       //  	document.getElementById("start_time").addEventListener('tap', function() {
+    			// 	var dTime = new Date();
+    			// 	dTime.setHours(6, 0);
+    			// 	plus.nativeUI.pickTime(function(e) {
+    			// 		var d = e.date;
+    			// 		$('#start_time').val( d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()+' '+d.getHours() + ":" + d.getMinutes());
+    			// 	}, function(e) {
+    			// 		mui.toast('请选择时间')
+    			// 	}, {
+    			// 		title: "请选择时间",
+    			// 		is24Hour: true,
+    			// 		time: dTime
+    			// 	});
+    			// });
+      	// 	document.getElementById("end_time").addEventListener('tap', function() {
+      	// 			var dTime = new Date();
+      	// 			dTime.setHours(6, 0);
+      	// 			plus.nativeUI.pickTime(function(e) {
+      	// 				var d = e.date;
+      	// 				$('#end_time').val(d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()+' '+d.getHours() + ":" + d.getMinutes());
+      	// 			}, function(e) {
+      	// 				mui.toast('请选择时间')
+      	// 			}, {
+      	// 				title: "请选择时间",
+      	// 				is24Hour: true,
+      	// 				time: dTime
+      	// 			});
+      	// 		});	
         
 	
       
