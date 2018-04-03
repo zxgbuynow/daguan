@@ -121,15 +121,19 @@ gwIDAQAB",
 
         $request = Request::instance();
         $params = $request->param();
+
         error_log(json_encode($params),3,'/home/wwwroot/daguan/pay.log');
-        if ($params['trade_status']=='TRADE_SUCCESS') {
+        if (isset($params['trade_status'])&&$params['trade_status']=='TRADE_SUCCESS') {
             $where['tid'] = $params['out_trade_no'];
             $data['status'] = 1;
             $data['pay_type'] = 'alipay';
-            $data['buyer_email'] = $params['buyer_email'];
+            $data['buyer_email'] = $params['buyer_logon_id'];
             $data['trade_no'] = $params['trade_no'];
             db('trade')->where($where)->update($data);//修改订单状态
             echo 'success';
+            exit;
+        }else{
+            echo 'fail';
             exit;
         }
         
