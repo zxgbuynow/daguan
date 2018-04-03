@@ -121,8 +121,6 @@ gwIDAQAB",
 
         $request = Request::instance();
         $params = $request->param();
-        print_r($params);exit;
-        error_log(json_encode($params),3,'/home/wwwroot/daguan/pay.log');
         if (isset($params['trade_status'])&&$params['trade_status']=='TRADE_SUCCESS') {
             $where['tid'] = $params['out_trade_no'];
             $data['status'] = 1;
@@ -140,9 +138,7 @@ gwIDAQAB",
 
         $request = Request::instance();
         $params = $request->param();
-        print_r($params);exit;
-        error_log(json_encode($params),3,'/home/wwwroot/daguan/pay.log');
-        
+        // error_log(json_encode($params),3,'/home/wwwroot/daguan/pay.log');
         
     }
     
