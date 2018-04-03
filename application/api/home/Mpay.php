@@ -13,7 +13,7 @@ Loader::import('malipay.wappay.buildermodel.AlipayTradeWapPayContentBuilder',EXT
  * pay控制器
  * @package app\index\controller
  */
-class Mpay
+class Mpay extends Common
 {
     public function dopay()
     {
