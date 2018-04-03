@@ -19,6 +19,9 @@
       .mui-table-view:after {
         height: 0;
       }
+      .mui-scroll-wrapper{
+        margin-top: 45px;
+      }
     </style>
   </head>
 
@@ -70,6 +73,9 @@
         $.dataRequest(param, function(rs) {
             var widgets = template('trade_list', rs);
             $('.integral-details').append(widgets);
+            mui('.mui-scroll-wrapper').scroll({
+              indicators: false
+            });
         })
       // mui.init({
       //   swipeBack: true, //启用右滑关闭功能
