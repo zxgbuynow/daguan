@@ -132,9 +132,6 @@ gwIDAQAB",
             db('trade')->where($where)->update($data);//修改订单状态
             echo 'success';
             exit;
-        }else{
-            echo 'fail';
-            exit;
         }
         
     }
