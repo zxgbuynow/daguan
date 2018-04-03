@@ -139,7 +139,8 @@ gwIDAQAB",
 
         $request = Request::instance();
         $params = $request->param();
-        $this->redirect(url('mobile/Member/trade'));
+        header('Location:http://'.$_SERVER['HTTP_HOST'].'/mobile.php/Member/trade.html');
+        // $this->redirect(url('mobile/Member/trade'));
         // error_log(json_encode($params),3,'/home/wwwroot/daguan/pay.log');
         
     }
