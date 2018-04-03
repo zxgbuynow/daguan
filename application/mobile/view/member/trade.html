@@ -77,6 +77,10 @@
               indicators: false
             });
         })
+        var oldBack = mui.back;
+          mui.back = function() {
+            window.location.href = "{:url('Member/member')}";
+          };
       // mui.init({
       //   swipeBack: true, //启用右滑关闭功能
       //   gestureConfig: {
