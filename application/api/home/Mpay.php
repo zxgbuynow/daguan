@@ -1,5 +1,6 @@
 <?php
 namespace app\api\home;
+use app\common\controller\Common;
 
 use \think\Request;
 use \think\Db;
