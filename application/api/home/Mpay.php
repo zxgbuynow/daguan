@@ -5,6 +5,9 @@ use \think\Request;
 use \think\Db;
 use think\Model;
 use think\helper\Hash;
+use think\Loader;
+Loader::import('malipay.wappay.service.AlipayTradeService',EXTEND_PATH,'.php');
+Loader::import('malipay.wappay.buildermodel.AlipayTradeWapPayContentBuilder',EXTEND_PATH,'.php');
 
 /**
  * pay控制器
@@ -12,80 +15,65 @@ use think\helper\Hash;
  */
 class Mpay
 {
-    /**
-     * @var string 支付方式名称
-     */
-    public $name = '支付宝支付手机H5支付';
-    /**
-     * @var string 支付方式接口名称
-     */
-    public $app_name = '支付宝支付手机H5接口';
-     /**
-     * @var string 支付方式key
-     */
-    public $app_key = 'malipay';
-    /**
-     * @var string 中心化统一的key
-     */
-    public $app_rpc_key = 'malipay';
-    /**
-     * @var string 统一显示的名称
-     */
-    public $display_name = '支付宝（手机h5）';
-    /**
-     * @var string 货币名称
-     */
-    public $curname = 'CNY';
-    /**
-     * @var string 当前支付方式的版本号
-     */
-    public $ver = '1.0';
-    /**
-     * @var string 当前支付方式所支持的平台
-     */
-    public $platform = 'isapp';
-
-    /**
-     * @支付宝固定参数
-     */
-    public $Service_Paychannel = "mobile.merchant.paychannel";
-    public $Service1 = "alipay.wap.trade.create.direct";    //接口1
-    public $Service2 = "alipay.wap.auth.authAndExecute";    //接口2
-    public $format = "xml";    //http传输格式
-    public $sec_id = 'MD5';    //签名方式 不需修改
-    public $_input_charset = 'utf-8';    //字符编码格式
-    public $_input_charset_GBK = "GBK";
-    public $v = '2.0';    //版本号
-    public $gateway_paychannel="https://mapi.alipay.com/cooperate/gateway.do?";
-    public $gateway="https://wappaygw.alipay.com/service/rest.htm?";
-
-    /**
-     * @var array 扩展参数
-     */
-    public $supportCurrency = array("CNY"=>"01");
-
-    public $mer_key = 'f403tsml33nuktahd70wph2kh9zj37p4';
-    public $mer_id = '2088031695418481';
-    public $seller_account_name = 'dg5889@dingtalk.com';
-    /**
-     * 构造方法
-     * @param null
-     * @return boolean
-     */
-    public function __construct(){
-        
-        $this->submit_charset = 'utf-8';
-        $this->notify_url = 'http://'.$_SERVER['HTTP_HOST'].url('Mpay/callback');
-        $this->callback_url = 'http://'.$_SERVER['HTTP_HOST'].url('Mpay/callback');
-    }
-
-    /**
-     * 提交支付信息的接口
-     * @param array 提交信息的数组
-     * @return mixed false or null
-     */
-    public function dopay($payment)
+    public function dopay()
     {
+        $config = array (
+            //应用ID,您的APPID。
+            'app_id' => "2018032802460598",
+            //商户私钥，您的原始格式RSA私钥
+            'merchant_private_key' => "MIIEowIBAAKCAQEA3LuRUFx2BL/nXp8fUd4obPzOIvr8ihn8yqiBYoR3CK3oD1uM
+1P4m5SqPA70lYNbaCRsFIUg4CuGk/R0QDmP6mBY4H/spyrYUYbfFksUf1k9ZHz9n
+UB/TIKdRTOsGFC6rs7eCMX4mH8KC4AqPlzl+R9QvTWMxgpvngxKzja+uXt//3C07
+y/CWmA7RtHScedYKKysFid3s7w78VFFwZ6mQ9jCus9EaCFYg/WBOoVMNKE0cDlgY
+Lf4yw3uba4oGle6LaVgNMm4zwe09JmlpmeLstf8U7N7TsB95Rv6CfrFC7lUlwolu
+bfyccUeBeTVBxc2RVRMCNfomlkHP6QP6Kqy+gwIDAQABAoIBAQCbVAqwCECsmvaP
+6V262KCOAWB10TUBYcQ4QFe8Igc5vlc852m1QJvSTB6TvPieqtKH8dGsWAvH7H2T
++G2iEsz3VTttlesU0QiKsy1/WORMhU3r5UwoYBzML7HQdNq0PRtqvkoJ1gGx+8jp
+K8Vb34NzvGcFCDaA+ID0BacAn44PCDcv0+OMnF6ipNK7bOJoN+QkEdkadoz1mO/+
+seGUoie6djERIqbRnIr3sP3U5ZYvLBto0EuBLblMJd1GLUmJfuVYik1weGyBsuEk
+/kTFcNZCwlexc7gQac9LNkBIlS0uUomIcnuePAkXVFOZW3FwouWUYklVLbbKq5fE
+vyJzbvpxAoGBAPkzzFGP3yIEd4DFzaiYOKgRv05Kh6z8+L9zm20KOW3rRoXh3DqE
+GNjyKKm00hJ0Pw6UhrHk2ctefVX7KhUQaNPLuijBn4bapkgBmpqdCwzJZpSc7BDY
+sYhlBfs6PNC5KfqJB5rBzC7XfDyWueYIaW6+YWJGxbFc3Db9ez+weKstAoGBAOLA
+9qOwpnhSx+baBt/elRDa+8HWQkIknMjgH47TLP2A5Ub3N1zsPCVTormptOLUdbsH
+Ed3phnyte4mutYqGPdao7n4e6LFmJ1tTrv3cmviVea3/fAzyQ3pDg98wtR3HtHTY
+64c4dtzYi6ZUDJFIutzFvqNHb/ycRMy7IrplgF5vAoGAfzkUjGc48TL6l4FkdzgP
+ZK56zkt6bLRRgdxRcx+PJjDBNkSSnEUoMkmevNUVklpKfvUQtu0wy4SX1Dd/ynUw
+L0CI75m6CazCy2wWM+0M4SBJAIIEeq1GJW392b5nod+GMOOYQEfEJ/3W7U+95FRT
+Dziemv+qmdvgiSprq546XJkCgYBk5SmZkluwRF1Qegj/CgJYGqhVCqo21iWxOBCy
+s4JcVkMuvYez4CWvEjTg2gNzvseX7cBkdqlxxpummseKmMrhPg/IrKYrcWHnwCeo
+K8YFADXBV2HyPMYLnAkMgZbFZnwEVhUO+O/iurQA0Xs6FhuXaqG1825//2SZmFcO
+i2WAHwKBgBs6+n19m4o0A/u1GIlbUI+T0OC/BuN4D4M5xil/K0fKTM1LBlfrvAlf
+25vscHdO4jReAdSyyeC/YC3Dw25iW4X/rUiowzdZUoU0FrRGDxgscJwwIIltnlPi
+CPALTKotDuQ30dilaQ85V/otiACFF+raOTTGYePigun2ZdWheEbJ",
+
+            //异步通知地址
+            'notify_url' =>  'http://'.$_SERVER['HTTP_HOST'].url('Mpay/callback'),
+
+            //同步跳转
+            'return_url' =>  'http://'.$_SERVER['HTTP_HOST'].url('Mpay/callback'),
+
+            //编码格式
+            'charset' => "UTF-8",
+
+            //签名方式
+            'sign_type'=>"RSA2",
+
+            //支付宝网关
+            'gatewayUrl' => "https://openapi.alipay.com/gateway.do",
+
+            //支付宝公钥,查看地址：https://openhome.alipay.com/platform/keyManage.htm 对应APPID下的支付宝公钥。
+            'alipay_public_key' => "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3LuRUFx2BL/nXp8fUd4o
+bPzOIvr8ihn8yqiBYoR3CK3oD1uM1P4m5SqPA70lYNbaCRsFIUg4CuGk/R0QDmP6
+mBY4H/spyrYUYbfFksUf1k9ZHz9nUB/TIKdRTOsGFC6rs7eCMX4mH8KC4AqPlzl+
+R9QvTWMxgpvngxKzja+uXt//3C07y/CWmA7RtHScedYKKysFid3s7w78VFFwZ6mQ
+9jCus9EaCFYg/WBOoVMNKE0cDlgYLf4yw3uba4oGle6LaVgNMm4zwe09JmlpmeLs
+tf8U7N7TsB95Rv6CfrFC7lUlwolubfyccUeBeTVBxc2RVRMCNfomlkHP6QP6Kqy+
+gwIDAQAB",
+
+
+        );
+
         $request = Request::instance();
         $params = $request->param();
 
@@ -93,381 +81,34 @@ class Mpay
         //查询订单信息
         $payment = db('trade')->where($where)->find();
 
-        $mer_id = $this->mer_id;
-        $mer_key = $this->mer_key;
-        $seller_account_name = $this->seller_account_name;
 
-        $subject = $payment['memberid'].$payment['tid'];
-
-        $payment['payment'] = 0.01
-
-        $subject = str_replace("'",'`',trim($subject));
-        $subject = str_replace('"','`',$subject);
-        $subject = str_replace(' ','',$subject);
-
-        $merchant_url = '';
-        $subject_tmp = $subject;
-        $price = number_format($payment['payment'],2,".","");
-
-        $pms_0 = array (
-            "_input_charset" => $this->_input_charset_GBK,
-            "sign_type" => $this->sec_id,
-            "service" => $this->Service_Paychannel,
-            "partner" => $mer_id,
-            "out_user" => ''
-        );
-
-        $pms_1 = array (
-            "req_data"      => '<direct_trade_create_req><subject>' . $subject_tmp . '</subject><out_trade_no>' .
-           $payment['payment_id'] . '</out_trade_no><total_fee>' . $price  . "</total_fee><seller_account_name>" . $seller_account_name .
-            "</seller_account_name><notify_url>" . $this->notify_url . "</notify_url><out_user>" . '' .
-            "</out_user><merchant_url>" . $merchant_url . "</merchant_url><cashier_code>" . '' .
-            "</cashier_code>" . "<call_back_url>" . $this->callback_url . "</call_back_url></direct_trade_create_req>",
-            "service"       => $this->Service1,
-            "sec_id"        => $this->sec_id,
-            "partner"       => $mer_id,
-            "req_id"        => date("Ymdhis"),
-            "format"        => $this->format,
-            "v"             => $this->v
-        );
-        $token=$this->alipay_wap_trade_create_direct($pms_1,$mer_key);
-
-        // 验证和发送信息与跳转手机支付宝收银台.
-        $req_data = '<auth_and_execute_req><request_token>'.$token.'</request_token></auth_and_execute_req>';
-        $pms2 = array (
-            "req_data"      => $req_data,
-            "service"       => $this->Service2,
-            "sec_id"        => $this->sec_id,
-            "partner"       => $mer_id,
-            "call_back_url" => $this->callback_url,
-            "format"        => $this->format,
-            "app_pay"       => 'Y',
-            "v"             => $this->v
-        );
-        $parameter = $this->para_filter($pms2);
-        $mysign    = $this->build_mysign($this->arg_sort($parameter), $mer_key, $this->sec_id);
-        $this->add_field('req_data',$req_data);
-        $this->add_field('service',$this->Service2);
-        $this->add_field('sec_id',$this->sec_id);
-        $this->add_field('partner',$mer_id);
-        $this->add_field('call_back_url',$this->callback_url);
-        $this->add_field('format',$this->format);
-        $this->add_field('v',$this->v);
-        $this->add_field('app_pay', 'Y');
-        $this->add_field('sign',urlencode($mysign));
-
-        echo $this->get_html();exit;
-    }
-
-    /**
-     * 创建mobile_merchant_paychannel接口
-    */
-    function mobile_merchant_paychannel($pms0, $merchant_key) {
-        $_key = $merchant_key;                       //MD5校验码
-        $sign_type    = $pms0['sign_type'];          //签名类型，此处为MD5
-        $parameter = $this->para_filter($pms0);      //除去数组中的空值和签名参数
-        $sort_array = $this->arg_sort($parameter);   //得到从字母a到z排序后的签名参数数组
-        $mysign = $this->build_mysign($sort_array, $_key, $sign_type); //生成签名
-        $req_data = $this->create_linkstring($parameter).'&sign='.urlencode($mysign).'&sign_type='.$sign_type;  //配置post请求数据，注意sign签名需要urlencode
-
-        //模拟get请求方法
-        $url = $this->gateway_paychannel . $req_data;
-        $result = kernel::single('base_httpclient')->get($url);
-        //调用处理Json方法
-        $alipay_channel = $this->getJson($result,$_key,$sign_type);
-        return $alipay_channel;
-    }
-
-    /**
-     * 验签并反序列化Json数据
-     */
-    function getJson($result,$m_key,$m_sign_type){
-        //获取返回的Json
-        // $json = $this->getDataForXML($result,'/alipay/response/alipay/result');
-        $xmlData = $this->getDataForXML($result);
-        $json = $xmlData['alipay']['response']['alipay']['result'];
-        //拼装成待签名的数据
-        $data = "result=" . $json . $m_key;
-        //$json="{\"payChannleResult\":{\"supportedPayChannelList\":{\"supportTopPayChannel\":{\"name\":\"储蓄卡快捷支付\",\"cashierCode\":\"DEBITCARD\",\"supportSecPayChannelList\":{\"supportSecPayChannel\":[{\"name\":\"农行\",\"cashierCode\":\"DEBITCARD_ABC\"},{\"name\":\"工行\",\"cashierCode\":\"DEBITCARD_ICBC\"},{\"name\":\"中信\",\"cashierCode\":\"DEBITCARD_CITIC\"},{\"name\":\"光大\",\"cashierCode\":\"DEBITCARD_CEB\"},{\"name\":\"深发展\",\"cashierCode\":\"DEBITCARD_SDB\"},{\"name\":\"更多\",\"cashierCode\":\"DEBITCARD\"}]}}}}}";
-        //获取返回sign
-        // $aliSign = $this->getDataForXML($result,'/alipay/sign');
-        $aliSign = $xmlData['alipay']['sign'];
-        //转换待签名格式数据，因为此mapi接口统一都是用GBK编码的，所以要把默认UTF-8的编码转换成GBK，否则生成签名会不一致
-        $data_GBK = mb_convert_encoding($data, "GBK", "UTF-8");
-        //生成自己的sign
-        $mySign = $this->sign($data_GBK,$m_sign_type);
-        //判断签名是否一致
-        if($mySign==$aliSign){
-            //echo "签名相同";
-            //php读取json数据
-            return json_decode($json);
-        }else{
-            //echo "验签失败";
-            return "验签失败";
-        }
-    }
-
-
-    /**
-     * 创建alipay.wap.trade.create.direct接口
-     */
-    public function alipay_wap_trade_create_direct($pms1, $merchant_key){
-        $_key       = $merchant_key;                  //MD5校验码
-        $sign_type  = $pms1['sec_id'];              //签名类型，此处为MD5
-        $parameter  = $this->para_filter($pms1);      //除去数组中的空值和签名参数
-        $req_data   = $pms1['req_data'];
-        $format     = $pms1['format'];                //编码格式，此处为utf-8
-        $sort_array = $this->arg_sort($parameter);    //得到从字母a到z排序后的签名参数数组
-        $mysign     = $this->build_mysign($sort_array, $_key, $sign_type);    //生成签名
-        //$req_data   = $this->create_linkstring($parameter).'&sign='.urlencode($mysign);    //配置post请求数据，注意sign签名需要urlencode
-        $parameter['sign'] = urlencode($mysign);
-
-        //Post提交请求
-        $url = $this->gateway;
+        //商户订单号，商户网站订单系统中唯一订单号，必填
         
-        $res = client::get($url, ['query' => $parameter])->getBody();
-        
-        //调用GetToken方法，并返回token
-        return $this->getToken($res,$_key,$sign_type);
+        $out_trade_no = $payment['tid'];
+
+        //订单名称，必填
+        $subject = $payment['title'].'...';
+
+        //付款金额，必填
+        $total_amount = number_format($payment['payment'],2,".","");
+        // $total_amount = 0.01;
+
+        //商品描述，可空
+        $body = $payment['title'].'...';
+
+        //超时时间
+        $timeout_express="1m";
+        $payRequestBuilder = new \AlipayTradeWapPayContentBuilder();
+        $payRequestBuilder->setBody($body);
+        $payRequestBuilder->setSubject($subject);
+        $payRequestBuilder->setOutTradeNo($out_trade_no);
+        $payRequestBuilder->setTotalAmount($total_amount);
+        $payRequestBuilder->setTimeExpress($timeout_express);
+
+        $payResponse = new \AlipayTradeService($config);
+        $result = $payResponse->wapPay($payRequestBuilder,$config['return_url'],$config['notify_url']);
+
+        return ;
     }
-    function get_html()
-    {
-        // 简单的form的自动提交的代码。
-
-        header("Content-Type: text/html;charset=".$this->submit_charset);
-        $strHtml ="<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">
-        <html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en-US\" lang=\"en-US\" dir=\"ltr\">
-        <head>
-        </head><body><div>Redirecting...</div>";
-        $strHtml .= '<form action="' . $this->submit_url .  '" name="pay_form" id="pay_form">';
-
-        // Generate all the hidden field.
-        foreach ($this->fields as $key=>$value)
-        {
-            $strHtml .= '<input type="hidden" name="' . $key . '" value="' . $value . '" />';
-        }
-        $strHtml .= '<input type="submit" name="btn_purchase" value="1" style="display:none;" />';
-        $strHtml .= '</form>';
-        // $strHtml .= '<script type="text/javascript">'.$this->getApJs() .'</script> ';
-        $strHtml .= '<script>';
-        $strHtml .= 'var queryParam = \'\';';
-        $strHtml .= 'Array.prototype.slice.call(document.querySelectorAll("input[type=hidden]")).forEach(function (ele) {';
-        $strHtml .= '  if(ele.name === \'req_data_tt\') {';
-        $strHtml .= '     queryParam += ele.name + "=" + ele.value + \'u\'';
-        $strHtml .= '  } else {';
-        $strHtml .= '     queryParam += ele.name + "=" + encodeURIComponent(ele.value) + \'&\';';
-        $strHtml .= '  }';
-        $strHtml .= '});';
-        $strHtml .= 'var gotoUrl = document.querySelector("#pay_form").getAttribute(\'action\') + \'&\' + queryParam;';
-        $strHtml .= '_AP.pay(gotoUrl);';
-        $strHtml .= '</script>';
-        $strHtml .= '</body></html>';
-        return $strHtml;
-    }
-
-    /**
-     * 返回token参数
-     * 参数 result 需要先urldecode
-     */
-    function getToken($result,$_key,$gt_sign_type){
-        $result = urldecode($result);               //URL转码
-        $Arr = explode('&', $result);               //根据 & 符号拆分
-
-        $temp = array();                            //临时存放拆分的数组
-        $myArray = array();                         //待签名的数组
-        //循环构造key、value数组
-        for ($i = 0; $i < count($Arr); $i++) {
-            $temp = explode( '=' , $Arr[$i] , 2 );
-            $myArray[$temp[0]] = $temp[1];
-        }
-
-        $sign = $myArray['sign'];                                               //支付宝返回签名
-        $myArray = $this->para_filter($myArray);                                       //拆分完毕后的数组
-        $sort_array = $this->arg_sort($myArray);                                       //排序数组
-        $mysign = $this->build_mysign($sort_array,$_key,$gt_sign_type); //构造本地参数签名，用于对比支付宝请求的签名
-        if($mysign == $sign)  //判断签名是否正确
-        {
-            $xmlData = $this->getDataForXML($myArray['res_data']);
-            // return $this->getDataForXML($myArray['res_data'],'/direct_trade_create_res/request_token');    //返回token
-            return $xmlData['direct_trade_create_res']['request_token'];    //返回token
-        }else{
-            echo('签名不正确');      //当判断出签名不正确，请不要验签通过
-            return '签名不正确';
-        }
-    }
-
-    /**
-     * 校验方法
-     * @param null
-     * @return boolean
-     */
-    public function is_fields_valiad(){
-        return true;
-    }
-
-    /**
-     * 支付后返回后处理的事件的动作
-     * @params array - 所有返回的参数，包括POST和GET
-     * @return null
-     */
-    public function callback()
-    {
-        #键名与pay_setting中设置的一致
-        $mer_id = $this->mer_id;
-        $mer_key = $this->mer_key;
-
-        $request = Request::instance();
-        $params = $request->param();
-        if ($params['trade_status']=='TRADE_SUCCESS') {
-            $where['tid'] = $params['out_trade_no'];
-            $data['status'] = 1;
-            $data['pay_type'] = 'alipay';
-            $data['buyer_email'] = $params['buyer_email'];
-            $data['trade_no'] = $params['trade_no'];
-            db('trade')->where($where)->update($data);//修改订单状态
-            echo 'success';
-            exit;
-        }
-        
-    }
-
-    /**
-     * 检验返回数据合法性
-     * @param mixed $form 包含签名数据的数组
-     * @param mixed $key 签名用到的私钥
-     * @access private
-     * @return boolean
-     */
-    public function is_return_vaild($form,$key)
-    {
-        ksort($form);
-        foreach($form as $k=>$v){
-            if($k!='sign'&&$k!='sign_type'){
-                $signstr .= "&$k=$v";
-            }
-        }
-
-        $signstr = ltrim($signstr,"&");
-        $signstr = $signstr.$key;
-
-        if($form['sign']==md5($signstr)){
-            return true;
-        }
-        #记录返回失败的情况
-        logger::error(app::get('ectools')->_('支付单号：') . $form['out_trade_no'] . app::get('ectools')->_('签名验证不通过，请确认！')."\n");
-        logger::error(app::get('ectools')->_('本地产生的加密串：') . $signstr);
-        logger::error(app::get('ectools')->_('支付宝传递打过来的签名串：') . $form['sign']);
-        $str_xml .= "<alipayform>";
-        foreach ($form as $key=>$value)
-        {
-            $str_xml .= "<$key>" . $value . "</$key>";
-        }
-        $str_xml .= "</alipayform>";
-
-        return false;
-    }
-
-    // 对签名字符串转义
-    public function createLinkstring($para) {
-        $arg  = "";
-        while (list ($key, $val) = each ($para)) {
-            $arg.=$key.'="'.$val.'"&';
-        }
-        //去掉最后一个&字符
-        $arg = substr($arg,0,count($arg)-2);
-        //如果存在转义字符，那么去掉转义
-        if(get_magic_quotes_gpc()){$arg = stripslashes($arg);}
-        return $arg;
-    }
-
-    // 签名生成订单信息--MD5加密方式
-    public function md5Sign($data, $key)
-    {
-        return md5($data.$key);
-    }
-
-    public function gen_form()
-    {
-
-        return '';
-    }
-
-    /**生成签名结果
-     * $array要签名的数组
-     * return 签名结果字符串
-     */
-    public function build_mysign($sort_array,$key,$sign_type = "MD5") {
-        $prestr = $this->create_linkstring($sort_array);         //把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
-        $prestr = $prestr.$key;                            //把拼接后的字符串再与安全校验码直接连接起来
-        $mysgin = $this->sign($prestr,$sign_type);                //把最终的字符串签名，获得签名结果
-        return $mysgin;
-    }
-
-
-    /**把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
-     * $array 需要拼接的数组
-     * return 拼接完成以后的字符串
-     */
-    public function create_linkstring($array) {
-        $arg  = "";
-        while (list ($key, $val) = each ($array)) {
-            $arg.=$key."=".$val."&";
-        }
-        $arg = substr($arg,0,count($arg)-2);             //去掉最后一个&字符
-        return $arg;
-    }
-
-
-    /**除去数组中的空值和签名参数
-     * $parameter 签名参数组
-     * return 去掉空值与签名参数后的新签名参数组
-     */
-    public function para_filter($parameter) {
-        $para = array();
-        while (list ($key, $val) = each ($parameter)) {
-            if($key == "sign" || $key == "sign_type" || $val == "")continue;
-            else    $para[$key] = $parameter[$key];
-        }
-        return $para;
-    }
-
-
-    /**对数组排序
-     * $array 排序前的数组
-     * return 排序后的数组
-     */
-    public function arg_sort($array) {
-        ksort($array);
-        reset($array);
-        return $array;
-    }
-
-
-    /**签名字符串
-     * $prestr 需要签名的字符串
-     * $sign_type 签名类型，也就是sec_id
-     * return 签名结果
-     */
-    public function sign($prestr,$sign_type) {
-        $sign='';
-        if($sign_type == 'MD5') {
-            $sign = md5($prestr);
-        }elseif($sign_type =='DSA') {
-            //DSA 签名方法待后续开发
-            die("DSA 签名方法待后续开发，请先使用MD5签名方式");
-        }else {
-            die("支付宝暂不支持".$sign_type."类型的签名方式");
-        }
-        return $sign;
-    }
-
-    /**
-     * 通过节点路径返回字符串的某个节点值
-     * $res_data——XML 格式字符串
-     * 返回节点参数
-     */
-    function getDataForXML($res_data)
-    {
-        return kernel::single('site_utility_xml')->xml2array($res_data);
-    }
+    
 }    
