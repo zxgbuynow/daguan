@@ -99,6 +99,8 @@
 
       // 2. 发起支付请求
       function pay(server, id, pid, total) {
+        window.location.href = server;return true;
+        console.log(server);
         var xhr = new XMLHttpRequest();
         var PAYSERVER = server;
         xhr.onreadystatechange = function() {
