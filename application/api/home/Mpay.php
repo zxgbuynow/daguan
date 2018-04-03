@@ -51,7 +51,7 @@ CPALTKotDuQ30dilaQ85V/otiACFF+raOTTGYePigun2ZdWheEbJ",
             'notify_url' =>  'http://'.$_SERVER['HTTP_HOST'].url('Mpay/callback'),
 
             //同步跳转
-            'return_url' =>  'http://'.$_SERVER['HTTP_HOST'].url('Mpay/callback'),
+            'return_url' =>  'http://'.$_SERVER['HTTP_HOST'].url('Mpay/callback1'),
 
             //编码格式
             'charset' => "UTF-8",
@@ -121,7 +121,7 @@ gwIDAQAB",
 
         $request = Request::instance();
         $params = $request->param();
-
+        print_r($params);exit;
         error_log(json_encode($params),3,'/home/wwwroot/daguan/pay.log');
         if (isset($params['trade_status'])&&$params['trade_status']=='TRADE_SUCCESS') {
             $where['tid'] = $params['out_trade_no'];
@@ -133,6 +133,16 @@ gwIDAQAB",
             echo 'success';
             exit;
         }
+        
+    }
+    public function callback1()
+    {
+
+        $request = Request::instance();
+        $params = $request->param();
+        print_r($params);exit;
+        error_log(json_encode($params),3,'/home/wwwroot/daguan/pay.log');
+        
         
     }
     
