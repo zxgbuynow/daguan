@@ -8,7 +8,7 @@ use think\Validate;
 /**
  * 用户验证器
  * @package app\admin\validate
- * @author 蔡伟明 <314013107@qq.com>
+ * @author zg
  */
 class User extends Validate
 {

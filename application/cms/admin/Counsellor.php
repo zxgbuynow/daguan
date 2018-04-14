@@ -11,6 +11,7 @@ use app\cms\model\Agency as AgencyModel;
 use app\cms\model\Point as PointModel;
 use app\cms\model\Category as CategoryModel;
 use app\cms\model\CateAccess as CateAccessModel;
+use app\cms\model\Trade as TradeModel;
 use util\Tree;
 use think\Db;
 use think\Hook;
@@ -43,6 +44,7 @@ class Counsellor extends Admin
         $list_type = AgencyModel::where('status', 1)->column('id,title');
 
         $btnAdd = ['icon' => 'fa fa-plus', 'title' => '积分列表', 'href' => url('point', ['id' => '__id__'])];
+        $incomeBtn = ['icon' => 'fa fa-fw fa-cny', 'title' => '收列表', 'href' => url('income', ['id' => '__id__'])];
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
@@ -64,6 +66,7 @@ class Counsellor extends Admin
             ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
             ->addRightButtons('delete,edit') // 批量添加右侧按钮
             ->addRightButton('custom', $btnAdd)
+            // ->addRightButton('custom', $incomeBtn)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
@@ -257,6 +260,53 @@ class Counsellor extends Admin
             ])
             // ->addTopButtons('delete') // 批量添加顶部按钮
             // ->addRightButtons('delete') // 批量添加右侧按钮
+            ->setRowList($data_list) // 设置表格数据
+            ->setPages($page) // 设置分页数据
+            ->fetch(); // 渲染页面
+   }
+   /**
+    * [income 收入列表]
+    * @param  [type] $id [description]
+    * @return [type]     [description]
+    */
+   public function income($id = null)
+   {
+       if ($id === null) $this->error('缺少参数');
+
+        cookie('__forward__', $_SERVER['REQUEST_URI']);
+
+        // 获取查询条件
+        $map = $this->getMap();
+
+        $map['memberid'] = $id;
+        // 数据列表
+        $data_list = PointModel::where($map)->order('id desc')->paginate();
+
+        // 分页数据
+        $page = $data_list->render();
+
+
+        $list_type = CounsellorModel::where('status', 1)->column('id,username');
+
+        // 使用ZBuilder快速创建数据表格
+        return ZBuilder::make('table')
+            ->setPageTitle('收入管理') // 设置页面标题
+            ->setTableName('member_point') // 设置数据表名
+            ->setSearch(['mobile' => '手机号']) // 设置搜索参数
+            ->hideCheckbox()
+            ->addColumns([ // 批量添加列
+                ['id', 'ID'],
+                ['behavior_type', '行为类型',['获得','消费']],
+                ['behavior', '行为描述'],
+                ['memberid', '会员', 'select', $list_type],
+                ['point', '积分值'],
+                ['create_time', '创建时间', 'datetime'],
+            ])
+            ->addTopButton('back', [
+                'title' => '返回咨询师列表',
+                'icon'  => 'fa fa-reply',
+                'href'  => url('counsellor/index')
+            ])
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面

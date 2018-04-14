@@ -19,4 +19,11 @@ class Agency extends Model
      // 自动写入时间戳
     protected $autoWriteTimestamp = true;
 
+    public  function getIncomeAttr($v,$data)
+    {
+       return number_format(db('trade')->where(['shopid'=>$data['id'],'status'=>1])->sum('payment'));
+    }
+
+    
+
 }

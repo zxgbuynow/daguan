@@ -15,7 +15,7 @@ class AdvertType extends Admin
 {
     /**
      * 广告列表
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function index()
@@ -50,7 +50,7 @@ class AdvertType extends Admin
 
     /**
      * 新增
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function add()
@@ -86,7 +86,7 @@ class AdvertType extends Admin
     /**
      * 编辑
      * @param null $id 广告分类id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function edit($id = null)
     {
@@ -127,7 +127,7 @@ class AdvertType extends Admin
     /**
      * 删除广告分类
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function delete($record = [])
@@ -138,7 +138,7 @@ class AdvertType extends Admin
     /**
      * 启用广告分类
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function enable($record = [])
@@ -149,7 +149,7 @@ class AdvertType extends Admin
     /**
      * 禁用广告分类
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function disable($record = [])
@@ -161,7 +161,7 @@ class AdvertType extends Admin
      * 设置广告分类状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record 日志记录
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function setStatus($type = '', $record = [])
@@ -174,7 +174,7 @@ class AdvertType extends Admin
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function quickEdit($record = [])

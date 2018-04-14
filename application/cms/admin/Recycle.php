@@ -17,7 +17,7 @@ class Recycle extends Admin
     /**
      * 文档列表
      * @param string $model 内容模型id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function index($model = '')
     {
@@ -122,7 +122,7 @@ class Recycle extends Admin
      * 还原文档
      * @param null $ids 文档id
      * @param string $table 表名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function restore($ids = null, $table = '')
     {
@@ -146,7 +146,7 @@ class Recycle extends Admin
      * 彻底删除文档
      * @param null $ids 文档id
      * @param string $table 表名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function delete($ids = null, $table = '')

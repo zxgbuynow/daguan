@@ -23,7 +23,7 @@ class Document extends ThinkModel
      * 获取文档列表
      * @param array $map 筛选条件
      * @param array $order 排序
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public static function getList($map = [], $order = [])
@@ -42,7 +42,7 @@ class Document extends ThinkModel
      * @param string $id 文档id
      * @param string $model 独立模型id
      * @param array $map 查询条件
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public static function getOne($id = '', $model = '', $map = [])
@@ -73,7 +73,7 @@ class Document extends ThinkModel
 
     /**
      * 新增或更新文档
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return bool
      */
     public function saveData()

@@ -16,7 +16,7 @@ class Column extends Common
     /**
      * 栏目文章列表
      * @param null $id 栏目id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function index($id = null)
@@ -79,7 +79,7 @@ class Column extends Common
     /**
      * 获取栏目面包屑导航
      * @param int $id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function getBreadcrumb($id)
     {

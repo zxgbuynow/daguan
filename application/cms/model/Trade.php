@@ -19,4 +19,9 @@ class Trade extends Model
      // 自动写入时间戳
     protected $autoWriteTimestamp = true;
 
+    public  function getUsernameAttr($v,$data)
+    {
+       // return 68788878;
+       return db('member')->where(['id'=>$data['memberid']])->column('nickname')[0];
+    }
 }

@@ -14,7 +14,7 @@ class Search extends Common
     /**
      * 搜索列表
      * @param string $keyword 关键词
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function index($keyword = '')

@@ -15,7 +15,7 @@ class Slider extends Admin
 {
     /**
      * 滚动图片列表
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function index()
@@ -50,7 +50,7 @@ class Slider extends Admin
 
     /**
      * 新增
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function add()
@@ -88,7 +88,7 @@ class Slider extends Admin
     /**
      * 编辑
      * @param null $id 滚动图片id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function edit($id = null)
@@ -132,7 +132,7 @@ class Slider extends Admin
     /**
      * 删除单页
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function delete($record = [])
@@ -143,7 +143,7 @@ class Slider extends Admin
     /**
      * 启用单页
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function enable($record = [])
@@ -154,7 +154,7 @@ class Slider extends Admin
     /**
      * 禁用单页
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function disable($record = [])
@@ -166,7 +166,7 @@ class Slider extends Admin
      * 设置单页状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function setStatus($type = '', $record = [])
@@ -179,7 +179,7 @@ class Slider extends Admin
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function quickEdit($record = [])

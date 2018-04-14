@@ -19,7 +19,7 @@ class Item extends Admin
     /**
      * 菜单列表
      * @param null $id 导航id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function index($id = null)
@@ -172,7 +172,7 @@ class Item extends Admin
     /**
      * 删除菜单
      * @param null $ids 菜单id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function delete($ids = null)
@@ -184,7 +184,7 @@ class Item extends Admin
     /**
      * 启用菜单
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function enable($record = [])
@@ -195,7 +195,7 @@ class Item extends Admin
     /**
      * 禁用菜单
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function disable($record = [])
@@ -207,7 +207,7 @@ class Item extends Admin
      * 设置菜单状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function setStatus($type = '', $record = [])
@@ -220,7 +220,7 @@ class Item extends Admin
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function quickEdit($record = [])

@@ -22,7 +22,7 @@ class Column extends ThinkModel
      * 标题获取器
      * @param $value
      * @param $data
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     protected function getTitleAttr($value, $data) {
         switch ($data['type']) {
@@ -35,7 +35,7 @@ class Column extends ThinkModel
 
     /**
      * 获取栏目列表
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array|mixed
      */
     public static function getList()
@@ -55,7 +55,7 @@ class Column extends ThinkModel
      * 获取树状栏目
      * @param int $id 需要隐藏的栏目id
      * @param string $default 默认第一个节点项，默认为“顶级栏目”，如果为false则不显示，也可传入其他名称
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array|mixed
      */
     public static function getTreeList($id = 0, $default = '')
@@ -90,7 +90,7 @@ class Column extends ThinkModel
     /**
      * 获取所有子栏目id
      * @param int $pid 父级id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array
      */
     public static function getChildsId($pid = 0)
@@ -105,7 +105,7 @@ class Column extends ThinkModel
     /**
      * 获取指定栏目数据
      * @param int $cid 栏目id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed|static
      */
     public static function getInfo($cid = 0)

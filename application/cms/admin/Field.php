@@ -18,7 +18,7 @@ class Field extends Admin
     /**
      * 字段列表
      * @param null $id 文档模型id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function index($id = null)
     {
@@ -58,7 +58,7 @@ class Field extends Admin
     /**
      * 新增字段
      * @param string $model 文档模型id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function add($model = '')
@@ -164,7 +164,7 @@ class Field extends Admin
     /**
      * 编辑字段
      * @param null $id 字段id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function edit($id = null)
@@ -247,7 +247,7 @@ class Field extends Admin
     /**
      * 删除字段
      * @param null $ids 字段id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function delete($ids = null)
@@ -271,7 +271,7 @@ class Field extends Admin
     /**
      * 启用字段
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function enable($record = [])
@@ -282,7 +282,7 @@ class Field extends Admin
     /**
      * 禁用字段
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function disable($record = [])
@@ -294,7 +294,7 @@ class Field extends Admin
      * 设置字段状态：删除、禁用、启用
      * @param string $type 类型：enable/disable
      * @param array $record
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function setStatus($type = '', $record = [])
@@ -308,7 +308,7 @@ class Field extends Admin
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function quickEdit($record = [])

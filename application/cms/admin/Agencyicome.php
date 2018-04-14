@@ -13,10 +13,10 @@ use think\Db;
 use think\Hook;
 
 /**
- * 订单默认控制器
+ * 分机构收入默认控制器
  * @package app\member\admin
  */
-class Trade extends Admin
+class Agencyicome extends Admin
 {
     /**
      * 咨询师首页
@@ -30,54 +30,27 @@ class Trade extends Admin
         $map = $this->getMap();
 
         // 数据列表
-        $data_list = TradeModel::where($map)->order('id desc')->paginate();
+        $data_list = AgencyModel::where($map)->order('id desc')->paginate();
 
         // 分页数据
         $page = $data_list->render();
 
-        //机构列表
-        $agency_list = AgencyModel::where('status', 1)->column('id,title');
-        //用户列表
-        $counsellor_list =  CounsellorModel::where('status', 1)->column('id,username');
-
-        $btncancle = [
-            // 'class' => 'btn btn-info',
-            'title' => '取消',
-            'icon'  => 'fa fa-fw fa-times-circle',
-            'href'  => url('cancle', ['id' => '__id__'])
-        ];
-
-        $btnfrzee = [
-            // 'class' => 'btn btn-info',
-            'title' => '冰结',
-            'icon'  => 'fa fa-fw fa-snowflake-o',
-            'href'  => url('frzee', ['id' => '__id__'])
-        ];
-
+        $incomeBtn = ['icon' => 'fa fa-fw fa-cny', 'title' => '收入明细', 'href' => url('income', ['id' => '__id__'])];
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
-            ->setPageTitle('订单管理') // 设置页面标题
-            ->setTableName('trade') // 设置数据表名
-            ->setSearch(['id' => '订单编号']) // 设置搜索参数
+            ->setPageTitle('机构收入管理') // 设置页面标题
+            ->setTableName('shop_agency') // 设置数据表名
+            ->setSearch(['title' => '分机构名']) // 设置搜索参数
             ->hideCheckbox()
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
-                ['title', '交易标题'],
-                ['payment', '支付金额'],
-                ['shopid', '机构', 'select', $agency_list],
-                ['memberid', '用户', 'select', $counsellor_list],
-                ['mid', '咨询师', 'select', $counsellor_list],
-                ['created_time', '创建时间', 'datetime'],
-                ['status', '状态', 'text', '', ['待支付', '已支付', '取消', '冻结']],
+                ['title', '分机构名'],
+                ['income', '收入'],
                 ['right_button', '操作', 'btn']
-                
             ])
-            // ->addTopButtons('delete') // 批量添加顶部按钮
-            // ->addRightButtons('cancle,frzee') // 批量添加右侧按钮
-            ->addRightButton('custom', $btncancle) // 添加右侧按钮
-            ->addRightButton('custom', $btnfrzee) // 添加右侧按钮
-            ->replaceRightButton(['status' => ['>', 1]], '', ['custom'])
+            ->raw('income')
+            ->addRightButton('custom', $incomeBtn)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
@@ -189,6 +162,62 @@ class Trade extends Admin
             ->setFormData($info) // 设置表单数据
             ->fetch();
     }
+
+    /**
+     * [income description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function income($id = null)
+   {
+       if ($id === null) $this->error('缺少参数');
+
+        cookie('__forward__', $_SERVER['REQUEST_URI']);
+
+        // 获取查询条件
+        $map = $this->getMap();
+
+        $map['shopid'] = $id;
+        $map['status'] = 1;//已支付
+
+        // 数据列表
+        $data_list = TradeModel::where($map)->order('id desc')->paginate();
+
+        // 分页数据
+        $page = $data_list->render();
+
+        //机构列表
+        // $agency_list = AgencyModel::where('status', 1)->column('id,title');
+
+        // print_r(db('member')->where(['id'=>1])->column('nickname')[0]);exit;
+        //用户列表
+        // $counsellor_list =  CounsellorModel::where('status', 1)->column('id,username');
+
+        // 使用ZBuilder快速创建数据表格
+        return ZBuilder::make('table')
+            ->setPageTitle('收入明细管理') // 设置页面标题
+            ->setTableName('trade') // 设置数据表名
+            // ->setSearch(['id' => '订单编号']) // 设置搜索参数
+            ->hideCheckbox()
+            ->addColumns([ // 批量添加列
+                ['id', 'ID'],
+                ['title', '交易标题'],
+                ['payment', '支付金额'],
+                ['username', '用户'],
+                ['created_time', '创建时间', 'datetime'],
+                ['status', '状态', 'text', '', ['待支付', '已支付', '取消', '冻结']],
+                
+            ])
+            ->raw('username')
+            ->addTopButton('back', [
+                'title' => '返回收入列表',
+                'icon'  => 'fa fa-reply',
+                'href'  => url('agencyicome/index')
+            ])
+            ->setRowList($data_list) // 设置表格数据
+            ->setPages($page) // 设置分页数据
+            ->fetch(); // 渲染页面
+   }
 
     /**
      * [cancle description]

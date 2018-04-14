@@ -8,7 +8,7 @@ if (!function_exists('get_column_name')) {
     /**
      * 获取栏目名称
      * @param int $cid 栏目id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     function get_column_name($cid = 0)
@@ -22,7 +22,7 @@ if (!function_exists('get_model_name')) {
     /**
      * 获取内容模型名称
      * @param string $id 内容模型id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     function get_model_name($id = '')
@@ -36,7 +36,7 @@ if (!function_exists('get_model_title')) {
     /**
      * 获取内容模型标题
      * @param string $id 内容模型标题
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     function get_model_title($id = '')
@@ -50,7 +50,7 @@ if (!function_exists('get_model_type')) {
     /**
      * 获取内容模型类别：0-系统，1-普通，2-独立
      * @param int $id 模型id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     function get_model_type($id = 0)
@@ -64,7 +64,7 @@ if (!function_exists('get_model_table')) {
     /**
      * 获取内容模型附加表名
      * @param int $id 模型id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     function get_model_table($id = 0)
@@ -78,7 +78,7 @@ if (!function_exists('is_default_field')) {
     /**
      * 检查是否为系统默认字段
      * @param string $field 字段名称
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return bool
      */
     function is_default_field($field = '')
@@ -96,7 +96,7 @@ if (!function_exists('table_exist')) {
     /**
      * 检查附加表是否存在
      * @param string $table_name 附加表名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     function table_exist($table_name = '')
@@ -109,7 +109,7 @@ if (!function_exists('time_tran')) {
     /**
      * 转换时间
      * @param int $timer 时间戳
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     function time_tran($timer)

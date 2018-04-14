@@ -16,7 +16,7 @@ class Nav extends Admin
 {
     /**
      * 导航列表
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function index()
@@ -58,7 +58,7 @@ class Nav extends Admin
 
     /**
      * 新增
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function add()
@@ -94,7 +94,7 @@ class Nav extends Admin
     /**
      * 删除导航
      * @param null $ids 菜单id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function delete($ids = null)
@@ -110,7 +110,7 @@ class Nav extends Admin
     /**
      * 启用导航
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function enable($record = [])
@@ -121,7 +121,7 @@ class Nav extends Admin
     /**
      * 禁用导航
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function disable($record = [])
@@ -133,7 +133,7 @@ class Nav extends Admin
      * 设置导航状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function setStatus($type = '', $record = [])
@@ -146,7 +146,7 @@ class Nav extends Admin
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function quickEdit($record = [])
