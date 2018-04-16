@@ -518,6 +518,60 @@ class Index
     }
 
     /**
+     * [updatepreference_custom 更新preference]
+     * @param  string $value [description]
+     * @return [type]        [description]
+     */
+    public function updatepreference_custom($params)
+    {
+        //参数
+        $account = trim($params['account']);
+        $pid = trim($params['pid']);
+        $isActive = trim($params['isActive']);
+        
+        if (!$pid) {
+            return $this->error('参数必填');
+        }
+        
+        //获得用户信息
+        $user = db('member')->where(['mobile'=>$account])->find();
+        if ($user['preference']) {
+            $preference = explode(',', $user['preference']);
+        }
+        if (!$isActive) {
+            foreach ($preference as $key => $value) {
+                if ($value==$pid) {
+                    unset($preference[$key]);
+                }
+            }
+        }else{
+            array_push($preference, $pid);
+        }
+        
+
+        if ($preference) {
+            $data['preference'] = implode(',', $preference);
+        }else{
+            $data['preference'] = '';
+        }
+
+        //更新状态
+        // $data['preference'] = implode(',', $preference);
+        $map['username'] = $account;
+        if(!db('member')->where($map)->update($data)){
+            // return $this->error('服务器忙，请稍后');
+        }
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+
+    /**
      * [updatenickname 更新Nickname]
      * @param  string $value [description]
      * @return [type]        [description]
@@ -1481,9 +1535,9 @@ class Index
         $pmap['memberid'] = $account;
 
         $calendar['list'] = db('calendar')->where($pmap)->whereTime('start_time', 'm')->select();
-
         foreach ($calendar['list'] as $key => $value) {
             if ($value['start_time']<$cstime) {
+                error_log($value['start_time'].'|||'.$cstime,3,'/home/wwwroot/daguan/time.log');
                 unset($calendar['list'][$key]);
             }
         }
@@ -1634,7 +1688,7 @@ class Index
         $map['id'] = $account;
 
         if(!db('member')->where($map)->update($data)){
-            return $this->error('服务器忙，请稍后');
+            // return $this->error('服务器忙，请稍后');
         }
         
         //返回信息
