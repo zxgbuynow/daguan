@@ -111,6 +111,9 @@ class Index
         $data['shopid'] = trim($params['agency']);
         $data['create_time'] = time();
 
+        if (db('member')->where(['mobile'=>$data['mobile']])->find()) {
+            return $this->error('账号已存在！');
+        }
         //生成密码
         $data['password'] =  Hash::make((string)trim($params['password']));
 
@@ -965,6 +968,10 @@ class Index
         $data['mobile'] = trim($params['mobile']);
         $data['create_time'] = time();
 
+        if (db('member')->where(['mobile'=>$data['mobile']])->find()) {
+            return $this->error('账号已存在！');
+        }
+        
         $data['type'] = 1;
 
         //生成密码
