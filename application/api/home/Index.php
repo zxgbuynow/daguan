@@ -537,6 +537,8 @@ class Index
         $user = db('member')->where(['mobile'=>$account])->find();
         if ($user['preference']) {
             $preference = explode(',', $user['preference']);
+        }else{
+            $preference = array();
         }
         if (!$isActive) {
             foreach ($preference as $key => $value) {
