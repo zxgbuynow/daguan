@@ -1751,6 +1751,31 @@ class Index
         return json($data);
     }
 
+    /**
+     * [getAvatar 头像]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function getAvatar_shop($params)
+    {
+        $users = trim($params['users']);
+        if (!$users) {
+            return $this->error('参数缺失！');
+        }
+
+        $where['mobile'] = array('in',explode(',', $users)) ;
+        $rs = db('member')->where($where)->column('mobile,avar');
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rs
+        ];
+        return json($data);
+
+    }
+
     /*
     |--------------------------------------------------------------------------
     | 公用方法
