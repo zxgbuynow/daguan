@@ -39,6 +39,7 @@ return [
         'calendaall'=>'calenda.all',//所有日程安排
         'calendaadd'=>'calenda.add',//日程添加
         'social'=>'social',
-        'identifi'=>'identifi'
+        'identifi'=>'identifi',
+        'getAvatar'=>'user.getAvatar'
     ]
 ];

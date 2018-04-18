@@ -887,6 +887,30 @@ class Index
         ];
         return json($data);
     }
+    /**
+     * [getAvatar 头像]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function getAvatar_custom($params)
+    {
+        $users = trim($params['users']);
+        if (!$users) {
+            return $this->error('参数缺失！');
+        }
+
+        $where['mobile'] = array('in',explode(',', $users)) ;
+        $rs = db('member')->where($where)->column('mobile,avar');
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rs
+        ];
+        return json($data);
+
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API
@@ -971,7 +995,7 @@ class Index
         if (db('member')->where(['mobile'=>$data['mobile']])->find()) {
             return $this->error('账号已存在！');
         }
-        
+
         $data['type'] = 1;
 
         //生成密码
