@@ -911,6 +911,33 @@ class Index
         return json($data);
 
     }
+
+    /**
+     * [calendatoday_custom 获得当前时间日程数据]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function calendatoday_custom($params)
+    {
+       $account = trim($params['account']);
+       $cstime =  trim($params['day']);
+
+       //当晚24点时间
+       $cetime = strtotime(date('Y-m-d',$cstime))+24 * 60 * 60;
+
+       //日程
+        $pmap['memberid'] = $account;
+
+        $calendar['list'] = db('calendar')->where($pmap)->whereTime('start_time', 'between', [$cstime, $cetime])->select();
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$calendar
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API
