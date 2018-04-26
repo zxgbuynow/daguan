@@ -924,6 +924,8 @@ class Index
 
        //当晚24点时间
        $cetime = strtotime(date('Y-m-d',$cstime))+24 * 60 * 60;
+       //今天
+       $today = strtotime(date('Y-m-d',time()));
 
        //日程
         $pmap['memberid'] = $account;
@@ -933,17 +935,28 @@ class Index
         $times = array('9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00');
 
         $timesarr['list'] = [];
-        foreach ($times as $key => $value) {
-            //订单记录
-            $tpoint = strtotime(date('Y-m-d',$cstime).$value);
-            $timesarr['list'][$key]['t'] = $value;
-            $timesarr['list'][$key]['s'] = 0;
-            foreach ($calendar['list'] as $k => $v) {
-                if ($tpoint>$v['start_time']&&$tpoint<$v['end_time']) {
-                    $timesarr['list'][$key]['s'] = 1;
+        //过去的时间
+        if ($today>strtotime(date('Y-m-d',$cstime))) {
+            foreach ($times as $key => $value) {
+                //订单记录
+                $tpoint = strtotime(date('Y-m-d',$cstime).$value);
+                $timesarr['list'][$key]['t'] = $value;
+                $timesarr['list'][$key]['s'] = 2;
+            }
+        }else{
+            foreach ($times as $key => $value) {
+                //订单记录
+                $tpoint = strtotime(date('Y-m-d',$cstime).$value);
+                $timesarr['list'][$key]['t'] = $value;
+                $timesarr['list'][$key]['s'] = 0;
+                foreach ($calendar['list'] as $k => $v) {
+                    if ($tpoint>$v['start_time']&&$tpoint<$v['end_time']) {
+                        $timesarr['list'][$key]['s'] = 1;
+                    }
                 }
             }
         }
+        
         //咨询师
         $timesarr['user'] = db('member')->where(['id'=>$account])->column('username');
 
