@@ -1854,6 +1854,37 @@ class Index
 
     }
 
+    /**
+     * [updateonline 更新状态]
+     * @param  string $value [description]
+     * @return [type]        [description]
+     */
+    public function updateonline_shop($params)
+    {
+        //参数
+        $account = trim($params['account']);
+        $isActive = trim($params['isActive']);
+        
+        if (!$account) {
+            return $this->error('参数必填');
+        }
+        
+
+        //更新状态
+        $data['online'] = $isActive;
+        $map['memberid'] = $account;
+        if(!db('member')->where($map)->update($data)){
+            // return $this->error('服务器忙，请稍后');
+        }
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 公用方法

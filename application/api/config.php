@@ -22,6 +22,7 @@ return [
         'updatenickname'=>'user.updatenickname',//更新Nickname
         'updatepreference'=>'user.updatepreference',//更新updatepreference
         'updategender'=>'user.updategender',//更新性别
+        'updateonline'=>'user.updateonline',//更新性别
         'upavar'=>'user.upavar',//
         'contentinfo'=>'article.contentinfo',//文章祥情
         'allcategory'=>'all.category',//文章祥情
