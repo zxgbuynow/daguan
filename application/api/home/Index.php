@@ -825,6 +825,7 @@ class Index
         $msg['subtitle'] = '预约'.$counsellor[0].$str;
         $msg['title'] = '预约您的'.$str;
         $msg['descrption'] = $username[0].'预约您的'.$str;
+        $msg['display'] = $username[0].'预约'.$counsellor[0].'的'.$str;
         $msg['sendid'] = $account;
         $msg['reciveid'] = $counsellor_id;
 
@@ -965,6 +966,29 @@ class Index
             'code'=>'1',
             'msg'=>'',
             'data'=>$timesarr
+        ];
+        return json($data);
+    }
+
+    /**
+     * [msg_shop 消息列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function msg_custom($params)
+    {
+
+        //查询消息
+        $user =  db('msg')->where(1)->order('id DESC')->limit('20')->select();
+        $ret = [];
+        foreach ($user as $key => $value) {
+            $ret[$value['type']][$key] = $value;
+        }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$ret
         ];
         return json($data);
     }
