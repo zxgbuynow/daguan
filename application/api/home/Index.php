@@ -344,6 +344,7 @@ class Index
             //从业时间
             $recommend['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
         }
+        $recommend['list'] = array_values($recommend['list']);
         //返回信息
         $data = [
             'code'=>'1',
