@@ -1873,7 +1873,7 @@ class Index
         //更新状态
         $data['online'] = $isActive;
         $map['memberid'] = $account;
-        if(!db('member')->where($map)->update($data)){
+        if(!db('member_counsellor')->where($map)->update($data)){
             // return $this->error('服务器忙，请稍后');
         }
         
