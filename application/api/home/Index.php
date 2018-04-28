@@ -332,6 +332,10 @@ class Index
         $recommend['list'] = db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where(array('a.status'=>1,'a.type'=>1))->order('a.recommond DESC')->select();
 
         foreach ($recommend['list'] as $key => $value) {
+            if (!$value['memberid']) {
+                unset($recommend['list'][$key]);
+                continue;
+            }
             //订单数
             $recommend['list'][$key]['trade'] = db('trade')->where(array('status'=>1,'mid'=>$value['memberid']))->count();
             //标识
