@@ -979,16 +979,13 @@ class Index
     {
 
         //查询消息
-        $user =  db('msg')->where(1)->order('id DESC')->limit('20')->select();
-        $ret = [];
-        foreach ($user as $key => $value) {
-            $ret[$value['type']][$key] = $value;
-        }
+        $user['list'] =  db('msg')->where(1)->order('id DESC')->limit('20')->select();
+        
         //返回信息
         $data = [
             'code'=>'1',
             'msg'=>'',
-            'data'=>$ret
+            'data'=>$user
         ];
         return json($data);
     }
