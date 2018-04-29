@@ -994,6 +994,8 @@ class Index
         ];
         return json($data);
     }
+
+
     /*
     |--------------------------------------------------------------------------
     | 商家版API
@@ -1107,7 +1109,14 @@ class Index
     {
         //参数
         $account = trim($params['mobile']);
-        $code  = rand(1000,9999);
+
+        //短信
+        $code = $this->sendmsg($account);
+        print_r($code);exit;
+        
+        //
+        
+        
 
         //生成session 
         session($account.$code,1);
@@ -1979,5 +1988,53 @@ class Index
             }  
         }  
     }
+
+    /**
+     * [sendmsg description]
+     * @param  [type] $mobile [description]
+     * @return [type]         [description]
+     */
+    public function sendmsg($mobile)
+    {
+        $apikey = "8df6ed7129c50581eecdf1e875edbaa3"; 
+
+        $code  = rand(1000,9999);
+        $text="【大观心理】您的验证码是".$code; 
+
+        $ch = curl_init();
+ 
+         /* 设置验证方式 */
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept:text/plain;charset=utf-8',
+             'Content-Type:application/x-www-form-urlencoded', 'charset=utf-8'));
+         /* 设置返回结果为流 */
+         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+         
+         /* 设置超时时间*/
+         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+         
+         /* 设置通信方式 */
+         curl_setopt($ch, CURLOPT_POST, 1);
+         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+         
+         // 发送短信
+         $data = array('text'=>$text,'apikey'=>$apikey,'mobile'=>$mobile);
+
+         $json_data = $this->send($ch,$data);
+         $array = json_decode($json_data,true);  
+    }
+    /**
+     * [send description]
+     * @param  [type] $ch   [description]
+     * @param  [type] $data [description]
+     * @return [type]       [description]
+     */
+    function send($ch,$data){
+         curl_setopt ($ch, CURLOPT_URL, 'https://sms.yunpian.com/v2/sms/single_send.json');
+         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+         $result = curl_exec($ch);
+         $error = curl_error($ch);
+         // checkErr($result,$error);
+         return $result;
+     }
     
 }
