@@ -1066,7 +1066,6 @@ class Index
         $rnewpw = trim($params['rnewpw']);
 
 
-print_r(Session::get($username.$code));exit;
         //检查过期时间
         if (Session::get($username.$code)&&Session::get($username.$code)<time()) {
             return $this->error('验证码已过期');
@@ -2132,6 +2131,7 @@ print_r(Session::get($username.$code));exit;
          // 发送短信
          $data = array('text'=>$text,'apikey'=>$apikey,'mobile'=>$mobile);
          $json_data = $this->send($ch,$data);
+         error_log($json_data,3,'/home/wwwroot/daguan/sendmsg.log');
          $array = json_decode($json_data,true);  
          if ($array['code']==0) {
             return $code;
