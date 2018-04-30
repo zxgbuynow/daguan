@@ -41,6 +41,8 @@ return [
         'calendaadd'=>'calenda.add',//日程添加
         'social'=>'social',
         'identifi'=>'identifi',
-        'getAvatar'=>'user.getAvatar'
+        'getAvatar'=>'user.getAvatar',
+        'usersendSms'=>'user.sendSms',
+        'findPassword'=>'user.findPassword'
     ]
 ];

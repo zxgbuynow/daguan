@@ -140,10 +140,23 @@ class Index
     {
         //参数
         $account = trim($params['mobile']);
-        $code  = rand(1000,9999);
 
+        //短信
+        $code = $this->sendmsg($account);
+        if (!$code) {
+            return $this->error('发送失败，请重试');
+        }
+        
         //生成session 
-        session($account.$code,1);
+        session($account.'code',$code);
+
+        //设置过期时间
+        $_SESSION[$account.$code] = time() + 600;
+
+        // $code  = rand(1000,9999);
+
+        // //生成session 
+        // session($account.$code,1);
 
         $map['username'] = $account;
         $user = db('member')->where($map)->find();
@@ -171,7 +184,15 @@ class Index
         $username = trim($params['mobile']);
         $code = trim($params['code']);
         
-        if (!session($username.$code)) {
+        //检查过期时间
+        if ($_SESSION[$username.$code]&&$_SESSION[$username.$code]<time()) {
+            return $this->error('验证码已过期');
+        }else{
+            return $this->error('请检查验证码');
+        }
+        
+        //检查是否正确
+        if ($_SESSION[$username.'code']!=$code) {
             return $this->error('验证码不正确');
         }
         
@@ -187,6 +208,7 @@ class Index
         
         //注销session
         session($username.$code,null);
+        session($username.'code',null);
 
         
         //返回信息
@@ -995,6 +1017,84 @@ class Index
         return json($data);
     }
 
+    /**
+     * [usersendSms_custom 发送验证码]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function usersendSms_custom($params)
+    {
+        //参数
+        $account = trim($params['mobile']);
+
+        //是否是会员
+        if (!db('member')->where(['mobile'=>$account])->find()) {
+            return $this->error('账号不存在');
+        }
+        
+        //短信
+        $code = $this->sendmsg($account);
+        if (!$code) {
+            return $this->error('发送失败，请重试');
+        }
+        
+        //生成session 
+        session($account.'vcode',$code);
+
+        //设置过期时间
+        $_SESSION[$account.$code] = time() + 600;
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+    /**
+     * [findPassword description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function findPassword_custom($params)
+    {
+        //参数
+        $username = trim($params['mobile']);
+        $code = trim($params['code']);
+        $newpw = trim($params['newpw']);
+        $rnewpw = trim($params['rnewpw']);
+
+
+
+        //检查过期时间
+        if ($_SESSION[$username.$code]&&$_SESSION[$username.$code]<time()) {
+            return $this->error('验证码已过期');
+        }else{
+            return $this->error('请检查验证码');
+        }
+        
+        //检查是否正确
+        if ($_SESSION[$username.'vcode']!=$code) {
+            return $this->error('验证码不正确');
+        }
+
+        //生成密码
+        $data['password'] =  Hash::make((string)trim($params['newpw']));
+
+        //更新
+        if(!db('member')->where(['mobile'=>$username])->update($data)){
+            return $this->error('服务器忙，请稍后');
+        }
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -1112,14 +1212,15 @@ class Index
 
         //短信
         $code = $this->sendmsg($account);
-        print_r($code);exit;
+        if (!$code) {
+            return $this->error('发送失败，请重试');
+        }
         
-        //
-        
-        
-
         //生成session 
-        session($account.$code,1);
+        session($account.'code',$code);
+
+        //设置过期时间
+        $_SESSION[$account.$code] = time() + 600;
 
         $map['username'] = $account;
         $user = db('member')->where($map)->find();
@@ -1147,10 +1248,21 @@ class Index
         $username = trim($params['mobile']);
         $code = trim($params['code']);
         
-        if (!session($username.$code)) {
-            return $this->error('验证码不正确');
+        // if (!session($username.$code)) {
+        //     return $this->error('验证码不正确');
+        // }
+        
+        //检查过期时间
+        if ($_SESSION[$username.$code]&&$_SESSION[$username.$code]<time()) {
+            return $this->error('验证码已过期');
+        }else{
+            return $this->error('请检查验证码');
         }
         
+        //检查是否正确
+        if ($_SESSION[$username.'code']!=$code) {
+            return $this->error('验证码不正确');
+        }
 
         //更新状态
         $data['status'] = 1;
@@ -1162,6 +1274,7 @@ class Index
         
         //注销session
         session($username.$code,null);
+        session($username.'code',null);
 
         
         //返回信息
@@ -1999,7 +2112,7 @@ class Index
         $apikey = "8df6ed7129c50581eecdf1e875edbaa3"; 
 
         $code  = rand(1000,9999);
-        $text="【大观心理】您的验证码是".$code; 
+        $text="【希望24热线】您的验证码是".$code; 
 
         $ch = curl_init();
  
@@ -2018,9 +2131,13 @@ class Index
          
          // 发送短信
          $data = array('text'=>$text,'apikey'=>$apikey,'mobile'=>$mobile);
-
          $json_data = $this->send($ch,$data);
          $array = json_decode($json_data,true);  
+         if ($array['code']==0) {
+            return $code;
+         }else{
+            return false;
+         }
     }
     /**
      * [send description]
