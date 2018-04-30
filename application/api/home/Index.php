@@ -187,8 +187,6 @@ class Index
         //检查过期时间
         if (Session::get($username.$code)&&Session::get($username.$code)<time()) {
             return $this->error('验证码已过期');
-        }else{
-            return $this->error('请检查验证码');
         }
         
         //检查是否正确
@@ -1214,10 +1212,10 @@ class Index
         }
         
         //生成session 
-        session($account.'code',$code);
+        Session::set($account.'code',$code);
 
         //设置过期时间
-        $_SESSION[$account.$code] = time() + 600;
+        Session::set($account.$code, time() + 600) ;
 
         $map['username'] = $account;
         $user = db('member')->where($map)->find();
@@ -1250,14 +1248,12 @@ class Index
         // }
         
         //检查过期时间
-        if ($_SESSION[$username.$code]&&$_SESSION[$username.$code]<time()) {
+        if (Session::get($username.$code)&&Session::get($username.$code)<time()) {
             return $this->error('验证码已过期');
-        }else{
-            return $this->error('请检查验证码');
         }
         
         //检查是否正确
-        if ($_SESSION[$username.'code']!=$code) {
+        if (Session::get($username.'code')!=$code) {
             return $this->error('验证码不正确');
         }
 
@@ -1270,8 +1266,8 @@ class Index
         }
         
         //注销session
-        Session::get($username.$code,null);
-        Session::get($username.'code',null);
+        Session::set($username.$code,null);
+        Session::set($username.'code',null);
 
         
         //返回信息
@@ -2001,6 +1997,82 @@ class Index
             // return $this->error('服务器忙，请稍后');
         }
         
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+
+    /**
+     * [usersendSms_custom 发送验证码]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function usersendSms_shop($params)
+    {
+        //参数
+        $account = trim($params['mobile']);
+
+        //是否是会员
+        if (!db('member')->where(['mobile'=>$account])->find()) {
+            return $this->error('账号不存在');
+        }
+        
+        //短信
+        $code = $this->sendmsg($account);
+        if (!$code) {
+            return $this->error('发送失败，请重试');
+        }
+        
+        //生成session 
+        Session::set($account.'vcode',$code);
+
+        //设置过期时间
+        Session::set($account.$code,time() + 600);
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+    /**
+     * [findPassword description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function findPassword_shop($params)
+    {
+        //参数
+        $username = trim($params['mobile']);
+        $code = trim($params['code']);
+        $newpw = trim($params['newpw']);
+        $rnewpw = trim($params['rnewpw']);
+
+
+        //检查过期时间
+        if (Session::get($username.$code)&&Session::get($username.$code)<time()) {
+            return $this->error('验证码已过期');
+        }
+        
+        //检查是否正确
+        if (Session::get($username.'vcode')!=$code) {
+            return $this->error('验证码不正确');
+        }
+
+        //生成密码
+        $data['password'] =  Hash::make((string)trim($params['newpw']));
+
+        //更新
+        if(!db('member')->where(['mobile'=>$username])->update($data)){
+            return $this->error('服务器忙，请稍后');
+        }
+
         //返回信息
         $data = [
             'code'=>'1',
