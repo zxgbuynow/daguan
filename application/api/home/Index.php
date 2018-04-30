@@ -201,7 +201,7 @@ class Index
         $map['username'] = $username;
 
         if(!db('member')->where($map)->update($data)){
-            return $this->error('服务器忙，请稍后');
+            // return $this->error('服务器忙，请稍后');
         }
         
         //注销session
@@ -1262,7 +1262,7 @@ class Index
         
         $map['username'] = $username;
         if(!db('member')->where($map)->update($data)){
-            return $this->error('服务器忙，请稍后');
+            // return $this->error('服务器忙，请稍后');
         }
         
         //注销session
