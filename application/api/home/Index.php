@@ -144,14 +144,14 @@ class Index
         //短信
         $code = $this->sendmsg($account);
         if (!$code) {
-            return $this->error('发送失败，请重试');
+            return $this->error('发送失败，1小时只能获得3次');
         }
         
         //生成session 
         Session::set($account.'code',$code);
 
         //设置过期时间
-        Session::set($account.$code, time() + 600) ;
+        Session::set($account.$code, time() + 1800) ;
 
         // $code  = rand(1000,9999);
 
@@ -205,8 +205,8 @@ class Index
         }
         
         //注销session
-        Session.set($username.$code,null);
-        Session.set($username.'code',null);
+        // Session.set($username.$code,null);
+        // Session.set($username.'code',null);
 
         
         //返回信息
@@ -1033,14 +1033,14 @@ class Index
         //短信
         $code = $this->sendmsg($account);
         if (!$code) {
-            return $this->error('发送失败，请重试');
+            return $this->error('发送失败，1小时只能获得3次');
         }
         
         //生成session 
         Session::set($account.'vcode',$code);
 
         //设置过期时间
-        Session::set($account.$code,time() + 600);
+        Session::set($account.$code,time() + 1800);
 
         //返回信息
         $data = [
@@ -1208,14 +1208,14 @@ class Index
         //短信
         $code = $this->sendmsg($account);
         if (!$code) {
-            return $this->error('发送失败，请重试');
+            return $this->error('发送失败，1小时只能获得3次');
         }
         
         //生成session 
         Session::set($account.'code',$code);
 
         //设置过期时间
-        Session::set($account.$code, time() + 600) ;
+        Session::set($account.$code, time() + 1800) ;
 
         $map['username'] = $account;
         $user = db('member')->where($map)->find();
@@ -1266,8 +1266,8 @@ class Index
         }
         
         //注销session
-        Session::set($username.$code,null);
-        Session::set($username.'code',null);
+        // Session::set($username.$code,null);
+        // Session::set($username.'code',null);
 
         
         //返回信息
@@ -2024,14 +2024,14 @@ class Index
         //短信
         $code = $this->sendmsg($account);
         if (!$code) {
-            return $this->error('发送失败，请重试');
+            return $this->error('发送失败，1小时只能获得3次');
         }
         
         //生成session 
         Session::set($account.'vcode',$code);
 
         //设置过期时间
-        Session::set($account.$code,time() + 600);
+        Session::set($account.$code,time() + 1800);
 
         //返回信息
         $data = [
