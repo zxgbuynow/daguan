@@ -1069,8 +1069,6 @@ class Index
         //检查过期时间
         if (Session::get($username.$code)&&Session::get($username.$code)<time()) {
             return $this->error('验证码已过期');
-        }else{
-            return $this->error('请检查验证码');
         }
         
         //检查是否正确
