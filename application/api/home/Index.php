@@ -5,7 +5,7 @@ use \think\Request;
 use \think\Db;
 use think\Model;
 use think\helper\Hash;
-
+use think\Session;
 /**
  * 前台首页控制器
  * @package app\index\controller
@@ -148,10 +148,10 @@ class Index
         }
         
         //生成session 
-        session($account.'code',$code);
+        Session::set($account.'code',$code);
 
         //设置过期时间
-        $_SESSION[$account.$code] = time() + 600;
+        Session::set($account.$code, time() + 600) ;
 
         // $code  = rand(1000,9999);
 
@@ -185,14 +185,14 @@ class Index
         $code = trim($params['code']);
         
         //检查过期时间
-        if ($_SESSION[$username.$code]&&$_SESSION[$username.$code]<time()) {
+        if (Session::get($username.$code)&&Session::get($username.$code)<time()) {
             return $this->error('验证码已过期');
         }else{
             return $this->error('请检查验证码');
         }
         
         //检查是否正确
-        if ($_SESSION[$username.'code']!=$code) {
+        if (Session::get($username.'code')!=$code) {
             return $this->error('验证码不正确');
         }
         
@@ -207,8 +207,8 @@ class Index
         }
         
         //注销session
-        session($username.$code,null);
-        session($username.'code',null);
+        Session.set($username.$code,null);
+        Session.set($username.'code',null);
 
         
         //返回信息
@@ -1039,10 +1039,10 @@ class Index
         }
         
         //生成session 
-        session($account.'vcode',$code);
+        Session::set($account.'vcode',$code);
 
         //设置过期时间
-        $_SESSION[$account.$code] = time() + 600;
+        Session::set($account.$code,time() + 600);
 
         //返回信息
         $data = [
@@ -1066,16 +1066,16 @@ class Index
         $rnewpw = trim($params['rnewpw']);
 
 
-
+print_r(Session::get($username.$code));exit;
         //检查过期时间
-        if ($_SESSION[$username.$code]&&$_SESSION[$username.$code]<time()) {
+        if (Session::get($username.$code)&&Session::get($username.$code)<time()) {
             return $this->error('验证码已过期');
         }else{
             return $this->error('请检查验证码');
         }
         
         //检查是否正确
-        if ($_SESSION[$username.'vcode']!=$code) {
+        if (Session::get($username.'vcode')!=$code) {
             return $this->error('验证码不正确');
         }
 
@@ -1273,8 +1273,8 @@ class Index
         }
         
         //注销session
-        session($username.$code,null);
-        session($username.'code',null);
+        Session::get($username.$code,null);
+        Session::get($username.'code',null);
 
         
         //返回信息
