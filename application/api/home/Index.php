@@ -2113,6 +2113,7 @@ class Index
         $code  = rand(1000,9999);
         $text="【希望24热线】您的验证码是".$code; 
 
+        error_log($text,3,'/home/wwwroot/daguan/mobile.log');
         $ch = curl_init();
  
          /* 设置验证方式 */
