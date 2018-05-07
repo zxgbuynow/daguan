@@ -148,10 +148,10 @@ class Index
         }
         
         //生成session 
-        Session::set($account.'code',$code);
+        cache($account.'code',$code);
 
         //设置过期时间
-        Session::set($account.$code, time() + 1800) ;
+        cache($account.$code, time() + 1800) ;
 
         // $code  = rand(1000,9999);
 
@@ -185,12 +185,12 @@ class Index
         $code = trim($params['code']);
         
         //检查过期时间
-        if (Session::get($username.$code)&&Session::get($username.$code)<time()) {
+        if (cache($username.$code)&&cache($username.$code)<time()) {
             return $this->error('验证码已过期');
         }
         
         //检查是否正确
-        if (Session::get($username.'code')!=$code) {
+        if (cache($username.'code')!=$code) {
             return $this->error('验证码不正确');
         }
         
@@ -1037,10 +1037,10 @@ class Index
         }
         
         //生成session 
-        Session::set($account.'vcode',$code);
+        cache($account.'vcode',$code);
 
         //设置过期时间
-        Session::set($account.$code,time() + 1800);
+        cache($account.$code,time() + 1800);
 
         //返回信息
         $data = [
@@ -1065,12 +1065,12 @@ class Index
 
 
         //检查过期时间
-        if (Session::get($username.$code)&&Session::get($username.$code)<time()) {
+        if (cache($username.$code)&&cache($username.$code)<time()) {
             return $this->error('验证码已过期');
         }
         
         //检查是否正确
-        if (Session::get($username.'vcode')!=$code) {
+        if (cache($username.'vcode')!=$code) {
             return $this->error('验证码不正确');
         }
 
@@ -1212,10 +1212,10 @@ class Index
         }
         
         //生成session 
-        Session::set($account.'code',$code);
+        cache($account.'code',$code);
 
         //设置过期时间
-        Session::set($account.$code, time() + 1800) ;
+        cache($account.$code, time() + 1800) ;
 
         $map['username'] = $account;
         $user = db('member')->where($map)->find();
@@ -1248,12 +1248,12 @@ class Index
         // }
         
         //检查过期时间
-        if (Session::get($username.$code)&&Session::get($username.$code)<time()) {
+        if (cache($username.$code)&&cache($username.$code)<time()) {
             return $this->error('验证码已过期');
         }
         
         //检查是否正确
-        if (Session::get($username.'code')!=$code) {
+        if (cache($username.'code')!=$code) {
             return $this->error('验证码不正确');
         }
 
@@ -1266,8 +1266,8 @@ class Index
         }
         
         //注销session
-        // Session::set($username.$code,null);
-        // Session::set($username.'code',null);
+        // cache($username.$code,null);
+        // cache($username.'code',null);
 
         
         //返回信息
@@ -2028,10 +2028,10 @@ class Index
         }
         
         //生成session 
-        Session::set($account.'vcode',$code);
+        cache($account.'vcode',$code);
 
         //设置过期时间
-        Session::set($account.$code,time() + 1800);
+        cache($account.$code,time() + 1800);
 
         //返回信息
         $data = [
@@ -2056,12 +2056,12 @@ class Index
 
 
         //检查过期时间
-        if (Session::get($username.$code)&&Session::get($username.$code)<time()) {
+        if (cache($username.$code)&&cache($username.$code)<time()) {
             return $this->error('验证码已过期');
         }
         
         //检查是否正确
-        if (Session::get($username.'vcode')!=$code) {
+        if (cache($username.'vcode')!=$code) {
             return $this->error('验证码不正确');
         }
 
