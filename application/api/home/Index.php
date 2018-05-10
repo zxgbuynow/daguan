@@ -111,6 +111,20 @@ class Index
         $data['shopid'] = trim($params['agency']);
         $data['create_time'] = time();
 
+
+        $data['birthday'] = trim($params['birthday']);
+        $data['sex'] = trim($params['sex']);
+        $data['edu'] = trim($params['edu']);
+        $data['grade'] = trim($params['grade']);
+        $data['profession'] = trim($params['profession']);
+        $data['marital'] = trim($params['marital']);
+        $data['province'] = trim($params['province']);
+        $data['city'] = trim($params['city']);
+        $data['tel'] = trim($params['tel']);
+        $data['isconsolle'] = trim($params['isconsolle']);
+        $data['consolletime'] = trim($params['consolletime']);
+        
+
         if (db('member')->where(['mobile'=>$data['mobile']])->find()) {
             return $this->error('账号已存在！');
         }
