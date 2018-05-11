@@ -120,7 +120,6 @@ class Counsellor extends Admin
                 $save1['leader'] = $data['leader'];
                 $save1['cerfornt'] = $data['cerfornt'];
                 $save1['cerback'] = $data['cerback'];
-                $save1['sort'] = $data['sort'];
 
                 //业务类弄
                 $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
