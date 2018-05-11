@@ -123,7 +123,7 @@ class Index
         $data['tel'] = trim($params['tel']);
         $data['isconsolle'] = trim($params['isconsolle']);
         $data['consolletime'] = trim($params['consolletime']);
-        
+
 
         if (db('member')->where(['mobile'=>$data['mobile']])->find()) {
             return $this->error('账号已存在！');
@@ -1105,6 +1105,36 @@ class Index
         return json($data);
     }
 
+    /**
+     * [articalcate_custom 文章分类]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function articalcate_custom($params)
+    {
+        $ret = array();
+        $article = db('cms_page')->where('status',1)->order('view DESC')->limit(10)->select();
+
+        $cates = db('cms_category')->where('status',1)->order('id DESC')->select();
+
+        foreach ($cates as $k => $v) {
+            $ret[$k]['name'] = $v['title'];
+            foreach ($article as $key => $value) {
+                unset($value['content']);
+                $ret[$k]['list'][$key] = $value;
+                $ret[$k]['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
+                $ret[$k]['list'][$key]['cover'] = get_file_path($value['cover']);
+            }
+        }
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$ret
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API

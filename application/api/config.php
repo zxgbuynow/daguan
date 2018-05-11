@@ -43,6 +43,7 @@ return [
         'identifi'=>'identifi',
         'getAvatar'=>'user.getAvatar',
         'usersendSms'=>'user.sendSms',
-        'findPassword'=>'user.findPassword'
+        'findPassword'=>'user.findPassword',
+        'articalcate'=>'artical.cate'
     ]
 ];
