@@ -82,19 +82,56 @@ class Counsellor extends Admin
         // 保存数据
         if ($this->request->isPost()) {
             $data = $this->request->post();
-            // 验证
-            $result = $this->validate($data, 'Counsellor');
-            // 验证失败 输出错误信息
-            if(true !== $result) $this->error($result);
-            $data['create_time']= time();
-            $data['type'] = 1;
-            if ($user = CounsellorModel::create($data)) {
-                // Hook::listen('counsellor_add', $user);
+
+            $save['username'] = $data['username'];
+            $save['nickname'] = $data['nickname'];
+            $save['truename'] = $data['truename'];
+            $save['password'] = $data['password'];
+
+            $save['qq'] = $data['qq'];
+            $save['weixin'] = $data['weixin'];
+            $save['alipay'] = $data['alipay'];
+            $save['mobile'] = $data['mobile'];
+            $save['status'] = $data['status'];
+            $save['recommond'] = $data['recommond'];
+
+            if ($crid = CounsellorModel::create($save)) {
+                $user = CounsellorModel::get($save['id']);
+                
+                //添加
+                $save1['status'] = $data['status'];
+                $save1['memberid'] = $crid;
+                $save1['per'] = $data['per'];
+                $save1['wordchart'] = $data['wordchart'];
+                $save1['speechchart'] = $data['speechchart'];
+                $save1['videochart'] = $data['videochart'];
+                $save1['facechart'] = $data['facechart'];
+                $save1['intro'] = $data['intro'];
+                $save1['employment'] = strtotime($data['employment']);
+                
+                $save1['remark'] = $data['remark'];
+
+                $save1['intro'] = $data['intro'];
+
+                $save1['identifi'] = $data['identifi'];
+                $save1['diploma'] = $data['diploma'];
+
+                $save1['tearch'] = $data['tearch'];
+                $save1['leader'] = $data['leader'];
+                $save1['cerfornt'] = $data['cerfornt'];
+                $save1['cerback'] = $data['cerback'];
+                $save1['sort'] = $data['sort'];
+
+                //业务类弄
+                $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
+                CounsellorotModel::create($save1);
+                
+                
                 // 记录行为
-                action_log('counsellor_add', 'admin_counsellor', $user['id'], UID);
-                $this->success('新增成功', url('index'));
+                action_log('user_add', 'admin_counsellor', $user['id'], UID, get_nickname($user['id']));
+                $this->success('编辑成功', cookie('__forward__'));
             } else {
-                $this->error('新增失败');
+                $this->error('编辑失败');
             }
         }
 
@@ -102,12 +139,40 @@ class Counsellor extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
+                ['hidden', 'aid'],
+                ['hidden', 'bid'],
+                ['hidden', 'shopid'],
                 ['text', 'username', '用户名', '必填，可由英文字母、数字组成'],
                 ['text', 'nickname', '昵称', '可以是中文'],
+                ['image', 'avar', '头像'],
+                ['text', 'truename', '真实姓名', '中文'],
+                ['text', 'identifi', '身份证'],
+                ['image', 'diploma', '咨询师证书'],
+                ['radio', 'tearch', '是否是讲师', '', ['否', '是']],
+                ['radio', 'leader', '是否是团队Leader', '', ['否', '是']],
+
                 ['password', 'password', '密码', '必填，6-20位'],
                 ['text', 'mobile', '手机号'],
-                ['radio', 'status', '状态', '', ['禁用', '启用'], 1]
+                ['text', 'qq', 'QQ'],
+                ['text', 'weixin', '微信'],
+                ['text', 'alipay', '支付宝'],
+                ['image', 'cerfornt', '身份证正面'],
+                ['image', 'cerback', '身份证反面'],
+
+                ['radio', 'status', '状态', '', ['停牌', '上线']],
+                ['radio', 'recommond', '推荐', '', ['不推荐', '推荐']],
+                ['text', 'sort', '排序'],
+                // ['date', 'employment', '从业时间'],
+                ['number', 'per', '单次时长'],
+                ['text', 'wordchart', '文字咨询'],
+                ['text', 'speechchart', '语音咨询'],
+                ['text', 'videochart', '视频咨询'],
+                ['text', 'facechart', '面对面咨询'],
+                ['textarea', 'intro', '简介'],
             ])
+            ->addDatetime('employment', '从业时间', '', '', 'YYYY-MM-DD')
+            // ->addSelect('tags', '业务分类', '', $list_type)
+            ->addUeditor('remark', '祥细说明')
             ->fetch();
     }
 
