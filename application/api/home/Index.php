@@ -1144,36 +1144,7 @@ class Index
         return json($data);
     }
 
-    public function getMemberInfoByTid_custom($params)
-    {
-        //参数
-        $tid = trim($params['tid']);
-        $cid = trim($params['cid']);
-
-        //订单信息
-        $trade = db('trade')->where(['id'=>$tid])->find();
-
-        //预约信息
-        $ondate = db('calendar')->where(['id'=>$cid])->find();
-        
-        $rs = array();
-        if ($uid&&$uid['memberid']) {
-            $rs['user'] = db('member')->where(['id'=>$uid['memberid']])->find();
-            if ($rs['user']) {
-                unset($rs['user']['password']);
-            }
-        }
-        $rs['trade'] = $trade;
-        $rs['ondate'] = $ondate;
-
-        //返回信息
-        $data = [
-            'code'=>'1',
-            'msg'=>'',
-            'data'=>$rs
-        ];
-        return json($data);
-    }
+    
     /*
     |--------------------------------------------------------------------------
     | 商家版API
@@ -2163,6 +2134,41 @@ class Index
             'code'=>'1',
             'msg'=>'',
             'data'=>1
+        ];
+        return json($data);
+    }
+    /**
+     * [getMemberInfoByTid_shop 获得咨询信息]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function getMemberInfoByTid_shop($params)
+    {
+        //参数
+        $tid = trim($params['tid']);
+        $cid = trim($params['cid']);
+
+        //订单信息
+        $trade = db('trade')->where(['id'=>$tid])->find();
+
+        //预约信息
+        $ondate = db('calendar')->where(['id'=>$cid])->find();
+        
+        $rs = array();
+        if ($uid&&$uid['memberid']) {
+            $rs['user'] = db('member')->where(['id'=>$uid['memberid']])->find();
+            if ($rs['user']) {
+                unset($rs['user']['password']);
+            }
+        }
+        $rs['trade'] = $trade;
+        $rs['ondate'] = $ondate;
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rs
         ];
         return json($data);
     }
