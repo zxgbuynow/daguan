@@ -2167,7 +2167,7 @@ class Index
         $rs['ondate'] = $ondate;
         //预约时间
         if ($rs['ondate']) {
-            $rs['ondate']['timerange'] = date('Y-m-d H:i:s',$rs['ondate']['start_time']).'-'.date('H:i:s',$rs['ondate']['end_time']);
+            $rs['ondate']['timerange'] = date('m-d H:i',$rs['ondate']['start_time']).'-'.date('H:i',$rs['ondate']['end_time']);
         }
         if ($rs['trade']) {
             switch ($rs['trade']['chart']) {
