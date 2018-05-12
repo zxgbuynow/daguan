@@ -768,6 +768,10 @@ class Index
     {
 
         $keyword = trim($params['search_keywords']);
+        if (isset($params['cate_id'])) {
+            $cate_id = trim($params['cate_id']);
+            $map['cid'] = $cate_id;
+        }
 
         $map['title'] = array('like','%'.$keyword.'%');
         $map['status'] = 1;
