@@ -2159,11 +2159,14 @@ class Index
             $rs['user'] = db('member')->where(['id'=>$trade['memberid']])->find();
             if ($rs['user']) {
                 unset($rs['user']['password']);
+                //年龄
+                $rs['user']['birthday'] = $this->calcAge($rs['user']['birthday']);
             }
         }
         $rs['trade'] = $trade;
         $rs['ondate'] = $ondate;
-
+        //预约时间
+        $rs['ondate']['timerange'] = date('Y-m-d H:i:s',$rs['ondate']['start_time']).'-'.date('H:i:s',$rs['ondate']['end_time']);
         //返回信息
         $data = [
             'code'=>'1',
@@ -2315,5 +2318,28 @@ class Index
          // checkErr($result,$error);
          return $result;
      }
-    
+    /**
+     * [calcAge description]
+     * @param  [type] $birthday [description]
+     * @return [type]           [description]
+     */
+    public function calcAge($birthday) {  
+        $age = 0;  
+        if(!empty($birthday)){  
+            $age = strtotime($birthday);  
+            if($age === false){  
+                return 0;  
+            }  
+              
+            list($y1,$m1,$d1) = explode("-",date("Y-m-d", $age));  
+              
+            list($y2,$m2,$d2) = explode("-",date("Y-m-d"), time());  
+              
+            $age = $y2 - $y1;  
+            if((int)($m2.$d2) < (int)($m1.$d1)){  
+                $age -= 1;  
+            }  
+        }  
+        return $age;  
+    }  
 }
