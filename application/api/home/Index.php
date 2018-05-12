@@ -1119,6 +1119,7 @@ class Index
 
         foreach ($cates as $k => $v) {
             $ret[$k]['name'] = $v['title'];
+            $ret[$k]['cid'] = $v['id'];
             foreach ($article as $key => $value) {
                 unset($value['content']);
                 $ret[$k]['list'][$key] = $value;
