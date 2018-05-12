@@ -2170,8 +2170,8 @@ class Index
             $rs['ondate']['timerange'] = date('m-d H:i',$rs['ondate']['start_time']).'-'.date('H:i',$rs['ondate']['end_time']);
         }
         if ($rs['trade']) {
+            $str ='文字咨询';
             switch ($rs['trade']['chart']) {
-                $str ='文字咨询';
                 case 'speechchart':
                     $str = '语音咨询';
                     break;
