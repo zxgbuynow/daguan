@@ -44,6 +44,7 @@ return [
         'getAvatar'=>'user.getAvatar',
         'usersendSms'=>'user.sendSms',
         'findPassword'=>'user.findPassword',
-        'articalcate'=>'artical.cate'
+        'articalcate'=>'artical.cate',
+        'getMemberInfoByTid'=>'getMemberInfoByTid'
     ]
 ];
