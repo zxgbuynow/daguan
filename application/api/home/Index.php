@@ -2166,7 +2166,29 @@ class Index
         $rs['trade'] = $trade;
         $rs['ondate'] = $ondate;
         //预约时间
-        $rs['ondate']['timerange'] = date('Y-m-d H:i:s',$rs['ondate']['start_time']).'-'.date('H:i:s',$rs['ondate']['end_time']);
+        if ($rs['ondate']) {
+            $rs['ondate']['timerange'] = date('Y-m-d H:i:s',$rs['ondate']['start_time']).'-'.date('H:i:s',$rs['ondate']['end_time']);
+        }
+        if ($rs['trade']) {
+            switch ($rs['trade']['chart']) {
+                $str ='文字咨询';
+                case 'speechchart':
+                    $str = '语音咨询';
+                    break;
+                case 'videochart':
+                    $str = '视频咨询';
+                    break;
+                case 'facechart':
+                    $str = '面对面咨询';
+                    break;
+                
+                default:
+                    break;
+            }
+            
+            $rs['trade']['chart'] = $str;
+        }
+        
         //返回信息
         $data = [
             'code'=>'1',
@@ -2326,10 +2348,7 @@ class Index
     public function calcAge($birthday) {  
         $age = 0;  
         if(!empty($birthday)){  
-            $age = strtotime($birthday);  
-            if($age === false){  
-                return 0;  
-            }  
+            
               
             list($y1,$m1,$d1) = explode("-",date("Y-m-d", $age));  
               
