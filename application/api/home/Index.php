@@ -1142,6 +1142,31 @@ class Index
         ];
         return json($data);
     }
+
+    public function getMemberInfoByTid_custom($params)
+    {
+        //参数
+        $tid = trim($params['tid']);
+
+        //订单信息
+        $uid = db('trade')->where(['id'=>$tid])->column('memberid');
+
+        $rs = array();
+        if ($uid&&$uid[0]) {
+            $rs = db('member')->where(['id'=>$uid[0]])->find();
+            if ($rs) {
+                unset($rs['password']);
+            }
+        }
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rs
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API
