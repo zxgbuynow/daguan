@@ -1818,11 +1818,13 @@ class Index
 
        //当晚24点时间
        $cetime = strtotime(date('Y-m-d',$cstime))+24 * 60 * 60;
+       //当天 0点
+       $btime = strtotime(date('Y-m-d',$cstime));
 
        //日程
         $pmap['memberid'] = $account;
 
-        $calendar['list'] = db('calendar')->where($pmap)->whereTime('start_time', 'between', [$cstime, $cetime])->select();
+        $calendar['list'] = db('calendar')->where($pmap)->whereTime('start_time', 'between', [$btime, $cetime])->select();
 
         //返回信息
         $data = [
