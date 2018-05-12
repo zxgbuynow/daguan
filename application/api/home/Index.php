@@ -1125,6 +1125,9 @@ class Index
             $ret[$k]['name'] = $v['title'];
             $ret[$k]['cid'] = $v['id'];
             foreach ($article as $key => $value) {
+                if ($v['id']!=$value['cid']) {
+                    continue;
+                }
                 unset($value['content']);
                 $ret[$k]['list'][$key] = $value;
                 $ret[$k]['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
