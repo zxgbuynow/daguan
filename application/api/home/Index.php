@@ -1134,7 +1134,7 @@ class Index
                 $ret[$k]['list'][$key]['cover'] = get_file_path($value['cover']);
             }
         }
-        $rs['data'] = $ret;
+        $rs['data'] = array_values($ret);
         //返回信息
         $data = [
             'code'=>'1',
