@@ -1126,12 +1126,12 @@ class Index
                 $ret[$k]['list'][$key]['cover'] = get_file_path($value['cover']);
             }
         }
-        
+        $rs['data'] = $ret;
         //返回信息
         $data = [
             'code'=>'1',
             'msg'=>'',
-            'data'=>$ret
+            'data'=>$rs
         ];
         return json($data);
     }
