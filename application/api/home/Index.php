@@ -830,6 +830,7 @@ class Index
         $data['payment'] = $price;
         $data['created_time'] = time();
         $data['num'] = $num;
+        $data['chart'] = $chart;
 
         //交易标题
         
@@ -1147,17 +1148,23 @@ class Index
     {
         //参数
         $tid = trim($params['tid']);
+        $cid = trim($params['cid']);
 
         //订单信息
-        $uid = db('trade')->where(['id'=>$tid])->column('memberid');
+        $trade = db('trade')->where(['id'=>$tid])->find();
 
+        //预约信息
+        $ondate = db('calendar')->where(['id'=>$cid])->find();
+        
         $rs = array();
-        if ($uid&&$uid[0]) {
-            $rs = db('member')->where(['id'=>$uid[0]])->find();
-            if ($rs) {
-                unset($rs['password']);
+        if ($uid&&$uid['memberid']) {
+            $rs['user'] = db('member')->where(['id'=>$uid['memberid']])->find();
+            if ($rs['user']) {
+                unset($rs['user']['password']);
             }
         }
+        $rs['trade'] = $trade;
+        $rs['ondate'] = $ondate;
 
         //返回信息
         $data = [
