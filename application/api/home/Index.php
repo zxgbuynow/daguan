@@ -1117,17 +1117,16 @@ class Index
     public function articalcate_custom($params)
     {
         $ret = array();
-        $article = db('cms_page')->where('status',1)->order('view DESC')->limit(10)->select();
+        // $article = db('cms_page')->where('status',1)->order('view DESC')->limit(10)->select();
 
         $cates = db('cms_category')->where('status',1)->order('id DESC')->select();
 
         foreach ($cates as $k => $v) {
             $ret[$k]['name'] = $v['title'];
             $ret[$k]['cid'] = $v['id'];
+            //取分类下数据
+            $article = db('cms_page')->where(['status'=>1,'cid'=>$v['id']])->order('view DESC')->limit(10)->select();
             foreach ($article as $key => $value) {
-                if ($v['id']!=$value['cid']) {
-                    continue;
-                }
                 unset($value['content']);
                 $ret[$k]['list'][$key] = $value;
                 $ret[$k]['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
