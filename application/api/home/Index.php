@@ -2155,8 +2155,8 @@ class Index
         $ondate = db('calendar')->where(['id'=>$cid])->find();
         
         $rs = array();
-        if ($uid&&$uid['memberid']) {
-            $rs['user'] = db('member')->where(['id'=>$uid['memberid']])->find();
+        if ($trade&&$trade['memberid']) {
+            $rs['user'] = db('member')->where(['id'=>$trade['memberid']])->find();
             if ($rs['user']) {
                 unset($rs['user']['password']);
             }
