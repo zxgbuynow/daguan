@@ -2197,6 +2197,26 @@ class Index
         ];
         return json($data);
     }
+    /**
+     * [caseAdd_shop 添加案例]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function caseAdd_shop($params)
+    {
+        //参数
+        $rs = trim($params['data']);
+        $cid = trim($params['cid']);
+
+        error_log(json_encode($data),3,'/home/wwwroot/daguan/case.log');
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rs
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 公用方法

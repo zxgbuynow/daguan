@@ -45,6 +45,7 @@ return [
         'usersendSms'=>'user.sendSms',
         'findPassword'=>'user.findPassword',
         'articalcate'=>'artical.cate',
-        'getMemberInfoByTid'=>'getMemberInfoByTid'
+        'getMemberInfoByTid'=>'getMemberInfoByTid',
+        'caseAdd'=>'caseAdd'
     ]
 ];
