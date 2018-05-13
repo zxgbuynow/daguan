@@ -2286,7 +2286,10 @@ class Index
         unset($params['source']);
 
         $pst = array_merge($rs,$params);
-        
+
+        if (db('case')->insert($rs)) {
+            db('calendar')->where(['id'=>$cid])->update(['status'=>2]);
+        }
         error_log(json_encode($pst),3,'/home/wwwroot/daguan/case.log');
         
         //返回信息
