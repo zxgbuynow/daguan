@@ -2284,6 +2284,7 @@ class Index
         unset($params['data']);
         unset($params['method']);
         unset($params['source']);
+        $params['create_time'] = time();
         foreach ($params as $key => $value) {
             $params[$key] = urldecode($value);
         }
