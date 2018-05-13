@@ -2205,10 +2205,14 @@ class Index
     public function caseAdd_shop($params)
     {
         //参数
-        $rs = trim($params['data']);
+        $param = trim($params['data']);
         $cid = trim($params['cid']);
 
-        error_log(json_encode($data),3,'/home/wwwroot/daguan/case.log');
+        error_log(json_encode($params),3,'/home/wwwroot/daguan/case.log');
+        $rs = array();
+        foreach ($param as $key => $value) {
+            array_push($rs, $value);
+        }
         //返回信息
         $data = [
             'code'=>'1',
