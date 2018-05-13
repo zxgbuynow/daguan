@@ -2207,6 +2207,16 @@ class Index
         //参数
         $param = trim($params['data']);
         $cid = trim($params['cid']);
+        $truename = trim($params['truename']);
+        $sex = trim($params['sex']);
+        $birthday = trim($params['birthday']);
+        $edu = trim($params['edu']);
+        $grade = trim($params['grade']);
+        $marital = trim($params['marital']);
+        $profession = trim($params['profession']);
+        $mobile = trim($params['mobile']);
+        $chat = trim($params['chat']);
+        $timerange = trim($params['timerange']);
 
         
         $rs = array();
@@ -2270,7 +2280,14 @@ class Index
             }
                       
         }
-        error_log(json_encode($rs),3,'/home/wwwroot/daguan/case.log');
+
+        unset($params['data']);
+        unset($params['method']);
+        unset($params['source']);
+
+        $pst = array_merge($rs,$params);
+        
+        error_log(json_encode($pst),3,'/home/wwwroot/daguan/case.log');
         
         //返回信息
         $data = [
