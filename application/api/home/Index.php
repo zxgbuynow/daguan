@@ -2210,16 +2210,16 @@ class Index
 
         error_log(json_encode($params),3,'/home/wwwroot/daguan/case.log');
         $rs = array();
-        foreach ($param as $key => $value) {
-            array_push($rs, $value);
-        }
+        // foreach ($param as $key => $value) {
+        //     array_push($rs, $value);
+        // }
         //返回信息
         $data = [
             'code'=>'1',
             'msg'=>'',
             'data'=>$rs
         ];
-        return json($data);
+        return json($param);
     }
     /*
     |--------------------------------------------------------------------------
