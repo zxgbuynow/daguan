@@ -2208,18 +2208,77 @@ class Index
         $param = trim($params['data']);
         $cid = trim($params['cid']);
 
-        error_log(json_encode($params),3,'/home/wwwroot/daguan/case.log');
+        
         $rs = array();
-        foreach ($param as $key => $value) {
-            array_push($rs, $value);
+        $parr = explode("&",$param);
+        foreach($parr as $v) {
+            $pqurey = explode("=", $v);
+            if ($pqurey[1]=='') {
+                continue;
+            }
+            if (array_key_exists($pqurey[0],$rs)) {
+                $rs[$pqurey[0]] = $rs[$pqurey[0]].','.$pqurey[1];
+            }else{
+                //select 判断
+                if (strpos('_Avl', $pqurey[0])) {
+                    if (array_key_exists('Avl',$rs)) {
+                        $rs['Avl'] = $rs['Avl'].','.$pqurey[1];
+                    }else{
+                        $rs['Avl'] = $pqurey[1];
+                    }
+                    
+                }elseif (strpos('_A2vl', $pqurey[0])) {
+                    if (array_key_exists('A2vl',$rs)) {
+                        $rs['A2vl'] = $rs['A2vl'].','.$pqurey[1];
+                    }else{
+                        $rs['A2vl'] = $pqurey[1];
+                    }
+                }elseif (strpos('_Bvl', $pqurey[0])) {
+                    if (array_key_exists('Bvl',$rs)) {
+                        $rs['Bvl'] = $rs['Bvl'].','.$pqurey[1];
+                    }else{
+                        $rs['Bvl'] = $pqurey[1];
+                    }
+                }elseif (strpos('_M1vl', $pqurey[0])) {
+                    if (array_key_exists('M1vl',$rs)) {
+                        $rs['M1vl'] = $rs['M1vl'].','.$pqurey[1];
+                    }else{
+                        $rs['M1vl'] = $pqurey[1];
+                    }
+                }elseif (strpos('_AMvl', $pqurey[0])) {
+                    if (array_key_exists('AMvl',$rs)) {
+                        $rs['AMvl'] = $rs['AMvl'].','.$pqurey[1];
+                    }else{
+                        $rs['AMvl'] = $pqurey[1];
+                    }
+                }elseif (strpos('_M2vl', $pqurey[0])) {
+                    if (array_key_exists('M2vl',$rs)) {
+                        $rs['M2vl'] = $rs['M2vl'].','.$pqurey[1];
+                    }else{
+                        $rs['M2vl'] = $pqurey[1];
+                    }
+                }elseif (strpos('_PLAN', $pqurey[0])) {
+                    if (array_key_exists('PLAN',$rs)) {
+                        $rs['PLAN'] = $rs['PLAN'].','.$pqurey[1];
+                    }else{
+                        $rs['PLAN'] = $pqurey[1];
+                    }
+                }else{
+                    $rs[$pqurey[0]] = $pqurey[1];
+                }
+                 
+            }
+                      
         }
+        error_log(json_encode($rs),3,'/home/wwwroot/daguan/case.log');
+        
         //返回信息
         $data = [
             'code'=>'1',
             'msg'=>'',
             'data'=>$rs
         ];
-        return json($param);
+        return json($data);
     }
     /*
     |--------------------------------------------------------------------------
