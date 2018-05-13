@@ -2220,44 +2220,44 @@ class Index
                 $rs[$pqurey[0]] = $rs[$pqurey[0]].','.$pqurey[1];
             }else{
                 //select 判断
-                if (strpos('_Avl', $pqurey[0])) {
+                if (strpos($pqurey[0],'_Avl')) {
                     if (array_key_exists('Avl',$rs)) {
                         $rs['Avl'] = $rs['Avl'].','.$pqurey[1];
                     }else{
                         $rs['Avl'] = $pqurey[1];
                     }
                     
-                }elseif (strpos('_A2vl', $pqurey[0])) {
+                }elseif (strpos($pqurey[0], '_A2vl')) {
                     if (array_key_exists('A2vl',$rs)) {
                         $rs['A2vl'] = $rs['A2vl'].','.$pqurey[1];
                     }else{
                         $rs['A2vl'] = $pqurey[1];
                     }
-                }elseif (strpos('_Bvl', $pqurey[0])) {
+                }elseif (strpos($pqurey[0], '_Bvl')) {
                     if (array_key_exists('Bvl',$rs)) {
                         $rs['Bvl'] = $rs['Bvl'].','.$pqurey[1];
                     }else{
                         $rs['Bvl'] = $pqurey[1];
                     }
-                }elseif (strpos('_M1vl', $pqurey[0])) {
+                }elseif (strpos($pqurey[0], '_M1vl')) {
                     if (array_key_exists('M1vl',$rs)) {
                         $rs['M1vl'] = $rs['M1vl'].','.$pqurey[1];
                     }else{
                         $rs['M1vl'] = $pqurey[1];
                     }
-                }elseif (strpos('_AMvl', $pqurey[0])) {
+                }elseif (strpos($pqurey[0],'_AMvl')) {
                     if (array_key_exists('AMvl',$rs)) {
                         $rs['AMvl'] = $rs['AMvl'].','.$pqurey[1];
                     }else{
                         $rs['AMvl'] = $pqurey[1];
                     }
-                }elseif (strpos('_M2vl', $pqurey[0])) {
+                }elseif (strpos($pqurey[0],'_M2vl')) {
                     if (array_key_exists('M2vl',$rs)) {
                         $rs['M2vl'] = $rs['M2vl'].','.$pqurey[1];
                     }else{
                         $rs['M2vl'] = $pqurey[1];
                     }
-                }elseif (strpos('_PLAN', $pqurey[0])) {
+                }elseif (strpos($pqurey[0],'_PLAN')) {
                     if (array_key_exists('PLAN',$rs)) {
                         $rs['PLAN'] = $rs['PLAN'].','.$pqurey[1];
                     }else{
