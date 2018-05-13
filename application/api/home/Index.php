@@ -2227,54 +2227,54 @@ class Index
                 continue;
             }
             if (array_key_exists($pqurey[0],$rs)) {
-                $rs[$pqurey[0]] = $rs[$pqurey[0]].','.$pqurey[1];
+                $rs[$pqurey[0]] = $rs[$pqurey[0]].','.urldecode($pqurey[1]);
             }else{
                 //select 判断
                 if (strpos($pqurey[0],'_Avl')) {
                     if (array_key_exists('Avl',$rs)) {
-                        $rs['Avl'] = $rs['Avl'].','.$pqurey[1];
+                        $rs['Avl'] = $rs['Avl'].','.urldecode($pqurey[1]);
                     }else{
-                        $rs['Avl'] = $pqurey[1];
+                        $rs['Avl'] = urldecode($pqurey[1]);
                     }
                     
                 }elseif (strpos($pqurey[0], '_A2vl')) {
                     if (array_key_exists('A2vl',$rs)) {
-                        $rs['A2vl'] = $rs['A2vl'].','.$pqurey[1];
+                        $rs['A2vl'] = $rs['A2vl'].','.urldecode($pqurey[1]);
                     }else{
-                        $rs['A2vl'] = $pqurey[1];
+                        $rs['A2vl'] = urldecode($pqurey[1]);
                     }
                 }elseif (strpos($pqurey[0], '_Bvl')) {
                     if (array_key_exists('Bvl',$rs)) {
-                        $rs['Bvl'] = $rs['Bvl'].','.$pqurey[1];
+                        $rs['Bvl'] = $rs['Bvl'].','.urldecode($pqurey[1]);
                     }else{
-                        $rs['Bvl'] = $pqurey[1];
+                        $rs['Bvl'] = urldecode($pqurey[1]);
                     }
                 }elseif (strpos($pqurey[0], '_M1vl')) {
                     if (array_key_exists('M1vl',$rs)) {
-                        $rs['M1vl'] = $rs['M1vl'].','.$pqurey[1];
+                        $rs['M1vl'] = $rs['M1vl'].','.urldecode($pqurey[1]);
                     }else{
-                        $rs['M1vl'] = $pqurey[1];
+                        $rs['M1vl'] = urldecode($pqurey[1]);
                     }
                 }elseif (strpos($pqurey[0],'_AMvl')) {
                     if (array_key_exists('AMvl',$rs)) {
-                        $rs['AMvl'] = $rs['AMvl'].','.$pqurey[1];
+                        $rs['AMvl'] = $rs['AMvl'].','.urldecode($pqurey[1]);
                     }else{
-                        $rs['AMvl'] = $pqurey[1];
+                        $rs['AMvl'] = urldecode($pqurey[1]);
                     }
                 }elseif (strpos($pqurey[0],'_M2vl')) {
                     if (array_key_exists('M2vl',$rs)) {
-                        $rs['M2vl'] = $rs['M2vl'].','.$pqurey[1];
+                        $rs['M2vl'] = $rs['M2vl'].','.urldecode($pqurey[1]);
                     }else{
-                        $rs['M2vl'] = $pqurey[1];
+                        $rs['M2vl'] = urldecode($pqurey[1]);
                     }
                 }elseif (strpos($pqurey[0],'_PLAN')) {
                     if (array_key_exists('PLAN',$rs)) {
-                        $rs['PLAN'] = $rs['PLAN'].','.$pqurey[1];
+                        $rs['PLAN'] = $rs['PLAN'].','.urldecode($pqurey[1]);
                     }else{
-                        $rs['PLAN'] = $pqurey[1];
+                        $rs['PLAN'] = urldecode($pqurey[1]);
                     }
                 }else{
-                    $rs[$pqurey[0]] = $pqurey[1];
+                    $rs[$pqurey[0]] = urldecode($pqurey[1]);
                 }
                  
             }
@@ -2284,10 +2284,12 @@ class Index
         unset($params['data']);
         unset($params['method']);
         unset($params['source']);
-
+        foreach ($params as $key => $value) {
+            $params[$key] = urldecode($value);
+        }
         $pst = array_merge($rs,$params);
 
-        if (db('case')->insert($rs)) {
+        if (db('case')->insert($pst)) {
             db('calendar')->where(['id'=>$cid])->update(['status'=>2]);
         }
         error_log(json_encode($pst),3,'/home/wwwroot/daguan/case.log');
