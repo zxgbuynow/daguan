@@ -21,7 +21,8 @@ class Common extends Controller
         if ($this->request->module()=='admin'||$this->request->module()=='cms') {
             $this->assign('_admin_base_layout', config('admin_base_layout'));
         }else{
-            $this->assign('_admin_base_layout', config('shop_base_layout'));
+            $this->assign('_admin_base_layout', config('admin_base_layout'));
+            // $this->assign('_admin_base_layout', config('shop_base_layout'));
         }
         
         // 当前配色方案
