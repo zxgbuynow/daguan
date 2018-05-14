@@ -197,6 +197,10 @@ class Counsellor extends Admin
             $save['qq'] = $data['qq'];
             $save['weixin'] = $data['weixin'];
             $save['alipay'] = $data['alipay'];
+            $save['truename'] = $data['truename'];
+            $save['cerfornt'] = $data['cerfornt'];
+            $save['cerback'] = $data['cerback'];
+            $save['identifi'] = $data['identifi'];
 
             $save['mobile'] = $data['mobile'];
             $save['status'] = $data['status'];
@@ -215,6 +219,12 @@ class Counsellor extends Admin
                     $save1['intro'] = $data['intro'];
                     $save1['employment'] = strtotime($data['employment']);
                     $save1['remark'] = $data['remark'];
+
+                    $save1['diploma'] = $data['diploma'];
+
+                    $save1['tearch'] = $data['tearch'];
+                    $save1['leader'] = $data['leader'];
+                    
                     //业务类弄
                     $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
                     CounsellorotModel::update($save1);
@@ -232,6 +242,12 @@ class Counsellor extends Admin
                     $save1['employment'] = strtotime($data['employment']);
                     
                     $save1['remark'] = $data['remark'];
+
+                    
+                    $save1['diploma'] = $data['diploma'];
+
+                    $save1['tearch'] = $data['tearch'];
+                    $save1['leader'] = $data['leader'];
                     //业务类弄
                     $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
                     CounsellorotModel::create($save1);
@@ -261,12 +277,22 @@ class Counsellor extends Admin
                 ['hidden', 'shopid'],
                 ['text', 'username', '用户名', '必填，可由英文字母、数字组成'],
                 ['text', 'nickname', '昵称', '可以是中文'],
+                ['image', 'avar', '头像'],
+                ['text', 'truename', '真实姓名', '中文'],
+                ['text', 'identifi', '身份证'],
+                ['image', 'diploma', '咨询师证书'],
+                ['radio', 'tearch', '是否是讲师', '', ['否', '是']],
+                ['radio', 'leader', '是否是团队Leader', '', ['否', '是']],
+
                 ['password', 'password', '密码', '必填，6-20位'],
                 ['text', 'mobile', '手机号'],
                 ['text', 'qq', 'QQ'],
                 ['text', 'weixin', '微信'],
                 ['text', 'alipay', '支付宝'],
-                ['radio', 'status', '状态', '', ['禁用', '启用']],
+                ['image', 'cerfornt', '身份证正面'],
+                ['image', 'cerback', '身份证反面'],
+
+                ['radio', 'status', '状态', '', ['停牌', '上线']],
                 ['radio', 'recommond', '推荐', '', ['不推荐', '推荐']],
                 // ['date', 'employment', '从业时间'],
                 ['number', 'per', '单次时长'],
