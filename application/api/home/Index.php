@@ -1235,13 +1235,13 @@ class Index
         $page_no = trim($params['page_no']);
         $page_size = trim($params['page_size']);
 
-        $map['memberid'] = $account;
+        $map['b.memberid'] = $account;
         
 
         if ($status == 'all') {
             // $map['status'] = array('gt',0);
         }else{
-            $map['status'] = $status;
+            $map['a.status'] = $status;
         }
         $startpg = ($page_no-1)*$page_size;
 
