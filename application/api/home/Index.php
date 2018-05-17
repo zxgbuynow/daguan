@@ -498,10 +498,13 @@ class Index
         }
         $startpg = ($page_no-1)*$page_size;
 
-        $trade['data'] = db('trade')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
+        $data = db('trade')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
 
-        $trade['data']['pagers']['total'] = db('trade')->where($map)->order('id DESC')->count();
-        $trade['data'] = array_values($trade['data']);
+        $pages = array(
+                'total'=>db('trade')->where($map)->order('id DESC')->count()
+            );
+        $trade['data']['pagers'] = $pages;
+        $trade['data']['list'] = array_values($data);
         //返回信息
         $data = [
             'code'=>'1',
