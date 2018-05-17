@@ -500,7 +500,7 @@ class Index
 
         $trade['list'] = db('trade')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
 
-        $trade['list']['pagers']['total'] = db('trade')->where($map)->order('id DESC')->count()
+        $trade['list']['pagers']['total'] = db('trade')->where($map)->order('id DESC')->count();
         //返回信息
         $data = [
             'code'=>'1',
