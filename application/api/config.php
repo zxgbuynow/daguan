@@ -46,6 +46,8 @@ return [
         'findPassword'=>'user.findPassword',
         'articalcate'=>'artical.cate',
         'getMemberInfoByTid'=>'getMemberInfoByTid',
-        'caseAdd'=>'caseAdd'
+        'caseAdd'=>'caseAdd',
+        'evaluate'=>'user.evaluate',
+        'oncalenda'=>'oncalenda'
     ]
 ];
