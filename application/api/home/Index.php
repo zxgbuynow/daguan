@@ -1017,7 +1017,7 @@ class Index
                 $timesarr['list'][$key]['t'] = $value;
                 $timesarr['list'][$key]['s'] = 0;
                 foreach ($calendar['list'] as $k => $v) {
-                    if ($tpoint>$v['start_time']&&$tpoint<$v['end_time']) {
+                    if ($tpoint>=$v['start_time']&&$tpoint=<$v['end_time']) {
                         $timesarr['list'][$key]['s'] = 1;
                     }else{
                         if ($tpoint<time()) {
