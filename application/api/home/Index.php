@@ -501,7 +501,7 @@ class Index
         $data = db('trade')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
 
         foreach ($data as $key => $value) {
-            $record = db('dp_calendar')->where(['tid'=>$value['id']])->count();
+            $record = db('calendar')->where(['tid'=>$value['id']])->count();
             $data[$key]['process'] =  '当前进度：'.$record.'/'.$value['num'];
         }
         $pages = array(
