@@ -483,9 +483,22 @@ class Index
     public function trade_custom($params)
     {
         $account = trim($params['account']);
-        $map['memberid'] = $account;
 
-        $trade['list'] = db('trade')->where($map)->order('id DESC')->select();
+        $status = trim($params['status']);
+        $page_no = trim($params['page_no']);
+        $page_size = trim($params['page_size']);
+
+        $map['memberid'] = $account;
+        
+
+        if ($status == 0) {
+            $map['status'] = array('gt',0);
+        }else{
+            $map['status'] = $status;
+        }
+        $startpg = ($page_no-1)*$page_size;
+
+        $trade['list'] = db('trade')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
 
        
         //返回信息
