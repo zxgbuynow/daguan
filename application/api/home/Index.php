@@ -997,8 +997,7 @@ class Index
        //日程
         $pmap['memberid'] = $account;
 
-        $calendar['list'] = db('calendar')->where($pmap)->whereTime('start_time', 'between', [$cstime, $cetime])->select();
-
+        $calendar['list'] = db('calendar')->where($pmap)->whereTime('start_time', 'between', [ intval($cstime) , $cetime])->select();
         $times = array('9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00');
 
         $timesarr['list'] = [];
@@ -1019,10 +1018,6 @@ class Index
                 foreach ($calendar['list'] as $k => $v) {
                     if ($tpoint>=$v['start_time']&&$tpoint<=$v['end_time']) {
                         $timesarr['list'][$key]['s'] = 1;
-                    }else{
-                        if ($tpoint<time()) {
-                            $timesarr['list'][$key]['s'] = 2;
-                        }
                     }
                 }
                 if (!$calendar['list']) {
