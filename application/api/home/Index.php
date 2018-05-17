@@ -1245,7 +1245,7 @@ class Index
         }
         $startpg = ($page_no-1)*$page_size;
 
-        $data = db('calendar')->alias('a')->field('a.*')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
+        $data = db('calendar')->alias('a')->field('a.*')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->limit($startpg, $page_size)->select();
 
         foreach ($data as $key => $value) {
             $member =  db('member')->alias('a')->field('a.*')->join(' trade b',' b.memberid = a.id','LEFT')->where(array('b.id'=>$value['tid']))->find();
@@ -1253,7 +1253,7 @@ class Index
             $data[$key]['st'] = date('Y-m-d H:i',$value['start_time']);
         }
         $pages = array(
-                'total'=>db('calendar')->alias('a')->field('a.*')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('id DESC')->limit($startpg, $page_size)->count()
+                'total'=>db('calendar')->alias('a')->field('a.*')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->limit($startpg, $page_size)->count()
             );
         $trade['data']['pagers'] = $pages;
         $trade['data']['list'] = array_values($data);
