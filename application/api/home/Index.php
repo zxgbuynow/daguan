@@ -491,8 +491,8 @@ class Index
         $map['memberid'] = $account;
         
 
-        if ($status == 0) {
-            $map['status'] = array('gt',0);
+        if ($status == 'all') {
+            // $map['status'] = array('gt',0);
         }else{
             $map['status'] = $status;
         }
@@ -500,6 +500,10 @@ class Index
 
         $data = db('trade')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
 
+        foreach ($data as $key => $value) {
+            $record = db('dp_calendar')->where(['tid'=>$value['id']])->count();
+            $data[$key]['process'] =  '当前进度：'.$record.'/'.$value['num'];
+        }
         $pages = array(
                 'total'=>db('trade')->where($map)->order('id DESC')->count()
             );
@@ -1161,6 +1165,21 @@ class Index
         return json($data);
     }
 
+    /**
+     * [evaluate 评价]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function evaluate_custom($params)
+    {
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
     
     /*
     |--------------------------------------------------------------------------
