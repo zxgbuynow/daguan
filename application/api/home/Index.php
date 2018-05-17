@@ -1222,7 +1222,49 @@ class Index
         return json($data);
 
     }
-    
+    /**
+     * [recordlist_custom 咨询记录列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function recordlist_custom($params)
+    {
+        $account = trim($params['account']);
+
+        $status = trim($params['status']);
+        $page_no = trim($params['page_no']);
+        $page_size = trim($params['page_size']);
+
+        $map['memberid'] = $account;
+        
+
+        if ($status == 'all') {
+            // $map['status'] = array('gt',0);
+        }else{
+            $map['status'] = $status;
+        }
+        $startpg = ($page_no-1)*$page_size;
+
+        $data = db('calendar')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
+
+        foreach ($data as $key => $value) {
+            $member =  db('member')->alias('a')->field('a.*')->join(' trade b',' b.memberid = a.id','LEFT')->where(array('b.id'=>$value['tid']))->find();
+            $data[$key]['member'] =  $member['nickname'];
+            $data[$key]['st'] = date('Y-m-d',$value['start_time']);
+        }
+        $pages = array(
+                'total'=>db('trade')->where($map)->order('id DESC')->count()
+            );
+        $trade['data']['pagers'] = $pages;
+        $trade['data']['list'] = array_values($data);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$trade
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API

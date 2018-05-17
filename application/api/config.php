@@ -48,6 +48,7 @@ return [
         'getMemberInfoByTid'=>'getMemberInfoByTid',
         'caseAdd'=>'caseAdd',
         'evaluate'=>'user.evaluate',
-        'oncalenda'=>'oncalenda'
+        'oncalenda'=>'oncalenda',
+        'recordlist'=>'recordlist'
     ]
 ];
