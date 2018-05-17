@@ -1003,7 +1003,7 @@ class Index
 
         $timesarr['list'] = [];
         //过去的时间
-        if ($today>strtotime(date('Y-m-d',$cstime))) {
+        if ($today>strtotime(date('Y-m-d H:i:s',$cstime))) {
             foreach ($times as $key => $value) {
                 //订单记录
                 $tpoint = strtotime(date('Y-m-d',$cstime).$value);
