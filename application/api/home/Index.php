@@ -1190,6 +1190,43 @@ class Index
         ];
         return json($data);
     }
+
+    /**
+     * [oncalenda_custom 客户端预约时间]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function oncalenda_custom($params)
+    {
+        //title des tid createtime start_time memberid
+        $account = trim($params['account']);
+        $start_time = trim($params['hour']);
+        $tid = trim($params['tid']);
+
+
+        //添加
+        $save['create_time'] = time();
+        $save['memberid'] = $account;
+
+        $save['start_time'] = strtotime($start_time);
+        $save['end_time'] = strtotime($start_time)+0.5*60*60;
+        $save['tid'] = $tid;
+
+        $save['title'] = db('trade')->where('id',$tid)->column('title')[0];
+        $save['descrption'] = db('trade')->where('id',$tid)->column('title')[0];
+
+        if (!db('calendar')->insert($save)) {
+            $this->error('保存失败！');
+        }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+
+    }
     
     /*
     |--------------------------------------------------------------------------
