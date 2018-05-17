@@ -1025,6 +1025,11 @@ class Index
                         }
                     }
                 }
+                if (!$calendar['list']) {
+                    if ($tpoint<time()) {
+                        $timesarr['list'][$key]['s'] = 2;
+                    }
+                }
             }
         }
         
