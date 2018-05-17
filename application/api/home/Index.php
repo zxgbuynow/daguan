@@ -503,6 +503,7 @@ class Index
         foreach ($data as $key => $value) {
             $record = db('calendar')->where(['tid'=>$value['id']])->count();
             $data[$key]['process'] =  '当前进度：'.$record.'/'.$value['num'];
+            $data[$key]['record'] =  $record;
         }
         $pages = array(
                 'total'=>db('trade')->where($map)->order('id DESC')->count()
