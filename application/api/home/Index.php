@@ -1176,7 +1176,23 @@ class Index
      * @return [type]         [description]
      */
     public function evaluate_custom($params)
-    {
+    {   
+        //参数
+        $account = trim($params['account']);
+        $c_id = trim($params['c_id']);
+        $sorce = trim($params['sorce']);
+        $cotent = trim($params['cotent']);
+
+        $save['sorce'] = $sorce;
+        $save['memberid'] = $account;
+        $save['cotent'] = $cotent;
+        $save['cid'] = $c_id;
+        $save['create_time'] = time();
+        if (!db('dp_evaluate')->insert($save)) {
+           $this->error('评论失败！');
+        }
+
+
         //返回信息
         $data = [
             'code'=>'1',
