@@ -1189,7 +1189,7 @@ class Index
         $save['cid'] = $c_id;
         $save['create_time'] = time();
         if (!db('evaluate')->insert($save)) {
-            db('calendar')->where(['id'=>$c_id])->update(['status'=>4]);
+            db('calendar')->where(['id'=>$c_id])->update(['status'=>3]);
             $this->error('评论失败！');
         }
 
