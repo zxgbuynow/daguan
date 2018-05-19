@@ -1188,8 +1188,8 @@ class Index
         $save['cotent'] = $cotent;
         $save['cid'] = $c_id;
         $save['create_time'] = time();
-        if (!db('dp_evaluate')->insert($save)) {
-            db('dp_calendar')->where(['id'=>$c_id])->update(['status'=>4]);
+        if (!db('evaluate')->insert($save)) {
+            db('calendar')->where(['id'=>$c_id])->update(['status'=>4]);
             $this->error('评论失败！');
         }
 
