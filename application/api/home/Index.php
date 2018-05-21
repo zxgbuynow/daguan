@@ -877,10 +877,9 @@ class Index
 
         $data['title'] = '预约'.$counsellor[0].$str;
         //机构
-        $data['shopid'] = db('member')->where('id',$account)->column('shopid');
+        $data['shopid'] = db('member')->where('id',$account)->column('shopid')?db('member')->where('id',$account)->column('shopid')[0]:0;
         //订单号
         $data['tid'] = date('YmdHis',time()).rand(1000,9999);
-        
         //插入数据
         $trade = db('trade')->insert($data);
         if (!$trade) {
