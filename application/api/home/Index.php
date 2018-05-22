@@ -337,6 +337,46 @@ class Index
         ];
         return json($data);
     }
+
+    /**
+     * [classList_custom 课程列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function classList_custom($params)
+    {
+        $map['typeid'] = '1';//课程
+        $map['status'] = 1;
+        $class['pic'] = db('cms_advert')->where($map)->order('id DESC')->limit(10)->select();
+       
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$class
+        ];
+        return json($data);
+    }
+    /**
+     * [activeList_custom 活动]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function activeList_custom($params)
+    {
+        $map['typeid'] = '2';//活动
+        $map['status'] = 1;
+        $class['pic'] = db('cms_advert')->where($map)->order('id DESC')->limit(10)->select();
+       
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$class
+        ];
+        return json($data);
+    }
+
     /**
      * [category_custom 咨询分类]
      * @param  string $value [description]

@@ -11,6 +11,8 @@ return [
         'userinfo'=>'user.userinfo',//我的、
         'article'=>'home.article',//好文推荐
         'lunbo'=>'home.lunbo',// 广告
+        'classList'=>'class.list',// 课程广告
+        'activeList'=>'active.list',// 活动广告
         'category'=>'counsellor.category',//咨询分类
         'recommend'=>'counsellor.recommend',//推荐咨询师
         'counsellor'=>'counsellor.info',//咨询师
