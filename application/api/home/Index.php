@@ -1051,7 +1051,7 @@ class Index
         }else{
             foreach ($times as $key => $value) {
                 //订单记录
-                $sval = explode(',', $value)[0];
+                $sval = explode('~', $value)[0];
                 $tpoint = strtotime(date('Y-m-d',$cstime).$sval);
                 $timesarr['list'][$key]['t'] = $value;
                 $timesarr['list'][$key]['s'] = 0;
