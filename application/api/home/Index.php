@@ -1037,8 +1037,8 @@ class Index
         $pmap['memberid'] = $account;
 
         $calendar['list'] = db('calendar')->where($pmap)->whereTime('start_time', 'between', [ intval($cstime) , $cetime])->select();
-        $times = array('9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00');
-
+        // $times = array('9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00');
+        $times = array('9:00~10:00','10:00~11:00','11:00~12:00','12:00~13:00','13:00~14:00','14:00~15:00','14:00~15:00','15:00~16:00','16:00~17:00','17:00~18:00','18:00~19:00','19:00~20:00','20:00~21:00');
         $timesarr['list'] = [];
         //过去的时间
         if ($today>strtotime(date('Y-m-d ',$cstime))) {
@@ -1051,7 +1051,8 @@ class Index
         }else{
             foreach ($times as $key => $value) {
                 //订单记录
-                $tpoint = strtotime(date('Y-m-d',$cstime).$value);
+                $sval = explode(',', $value)[0];
+                $tpoint = strtotime(date('Y-m-d',$cstime).$sval);
                 $timesarr['list'][$key]['t'] = $value;
                 $timesarr['list'][$key]['s'] = 0;
                 foreach ($calendar['list'] as $k => $v) {
@@ -1259,7 +1260,7 @@ class Index
         $save['memberid'] = $account;
 
         $save['start_time'] = strtotime($start_time);
-        $save['end_time'] = strtotime($start_time)+0.5*60*60;
+        $save['end_time'] = strtotime($start_time)+60*60;
         $save['tid'] = $tid;
 
         $save['title'] = db('trade')->where('id',$tid)->column('title')[0];
