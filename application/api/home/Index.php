@@ -1310,6 +1310,7 @@ class Index
         foreach ($data as $key => $value) {
             $member =  db('member')->alias('a')->field('a.*')->join(' trade b',' b.memberid = a.id','LEFT')->where(array('b.id'=>$value['tid']))->find();
             $data[$key]['member'] =  $member['nickname'];
+            $data[$key]['mobile'] =  $member['mobile'];
             $data[$key]['st'] = date('Y-m-d H:i',$value['start_time']);
         }
         $pages = array(
