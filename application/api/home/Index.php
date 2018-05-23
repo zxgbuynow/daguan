@@ -1305,10 +1305,10 @@ class Index
         }
         $startpg = ($page_no-1)*$page_size;
 
-        $data = db('calendar')->alias('a')->field('a.*,b.mid')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->limit($startpg, $page_size)->select();
+        $data = db('calendar')->alias('a')->field('a.*')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->limit($startpg, $page_size)->select();
 
         foreach ($data as $key => $value) {
-            $member =  db('member')->alias('a')->field('a.*')->join(' trade b',' b.memberid = a.id','LEFT')->where(array('b.id'=>$value['tid']))->find();
+            $member =  db('member')->alias('a')->field('a.*,b.mid')->join(' trade b',' b.memberid = a.id','LEFT')->where(array('b.id'=>$value['tid']))->find();
             $data[$key]['member'] =  $member['nickname'];
             $data[$key]['mobile'] =  db('member')->where(['id'=>$member['mid']])->column('mobile')[0];
             $data[$key]['st'] = date('Y-m-d H:i',$value['start_time']);
