@@ -1055,16 +1055,20 @@ class Index
                 $tpoint = strtotime(date('Y-m-d',$cstime).$sval);
                 $timesarr['list'][$key]['t'] = $value;
                 $timesarr['list'][$key]['s'] = 0;
+                if ($tpoint<time()) {
+                    $timesarr['list'][$key]['s'] = 2;
+                }
                 foreach ($calendar['list'] as $k => $v) {
                     if ($tpoint>=$v['start_time']&&$tpoint<=$v['end_time']) {
                         $timesarr['list'][$key]['s'] = 1;
                     }
                 }
-                if (!$calendar['list']) {
-                    if ($tpoint<time()) {
-                        $timesarr['list'][$key]['s'] = 2;
-                    }
-                }
+
+                // if (!$calendar['list']) {
+                //     if ($tpoint<time()) {
+                //         $timesarr['list'][$key]['s'] = 2;
+                //     }
+                // }
             }
         }
         
