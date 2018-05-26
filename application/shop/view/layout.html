@@ -300,7 +300,7 @@
             {notempty name="_top_menus"}
             {volist name="_top_menus" id="menu"}
             <li class="hidden-xs hidden-sm {$menu['id'] == $_location[0]['id'] ?= 'active'}">
-                {in name="menu.url_type" value="module_admin,module_home"}
+                {in name="menu.url_type" value="module_shop,module_home"}
                 <a href="javascript:void(0);" data-module-id="{$menu['id']}" data-module="{$menu['module']}" data-controller="{$menu['controller']}" target="{$menu['url_target']}" class="top-menu"><i class="{$menu.icon}"></i> {$menu.title}</a>
                 {else/}
                 <a href="{$menu['url_value']}" target="{$menu['url_target']}"><i class="{$menu.icon}"></i> {$menu.title}</a>

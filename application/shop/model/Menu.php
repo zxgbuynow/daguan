@@ -99,6 +99,7 @@ class Menu extends Model
     {
         $cache_tag .= '_role_'.session('shop_auth.role');
         $menus = cache($cache_tag);
+        $menus = '';
         if (!$menus) {
             // 非开发模式，只显示可以显示的菜单
             if (config('develop_mode') == 0) {
