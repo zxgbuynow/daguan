@@ -859,7 +859,7 @@ class Index
     public function articallist_custom($params)
     {
 
-        $keyword = trim($params['search_keywords']);
+        
         if (isset($params['cate_id'])) {
             $cate_id = trim($params['cate_id']);
             $map['cid'] = $cate_id;
@@ -869,9 +869,11 @@ class Index
             $type = trim($params['type']);
             $map['type'] = $type;
         }
-        
 
-        $map['title'] = array('like','%'.$keyword.'%');
+        if (isset($params['search_keywords'])) {
+            $keyword = trim($params['search_keywords']);
+            $map['title'] = array('like','%'.$keyword.'%');
+        }
         $map['status'] = 1;
         
         $article['list'] = db('cms_page')->where($map)->order('view DESC')->select();
