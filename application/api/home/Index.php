@@ -869,6 +869,7 @@ class Index
             $type = trim($params['type']);
             $map['type'] = $type;
         }
+        
 
         $map['title'] = array('like','%'.$keyword.'%');
         $map['status'] = 1;
