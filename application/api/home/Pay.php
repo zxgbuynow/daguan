@@ -133,6 +133,12 @@ class Pay
             $data['pay_type'] = 'alipay';
             $data['buyer_email'] = $params['buyer_email'];
             $data['trade_no'] = $params['trade_no'];
+            //是否是充值订单
+            $info = db('trade')->where($where)->find();
+            if ($info['paytype']==1) {
+                db('member')->where(['id'=>$info['memberid']])->update(['is_diamonds'=>1]);
+            }
+            
             db('trade')->where($where)->update($data);//修改订单状态
             echo 'success';
             exit;

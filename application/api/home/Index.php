@@ -272,8 +272,16 @@ class Index
      */
     public function article_custom($params)
     {
-
-        $article['list'] = db('cms_page')->where('status',1)->order('view DESC')->limit(10)->select();
+        //cid 
+        $map['status'] = 1;
+        if (isset($params['account'])) {
+            $preference = db('member')->where(['id'=>$params['account']])->column('preference');
+            if ($preference[0]) {
+                $map['cid']= array('in',explode(',', $preference[0]));
+            }
+            
+        }
+        $article['list'] = db('cms_page')->where($map)->order('view DESC')->limit(10)->select();
 
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
@@ -403,10 +411,32 @@ class Index
      */
     public function recommend_custom($params)
     {
-        $recommend['list'] = db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where(array('a.status'=>1,'a.type'=>1))->order('a.recommond DESC')->select();
+        $map['a.status'] = 1;
+        $map['a.type'] = 1;
+        $preferencearr = [];
+        if (isset($params['account'])) {
+            $preference = db('member')->where(['id'=>$params['account']])->column('preference');
+            if ($preference[0]) {
+                $preferencearr = explode(',', $preference[0]);
+            }
+            
+        }
+
+        $recommend['list'] = db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.recommond DESC')->limit(20)->select();
 
         foreach ($recommend['list'] as $key => $value) {
             if (!$value['memberid']) {
+                unset($recommend['list'][$key]);
+                continue;
+            }
+            if ($value['tags']) {
+                $tags = explode(',', $value['tags']);
+                if (empty(array_intersect($tags,$preferencearr))) {
+                    unset($recommend['list'][$key]);
+                    continue;
+                }
+                
+            }else{
                 unset($recommend['list'][$key]);
                 continue;
             }
@@ -529,7 +559,7 @@ class Index
         $page_size = trim($params['page_size']);
 
         $map['memberid'] = $account;
-        
+        $map['paytype'] = 0;        
 
         if ($status == 'all') {
             // $map['status'] = array('gt',0);
@@ -894,6 +924,41 @@ class Index
         $data['num'] = $num;
         $data['chart'] = $chart;
 
+        //冲值订单处理
+        if (isset($params['type'])) {
+            $username = db('member')->where('id',$account)->column('nickname');
+
+            $data['title'] = $username[0].'成为心窝会员';
+            //机构
+            @$data['shopid'] = db('member')->where('id',$account)->column('shopid')?db('member')->where('id',$account)->column('shopid')[0]:0;
+            //订单号
+            $data['tid'] = date('YmdHis',time()).rand(1000,9999);
+            //插入数据
+            $trade = db('trade')->insert($data);
+            if (!$trade) {
+                return $this->error('生成订单');
+            }
+            // //生成消息
+            // $msg['type'] = 0;
+            // $msg['subtitle'] = $username[0].'成为心窝会员';
+            // $msg['title'] = $username[0].'成为心窝会员';
+            // $msg['descrption'] = $username[0].'成为心窝会员';
+            // $msg['display'] = $username[0].'成为心窝会员';
+            // $msg['sendid'] = $account;
+            // $msg['reciveid'] = $counsellor_id;
+
+            // $this->create_msg($msg);
+            
+            $ret = array('tid'=>$data['tid']);
+            //返回信息
+            $data = [
+                'code'=>'1',
+                'msg'=>'',
+                'data'=>$ret
+            ];
+            return json($data);
+
+        }
         //交易标题
         
         $str = '文字咨询';
@@ -1052,7 +1117,7 @@ class Index
             foreach ($times as $key => $value) {
                 //订单记录
                 $sval = explode('~', $value)[0];
-                $tpoint = strtotime(date('Y-m-d',$cstime).$sval);
+                $tpoint = strtotime(date('Y-m-d',$cstime).$sval)+60;//加上60秒处理时间间隔
                 $timesarr['list'][$key]['t'] = $value;
                 $timesarr['list'][$key]['s'] = 0;
                 if ($tpoint<time()) {
