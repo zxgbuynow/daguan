@@ -72,6 +72,8 @@ class Page extends Admin
             }
         }
         $list_type = CategoryModel::where('status', 1)->column('id,title');
+
+        $alist = PageModel::where(['status'=>1])->column('id,title');
         // 显示添加页面
         return ZBuilder::make('form')
             ->addFormItems([
@@ -82,9 +84,12 @@ class Page extends Admin
                 ['ckeditor', 'content', '页面内容'],
                 ['image', 'cover', '单页封面'],
                 ['text', 'view', '阅读量', '', 0],
+                ['radio', 'type', '测试文章模式', '', ['否', '是'], 0],
                 ['radio', 'status', '立即启用', '', ['否', '是'], 1]
             ])
             ->addSelect('cid', '业务分类', '', $list_type)
+            ->addSelect('conrrelation_id', '关联文章ID', '', $alist)
+            ->setTrigger('type', '1', 'conrrelation_id')
             ->fetch();
     }
 
@@ -118,6 +123,8 @@ class Page extends Admin
 
         $info = PageModel::get($id);
         $list_type = CategoryModel::where('status', 1)->column('id,title');
+        
+        $alist = PageModel::where(['status'=>1])->column('id,title');
         // 显示编辑页面
         return ZBuilder::make('form')
             ->addFormItems([
@@ -129,9 +136,12 @@ class Page extends Admin
                 ['ckeditor', 'content', '页面内容'],
                 ['image', 'cover', '单页封面'],
                 ['text', 'view', '阅读量', '', 0],
+                ['radio', 'type', '测试文章模式', '', ['否', '是']],
                 ['radio', 'status', '立即启用', '', ['否', '是']]
             ])
             ->addSelect('cid', '业务分类', '', $list_type)
+            ->addSelect('conrrelation_id', '关联文章ID', '', $alist)
+            ->setTrigger('type', '1', 'conrrelation_id')
             ->setFormdata($info)
             ->fetch();
     }

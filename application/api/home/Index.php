@@ -865,6 +865,11 @@ class Index
             $map['cid'] = $cate_id;
         }
 
+        if (isset($params['type'])) {
+            $type = trim($params['type']);
+            $map['type'] = $type;
+        }
+
         $map['title'] = array('like','%'.$keyword.'%');
         $map['status'] = 1;
         
