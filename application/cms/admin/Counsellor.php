@@ -195,6 +195,7 @@ class Counsellor extends Admin
             $save['password'] = $data['password'];
 
             $save['qq'] = $data['qq'];
+            $save['avar'] = $data['avar'];
             $save['weixin'] = $data['weixin'];
             $save['alipay'] = $data['alipay'];
             $save['truename'] = $data['truename'];
