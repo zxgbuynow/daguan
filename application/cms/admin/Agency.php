@@ -220,6 +220,7 @@ class Agency extends Admin
             
             if (CateAccessModel::where('shopid',$id)->find()) {//编辑
                 $map['shopid'] = $id;
+                $save['cids'] = implode(',', $data['cids']);
                 if (db('shop_cate_access')->where($map)->update($save)) {
                     
                     // 记录行为
