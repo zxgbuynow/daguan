@@ -431,7 +431,7 @@ class Index
             }
             if ($value['tags']) {
                 $tags = explode(',', $value['tags']);
-                if (empty(array_intersect($tags,$preferencearr))) {
+                if (empty(array_intersect($tags,$preferencearr))&&$preferencearr) {
                     unset($recommend['list'][$key]);
                     continue;
                 }
