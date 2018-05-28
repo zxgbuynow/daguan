@@ -226,7 +226,7 @@ class Counsellor extends Admin
                     $save1['leader'] = $data['leader'];
                     
                     //业务类弄
-                    $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
+                    @$save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
                     CounsellorotModel::update($save1);
 
                 }else{
@@ -249,7 +249,7 @@ class Counsellor extends Admin
                     $save1['tearch'] = $data['tearch'];
                     $save1['leader'] = $data['leader'];
                     //业务类弄
-                    $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
+                    @$save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
                     CounsellorotModel::create($save1);
                 }
                 
