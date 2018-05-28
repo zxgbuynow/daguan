@@ -10,6 +10,7 @@ return [
         'confirm'=>'user.confirm',//注册验证手机
         'userinfo'=>'user.userinfo',//我的、
         'article'=>'home.article',//好文推荐
+        'articlebycate'=>'articlebycate',
         'lunbo'=>'home.lunbo',// 广告
         'classList'=>'class.list',// 课程广告
         'activeList'=>'active.list',// 活动广告

@@ -457,6 +457,39 @@ class Index
         ];
         return json($data);
     }
+
+    /**
+     * [articlebycate_custom 分类文章]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function articlebycate_custom($params)
+    {
+        $map['type'] = 0;
+        $map['status'] = 1;
+        $cid = $params['cid'];
+        if ($cid) {
+            $map['cid'] = $cid;
+        }
+        $article['list'] = db('cms_page')->where($map)->order('view DESC')->select();
+
+        foreach ($article['list'] as $key => $value) {
+            unset($article['list'][$key]['content']);
+            $article['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
+        }
+        foreach ($article['list'] as $key => $value) {
+            unset($article['list'][$key]['content']);
+            $article['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
+            $article['list'][$key]['cover'] = get_file_path($value['cover']);
+        }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$article
+        ];
+        return json($data);
+    }
     /**
      * [counsellor_custom 咨询师]
      * @param  [type] $params [description]
