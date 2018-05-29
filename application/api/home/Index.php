@@ -2666,7 +2666,7 @@ class Index
 
         $data['ondatetime'] = strtotime($cstime);
         $data['memberid'] = $account;
-        if(!db('dp_connsellor_ondate')->insert($data)){
+        if(!db('connsellor_ondate')->insert($data)){
             return $this->error('服务器忙，请稍后');
         }
 
