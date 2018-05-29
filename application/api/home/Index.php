@@ -2636,6 +2636,14 @@ class Index
                         $timesarr['list'][$key]['s'] = 1;
                     }
                 }
+                //查看是否设置了可约
+                if ($timesarr['list'][$key]['s']==0) {
+                    $tt = strtotime(date('Y-m-d',$cstime).$sval);
+                    $cid = $account;
+                    if (db('connsellor_ondate')->where(['memberid'=>$cid,'ondatetime'=>$tt])->find()) {
+                        $timesarr['list'][$key]['s'] = 3;
+                    }
+                }
 
             }
         }
