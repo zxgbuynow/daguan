@@ -2651,6 +2651,33 @@ class Index
         ];
         return json($data);
     }
+
+    /**
+     * [setcalenda_shop 设置]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function setcalenda_shop($params)
+    {
+        //参数
+        $account = trim($params['account']);
+        $cstime =  trim($params['day']);
+
+
+        $data['ondatetime'] = strtotime($cstime);
+        $data['memberid'] = $account;
+        if(!db('dp_connsellor_ondate')->insert($data)){
+            return $this->error('服务器忙，请稍后');
+        }
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 公用方法

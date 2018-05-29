@@ -53,6 +53,7 @@ return [
         'evaluate'=>'user.evaluate',
         'oncalenda'=>'oncalenda',
         'recordlist'=>'recordlist',
-        'calendaondate'=>'calenda.ondate'
+        'calendaondate'=>'calenda.ondate',
+        'setcalenda'=>'setcalenda'
     ]
 ];
