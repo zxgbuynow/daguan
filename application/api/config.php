@@ -52,6 +52,7 @@ return [
         'caseAdd'=>'caseAdd',
         'evaluate'=>'user.evaluate',
         'oncalenda'=>'oncalenda',
-        'recordlist'=>'recordlist'
+        'recordlist'=>'recordlist',
+        'calendaondate'=>'calenda.ondate'
     ]
 ];

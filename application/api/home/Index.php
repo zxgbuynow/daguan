@@ -2596,7 +2596,7 @@ class Index
      * @param  [type] $params [description]
      * @return [type]         [description]
      */
-    public function calendatoday_shop($params)
+    public function calendaondate_shop($params)
     {
        $account = trim($params['account']);
        $cstime =  trim($params['day']);
