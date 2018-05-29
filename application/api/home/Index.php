@@ -2661,7 +2661,7 @@ class Index
     {
         //参数
         $account = trim($params['account']);
-        $cstime =  trim($params['day']);
+        $cstime =  trim($params['hour']);
 
 
         $data['ondatetime'] = strtotime($cstime);
