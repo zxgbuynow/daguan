@@ -61,6 +61,7 @@ class Counsellor extends Admin
                 ['create_time', '创建时间', 'datetime'],
                 ['status', '状态', 'switch'],
                 ['recommond', '推荐', 'switch'],
+                ['sort', '排序', 'text.edit'],
                 ['right_button', '操作', 'btn']
             ])
             ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
