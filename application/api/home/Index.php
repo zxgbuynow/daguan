@@ -416,13 +416,13 @@ class Index
         $preferencearr = [];
         if (isset($params['account'])) {
             $preference = db('member')->where(['id'=>$params['account']])->column('preference');
-            if ($preference[0]) {
+            if ($preference&&$preference[0]) {
                 $preferencearr = explode(',', $preference[0]);
             }
             
         }
 
-        $recommend['list'] = db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.recommond DESC')->limit(20)->select();
+        $recommend['list'] = db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC')->limit(20)->select();
 
         foreach ($recommend['list'] as $key => $value) {
             if (!$value['memberid']) {
@@ -1420,6 +1420,9 @@ class Index
             $member =  db('member')->alias('a')->field('a.*,b.mid')->join(' trade b',' b.memberid = a.id','LEFT')->where(array('b.id'=>$value['tid']))->find();
             $data[$key]['member'] =  $member['nickname'];
             $data[$key]['mobile'] =  db('member')->where(['id'=>$member['mid']])->column('mobile')[0];
+
+            $data[$key]['avar'] =  db('member')->where(['id'=>$member['mid']])->column('avar')[0];
+            $data[$key]['counsellor'] =  db('member')->where(['id'=>$member['mid']])->column('nickname')[0];
             $data[$key]['st'] = date('Y-m-d H:i',$value['start_time']);
         }
         $pages = array(
@@ -2114,7 +2117,7 @@ class Index
         $calendar['list'] = db('calendar')->where($pmap)->whereTime('start_time', 'm')->select();
         foreach ($calendar['list'] as $key => $value) {
             if ($value['start_time']<$cstime) {
-                error_log($value['start_time'].'|||'.$cstime,3,'/home/wwwroot/daguan/time.log');
+                // error_log($value['start_time'].'|||'.$cstime,3,'/home/wwwroot/daguan/time.log');
                 unset($calendar['list'][$key]);
             }
         }
@@ -2583,7 +2586,7 @@ class Index
         if (db('case')->insert($pst)) {
             db('calendar')->where(['id'=>$cid])->update(['status'=>2]);
         }
-        error_log(json_encode($pst),3,'/home/wwwroot/daguan/case.log');
+        // error_log(json_encode($pst),3,'/home/wwwroot/daguan/case.log');
         
         //返回信息
         $data = [
@@ -2791,7 +2794,7 @@ class Index
         $code  = rand(1000,9999);
         $text="【希望24热线】您的验证码是".$code; 
 
-        error_log($text,3,'/home/wwwroot/daguan/mobile.log');
+        // error_log($text,3,'/home/wwwroot/daguan/mobile.log');
         $ch = curl_init();
  
          /* 设置验证方式 */
@@ -2810,7 +2813,7 @@ class Index
          // 发送短信
          $data = array('text'=>$text,'apikey'=>$apikey,'mobile'=>$mobile);
          $json_data = $this->send($ch,$data);
-         error_log($json_data,3,'/home/wwwroot/daguan/sendmsg.log');
+         // error_log($json_data,3,'/home/wwwroot/daguan/sendmsg.log');
          $array = json_decode($json_data,true);  
          if ($array['code']==0) {
             return $code;
