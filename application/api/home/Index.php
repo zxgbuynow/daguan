@@ -975,6 +975,7 @@ class Index
             //订单号
             $data['tid'] = date('YmdHis',time()).rand(1000,9999);
             //插入数据
+            $data['paytype'] = 1;
             $trade = db('trade')->insert($data);
             if (!$trade) {
                 return $this->error('生成订单');
