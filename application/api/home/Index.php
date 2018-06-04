@@ -446,7 +446,6 @@ class Index
             if (is_numeric($recommend['list'][$key]['avar'])) {
                 $recommend['list'][$key]['avar'] = get_file_path($recommend['list'][$key]['avar']);
             }
-            $recommend['list'][$key]['avar'] 
             //订单数
             $recommend['list'][$key]['trade'] = db('trade')->where(array('status'=>1,'mid'=>$value['memberid']))->count();
             //标识
