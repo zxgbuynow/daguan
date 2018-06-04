@@ -425,6 +425,7 @@ class Index
         $recommend['list'] = db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC')->limit(20)->select();
 
         foreach ($recommend['list'] as $key => $value) {
+            unset($recommend['list'][$key]['intro']);
             if (!$value['memberid']) {
                 unset($recommend['list'][$key]);
                 continue;
