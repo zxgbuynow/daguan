@@ -426,6 +426,7 @@ class Index
 
         foreach ($recommend['list'] as $key => $value) {
             unset($recommend['list'][$key]['intro']);
+            unset($recommend['list'][$key]['remark']);
             if (!$value['memberid']) {
                 unset($recommend['list'][$key]);
                 continue;
