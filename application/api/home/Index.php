@@ -1000,8 +1000,12 @@ class Index
             return json($data);
 
         }
+
+        //取会员
+        $userinfo = db('member')->where('id',$account)->find();
+
+
         //交易标题
-        
         $str = '文字咨询';
         switch ($chart) {
             case 'speechchart':
@@ -1042,7 +1046,12 @@ class Index
 
         $this->create_msg($msg);
         
-        $ret = array('tid'=>$data['tid']);
+        //如果是会员
+        if ($userinfo['is_diamonds']&&$chart!='facechart') {
+            db('trade')->where(['tid'=>$data['tid']])->update(['status'=>1]);//修改订单状态
+        }
+
+        $ret = array('tid'=>$data['tid'],'flish'=>1);
         //返回信息
         $data = [
             'code'=>'1',
@@ -1112,7 +1121,7 @@ class Index
         }
 
         $where['mobile'] = array('in',explode(',', $users)) ;
-        $rs = db('member')->where($where)->column('mobile,avar');
+        $rs = db('member')->where($where)->column('mobile,avar,nickname');
 
         //返回信息
         $data = [
