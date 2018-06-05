@@ -356,8 +356,33 @@ class Index
     {
         $map['typeid'] = '1';//课程
         $map['status'] = 1;
+        $ismobile = trim($params['ismobile']);
         $class['pic'] = db('cms_advert')->where($map)->order('id DESC')->limit(10)->select();
-       
+
+        foreach ($lunbo['pic'] as $key => $value) {
+            if (strstr($value['link'], 'article')) {//文章
+                if ($ismobile) {
+                    $class['pic'][$key]['webview'] = "/mobile.php/artical/detail.html";
+                    $class['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                }else{
+                    $class['pic'][$key]['webview'] = '_www/view/artical/detail.html';
+                    $class['pic'][$key]['webparam'] = ['article_id'=>explode('.',explode('/', $value['link'])[1])[0]];
+                }
+                
+                 
+            }else if (strstr($value['link'], 'counsellor')) {
+                if ($ismobile) {
+                    $class['pic'][$key]['webview'] = "/mobile.php/counsellor/detail.html";
+                     $class['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                }else{
+                    $class['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
+                     $class['pic'][$key]['webparam'] = ['counsellor_id'=>explode('.',explode('/', $value['link'])[1])[0]];
+                }
+                
+               
+            }
+        }
+
         //返回信息
         $data = [
             'code'=>'1',
@@ -376,7 +401,29 @@ class Index
         $map['typeid'] = '2';//活动
         $map['status'] = 1;
         $class['pic'] = db('cms_advert')->where($map)->order('id DESC')->limit(10)->select();
-       
+        foreach ($lunbo['pic'] as $key => $value) {
+            if (strstr($value['link'], 'article')) {//文章
+                if ($ismobile) {
+                    $class['pic'][$key]['webview'] = "/mobile.php/artical/detail.html";
+                    $class['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                }else{
+                    $class['pic'][$key]['webview'] = '_www/view/artical/detail.html';
+                    $class['pic'][$key]['webparam'] = ['article_id'=>explode('.',explode('/', $value['link'])[1])[0]];
+                }
+                
+                 
+            }else if (strstr($value['link'], 'counsellor')) {
+                if ($ismobile) {
+                    $class['pic'][$key]['webview'] = "/mobile.php/counsellor/detail.html";
+                     $class['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                }else{
+                    $class['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
+                     $class['pic'][$key]['webparam'] = ['counsellor_id'=>explode('.',explode('/', $value['link'])[1])[0]];
+                }
+                
+               
+            }
+        }
         //返回信息
         $data = [
             'code'=>'1',
