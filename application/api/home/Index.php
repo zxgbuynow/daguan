@@ -920,8 +920,7 @@ class Index
 
         $map['a.status'] = 1;
 
-        $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.id = s.id','LEFT')->where($map)->select();
-        
+        $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.shopid = s.id','LEFT')->where($map)->select();
         if ($category) {
             foreach ($counsellor['list'] as $key => $value) {
                 if (!in_array($category, explode(',', $value['tags']))) {
