@@ -289,6 +289,7 @@ class Index
         }
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
+            unset($article['list'][$key]['description']);
             $article['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
             $article['list'][$key]['cover'] = get_file_path($value['cover']);
         }
