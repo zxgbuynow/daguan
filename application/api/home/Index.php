@@ -916,10 +916,11 @@ class Index
         $category = trim($params['cat_id']);
         $keyword = trim($params['search_keywords']);
 
-        $map['a.nickname'] = array('like','%'.$keyword.'%');
+        $map['a.nickname|s.shopid'] = array('like','%'.$keyword.'%');
+
         $map['a.status'] = 1;
 
-        $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->select();
+        $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.id = s.id','LEFT')->where($map)->select();
         
         if ($category) {
             foreach ($counsellor['list'] as $key => $value) {
