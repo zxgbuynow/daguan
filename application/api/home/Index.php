@@ -916,7 +916,7 @@ class Index
         $category = trim($params['cat_id']);
         $keyword = trim($params['search_keywords']);
 
-        $map['a.nickname|s.shopid'] = array('like','%'.$keyword.'%');
+        $map['a.nickname|s.title'] = array('like','%'.$keyword.'%');
 
         $map['a.status'] = 1;
 
