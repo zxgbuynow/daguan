@@ -560,6 +560,10 @@ class Index
         if (!$counsellor) {
             return $this->error('咨询师不存在或是已注销');
         }
+        if (is_numeric($counsellor['avar'])) {
+                $counsellor['avar'] = get_file_path($counsellor['avar']);
+            }
+
         //订单数
         $counsellor['trade'] = db('trade')->where(array('status'=>1,'mid'=>$counsellor['memberid']))->count();
         //标识
