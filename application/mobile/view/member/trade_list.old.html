@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <style type="text/css">
+    		
+      .mui-table-view> .mui-table-view-cell {
+        /*padding: 0;*/
+        background: #fff;
+        /*margin-bottom: 10px;*/
+      }
+      .mui-table-view:after {
+        height: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="pullrefresh" class="fontS mui-scroll-wrapper">
+      <div class="mui-scroll">
+        <ul class="mui-table-view integral-details">
+			<li class="mui-table-view-cell">
+	          <div class="box-display">
+	            <div class="box-item-flex1">
+	              购买咨询师时间<br>
+	              <span class="fontS font-gray-60 fonts" >￥80.00</span>
+	            </div>
+	            <div class="box-item-flex1 content-right deposit-detail-amount  font-red">
+	              已支付
+	            </div>
+	          </div>
+	        </li>
+        </ul>
+      </div>
+    </div>
+    <script src="../../js/zepto.js"></script>
+    <script src="../../js/mui.min.js"></script>
+    <script src="../../js/template.min.js"></script>
+    <script src="../../config.js"></script>
+    <script src="../../js/app.js"></script>
+
+    <script type="text/html" id="trade_list">
+      <% for(var i=0; i<list.length; i++) { %>
+      		<li class="mui-table-view-cell">
+	          <div class="box-display">
+	            <div class="box-item-flex1">
+	              <%= list[i].title%><br>
+	              <span class="fontS font-gray-60 fonts" ><%= $format_price(list[i].payment)%></span>
+	            </div>
+	            <div class="box-item-flex1 content-right deposit-detail-amount  font-red">
+	            	<%if (list[i].status=='1'){%>已支付
+	              <% } %>
+	              <%if (list[i].status=='0'){%>未支付
+	              <% } %>
+	            </div>
+	          </div>
+	        </li>
+      <% } %>
+    </script>
+
+    <script>
+      var state = app.getState();
+      var param = {
+          'method': config.apimethod.trade,
+          'account': state.token,
+          'source':config.source
+      }
+      mui.plusReady(function() {
+        $.dataRequest(param, function(rs) {
+        		var widgets = template('trade_list', rs);
+            $('.integral-details').append(widgets);
+        })
+      });
+     
+    </script>
+  </body>
+
+</html>

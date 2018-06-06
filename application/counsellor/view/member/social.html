@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__C_CSS__/mui.picker.min.css" />
+  </head>
+
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">社交信息</div>
+    </header>
+    <section class="container">
+      <div class="form-container" action="" id="user_form">
+        <section class="mui-input-group">
+          <div class="mui-input-row">
+            <label>微信：</label>
+            <input id="weixin" type="text" value="" class="mui-input-clear" placeholder="请输入您的微信">
+          </div>
+          <div class="mui-input-row">
+            <label>QQ：</label>
+            <input id="QQ" type="text" value="" class="mui-input-clear" placeholder="请输入您的QQ">
+          </div>
+          <div class="mui-input-row">
+            <label>支付宝：</label>
+            <input id="alipay" type="text" value="" class="mui-input-clear" placeholder="请输入您的支付宝">
+          </div>
+        </section>
+        <section class="mui-content-padded form-op-section">
+          <button id="save" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">保存</button>
+        </section>
+      </div>
+    </section>
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      var state = app.getState();
+      var param = {
+          'method': config.apimethod.userinfo,
+          'account': state.account,
+          'source':config.source
+      }
+      $.dataRequest(param, function(rs) {
+        var data = rs;
+        document.getElementById('weixin').value = data.weixin;
+        document.getElementById('QQ').value = data.qq;
+        document.getElementById('alipay').value = data.alipay;
+      });
+      document.getElementById('save').addEventListener('tap', function() {
+        var param = {
+            'method': config.apimethod.social,
+            'account': state.account,
+            'source':config.source,
+            'weixin': document.getElementById('weixin').value,
+            'qq': document.getElementById('QQ').value,
+            'alipay': document.getElementById('alipay').value
+        }
+        $.dataRequest(param, function(rs) {
+          var data = rs.data;
+            mui.toast('更新成功');
+            window.location.href = "{:url('Member/infomanager')}";
+
+        });
+      }, false)
+    </script>
+  </body>
+
+</html>

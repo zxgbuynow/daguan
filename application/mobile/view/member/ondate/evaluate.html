@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" class="feedback">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>反馈详情</title>
+		<link href="__M_CSS__/mui.min.css" rel="stylesheet" />
+		<link href="__M_CSS__/mui.picker.css" rel="stylesheet" />
+		<link href="__M_CSS__/mui.poppicker.css" rel="stylesheet" />
+		<link href="__M_CSS__/app.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="__M_CSS__/feedback.css" />
+		<style type="text/css">
+			html,
+			body {
+				font-size: 13px;
+				height: 100%;
+				background-color: #efeff4;
+			}
+			.mui-scroll-wrapper{
+				margin-top:50px;
+			}
+			.green_bg{
+				background: #fff;
+			}
+			.green_bg a{
+				color: #ea2329;
+			}
+			.mui-btn-primary{
+				background: #ea2329;
+				border-color: #ea2329;
+			}
+			/*.green_bg h1{
+				color: #fff;
+			}*/
+			.mui-content-padded{
+				padding: 10px 10px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav green_bg">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title" id="title">评价</h1>
+		</header>
+		<div class="mui-content">
+			
+			<div class="mui-content-padded">
+				<div class="mui-inline">评分</div>
+				<div class="icons mui-inline" style="margin-left: 6px;">
+					<i data-index="1" class="mui-icon mui-icon-star"></i>
+					<i data-index="2" class="mui-icon mui-icon-star"></i>
+					<i data-index="3" class="mui-icon mui-icon-star"></i>
+					<i data-index="4" class="mui-icon mui-icon-star"></i>
+					<i data-index="5" class="mui-icon mui-icon-star"></i>
+				</div>
+			</div><br />
+			
+			<div class="row mui-input-row">
+				<textarea id='evaluateCotent' class="mui-input-clear question" placeholder="对本次咨询是否满意？说说您的想法吧..."></textarea>
+			</div>
+		</div>	
+		
+		<nav id="nav" class="mui-bar mui-bar-tab ">
+			<button class="mui-btn mui-btn-primary " style="left: 42%;" id="evaluate">提交</button>
+		</nav>
+			
+		<script src="__M_JS__/mui.min.js"></script>
+		<script src="__M_JS__/shopex.js"></script>
+		<script src="__M_JS__/zepto.js"></script>
+		<script src="__M_JS__/template.min.js"></script>
+		<script src="__M_JS__/config.js"></script>
+		<script src="__M_JS__/app.js"></script>
+		
+		<script>
+			mui.init();
+			var starIndex = 1;
+			var state = app.getState();
+			var result = window.location.href;
+      	  	var bn = $.getUrlParam(result,'c_id');
+
+			// var self = plus.webview.currentWebview();
+			// var bn = self.c_id;
+			mui('.icons').on('tap','i',function(){
+			  	var index = parseInt(this.getAttribute("data-index"));
+			  	var parent = this.parentNode;
+			  	var children = parent.children;
+			  	if(this.classList.contains("mui-icon-star")){
+			  		for(var i=0;i<index;i++){
+		  				children[i].classList.remove('mui-icon-star');
+		  				children[i].classList.add('mui-icon-star-filled');
+			  		}
+			  	}else{
+			  		for (var i = index; i < 5; i++) {
+			  			children[i].classList.add('mui-icon-star')
+			  			children[i].classList.remove('mui-icon-star-filled')
+			  		}
+			  	}
+				  	starIndex = index*2;
+			  });
+			  
+			  //
+			  document.getElementById("evaluate").addEventListener('tap',function(){
+			  	
+			  	var param = {
+			  		'method': config.apimethod.evaluate,
+			        'account': state.account,
+			        'c_id': bn,
+			        'source':config.source,
+			  		'sorce' :starIndex,
+			  		'cotent':document.getElementById("evaluateCotent").value
+			  	}
+		        	$.dataRequest(param, function(c) {
+		        		mui.toast('评分成功')
+		        		setTimeout(function(){
+		        			window.location.href = "{:url('Member/trade')}";
+		        		},1000);
+	            })
+			  	
+			  })
+		</script>
+	</body>
+</html>

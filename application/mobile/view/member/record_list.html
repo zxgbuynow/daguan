@@ -97,11 +97,13 @@
         height: 80px;
       }
 	  .box-item-flex1{
-	  	width: 100%;
+	  	width: 100px;
+	  	margin-left: 20px;
 	  }
 	  .mui-col-xs-24{
   	    width: 20%;
 	  }
+	  
     </style>
   </head>
 
@@ -109,12 +111,12 @@
     <div id="slider" class="mui-slider mui-fullscreen bbc-tab-bar">
       <div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
         <a class="mui-control-item mui-active" href="#item1mobile">全部</a>
-        <a class="mui-control-item " href="#item2mobile">待支付</a>
-        <a class="mui-control-item" href="#item3mobile">已支付</a>
-        <a class="mui-control-item" href="#item4mobile">取消</a>
-        <a class="mui-control-item" href="#item5mobile">冻结</a>
+        <a class="mui-control-item " href="#item2mobile">待咨询</a>
+        <a class="mui-control-item" href="#item3mobile">已咨询</a>
+        <a class="mui-control-item" href="#item4mobile">待评论</a>
+        <a class="mui-control-item" href="#item5mobile">已完成</a>
       </div>
-      <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-24" ></div>
+      <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-24" style="transform: translate3d(0px, 0px, 0px) translateZ(0px);"></div>
       <div class="mui-slider-group">
       	<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
           <div id="scroll1" class="mui-scroll-wrapper">
@@ -179,7 +181,6 @@
         </div>
       </div>
     </div>
-
     <script src="../../js/zepto.js"></script>
     <script src="../../js/mui.min.js"></script>
     <script src="../../js/mui.pullToRefresh.js"></script>
@@ -190,53 +191,38 @@
 
     <script type="text/html" id="trade_list">
         <% for(var i=0; i<list.length; i++) { %>
-      		<li class="mui-table-view-cell
-      			 <%if (list[i].status=='1'){%>
-      			 	<%if (list[i].record<list[i].num){%>
-      					action-webview
-      				<% } %>
-	              <% } %>
-	              <%if (list[i].status=='0'){%>
-	              <% } %>
-	              <%if (list[i].status=='2'){%>
-	              <% } %>
-	              <%if (list[i].status=='3'){%>
-	              <% } %>
-      			" data-webview="_www/view/member/ondate/index.html" data-webparam = '{"counsellor_id":<%= list[i].mid %>,"tid":<%= list[i].id %>}'>
+      		<li class="mui-table-view-cell mui-media <%if (list[i].status=='2'||list[i].status=='0'){%>action-webview<% } %>" <%if (list[i].status=='0'){%>data-webview="_www/view/msg/chat.html" data-webparam = '{"jid":"2", "username":"<%= list[i].mobile %>" }' <%}else{%>data-webview="_www/view/member/ondate/evaluate.html" data-webparam = '{"c_id":<%= list[i].id %>}' <%}%>
 	          <div class="box-display">
+	          	<img class="mui-media-object " src="../../img/activity_ads.jpg">
 	            <div class="box-item-flex1">
-	              <%= list[i].title%><br>
-	              <span class="fontS font-gray-60 fonts" ><%= list[i].process%></span>
-	              <span class="fontS font-gray-60 fonts" ><%= $format_price(list[i].payment)%>
-	              </span>
+	              <%= list[i].member%><br>
+	              <span class="fontS font-gray-60 fonts" ><%= list[i].st%></span>
 	            </div>
 	            <div class="box-item-flex2 content-right deposit-detail-amount  font-red">
-	            	  <%if (list[i].status=='1'){%>已支付
+	            	  <%if (list[i].status=='1'){%>已咨询
 	              <% } %>
-	              <%if (list[i].status=='0'){%>未支付
+	              <%if (list[i].status=='0'){%>待咨询
 	              <% } %>
-	              <%if (list[i].status=='2'){%>取消
+	              <%if (list[i].status=='2'){%>待评价
 	              <% } %>
-	              <%if (list[i].status=='3'){%>冻结
+	              <%if (list[i].status=='3'){%>已完成
 	              <% } %>
 	            </div>
 	          </div>
 	        </li>
       <% } %>
     </script>
-
     <script type="text/javascript" charset="utf-8">
       mui.plusReady(function() {
         var state = app.getState();
         var param = {
-          'method': config.apimethod.trade,
+          'method': config.apimethod.recordlist,
           'account': state.token,
           'source':config.source,
           'status': 'all',
         	  'page_no': config.cpage,
           'page_size': config.pagesize
-      }
-
+        }
         $.tabWithPageRequest(param, 'trade_list', 'scroll1', 'status');
       })
     </script>

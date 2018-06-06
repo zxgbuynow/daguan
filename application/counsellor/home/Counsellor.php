@@ -31,4 +31,8 @@ class Counsellor extends Home
     {
         return $this->fetch(); // 渲染模板
     }
+    public function cases()
+    {
+        return $this->fetch('case'); // 渲染模板
+    }
 }

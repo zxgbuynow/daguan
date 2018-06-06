@@ -802,7 +802,7 @@ function preateClear() {
             $(pullRefreshEl).data('count', config.cpage);
             var self = this;
             setTimeout(function() {
-              data.queryData.page_no = config.cpage;
+              data.page_no = config.cpage;
               count = 0
               $.dataRequest(data, function(response) {
                 var result = template(renderFor, response.data);
@@ -817,7 +817,7 @@ function preateClear() {
           callback: function() {
             var self = this;
             count++
-            data.queryData.page_no = count;
+            data.page_no = count;
             $.dataRequest(data, function(response) {
               if(!isEmptyObject(response.data) && response.data.pagers.total){
                 var total = Math.ceil(response.data.pagers.total / config.pagesize);

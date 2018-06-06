@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__M_CSS__/style.css">
+  </head>
+
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">升级心窝会员</div>
+    </header>
+    <section class="container">
+      <form class="form-container" id="login_form">
+        <section class="mui-input-group">
+          <div class="mui-input-row">
+            <label>帐号：</label>
+            <input id="account" type="text" value="" class="mui-input-clear mui-input" placeholder="请输入待手机号">
+          </div>
+          
+        </section>
+        <section class="mui-content-padded">
+          普通用户可升级成心窝会员并付款36.5元，全年免费网络咨询
+        </section>
+      </form>
+      
+      <section class="content-horizontal-padded form-op-section">
+        <button id='createTrade' type="submit" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">确认并支付</button>
+      </section>
+      
+    </section>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      mui.init({
+        swipeBack: true, //启用右滑关闭功能
+      });
+      var result = window.location.href;
+      var type = $.getUrlParam(result,'type');
+
+    	if(type == 1){
+    		$('.header-title').html('升级心窝会员')
+    	}else{
+    		$('.header-title').html('赠送心窝会员')
+    	}
+
+    	//提交
+			$('#createTrade').on('tap', function(e) {
+				var account = $('#account').val()
+				if(!account){
+					mui.toast('请填写待升级账号');return false;
+				}
+				//判断是否为会员 
+				var param = {
+			          'method': config.apimethod.userinfo,
+			          'account': account,
+			          'source':config.source
+	      }
+	      $.dataRequest(param, function(rs) {
+					//price chart accout counsellor_id
+					var param1 = {
+					  'method': config.apimethod.createTrade,
+					  'source':config.source,
+					  'counsellor_id': 0,
+					  'price': 36.5,
+					  'chart': '',
+					  'num': 1,
+					  'pertime':0,
+					  'type':type,
+					  'account': rs.id
+					}
+					$.dataRequest(param1, function(rm) {
+						mui.toast('订单创建成功！');
+            window.location.href = "{:url('Checkout/payment')}"+'?price='+36.5+'&tid='+rm.tid+'&counsellor_mobile='+rs.mobile+'&paytype=1';
+						// clicked('_www/view/checkout/payment.html',{
+						// 	'price':36.5, 
+						// 	'tid':rm.tid,
+						// 	'counsellor_mobile':rs.mobile,
+						// 	'paytype':1
+						// });
+					})
+				})
+				
+			})
+    </script>
+  </body>
+
+</html>

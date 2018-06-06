@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__M_CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__M_CSS__/mui.picker.min.css" />
+  </head>
+
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">偏好设置</div>
+    </header>
+    <section class="container">
+      <div class="form-container" action="" id="user_form">
+        <section class="mui-input-group">
+	        	<ul class="mui-table-view preference-list">
+				<!--<li class="mui-table-view-cell">
+					加我为朋友时需要验证
+					<div class="mui-switch  mui-switch-mini">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					加我为朋友时需要验证
+					<div class="mui-switch mui-active mui-switch-mini">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					加我为朋友时需要验证
+					<div class="mui-switch mui-active mui-switch-mini">
+						<div class="mui-switch-handle"></div>
+					</div>
+				</li>-->
+			</ul>
+       </section>
+      </div>
+    </section>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script type="text/html" id="preference_list">
+	    	<% for(var i=0; i<list.length; i++) { %>
+	    		<li class="mui-table-view-cell">
+				<%= list[i].title%>
+				<div class="mui-switch  <% if( list[i].is){ %> mui-active <%}%> mui-switch-mini" pid = "<%= list[i].id%>">
+					<div class="mui-switch-handle"></div>
+				</div>
+			</li>
+		<%}%>
+    </script>
+    <script type="text/javascript" charset="utf-8">
+      var state = app.getState();
+	  	  var param = {
+	          'method': config.apimethod.userinfo,
+	          'account': state.account,
+	          'source':config.source
+	      }
+	      $.dataRequest(param, function(rs) {
+	      	  var param1 = {
+		          'method': config.apimethod.category,
+		          'source':config.source
+		      }
+		      $.dataRequest(param1, function(rs1) {
+		        var data = rs1;
+		        if(rs.preference){
+		        		var pres = rs.preference;
+
+		        		for (var i in data['list']) {
+		        			if(pres.indexOf(data['list'][i]['id'])>-1){
+		        				data['list'][i]['is'] = 1;
+		        			}else{
+		        				data['list'][i]['is'] = null;
+		        			}
+		        		}
+		        }else{
+		        		for (var i in data['list']) {
+		        			data['list'][i]['is'] = null;
+		        		}
+		        }
+		         
+		        var widgets = template('preference_list', data);
+	        		$('.preference-list').append(widgets); 
+//	        		mui('.preference-list .mui-switch')['switch']();
+	        		mui('.preference-list .mui-switch').each(function() { //循环所有toggle
+	        			
+					var _this = this;
+					mui(_this).switch();//手动初始化一下
+					_this.addEventListener('toggle', function(event) {
+						var pid =  $(_this).attr('pid');
+//						log(event.detail.isActive)
+						var isActive = 0;
+						if(event.detail.isActive){
+							isActive = 1;
+						}else{
+							isActive = 0;
+						}
+//						log($(_this).attr('pid'))
+						var param2 = {
+				            'method': config.apimethod.updatepreference,
+				            'account': state.account,
+				          	'source':config.source,
+				            'pid': pid,
+				            'isActive':isActive
+				        }
+//						log(param2);return false;
+				        $.dataRequest(param2, function(rs) {
+				          var data = rs.data;
+				            mui.toast('更新成功');
+				        });
+
+
+					});
+				});
+		      });
+	      
+	      })
+	      
+      
+    </script>
+  </body>
+
+</html>

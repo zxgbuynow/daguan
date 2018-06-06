@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__C_CSS__/mui.picker.min.css" />
+    <link rel="stylesheet" href="__C_CSS__/feedback-page.css">
+  </head>
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">头像</div>
+    </header>
+    <section class="container">
+      <div class="form-container" action="" id="user_form">
+        <div id="feedback" class="mui-page feedback">
+          <div class="mui-page-content">
+            <div id='avatar' class="row image-list" style="margin-bottom: 20px;">
+            </div>
+          </div>
+        </div>
+        <section class="mui-content-padded form-op-section">
+          <button id="save" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">保存</button>
+        </section>
+      </div>
+    </section>
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script src="__C_JS__/custRegUpCard.js"></script>
+    <script src="__C_JS__/binaryajax.js"></script>
+    <script src="__C_JS__/exif.js"></script>
+    <script src="__C_JS__/canvasResize.js"></script>
+    <script type="text/javascript" charset="utf-8">
+    var state = app.getState();
+      var param = {
+          'method': config.apimethod.userinfo,
+          'account': state.account,
+          'source':config.source
+      }
+      $.dataRequest(param, function(rs) {
+        var data = rs;
+        if (data.avar) {
+          if ($('.image-item')) {
+            $(".image-item").css("background-image","url(" + config.imgser+'/'+data.avar + ")");
+          } 
+        }
+      });
+
+      document.getElementById('save').addEventListener('tap', function() {
+        var param = {
+            'method': config.apimethod.upavar,
+            'account': state.token,
+            'source':config.source,
+            'avar': $('#image-1').attr('vase')
+        }
+
+        $.dataRequestpost(param, function(rs) {
+          var data = rs.data;
+            mui.toast('更新成功');
+            window.location.href = "{:url('Member/infomanager')}";
+               // var parent = plus.webview.getWebviewById('_www/view/member/infomanager.html');
+               // parent.reload();
+               // parent.onloaded = function(){
+               //   mui.back();
+               // }
+        });
+      }, false)
+    </script>
+  </body>
+
+</html>

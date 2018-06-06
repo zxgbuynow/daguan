@@ -56,4 +56,16 @@ class Member extends Home
     {
         return $this->fetch('member/safe/logpassword'); // 渲染模板
     }
+    public function updatelv()
+    {
+        return $this->fetch(); // 渲染模板
+    }
+    public function record()
+    {
+        return $this->fetch(); // 渲染模板
+    }
+    public function evaluate()
+    {
+        return $this->fetch('member/ondate/evaluate'); // 渲染模板
+    }
 }

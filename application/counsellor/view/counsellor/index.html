@@ -51,7 +51,7 @@
     <header class="page-header">
     	  <i id="all_clander" class="header-left txt-func action-webview" data-webview="{:url('Counsellor/alist')}">所有日程</i>
       <div class="header-title">工作台</div>
-      <i class=" mui-icon mui-icon-plus mui-pull-right cander-icon action-webview" data-webview="{:url('Counsellor/plus')}"></i>
+      <i class=" mui-icon mui-icon-plus mui-pull-right cander-icon action-webview" data-webview="{:url('Counsellor/plus')}" style="display: none;"></i>
     </header>
     <div class="container" id="container" style="margin-bottom: 50px;">
        
@@ -77,7 +77,7 @@
     <script src="__C_JS__/config.js"></script>
     <script src="__C_JS__/app.js"></script>
     <script src="__C_JS__/MCalendar.js"></script>
-  	<script type="text/html" id="calendar_list">
+  	<script type="text/html" id="calendar_list1">
   		<% if(list != null){ %>
   			<ul class="mui-table-view calendar-list" style="background-color: #FFFFFF;">
   	        <% for(var i=0; i<list.length; i++) { %>
@@ -89,7 +89,27 @@
   			</ul>
           <%}%>
   	</script>
-    
+    <script type="text/html" id="calendar_list">
+    <% if(list != null){ %>
+      <ul class="mui-table-view calendar-list" style="background-color: #FFFFFF;">
+          <% for(var i=0; i<list.length; i++) { %>
+      <li data-view="_www/view/counsellor/case.html" class="mui-table-view-cell go-case" data-status = "<%= list[i].status%>" data-cid = "<%= list[i].id%>" data-tid = "<%= list[i].tid%>" data-endtime = "<%= list[i].end_time%>">
+            <span><%= list[i].title%></span>
+            <% if(list[i].status==0){%>
+                <% if($getDateDiff(list[i].end_time)){%>
+                  <span style="float: right;color: #646464;font-size: 12px;"><%= $getDateDiff(list[i].start_time)%></span>
+                  <%}else{%>
+                  <span style="float: right;color: #646464;font-size: 12px;">完成</span>
+                <%}%> 
+              <%}else{%>
+                <span style="float: right;color: #646464;font-size: 12px;">已提交案例</span>
+              <%}%>
+             
+          </li>
+          <%}%>
+      </ul>
+        <%}%>
+  </script>
 
     <script type="text/javascript">
      
@@ -99,6 +119,23 @@
   			var MC = mui("#container").MCalendar({date:today});
   			
   			var myDate = new Date();
+
+        $(window).on('tap','.go-case', function() {
+          var webview = $(this).data('view');
+          var etime = $(this).data('endtime');
+          var tid = $(this).data('tid');
+          var cid = $(this).data('cid');
+          var status = $(this).data('status');
+          //判断如果已过时间，即完成，可跳转
+          var nowtm = Math.floor(Date.parse(new Date())/1000);
+          if(etime<nowtm){
+            if(status>0){
+              mui.toast('已提交案例');return false;
+            }
+            window.location.href = "{:url('Counsellor/cases')}?tid="+tid+'&cid='+cid;
+            // clicked(webview,{tid:tid,cid:cid})
+          }
+        })
 
   		};
 	     $(window).on('tap', '.action-webview', function() {

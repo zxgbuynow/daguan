@@ -10,7 +10,7 @@ use think\helper\Hash;
  * 前台首页控制器
  * @package app\index\controller
  */
-class Artical extends Home
+class Artical extends Common
 {
     public function index()
     {
@@ -18,6 +18,16 @@ class Artical extends Home
     }
 
     public function detail()
+    {
+        return $this->fetch(); // 渲染模板
+    }
+
+    public function cate()
+    {
+        return $this->fetch(); // 渲染模板
+    }
+
+    public function tlist()
     {
         return $this->fetch(); // 渲染模板
     }

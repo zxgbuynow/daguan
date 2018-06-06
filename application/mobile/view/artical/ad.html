@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+     
+      
+    </style>
+  </head>
+
+  <body>
+
+
+     <header class="page-header">
+     	 <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+     	 <div class="header-title">课程活动</div>
+   	 </header>
+      
+    <div class="mui-content">
+
+    </div>
+    <script src="../../js/zepto.js"></script>
+    <script src="../../js/mui.min.js"></script>
+    <script src="../../js/template.min.js"></script>
+    <script src="../../config.js"></script>
+    <script src="../../js/app.js"></script>
+    <script>
+      mui.plusReady(function() {
+        var wv = plus.webview.currentWebview();
+        var linkadr = wv.link;
+        
+        mui.init({
+          swipeBack: false,
+          subpages: [{
+            url: '_www/view/artical/ad_list.html',
+            id: '_www/view/artical/ad_list.html',
+            styles: {
+              top: '45px',
+              bottom: '0px'
+            }
+          }]
+        });
+
+      });
+    </script>
+  </body>
+
+</html>

@@ -27,5 +27,9 @@ class Passport extends Common
         return $this->fetch(); // 渲染模板
     }
 
+    public function forgetPassword()
+    {
+        return $this->fetch(); // 渲染模板
+    }
     
 }

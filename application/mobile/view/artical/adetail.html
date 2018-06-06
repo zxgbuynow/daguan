@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__M_CSS__/style.css" />
+    <style>
+    		.single-img img{
+    			max-width: 100%;
+    			max-height: 300px;
+    		}
+    </style>
+    
+  </head>
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">文章详情</div>
+
+    </header>
+    <section class="container section-white">
+    </section>
+    	  <section class="content-horizontal-padded look-btn mui-hidden">
+    	  	<input type="hidden" id="cid" value="0">
+	    <button id="look" class="mui-btn mui-btn-block" >查看答案</button>
+	  </section>
+  </body>
+  <script src="__M_JS__/zepto.js"></script>
+  <script src="__M_JS__/mui.min.js"></script>
+  <script src="__M_JS__/template.min.js"></script>
+  <script src="__M_JS__/config.js"></script>
+  <script src="__M_JS__/app.js"></script>
+  <script type="text/html" id="content-info">
+    <section class="content-padded border-bottom">
+      <h1 class="content-center content-padded"><%= title %></h1>
+      <section class="content-center fonts font-gray-40"><%= $timestamp_To_Time(create_time) %></section>
+      <div class="fontS font-gray-20 single-img">
+
+      </div>
+    </section>
+    	 
+  </script>
+  <script>
+      var article_id = plus.webview.currentWebview().article_id;
+      var result = window.location.href;
+      var article_id = $.getUrlParam(result,'article_id');
+
+      var param = {
+          'method': config.apimethod.contentinfo,
+          'source':config.source,
+          'id': article_id
+      }
+      $.dataRequest(param, function(rs) {
+        var tempEl = template('content-info', rs);
+        $('.container').html(tempEl);
+        document.getElementById("cid").value = rs.conrrelation_id;
+		    $('.look-btn').removeClass('mui-hidden')
+    		var reg = new RegExp( '/uploads/images' , "g" )
+    		var newstr = rs.content.replace( reg , config.imgser+'uploads/images' );
+
+        //查看答案
+        document.getElementById('look').addEventListener('tap', function() {
+        		var cid = document.getElementById("cid").value;
+
+            window.location.href = "{:url('Artical/detail')}"+'?article_id='+cid;
+        })
+      });
+  </script>
+</html>

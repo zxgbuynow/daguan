@@ -10,7 +10,7 @@ use think\helper\Hash;
  * 前台首页控制器
  * @package app\index\controller
  */
-class Index extends Home
+class Index extends Common
 {
     public function index()
     {

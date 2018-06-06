@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__M_CSS__/style.css">
+    <link rel="stylesheet" href="__M_CSS__/widgets.css" />
+    <link rel="stylesheet" href="__M_CSS__/swiper.min.css" />
+    <style>
+      .swiper-slide{
+      	padding: 10px 10px;
+      }
+      .swiper-slide img{
+      	height="150px"
+      }
+    </style>
+  </head>
+
+  <body>
+
+
+      <header class="home-header">
+        <i class="icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+        <div class="main">
+          <form onsubmit="return false;">
+          <div class="mui-input-row header-search-form">
+          	<input type="search" onfocus="toSearch(this,'/mobile.php/artical/index.html')" class="header-search mui-input-clear" placeholder="寻找感兴趣的文章">
+          </div>
+        </form>
+        </div>
+        <i class="search-hide icon-func bbc-icon" ></i>
+      	<a href="#" class="txt-func search-cancel" style="display:none;">取消</a>
+      </header>
+      
+    
+    <div class="container">
+		<!--<section class="widgets-category-nav section-white">
+	        <div class="section-title">
+	          <div class="title-txt">好文推荐</div>
+	          <div class="more-link action-webview" data-webview="_www/view/category/category.html"><i class="bbc-icon bbc-icon-forward"></i></div>
+	        </div>
+	        <div class="mui-table-view">
+	          	<div class="swiper-container">
+				  <div class="swiper-wrapper">
+				    <div class="swiper-slide">
+				    		<img src="../../img/goods_detail_img_03.jpg" />
+				    </div>
+				    <div class="swiper-slide">
+				    		<img src="../../img/goods_detail_img_02.jpg" height="150px"/>
+				    </div>
+				    <div class="swiper-slide">
+				    		<img src="../../img/goods_detail_img_03.jpg" height="150px"/>
+				    </div>
+				  </div>
+				</div>
+	        </div>
+      	</section>-->
+    </div>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script src="__M_JS__/swiper.min.js"></script>
+    
+    <script type="text/html" id="artical_list">
+    		<% for(var i=0; i<data.length; i++) { %>
+    		<% if(data[i]['list']){%>
+    		<section class="widgets-category-nav section-white">
+	        <div class="section-title">
+	          <div class="title-txt"><%= data[i]['name']%></div>
+	          <div class="more-link action-clickview" data-webview="{:url('Artical/index')}" data-webparam='<%= data[i].cid %>'><i class="bbc-icon bbc-icon-forward"></i></div>
+	        </div>
+	        <div class="mui-table-view">
+	          	<div class="swiper-container">
+				  <div class="swiper-wrapper">
+				  	<% for(var m=0; m<data[i]['list'].length; m++) { %>
+				    <div class="swiper-slide ">
+				    		<a class="action-clickview"  data-webview="{:url('Artical/detail')}" data-webparam='<%= data[i]["list"][m].id %>'><img src="<%= $add_server(data[i]['list'][m]['cover'])%>" style="height: 150px;"/></a>
+				    </div>
+				    <%}%>
+				  </div>
+				</div>
+	        </div>
+      	</section>
+      	<%}%>
+      	<%}%>
+    	</script>
+    <script>
+    		
+      	var param = {
+            'method': config.apimethod.articalcate,
+            'source':config.source
+	     }
+        $.dataRequest(param, function(rs) {
+        		var widgets = template('artical_list', rs);
+            $('.container').append(widgets);
+            	var mySwiper = new Swiper('.swiper-container', {
+	        		slidesPerView: 1.5,
+	        		spaceBetween: 30,
+        				speed:500,
+        			})
+              $(window).on('tap', '.action-clickview', function() {
+                var webview = $(this).data('webview');
+                var webparam = $(this).data('webparam');
+                if (webparam) {
+                  if(webview.indexOf("detail") >-1) {
+                    window.location.href = webview+'?article_id='+webparam;
+                  }else{
+                    window.location.href = webview+'?cat_id='+webparam;
+                  }
+                  
+                 
+                }
+                
+              })
+        })
+        
+
+    </script>
+  </body>
+
+</html>

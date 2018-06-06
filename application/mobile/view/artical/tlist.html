@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__M_CSS__/style.css">
+  </head>
+
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">心理测试</div>
+    </header>
+    <div class="mui-content">
+      <div id="pullrefresh" class="fontS mui-scroll-wrapper">
+      <div class="mui-scroll">
+        <ul class="mui-table-view artical-list">
+      <!--<li class="mui-table-view-cell">
+            <div class="box-display">
+              <div class="box-item-flex1">
+                购买咨询师时间<br>
+                <span class="fontS font-gray-60 fonts" >￥80.00</span>
+              </div>
+              <div class="box-item-flex1 content-right deposit-detail-amount  font-red">
+                已支付
+              </div>
+            </div>
+          </li>-->
+        </ul>
+      </div>
+    </div>
+    </div>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script type="text/html" id="artical_list">
+         <section>  
+            <!--文章 start-->
+          <section class="widgets-category-nav section-white">
+            <div class="mui-table-view">
+              <ul class="mui-table-view mui-table-view-chevron">
+                <% for(var i=0; i<list.length; i++) { %>
+          <li class="mui-table-view-cell mui-media action-webview" data-webview="_www/view/artical/adetail.html" data-webparam = '{"article_id":<%= list[i].id %>}'>
+            <a class="mui-navigate-right" href="{:url('Artical/adetail')}?article_id=<%= list[i].id %">
+              <img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].cover) %>">
+              <div class="mui-media-body">
+                <%= list[i].title %>
+                <p class='mui-ellipsis mui-media-text'><%= list[i].description %></p>
+                <p class="mui-ellipsis mui-media-text mui-media-author">作者：<%= list[i].author %></p>
+              </div>
+            </a>
+          </li>
+           <% } %>
+          </ul>   
+            </div>
+          </section>
+    </script>
+    <script type="text/javascript" charset="utf-8">
+      var state = app.getState();
+      var param = {
+          'method': config.apimethod.articallist,
+          'source':config.source,
+          'type':1
+      }
+      $.dataRequest(param, function(rs) {
+          var widgets = template('artical_list', rs);
+          $('.artical-list').append(widgets);
+           mui('.mui-scroll-wrapper').scroll({
+          indicators: false
+        }); 
+      })
+      // mui.init({
+      //   swipeBack: true, //启用右滑关闭功能
+      //   gestureConfig: {
+      //     doubletap: true
+      //   },
+      //   subpages: [{
+      //     url: '_www/view/artical/tlist_list.html',
+      //     id: '_www/view/artical/tlist_list.html',
+      //     styles: {
+      //       top: '45px',
+      //       bottom: '0',
+      //     }
+      //   }]
+      // });
+
+      // var contentWebview = null;
+      // document.querySelector('header').addEventListener('doubletap', function() {
+      //   if(contentWebview == null) {
+      //     contentWebview = plus.webview.currentWebview().children()[0];
+      //   }
+      //   contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
+      // });
+    </script>
+  </body>
+</html>

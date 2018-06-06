@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__M_CSS__/style.css" />
+    <link rel="stylesheet" href="__M_CSS__/widgets.css" />
+    <link rel="stylesheet" href="__M_CSS__/MCalendar.css" />
+    <style>
+    		.main{
+    			margin-right: 10px;
+    		}
+    		.mui-table-view .mui-media-object{
+		    max-width: 72px; 
+    			height: 72px;
+    		}
+    		.mui-media-text {
+    			color: #646464;
+    			font-size: 15px;
+    		}
+    		.mui-media-author { 
+    			font-size: 13px;
+    			margin-top: 5px;
+    		} 
+    		.mui-media-action{
+    			font-size: 13px;
+    		}
+    		.float-right{
+    			float: right;
+    		}
+    		.mui-icon .mui-badge{
+			    height: 10px;
+			    margin-left: -8px;
+    		}
+    		.cander-icon {
+    			    height: 3rem;
+			    color: #ea2329;
+			    margin-top: .5rem;
+			    margin-right: 1rem;
+			    font-size: 21px;
+
+    		}
+    </style>
+  </head>
+
+  <body>
+    <header class="page-header">
+    	  <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">咨询师当月工作按排</div>
+    </header>
+    <div class="container" id="container" style="margin-bottom: 50px;"> 
+       
+    </div> 
+   
+    
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/js/app.js"></script>
+    <script src="__M_JS__/MCalendar.js"></script>
+    <script type="text/javascript">
+      mui.init({
+        swipeBack: true //启用右滑关闭功能
+      });
+      var counsellor_id = 0;
+      var tid
+      Mc();
+      counsellor_id = plus.webview.currentWebview().counsellor_id;
+      tid = plus.webview.currentWebview().tid||0;
+  	  function Mc(){
+  		  var today = mui.DateUtil.addDate(mui.DateUtil.getToday(),0);
+  		  var MC = mui("#container").MCalendar({date:today});
+  	  };
+	
+    </script>
+  </body>
+
+</html>

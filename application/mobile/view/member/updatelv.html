@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__M_CSS__/style.css">
+  </head>
+
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">心窝会员</div>
+    </header>
+    <section class="container">
+      <section class="section-white">
+        <ul class="mui-table-view">
+          <li  class="mui-table-view-cell action-webview" data-webview="{:url('Member/uppay')}" data-webparam = "{type:1}">
+            <a class="mui-navigate-right">
+              升级<br><span class="fontS font-gray-40">普通用户可升级成心窝会员并付款36.5元，全年免费网络咨询</span>
+            </a>
+          </li>
+          <li  class="mui-table-view-cell action-webview" data-webview="{:url('Member/uppay')}" data-webparam = "{type:2}">
+            <a class="mui-navigate-right">
+              赠送<br><span class="fontS font-gray-40">为其他用户开通心窝会员</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+    </section>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/js/app.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      mui.init({
+        swipeBack: true, //启用右滑关闭功能
+      });
+      
+    </script>
+  </body>
+
+</html>

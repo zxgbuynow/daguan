@@ -69,9 +69,9 @@
           </div>
         </section>
       </form>
-      <!--<section class="content-horizontal-padded content-right">
+      <section class="content-horizontal-padded content-right">
         <a id='forgetPassword' class="fontS font-orange">忘记密码</a>
-      </section>-->
+      </section>
       <section class="content-horizontal-padded form-op-section">
         <button id='login' type="submit" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">登录</button>
       </section>
@@ -130,6 +130,11 @@
 		      var regButton = document.getElementById('reg');
           regButton.addEventListener('tap', function(event) {
             window.location.href = "{:url('Passport/register')}";
+          }, false);
+
+          var forgetPassword = document.getElementById('forgetPassword');
+          forgetPassword.addEventListener('tap', function(event) {
+            window.location.href = "{:url('Passport/forgetPassword')}";
           }, false);
 
 

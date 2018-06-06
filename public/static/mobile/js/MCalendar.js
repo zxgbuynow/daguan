@@ -94,7 +94,7 @@
 						$.addClass(this,"mc-cell-selected");
 						cell_selected = this;
 						date_selected = d;
-					}
+					} 
 					
 					if(d.getTime() == $.DateUtil.getToday().getTime()){
 						$.addClass(this, "mc-table-cell-today")
@@ -124,35 +124,8 @@
 				else{
 					changeMonth(date);
 				}
-				
 //				$("#mc-date-label")[0].innerHTML = (date_selected.getMonth()+1) +'月' +date_selected.getFullYear() +'年';
 
-				Zepto('.calendar-list').remove();
-				//取数据
-				var state = app.getState();
-				if(date_selected.getDate()==new Date().getDate()){//当天
-					//获得今日数据
-			      	var param = {
-			          'method': config.apimethod.calendatoday,
-			          'account': state.token,
-			          'day': Math.floor(Date.parse(new Date())/1000),
-			          'source':config.source
-			      	}
-				}else{
-					var param = {
-			          'method': config.apimethod.calendatoday,
-			          'account': state.token,
-			          'day': Math.floor(Date.parse(date_selected)/1000),
-			          'source':config.source
-			      	}
-				}
-				Zepto.dataRequest(param, function(rs) {
-		        		var widgets = template('calendar_list', rs);
-		            Zepto("#container").append(widgets);
-		            mui('#container').scroll({
-			          indicators: false
-			        });
-		        })
 			}
 		function getFirstDateInMonth(date){
 			var d = new Date(date);
@@ -172,6 +145,10 @@
 				$("#mc-table-body").on('tap','.mc-table-cell',function(){
 					var idx = this.getAttribute("mc-cell-index");
 					changeDate($.DateUtil.addDate(firstDateinMonthView,idx))
+					var curd = new Date($.DateUtil.addDate(firstDateinMonthView,idx));
+					//查看当天按排
+					window.location.href = "{:url('Member/hour')}"+'?counsellor_id='+counsellor_id+'&curdate='+curd.getTime()+'&tid='+tid;
+
 				});
 				var swipeMonth = function(direction){
 					var d = new Date(date_selected);
