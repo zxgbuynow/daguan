@@ -336,6 +336,9 @@ class Index
                 }
                 
                
+            }else{
+                $class['pic'][$key]['webview'] = '';
+                $class['pic'][$key]['webparam'] = [];
             }
         }
         //返回信息
@@ -376,10 +379,13 @@ class Index
                      $class['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
                 }else{
                     $class['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
-                     $class['pic'][$key]['webparam'] = ['counsellor_id'=>explode('.',explode('/', $value['link'])[1])[0]];
+                    $class['pic'][$key]['webparam'] = ['counsellor_id'=>explode('.',explode('/', $value['link'])[1])[0]];
                 }
                 
                
+            }else{
+                $class['pic'][$key]['webview'] = '';
+                $class['pic'][$key]['webparam'] = [];
             }
         }
 
