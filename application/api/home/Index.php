@@ -923,10 +923,15 @@ class Index
     {
 
         //参数
-        $category = trim($params['cat_id']);
-        $keyword = trim($params['search_keywords']);
-
-        $map['a.nickname|s.title'] = array('like','%'.$keyword.'%');
+        $category = '';
+        if (isset($params['cat_id'])) {
+            $category = trim($params['cat_id']);
+        }
+        if (isset($params['search_keywords'])) {
+            $keyword = trim($params['search_keywords']);
+            $map['a.nickname|s.title'] = array('like','%'.$keyword.'%');
+        }
+        
 
         $map['a.status'] = 1;
 
