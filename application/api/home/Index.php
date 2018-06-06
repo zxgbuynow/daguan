@@ -930,17 +930,19 @@ class Index
         $map['a.status'] = 1;
 
         $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.shopid = s.id','LEFT')->where($map)->select();
-        if ($category) {
-            foreach ($counsellor['list'] as $key => $value) {
+        
+        foreach ($counsellor['list'] as $key => $value) {
+            if ($category) {
                 if (!in_array($category, explode(',', $value['tags']))) {
                     unset($counsellor['list'][$key]);
                     continue;
                 }
-                if (is_numeric($counsellor['list'][$key]['avar'])) {
-                    $counsellor['list'][$key]['avar'] = get_file_path($counsellor['list'][$key]['avar']);
-                }   
-            }    
-        }
+            }
+            if (is_numeric($counsellor['list'][$key]['avar'])) {
+                $counsellor['list'][$key]['avar'] = get_file_path($counsellor['list'][$key]['avar']);
+            }   
+        }    
+        
         
         // if (!$counsellor) {
         //     return $this->error('咨询师不存在或是已注销');
