@@ -927,6 +927,9 @@ class Index
                     unset($counsellor['list'][$key]);
                     continue;
                 }
+                if (is_numeric($counsellor['list'][$key]['avar'])) {
+                    $counsellor['list'][$key]['avar'] = get_file_path($counsellor['list'][$key]['avar']);
+                }   
             }    
         }
         
