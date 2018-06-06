@@ -359,7 +359,7 @@ class Index
         $ismobile = trim($params['ismobile']);
         $class['pic'] = db('cms_advert')->where($map)->order('id DESC')->limit(10)->select();
 
-        foreach ($lunbo['pic'] as $key => $value) {
+        foreach ($class['pic'] as $key => $value) {
             if (strstr($value['link'], 'article')) {//文章
                 if ($ismobile) {
                     $class['pic'][$key]['webview'] = "/mobile.php/artical/detail.html";
@@ -401,7 +401,7 @@ class Index
         $map['typeid'] = '2';//活动
         $map['status'] = 1;
         $class['pic'] = db('cms_advert')->where($map)->order('id DESC')->limit(10)->select();
-        foreach ($lunbo['pic'] as $key => $value) {
+        foreach ($class['pic'] as $key => $value) {
             if (strstr($value['link'], 'article')) {//文章
                 if ($ismobile) {
                     $class['pic'][$key]['webview'] = "/mobile.php/artical/detail.html";
