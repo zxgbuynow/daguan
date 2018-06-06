@@ -940,7 +940,13 @@ class Index
             }
             if (is_numeric($counsellor['list'][$key]['avar'])) {
                 $counsellor['list'][$key]['avar'] = get_file_path($counsellor['list'][$key]['avar']);
-            }   
+            }  
+
+            //标识
+            $smap['id'] = array('in',$value['tags']);
+            $counsellor['list'][$key]['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
+            //从业时间
+            $counsellor['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年'; 
         }    
         
         
