@@ -337,7 +337,7 @@ class Index
                 
                
             }else{
-                $class['pic'][$key]['webview'] = '';
+                $class['pic'][$key]['webview'] = '_www/view/index.html';
                 $class['pic'][$key]['webparam'] = [];
             }
         }
@@ -384,7 +384,7 @@ class Index
                 
                
             }else{
-                $class['pic'][$key]['webview'] = '';
+                $class['pic'][$key]['webview'] = '_www/view/index.html';
                 $class['pic'][$key]['webparam'] = [];
             }
         }
@@ -428,6 +428,9 @@ class Index
                 }
                 
                
+            }else{
+                $class['pic'][$key]['webview'] = '_www/view/index.html';
+                $class['pic'][$key]['webparam'] = [];
             }
         }
         //返回信息
