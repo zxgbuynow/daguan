@@ -321,7 +321,7 @@ class Agency extends Admin
         $id      == UID && $this->error('禁止操作当前账号');
         $field   = input('post.name', '');
         $value   = input('post.value', '');
-        $config  = UserModel::where('id', $id)->value($field);
+        $config  = AgencyModel::where('id', $id)->value($field);
         $details = '字段(' . $field . ')，原值(' . $config . ')，新值：(' . $value . ')';
         return parent::quickEdit(['user_edit', 'shop_user', $id, UID, $details]);
     }
