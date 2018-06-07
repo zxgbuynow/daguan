@@ -185,16 +185,19 @@ class Advert extends Admin
     public function edit($id = null)
     {
         if ($id === null) $this->error('缺少参数');
-
+        $info = AdvertModel::get($id);
         // 保存数据
         if ($this->request->isPost()) {
             // 表单数据
             $data = $this->request->post();
-
             // 验证
             $result = $this->validate($data, 'Advert');
             if (true !== $result) $this->error($result);
-
+            if ($info['ad_type']==2) {
+                $srcpath = get_file_path($data['src']);
+                $data['cover'] = $srcpath;
+            }
+            
             if (AdvertModel::update($data)) {
                 // 记录行为
                 action_log('advert_edit', 'cms_advert', $id, UID, $data['name']);
@@ -207,7 +210,7 @@ class Advert extends Admin
         $list_type = AdvertTypeModel::where('status', 1)->column('id,name');
         array_unshift($list_type, '默认分类');
 
-        $info = AdvertModel::get($id);
+        
         $info['ad_type'] = ['代码', '文字', '图片', 'flash'][$info['ad_type']];
 
         // 显示编辑页面
@@ -223,6 +226,7 @@ class Advert extends Admin
                 ['radio', 'timeset', '时间限制', '', ['永不过期', '在设内时间内有效']],
                 ['daterange', 'start_time,end_time', '开始时间-结束时间'],
                 ['textarea', 'content', '广告内容'],
+                ['image', 'src', '单页封面'],
                 ['radio', 'status', '立即启用', '', ['否', '是']]
             ])
             ->setTrigger('timeset', '1', 'start_time')
