@@ -982,7 +982,7 @@ class Index
     {
 
         
-        if (isset($params['cate_id'])) {
+        if (isset($params['cate_id'])&&!empty($params['cate_id'])) {
             $cate_id = trim($params['cate_id']);
             $map['cid'] = $cate_id;
         }
