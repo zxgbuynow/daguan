@@ -992,7 +992,7 @@ class Index
             $map['type'] = $type;
         }
 
-        if (isset($params['search_keywords'])) {
+        if (isset($params['search_keywords'])&&!empty($params['search_keywords'])) {
             $keyword = trim($params['search_keywords']);
             $map['title'] = array('like','%'.$keyword.'%');
         }
