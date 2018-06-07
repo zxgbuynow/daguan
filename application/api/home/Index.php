@@ -286,7 +286,7 @@ class Index
             }
             
         }
-        $article['list'] = db('cms_page')->where($map)->order('view DESC')->limit(10)->select();
+        $article['list'] = db('cms_page')->where($map)->order('sort ASC, view DESC')->limit(10)->select();
 
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
@@ -540,7 +540,7 @@ class Index
         if ($cid) {
             $map['cid'] = $cid;
         }
-        $article['list'] = db('cms_page')->where($map)->order('view DESC')->select();
+        $article['list'] = db('cms_page')->where($map)->order('sort ASC ,view DESC')->select();
 
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
@@ -998,7 +998,7 @@ class Index
         }
         $map['status'] = 1;
         
-        $article['list'] = db('cms_page')->where($map)->order('view DESC')->select();
+        $article['list'] = db('cms_page')->where($map)->order('sort ASC, view DESC')->select();
 
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
@@ -1405,7 +1405,7 @@ class Index
             $ret[$k]['name'] = $v['title'];
             $ret[$k]['cid'] = $v['id'];
             //取分类下数据
-            $article = db('cms_page')->where(['status'=>1,'cid'=>$v['id']])->order('view DESC')->limit(10)->select();
+            $article = db('cms_page')->where(['status'=>1,'cid'=>$v['id']])->order('sort ASC, view DESC')->limit(10)->select();
             foreach ($article as $key => $value) {
                 unset($value['content']);
                 $ret[$k]['list'][$key] = $value;

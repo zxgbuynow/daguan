@@ -37,6 +37,7 @@ class Page extends Admin
                 ['create_time', '创建时间', 'datetime'],
                 ['update_time', '更新时间', 'datetime'],
                 ['status', '状态', 'switch'],
+                ['sort', '排序', 'text.edit'],
                 ['right_button', '操作', 'btn']
             ])
             ->addTopButtons('add,enable,disable,delete') // 批量添加顶部按钮
