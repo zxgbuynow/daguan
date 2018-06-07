@@ -436,7 +436,8 @@
             //课程
             var aparam = {
                   'method': config.apimethod.classList,
-                  'source':config.source
+                  'source':config.source,
+                  'ismobile':1
               }
               $.dataRequest(aparam, function(rs) {
                   var widgets = template('class_list', rs);
@@ -449,7 +450,8 @@
                     //课程
                 var aparam = {
                     'method': config.apimethod.activeList,
-                    'source':config.source
+                    'source':config.source,
+                    'ismobile':1
                 }
                 $.dataRequest(aparam, function(rs) {
                     console.log(rs);
