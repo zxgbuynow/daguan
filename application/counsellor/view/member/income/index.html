@@ -68,6 +68,9 @@
       $.dataRequest(param, function(rs) { 
           var widgets = template('income_list', rs);
           $('.income-details').append(widgets);
+          mui('.mui-scroll-wrapper').scroll({
+            indicators: false
+          });
       })
      
     </script>
