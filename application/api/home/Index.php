@@ -124,6 +124,9 @@ class Index
         $data['isconsolle'] = trim($params['isconsolle']);
         $data['consolletime'] = trim($params['consolletime']);
 
+        if (isset($params['ismobile'])) {
+            $data['source_from'] = 1;
+        }
 
         if (db('member')->where(['mobile'=>$data['mobile']])->find()) {
             return $this->error('账号已存在！');
@@ -593,12 +596,14 @@ class Index
                 'chart'=>'wordchart',
                 'status'=>$counsellor['iswordchart'],
                 'price'=>$counsellor['wordchart'],
+                'price1'=>$counsellor['wordchartlv'],
                 'show'=>'文字咨询'
             ),
             array(
                 'chart'=>'speechchart',
                 'status'=>$counsellor['isspeechchart'],
                 'price'=>$counsellor['speechchart'],
+                'price1'=>$counsellor['speechchartlv'],
                 'show'=>'语音咨询'
 
             ),
@@ -606,12 +611,14 @@ class Index
                 'chart'=>'videochart',
                 'status'=>$counsellor['isvideochart'],
                 'price'=>$counsellor['videochart'],
+                'price1'=>$counsellor['videochartlv'],
                 'show'=>'视频咨询'
             ),
             array(
                 'chart'=>'facechart',
                 'status'=>$counsellor['isfacechart'],
                 'price'=>$counsellor['facechart'],
+                'price1'=>$counsellor['facechartlv'],
                 'show'=>'面对面咨询'
             )
         );
@@ -2777,6 +2784,18 @@ class Index
         $account = trim($params['account']);
         $cstime =  trim($params['hour']);
 
+        if (isset($params['iscancle'])) {
+            $data['ondatetime'] = strtotime($cstime);
+            $data['memberid'] = $account;
+            db('connsellor_ondate')->where($data)->delete();
+            //返回信息
+            $data = [
+                'code'=>'1',
+                'msg'=>'',
+                'data'=>1
+            ];
+            return json($data);
+        }
 
         $data['ondatetime'] = strtotime($cstime);
         $data['memberid'] = $account;

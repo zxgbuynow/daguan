@@ -165,9 +165,13 @@ class Counsellor extends Admin
                 // ['date', 'employment', '从业时间'],
                 ['number', 'per', '单次时长'],
                 ['text', 'wordchart', '文字咨询'],
+                ['text', 'wordchartlv', '文字咨询会员价'],
                 ['text', 'speechchart', '语音咨询'],
+                ['text', 'speechchartlv', '语音咨询会员价'],
                 ['text', 'videochart', '视频咨询'],
+                ['text', 'videochartlv', '视频咨询会员价'],
                 ['text', 'facechart', '面对面咨询'],
+                ['text', 'facechartlv', '面对面咨询会员价'],
                 ['textarea', 'intro', '简介'],
             ])
             ->addDatetime('employment', '从业时间', '', '', 'YYYY-MM-DD')
@@ -218,6 +222,12 @@ class Counsellor extends Admin
                     $save1['speechchart'] = $data['speechchart'];
                     $save1['videochart'] = $data['videochart'];
                     $save1['facechart'] = $data['facechart'];
+
+                    $save1['wordchartlv'] = $data['wordchartlv'];
+                    $save1['speechchartlv'] = $data['speechchartlv'];
+                    $save1['videochartlv'] = $data['videochartlv'];
+                    $save1['facechartlv'] = $data['facechartlv'];
+
                     $save1['intro'] = $data['intro'];
                     $save1['employment'] = strtotime($data['employment']);
                     $save1['remark'] = $data['remark'];
@@ -228,7 +238,7 @@ class Counsellor extends Admin
                     $save1['leader'] = $data['leader'];
                     
                     //业务类弄
-                    @$save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
+                    $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
                     CounsellorotModel::update($save1);
 
                 }else{
@@ -240,6 +250,10 @@ class Counsellor extends Admin
                     $save1['speechchart'] = $data['speechchart'];
                     $save1['videochart'] = $data['videochart'];
                     $save1['facechart'] = $data['facechart'];
+                    $save1['wordchartlv'] = $data['wordchartlv'];
+                    $save1['speechchartlv'] = $data['speechchartlv'];
+                    $save1['videochartlv'] = $data['videochartlv'];
+                    $save1['facechartlv'] = $data['facechartlv'];
                     $save1['intro'] = $data['intro'];
                     $save1['employment'] = strtotime($data['employment']);
                     
@@ -267,7 +281,10 @@ class Counsellor extends Admin
         // 获取数据
         // $info = CounsellorModel::where('id', $id)->find();
         $info = CounsellorModel::getCounsellorList($id);
-
+        if (!$info['status']) {
+            $info['status'] = 0;
+        }
+        // print_r($info);exit;
         $list_type = CategoryModel::where('status', 1)->column('id,title');
 
         // 使用ZBuilder快速创建表单 
@@ -299,9 +316,13 @@ class Counsellor extends Admin
                 // ['date', 'employment', '从业时间'],
                 ['number', 'per', '单次时长'],
                 ['text', 'wordchart', '文字咨询'],
+                ['text', 'wordchartlv', '文字咨询会员价'],
                 ['text', 'speechchart', '语音咨询'],
+                ['text', 'speechchartlv', '语音咨询会员价'],
                 ['text', 'videochart', '视频咨询'],
+                ['text', 'videochartlv', '视频咨询会员价'],
                 ['text', 'facechart', '面对面咨询'],
+                ['text', 'facechartlv', '面对面咨询会员价'],
                 ['textarea', 'intro', '简介'],
             ])
             ->addDatetime('employment', '从业时间', '', '', 'YYYY-MM-DD')
