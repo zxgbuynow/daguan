@@ -1751,6 +1751,10 @@ class Index
         if (!$user) {
             return $this->error('用户不存在');
         }
+        // get_file_path
+        if (is_numeric($user['avar'])) {
+            $user['avar'] = get_file_path($user['avar']);
+        }
         //用户积分
         $pmap['memberid'] = $user['id'];
         $pmap['behavior_type'] = 0;
