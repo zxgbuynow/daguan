@@ -2165,6 +2165,8 @@ class Index
 
         //收入
         $map['mid'] = $account;
+        $map['paytype'] = 0;
+        $map['status'] = 1;
         $user['income'] =db('trade')->where($map)->sum('payment'); 
 
         //积分
