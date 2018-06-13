@@ -140,6 +140,7 @@ class Pay
             }
             
             db('trade')->where($where)->update($data);//修改订单状态
+            db('msg')->where(['tid'=>$where['tid']])->update(['is_pay'=>1]);//修改订单状态
             echo 'success';
             exit;
         }

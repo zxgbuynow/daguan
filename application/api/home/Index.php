@@ -1151,12 +1151,14 @@ class Index
         $msg['display'] = $username[0].'预约'.$counsellor[0].'的'.$str;
         $msg['sendid'] = $account;
         $msg['reciveid'] = $counsellor_id;
+        $msg['tid'] = $data['tid'];
 
-        $this->create_msg($msg);
+        $lastid = $this->create_msg($msg);
         $ret = array('tid'=>$data['tid'],'price'=>$price);
         //价格为0
         if ($price == 0) {
             db('trade')->where(['tid'=>$data['tid']])->update(['status'=>1]);//修改订单状态
+            db('msg')->where(['tid'=>$data['tid']])->update(['is_pay'=>1]);//修改订单状态
             $ret = array('tid'=>$data['tid'],'flish'=>1);
         }
         //如果是会员
@@ -2859,6 +2861,7 @@ class Index
 
         //插入数据
         $me = db('msg')->insert($data);
+        return db('msg')->getLastInsID();
 
     }
     /**
