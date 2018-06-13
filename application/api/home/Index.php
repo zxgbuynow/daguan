@@ -57,6 +57,7 @@ class Index
         //是否存在
         $map['username'] = $username;
         $map['status'] = 1;
+        $map['type'] = 0;
         $user = db('member')->where($map)->find();
         if (!$user) {
             return $this->error('用户不存在或被禁用！');
@@ -1122,7 +1123,7 @@ class Index
         $counsellor = db('member')->where('id',$counsellor_id)->column('nickname');
         $username = db('member')->where('id',$account)->column('nickname');
 
-        $data['title'] = '预约'.$counsellor[0].$str;
+        $data['title'] = $username[0].'预约'.$counsellor[0].$str;
         //机构
         $data['shopid'] = db('member')->where('id',$account)->column('shopid')?db('member')->where('id',$account)->column('shopid')[0]:0;
         //订单号
@@ -1566,6 +1567,7 @@ class Index
         //是否存在
         $map['username'] = $username;
         $map['status'] = 1;
+        $map['type'] = 1;
         $user = db('member')->where($map)->find();
         if (!$user) {
             return $this->error('用户不存在或被禁用！');
@@ -2233,6 +2235,7 @@ class Index
                 // error_log($value['start_time'].'|||'.$cstime,3,'/home/wwwroot/daguan/time.log');
                 unset($calendar['list'][$key]);
             }
+
         }
         $calendar['list'] = array_values($calendar['list']);
         //返回信息
@@ -2917,7 +2920,7 @@ class Index
         $apikey = "8df6ed7129c50581eecdf1e875edbaa3"; 
 
         $code  = rand(1000,9999);
-        $text="【希望24热线】您的验证码是".$code; 
+        $text="【大观心理】您的验证码是".$code; 
 
         // error_log($text,3,'/home/wwwroot/daguan/mobile.log');
         $ch = curl_init();
