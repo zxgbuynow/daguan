@@ -1055,6 +1055,7 @@ class Index
 
         //shopid mid uid tid payment title
         
+
         $data['mid'] = $counsellor_id;
         $data['memberid'] = $account;
         $data['payment'] = $price;
@@ -1102,7 +1103,16 @@ class Index
         //取会员
         $userinfo = db('member')->where('id',$account)->find();
 
+        //取商品
+        $goodsinfo = db('member_counsellor')->where('memberid',$counsellor_id)->find();
 
+        //计算价格
+        $price = $goodsinfo[$chart];
+        //取会员价
+        if ($userinfo['is_diamonds']) {
+            $price = $goodsinfo[$chart.'lv'];
+        }
+        $data['payment'] = $price;
         //交易标题
         $str = '文字咨询';
         switch ($chart) {
@@ -1143,12 +1153,17 @@ class Index
         $msg['reciveid'] = $counsellor_id;
 
         $this->create_msg($msg);
-        $ret = array('tid'=>$data['tid']);
-        //如果是会员
-        if ($userinfo['is_diamonds']&&$chart!='facechart') {
+        $ret = array('tid'=>$data['tid'],'price'=>$price);
+        //价格为0
+        if ($price == 0) {
             db('trade')->where(['tid'=>$data['tid']])->update(['status'=>1]);//修改订单状态
             $ret = array('tid'=>$data['tid'],'flish'=>1);
         }
+        //如果是会员
+        // if ($userinfo['is_diamonds']&&$chart!='facechart') {
+        //     db('trade')->where(['tid'=>$data['tid']])->update(['status'=>1]);//修改订单状态
+        //     $ret = array('tid'=>$data['tid'],'flish'=>1);
+        // }
 
         
         //返回信息
