@@ -1544,9 +1544,9 @@ class Index
         foreach ($data as $key => $value) {
             $member =  db('member')->alias('a')->field('a.*,b.mid')->join(' trade b',' b.memberid = a.id','LEFT')->where(array('b.id'=>$value['tid']))->find();
             $data[$key]['member'] =  $member['nickname'];
-            $data[$key]['mobile'] =  db('member')->where(['id'=>$member['mid']])->column('mobile')[0];
+            $data[$key]['mobile'] =  db('member')->where(['id'=>$member['mid']])->value('mobile');
 
-            $data[$key]['avar'] =  db('member')->where(['id'=>$member['mid']])->column('avar')[0];
+            $data[$key]['avar'] =  db('member')->where(['id'=>$member['mid']])->value('avar');
             $data[$key]['counsellor'] =  db('member')->where(['id'=>$member['mid']])->column('nickname')[0];
             $data[$key]['st'] = date('Y-m-d H:i',$value['start_time']);
         }
@@ -2444,7 +2444,7 @@ class Index
         }
 
         $where['mobile'] = array('in',explode(',', $users)) ;
-        $rs = db('member')->where($where)->column('mobile,avar');
+        $rs = db('member')->where($where)->column('mobile,avar,nickname');
 
         //返回信息
         $data = [
