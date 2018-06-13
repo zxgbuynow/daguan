@@ -2160,6 +2160,7 @@ class Index
     {
         $account = trim($params['account']);
         $map['mid'] = $account;
+        $map['status'] = 1;
         
         $trade['list'] = db('trade')->where($map)->order('id DESC')->select();
 
