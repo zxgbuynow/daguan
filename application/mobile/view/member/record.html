@@ -199,7 +199,7 @@
     <script src="__M_JS__/app.js"></script>
     <script type="text/html" id="trade_list">
         <% for(var i=0; i<list.length; i++) { %>
-          <li class="mui-table-view-cell mui-media <%if (list[i].status=='2'||list[i].status=='0'){%>click-webview<% } %>" <%if (list[i].status=='0'){%> data-webview="{:url('Member/member')}" data-webparam = '{"jid":"2", "username":"<%= list[i].mobile %>" }' <%}else{%>data-webview="{:url('Member/evaluate')}" data-webparam = '<%= list[i].id %>' <%}%>
+          <li class="mui-table-view-cell mui-media <%if (list[i].status=='2'||list[i].status=='0'){%>click-webview<% } %>" <%if (list[i].status=='0'){%> data-webview="{:url('Member/member')}" data-webparam = '<%= list[i].mobile %>' <%}else{%>data-webview="{:url('Member/evaluate')}" data-webparam = '<%= list[i].id %>' <%}%>
             <div class="box-display">
               <img class="mui-media-object " src="../../img/activity_ads.jpg">
               <div class="box-item-flex1">
@@ -239,11 +239,14 @@
               if(webview.indexOf("evaluate") > -1) {
                 window.location.href = webview+'?c_id='+webparam;
               }else{
+                if (!webparam) {
+                  mui.toast('参数缺失');return false;
+                }
                 mui.toast( "发起成功,请等待" );
                 mui.ajax('http://103.20.248.251/perl/phone', {
                   data: {
-                    'cid':'18321271831',
-                    'did':'10086',
+                    'cid':state.account,
+                    'did':webparam,
                     'pbx':'P000000001111',
                     'username':'dgapp',
                     'password':'hope9995'
