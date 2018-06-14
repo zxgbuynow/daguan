@@ -199,7 +199,7 @@
     <script src="__M_JS__/app.js"></script>
     <script type="text/html" id="trade_list">
         <% for(var i=0; i<list.length; i++) { %>
-          <li class="mui-table-view-cell mui-media <%if (list[i].status=='2'||list[i].status=='0'){%>click-webview<% } %>" <%if (list[i].status=='0'){%> data-webparam = '{"jid":"2", "username":"<%= list[i].mobile %>" }' <%}else{%>data-webview="{:url('Member/evaluate')}" data-webparam = '{"c_id":<%= list[i].id %>}' <%}%>
+          <li class="mui-table-view-cell mui-media <%if (list[i].status=='2'||list[i].status=='0'){%>click-webview<% } %>" <%if (list[i].status=='0'){%> data-webview="{:url('Member/member')}" data-webparam = '{"jid":"2", "username":"<%= list[i].mobile %>" }' <%}else{%>data-webview="{:url('Member/evaluate')}" data-webparam = '<%= list[i].id %>' <%}%>
             <div class="box-display">
               <img class="mui-media-object " src="../../img/activity_ads.jpg">
               <div class="box-item-flex1">
@@ -236,12 +236,33 @@
           var webparam = $(this).data('webparam');
           if(webview && webview != '') {
             if(webview.indexOf("http") == -1) {
-              clicked(webview, webparam || {});
-            } else {
-              clicked('_www/view/h5.html', {
-                'link': webview
-              });
-            }
+              if(webview.indexOf("evaluate") > -1) {
+                window.location.href = webview+'?c_id='+webparam;
+              }else{
+                mui.toast( "发起成功,请等待" );
+                mui.ajax('http://103.20.248.251/perl/phone', {
+                  data: {
+                    'cid':'18321271831',
+                    'did':'10086',
+                    'pbx':'P000000001111',
+                    'username':'dgapp',
+                    'password':'hope9995'
+
+                  },
+                  type: 'get',
+                  success: function(response) {
+                    mui.toast( "发起成功,请等待" );
+                  },
+                  error: function(xhr, type, errorThrown) {
+                    //异常处理；
+                    log(xhr.response) 
+                  }
+                });
+              
+              }
+              
+              // clicked(webview, webparam || {});
+            } 
           }
         })
       // mui.init({

@@ -9,38 +9,185 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <link rel="stylesheet" href="__M_CSS__/style.css">
+    <style type="text/css">
+        .require-item{
+            color: red;
+        }
+      #c-register .form-container{
+        margin-top: 0.5rem;
+        padding-top: 0;
+        background: #fff;
+      }
+      #c-register .mui-input-row{
+        height: 3.4rem;
+      }
+      #c-register .mui-input-row input{
+        height: 100%;
+        margin-top: 0;
+      }
+      #c-register  .mui-input-row label{
+        padding: 1rem;
+      }
+      #c-register .mui-right-img{
+          position: absolute;
+          right: 0.9rem;
+          width: 20px;
+          height: 20px;
+          top: 1.1rem;
+      }
+      #c-register .mui-right-img.arrow-down{
+          height: 10px;
+          top: 1.4rem;
+      }
+      #c-register .mui-input-row select{
+        height: 3.4rem;
+      }
+      #c-register .mui-input-row .mui-def-option{
+        color: #efeff4 !important;
+        
+      }
+      #c-register #register_next {
+        background: url(__M_IMG__/icon-btnbg.png) no-repeat;
+        background-size: 100% 100%;
+        border-color: inherit;
+        border: 0;
+        width: 60%;
+        margin: 0 auto;
+      }
+      #c-register .shop-checkbox input{
+        right: 0.5rem;
+      }
+      #c-register .mui-input-row.mui-input-special label{
+        width: 11rem;
+      }
+      #c-register .mui-input-row.mui-content-padded-desc {
+          padding: 0.8rem 1rem;
+          font-size: 0.9rem;
+          color: #b0b0b0;
+          height: 100%;
+      }
+      #c-register .mui-input-group:after{
+        height: 0;
+      }      
+    </style>
   </head>
 
   <body>
     <header class="page-header">
       <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
-      <div class="header-title">会员注册</div>
+      <div class="header-title">用户注册</div>
     </header>
-    <section class="container">
+    <section class="container" id="c-register">
       <form class="form-container">
         <input type="hidden" name="key" value="topwap_signup">
         <section class="mui-input-group">
-        	   <div class="mui-input-row ">
-            <label>姓名：</label>
-      		<input id="account" type="text" class="mui-input-clear" placeholder="请输入姓名">
+               <div class="mui-input-row ">
+            <label><i class="require-item">*</i>姓名</label>
+            <input id="account" type="text" class="mui-input-clear" placeholder="请输入姓名">
          </div>
           <div class="mui-input-row ">
-            <label>邮箱：</label>
-      		<input id="email" type="text" class="mui-input-clear" placeholder="请输入邮箱">
+            <label>邮箱</label>
+            <input id="email" type="text" class="mui-input-clear" placeholder="请输入邮箱">
           </div>
           <div class="mui-input-row ">
-            <label>手机：</label>
-      		<input id="mobile" type="text" class="mui-input-clear" placeholder="请输入手机号">
+            <label><i class="require-item">*</i>手机</label>
+            <input id="mobile" type="text" class="mui-input-clear" placeholder="请输入手机号">
           </div>
           <div class="mui-input-row">
-            <label>密码：</label>
+            <label><i class="require-item">*</i>密码</label>
             <input id="password" type="password" class="mui-input-password" placeholder="请输入密码">
           </div>
+          <div class="mui-input-row mui-content-padded-desc">
+          为了更好的为您服务，请填写注册信息。请放心，您的所有信息我们都将为您保密。您可以参看咨询协议
+        </div>
           <div class="mui-input-row">
-            <label>机构中心：</label>
+            <label>性别</label>
+            <select id="sex" name="sex" class="mui-input-clear mui-input " >
+        <option value="1" selected="selected">男</option>
+        <option value="0" >女</option>
+      </select>
+          </div>
+          <div class="mui-input-row">
+            <label>出生日期</label>
+            <input id="birthday" type="datetime" data-options='{"beginYear":2018,"endYear":2025}' class=" pickTime" placeholder="请输入生日">
+            <img src="__M_IMG__/icon-time.png" class="mui-right-img">
+          </div>
+          <div class="mui-input-row">
+            <label>学历</label>
+            <select id="edu" name="edu" class="mui-input-clear mui-input " >
+                    <option value="" selected="selected" class="mui-def-option">请选择学历</option>
+                    <option value="初中" >初中</option>
+                    <option value="高中" >高中</option>
+                <option value="大专" >大专</option>
+                <option value="本科" >本科</option>
+                <option value="硕士" >硕士</option>
+                <option value="博士" >博士</option>
+            </select>
+          </div>
+          
+          <div class="mui-input-row">
+            <label>年级</label>
+            <select id="grade" name="grade" class="mui-input-clear mui-input " >
+                    <option value="" selected="selected" class="mui-def-option">请选择年级</option>
+                <option value="一年级" >一年级</option>
+                <option value="二年级" >二年级</option>
+                <option value="三年级" >三年级</option>
+                <option value="四年级" >四年级</option>
+                <option value="五年级" >五年级</option>
+                <option value="六年级" >六年级</option>
+            </select>
+      <img src="__M_IMG__/icon-arrowdown.png" class="mui-right-img arrow-down">
+          </div>
+          <div class="mui-input-row">
+            <label>职业</label>
+            <select id="profession" name="profession" class="mui-input-clear mui-input " >
+                    <option value="" selected="selected" class="mui-def-option">请选择职业</option>
+                <option value="销售" >销售</option>
+                <option value="客服" >客服</option>
+                <option value="工程师" >工程师</option>
+            </select>
+      <img src="__M_IMG__/icon-arrowdown.png" class="mui-right-img arrow-down">
+          </div>
+          <div class="mui-input-row">
+            <label>婚姻</label>
+            <select id="marital" name="marital" class="mui-input-clear mui-input " >
+                    <option value="" selected="selected" class="mui-def-option">请选择婚姻状况</option>
+                <option value="0" >未婚</option>
+                <option value="1" >已婚</option>
+            </select>
+      <img src="__M_IMG__/icon-arrowdown.png" class="mui-right-img arrow-down">
+          </div>
+          <div class="mui-input-row ">
+            <label>省</label>
+            <input id="province" type="text" class="mui-input-clear" placeholder="请输入省">
+          </div>
+          <div class="mui-input-row ">
+            <label>市</label>
+            <input id="city" type="text" class="mui-input-clear" placeholder="请输入市">
+          </div>
+          <div class="mui-input-row ">
+            <label>联系人电话</label>
+            <input id="tel" type="text" class="mui-input-clear" placeholder="请输入联系电话">
+          </div>
+          <div class="mui-input-row mui-input-special">
+            <label>是否接受过心理咨询</label>
+            <select id="isconsolle" name="isconsolle" class="mui-input-clear mui-input " >
+                <option value="" selected="selected" class="mui-def-option">请选择</option>
+                <option value="1" >是</option>
+                <option value="0" >否</option>
+            </select>
+      <img src="__M_IMG__/icon-arrowdown.png" class="mui-right-img arrow-down">
+          </div>
+          <div class="mui-input-row">
+            <label>时间</label>
+            <input id="consolletime" type="datetime" data-options='{"beginYear":2018,"endYear":2025}' class=" pickTime" placeholder="咨询时间">
+            <img src="__M_IMG__/icon-time.png" class="mui-right-img">
+          </div>
+          <div class="mui-input-row mui-hidden">
+            <label>机构中心</label>
             <select id="agency" name="agency" class="mui-input-clear mui-input agency-list" >
-				<option value="" selected="selected">请选择</option>
-			</select>
+                <option value="" selected="selected" class="mui-def-option">请选择</option>
+            </select>
           </div>
         </section>
         <section class="content-vertical-padded box-display">
@@ -48,10 +195,11 @@
             <label></label>
             <input name="license" value="1" type="checkbox" checked>
           </div>
-          <div class="box-item-flex1 fontS font-gray-20">我已阅读并同意<mark id="agreement">《会员注册协议》</mark></div>
+          <div class="box-item-flex1 fontS font-gray-20">我已阅读并同意<mark id="agreement" class="action-clickview" data-view="_www/view/passport/agreement.html">《咨询协议》</mark></div>
+          
         </section>
         <section class="mui-content-padded form-op-section">
-          <button id="register_next" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">下一步</button>
+          <button id="register_next" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">提交</button>
         </section>
       </form>
     </section>
@@ -60,37 +208,99 @@
     <script src="__M_JS__/template.min.js"></script>
     <script src="__M_JS__/config.js"></script>
     <script src="__M_JS__/app.js"></script>
-	 <script type="text/html" id="agency_list">
-    		<% for(var i in list) { %>	
-      		<option value="<%= list[i].id %>"><%= list[i].title %></option>
-      	<% } %>
+    <script src="__M_JS__/mui.picker.min.js"></script>
+    <script type="text/html" id="agency_list">
+            <% for(var i in list) { %>  
+            <option value="<%= list[i].id %>"><%= list[i].title %></option>
+        <% } %>
     </script>
 
     <script>
+      mui.plusReady(function() {
+
+//      log(conn);
+//      var entrance = plus.webview.currentWebview().entrance;
        //机构
         var param = {
-		      'method': config.apimethod.agency,
-		      'source':config.source
-		    }
-		//机构列表
-	    $.dataRequest(param, function (rs) { 
-			
-			var _html = template('agency_list', rs);
-			$('#agency').append(_html);
+              'method': config.apimethod.agency,
+              'source':config.source
+        }
+        //机构列表
+        $.dataRequest(param, function (rs) { 
+            
+            var _html = template('agency_list', rs);
 
-	    });
+            $('#agency').append(_html);
+
+        });
+        
+        var btns = mui('.pickTime');
+        btns.each(function(i, btn) {
+          btn.addEventListener('tap', function() {
+            var optionsJson = this.getAttribute('data-options') || '{}';
+            var options = JSON.parse(optionsJson);
+            var that = this;
+            var picker = new mui.DtPicker(options);
+            picker.show(function(rs) {
+              that.value = rs.text
+              // result.innerText = '选择结果: ' + rs.text;
+              
+              picker.dispose();
+            });
+          }, false);
+        });
+
+        // document.getElementById("birthday").addEventListener('tap', function() {
+        //     var dTime = new Date();
+        //     plus.nativeUI.pickDate(function(e) {
+        //         var d = e.date;
+        //         $('#birthday').val( d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate());
+        //     }, function(e) {
+        //         mui.toast('请选择日期')
+        //     }, {
+        //         title: "请选择日期",
+        //         time: dTime
+        //     });
+        // });
+        
+        // document.getElementById("consolletime").addEventListener('tap', function() {
+        //     var dTime = new Date();
+        //     plus.nativeUI.pickDate(function(e) {
+        //         var d = e.date;
+        //         $('#consolletime').val( d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate());
+        //     }, function(e) {
+        //         mui.toast('请选择日期')
+        //     }, {
+        //         title: "请选择日期",
+        //         time: dTime
+        //     });
+        // });
+
         $('#register_next').on('tap', function() {
-          var account = $('#account').val();
-		 var email = $('#email').val();
-		 var mobile = $('#mobile').val();
-		 var password = $('#password').val();
-		 var agency = $('#agency').val();
+         var account = $('#account').val();
+         var email = $('#email').val();
+         var mobile = $('#mobile').val();
+         var password = $('#password').val();
+         var agency = $('#agency').val();
+         
+         //新加
+         var birthday = $('#birthday').val();
+         var sex = $('#sex').val();
+         var edu = $('#edu').val();
+         var grade = $('#grade').val();
+         var marital = $('#marital').val();
+         var profession = $('#profession').val();
+         var province = $('#province').val();
+         var city = $('#city').val();
+         var tel = $('#tel').val();
+         var isconsolle = $('#isconsolle').val();
+         var consolletime = $('#consolletime').val();
           if(!account) {
             mui.alert('手机号不能为空');
             return
           }
-          if(!agency) {
-            mui.alert('机构中心不能为空');
+          if(!password) {
+            mui.alert('密码不能为空');
             return
           }
          
@@ -98,6 +308,7 @@
             mui.alert('请阅读并接受会员注册协议');
             return;
           }
+          
           var param = {
               'method': config.apimethod.register,
               'source':config.source,
@@ -105,35 +316,49 @@
               'email': email,
               'mobile': mobile,
               'password': password,
-              'agency': agency
+              'agency': agency,
+              'birthday': birthday,
+              'sex': sex,
+              'edu': edu,
+              'grade': grade,
+              'profession': profession,
+              'marital': marital,
+              'province': province,
+              'city': city,
+              'tel': tel,
+              'isconsolle': isconsolle,
+              'consolletime': consolletime,
+              'ismobile':1
            }
           $.dataRequest(param, function(rs) {
             var data = rs.data;
               sendSms(mobile);
-
+                
           });
         });
         function sendSms(account){
-        		var param = {
+          var param = {
               'method': config.apimethod.vcode,
               'source':config.source,
               'mobile': account
-           }
+          }
           $.dataRequest(param, function(rs) {
-            window.location.href = "{:url('Passport/verificationsms')}"+'?mobile='+account+'&vcode='+rs;
-          	// clicked('_www/view/passport/verificationsms.html', {
-           //      'mobile': account,
-           //      'vcode': rs
-           //    });
+            window.location.href = "{:url('Passport/verificationsms')}"+'?mobile='+account;
+            // clicked('_www/view/passport/verificationsms.html', {
+            //     'mobile': account
+            // });
           })
+
         }
         
+      });
 
       
 
 
       document.getElementById('agreement').addEventListener('tap', function() {
         //clicked('_www/view/passport/agreement.html', {}, 'slide-in-bottom');
+        window.location.href = "{:url('Passport/agreement')}"
       });
       
       window.addEventListener('readed',function(event){

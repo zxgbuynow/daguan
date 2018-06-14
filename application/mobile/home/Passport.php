@@ -32,5 +32,9 @@ class Passport extends Common
     {
         return $this->fetch(); // 渲染模板
     }
+    public function agreement()
+    {
+        return $this->fetch(); // 渲染模板
+    }
     
 }

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__M_CSS__/style.css">
+  </head>
+
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">会员注册</div>
+    </header>
+    <section class="container">
+      <form class="form-container">
+        <input type="hidden" name="key" value="topwap_signup">
+        <section class="mui-input-group">
+        	   <div class="mui-input-row ">
+            <label>姓名：</label>
+      		<input id="account" type="text" class="mui-input-clear" placeholder="请输入姓名">
+         </div>
+          <div class="mui-input-row ">
+            <label>邮箱：</label>
+      		<input id="email" type="text" class="mui-input-clear" placeholder="请输入邮箱">
+          </div>
+          <div class="mui-input-row ">
+            <label>手机：</label>
+      		<input id="mobile" type="text" class="mui-input-clear" placeholder="请输入手机号">
+          </div>
+          <div class="mui-input-row">
+            <label>密码：</label>
+            <input id="password" type="password" class="mui-input-password" placeholder="请输入密码">
+          </div>
+          <div class="mui-input-row">
+            <label>机构中心：</label>
+            <select id="agency" name="agency" class="mui-input-clear mui-input agency-list" >
+				<option value="" selected="selected">请选择</option>
+			</select>
+          </div>
+        </section>
+        <section class="content-vertical-padded box-display">
+          <div class="mui-checkbox bbc-checkbox shop-checkbox">
+            <label></label>
+            <input name="license" value="1" type="checkbox" checked>
+          </div>
+          <div class="box-item-flex1 fontS font-gray-20">我已阅读并同意<mark id="agreement">《会员注册协议》</mark></div>
+        </section>
+        <section class="mui-content-padded form-op-section">
+          <button id="register_next" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">下一步</button>
+        </section>
+      </form>
+    </section>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+	 <script type="text/html" id="agency_list">
+    		<% for(var i in list) { %>	
+      		<option value="<%= list[i].id %>"><%= list[i].title %></option>
+      	<% } %>
+    </script>
+
+    <script>
+       //机构
+        var param = {
+		      'method': config.apimethod.agency,
+		      'source':config.source
+		    }
+		//机构列表
+	    $.dataRequest(param, function (rs) { 
+			
+			var _html = template('agency_list', rs);
+			$('#agency').append(_html);
+
+	    });
+        $('#register_next').on('tap', function() {
+          var account = $('#account').val();
+    		 var email = $('#email').val();
+    		 var mobile = $('#mobile').val();
+    		 var password = $('#password').val();
+    		 var agency = $('#agency').val();
+          if(!account) {
+            mui.alert('手机号不能为空');
+            return
+          }
+          if(!agency) {
+            mui.alert('机构中心不能为空');
+            return
+          }
+         
+          if(!$('input[name="license"]').prop('checked')) {
+            mui.alert('请阅读并接受会员注册协议');
+            return;
+          }
+          var param = {
+              'method': config.apimethod.register,
+              'source':config.source,
+              'account': account,
+              'email': email,
+              'mobile': mobile,
+              'password': password,
+              'agency': agency
+           }
+          $.dataRequest(param, function(rs) {
+            var data = rs.data;
+              sendSms(mobile);
+
+          });
+        });
+        function sendSms(account){
+        		var param = {
+              'method': config.apimethod.vcode,
+              'source':config.source,
+              'mobile': account
+           }
+          $.dataRequest(param, function(rs) {
+            window.location.href = "{:url('Passport/verificationsms')}"+'?mobile='+account+'&vcode='+rs;
+          	// clicked('_www/view/passport/verificationsms.html', {
+           //      'mobile': account,
+           //      'vcode': rs
+           //    });
+          })
+        }
+        
+
+      
+
+
+      document.getElementById('agreement').addEventListener('tap', function() {
+        //clicked('_www/view/passport/agreement.html', {}, 'slide-in-bottom');
+      });
+      
+      window.addEventListener('readed',function(event){
+        $('input[name="license"]').prop('checked', 'checked');
+      });
+    </script>
+  </body>
+
+</html>

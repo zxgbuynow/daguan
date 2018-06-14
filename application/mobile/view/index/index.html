@@ -76,8 +76,8 @@
 
   <body>
     <header class="home-header">
-      <div class="header-logo"><img src="__M_IMG__/shop_logo.gif"></div>
-      <div class="main">
+      <!-- <div class="header-logo"><img src="__M_IMG__/shop_logo.gif"></div> -->
+      <div class="main" style="margin-left: 20px;">
         <form onsubmit="return false;">
           <div class="mui-input-row header-search-form"><input type="search" onfocus="toSearch(this,'/mobile.php/artical/index.html')" class="header-search mui-input-clear" placeholder="寻找感兴趣的文章"></div>
         </form>
@@ -240,14 +240,14 @@
     <script type="text/html" id="widget_nav">
       <section class="widgets-category-nav section-white">
           <ul class="widgets-icons-nav">
-            <li class="action-webview"><i><a href="http://www.baidu.com"><img src="../img/widgets_02_05.png"></a></i><span>高效课程</li>
-            <li class="action-webview" data-webview="_www/view/artical/list.html" ><i><a href="{:url('Artical/index')}"><img src="../img/widgets_02_17.png"></a></i><span>心灵图书室</li>
+            <li class="action-webview"><i><a href="http://www.baidu.com"><img src="__M_IMG__/xiaolv.png"></a></i><span>高效课程</li>
+            <li class="action-webview" data-webview="_www/view/artical/list.html" ><i><a href="{:url('Artical/index')}"><img src="__M_IMG__/readroom.png"></a></i><span>心灵图书室</li>
             <% for(var i=0; i<list.length; i++) { %>
               <%if(i<5){%>
                 <li class="action-webview" data-webview="_www/view/counsellor/list.html" data-webparam='{"cat_id":<%= list[i].id %>}'><i><a href="{:url('Counsellor/index')}?cat_id=<%= list[i].id %>"><img src="<%= $add_server(list[i].cover) %>"></a></i><span><%= list[i].title %></li>
               <%}%> 
           <% } %>
-          <li class="action-webview" data-webview="_www/view/category/category.html" ><i><a href="{:url('Category/category')}"><img src="../img/widgets_02_11.png"></a></i><span>更多分类</li>
+          <li class="action-webview" data-webview="_www/view/category/category.html" ><i><a href="{:url('Category/category')}"><img src="__M_IMG__/catemore.png"></a></i><span>更多分类</li>
           </ul>
       </section>
   </script> 
