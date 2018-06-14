@@ -947,6 +947,7 @@ class Index
         
 
         $map['a.status'] = 1;
+        $map['a.type'] = 1;
 
         $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.shopid = s.id','LEFT')->where($map)->select();
         
@@ -1069,7 +1070,7 @@ class Index
 
             $data['title'] = $username[0].'成为心窝会员';
             //机构
-            @$data['shopid'] = db('member')->where('id',$account)->column('shopid')?db('member')->where('id',$account)->column('shopid')[0]:0;
+            @$data['shopid'] = db('member')->where('id',$account)->column('shopid')?db('member')->where('id',$account)->value('shopid');
             //订单号
             $data['tid'] = date('YmdHis',time()).rand(1000,9999);
             //插入数据
