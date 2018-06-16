@@ -574,6 +574,11 @@ class Index
         if (!trim($params['id'])) {
             return $this->error('参数缺失！');
         }
+        $account = $params['account'];
+        //会员
+        //is_diamonds
+        $is_diamonds = db('member')->where(['username'=>$account])->value('is_diamonds');
+        
         $counsellor =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where(array('a.id'=>$params['id']))->find();
 
         if (!$counsellor) {
@@ -624,6 +629,8 @@ class Index
             )
         );
         
+        //
+        $counsellor['is_diamonds'] = $is_diamonds;
         //返回信息
         $data = [
             'code'=>'1',
