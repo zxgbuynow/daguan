@@ -574,10 +574,14 @@ class Index
         if (!trim($params['id'])) {
             return $this->error('参数缺失！');
         }
-        $account = $params['account'];
+        $account = isset($params['account'])?$params['account']:'';
         //会员
         //is_diamonds
-        $is_diamonds = db('member')->where(['username'=>$account])->value('is_diamonds');
+        $is_diamonds = 0;
+        if ($account) {
+            $is_diamonds = db('member')->where(['username'=>$account])->value('is_diamonds');
+        }
+        
         
         $counsellor =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where(array('a.id'=>$params['id']))->find();
 
