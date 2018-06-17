@@ -489,7 +489,8 @@ class Index
             
         }
 
-        $recommend['list'] = db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC')->limit(20)->select();
+        $map['b.online'] = 1;
+        $recommend['list'] = db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC')->limit(20)->order('rand()')->select();
 
         foreach ($recommend['list'] as $key => $value) {
             unset($recommend['list'][$key]['intro']);
@@ -520,6 +521,8 @@ class Index
             $recommend['list'][$key]['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
             //从业时间
             $recommend['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
+            //分中心
+            $recommend['list'][$key]['shopname'] = $value['shopid']?db('shop_agency')->where(['id'=>$value['shopid']])->value('title'):'中国大陆';
         }
         $recommend['list'] = array_values($recommend['list']);
         //返回信息
