@@ -50,6 +50,7 @@ class Agency extends Admin
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
                 ['title', '分机构名'],
+                ['city', '地区', 'text.edit'],
                 ['description', '描述'],
                 ['adminid', '管理员', 'select', $list_type],
                 ['create_time', '创建时间', 'datetime'],
@@ -95,6 +96,7 @@ class Agency extends Admin
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['text', 'title', '分机构名'],
+                ['text', 'city', '地区','<code>最合适四个字</code>'],
                 ['text', 'description', '描述'],
                 ['select', 'adminid', '分机构管理员', '', $list],
                 ['radio', 'status', '状态', '', ['禁用', '启用'], 1]
@@ -305,7 +307,7 @@ class Agency extends Admin
     public function setStatus($type = '', $record = [])
     {
         $ids        = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
-        $menu_title = MemberModel::where('id', 'in', $ids)->column('mobile');
+        $menu_title = CounsellorModel::where('id', 'in', $ids)->column('mobile');
         return parent::setStatus($type, ['member_'.$type, 'member', 0, UID, implode('、', $menu_title)]);
     }
 
