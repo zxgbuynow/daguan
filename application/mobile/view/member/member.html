@@ -28,7 +28,7 @@
       z-index: 5;
       transform: translate3d(0, 0, 0); }
 
-    	 .wave {
+       .wave {
       opacity: .4;
       position: absolute;
       top: 3%;
@@ -60,7 +60,13 @@
         min-height: 11rem;
       }
       .user-accout{
-      	color: #555555;
+        color: #555555;
+      }
+      .box:after{
+        background:linear-gradient(to bottom, #00C7C9, rgba(221, 238, 255, 0) 80%, rgba(255, 255, 255, 0.5))
+      }
+      .login-avatar{
+        border:0.2rem solid #00C7C9
       }
     </style>
   </head>
@@ -71,7 +77,11 @@
       <a id="msg" data-view="{:url('Member/msg')}" class="user-setting bbc-icon bbc-icon-message-gap " ></a>
       
       <div id="user_info" class="user-logined " data-view="_www/view/member/userinfo/userinfo.html">
-        <div class="login-avatar"><i class="bbc-icon bbc-icon-member fontB"></i></div>
+
+        <div class="login-avatar">
+          <!-- <i class="bbc-icon bbc-icon-member fontB"></i> -->
+        <img class="userinfo-avatar" id="head-img" src="" />
+        </div>
         <div  class="user-accout">您好，<span id="account"></span></div>
         <div><span id="grade_name" class="fontS font-yellow"></span></div>
       </div>
@@ -85,7 +95,7 @@
         <li data-needlog="true" data-view="{:url('Member/record')}" class="mui-table-view-cell action-clickview">
           <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-password user-safe"></i> 我的咨询</a>
         </li>
-        <li data-needlog="true" data-view="" class="mui-table-view-cell ">
+        <li data-needlog="true" data-view="" class="mui-table-view-cell mui-hidden">
           <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-password user-safe"></i> 测试管理</a>
         </li>
         <li data-needlog="true" data-view="_www/view/member/favorite/favorite.html" class="mui-table-view-cell ">
@@ -102,7 +112,7 @@
         <li data-needlog="true" data-view="{:url('Member/point')}" class="mui-table-view-cell action-clickview">
           <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-communication user-complain"></i> 积分/优惠券</a>
         </li>
-        <li data-needlog="true" data-view="_www/view/member/favorite/favorite.html" class="mui-table-view-cell ">
+        <li data-needlog="true" data-view="_www/view/member/favorite/favorite.html" class="mui-table-view-cell mui-hidden">
           <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-star-empty user-favorite"></i> 我的收藏</a>
         </li>
       </ul>
@@ -114,7 +124,7 @@
         <span class="mui-tab-label">首页</span>
       </a>
       <a class="bbc-tab-item " href="{:url('Counsellor/index')}">
-        <span class="mui-icon bbc-icon bbc-icon-view"></span>
+        <span class="mui-icon bbc-icon bbc-icon-list"></span>
         <span class="mui-tab-label">咨询</span>
       </a>
       <!-- <a class="bbc-tab-item" href="{:url('Counsellor/index')}">
@@ -135,6 +145,24 @@
     <script type="text/javascript" charset="utf-8">
 		  //用户名
 		  $('#account').html(app.getState().account);
+      if(app.getState().account){
+        var param = {
+            'method': config.apimethod.userinfo,
+            'account': app.getState().account,
+            'source':config.source
+        }
+        $.dataRequest(param, function(rs) {
+          var data = rs;
+          if(data.avar){
+              console.log(data.avar)
+              document.getElementById("head-img").src = config.imgser+data.avar;
+          }else{
+              document.getElementById("head-img").src = '__M_IMG__/newlogo.png';
+          }
+        });
+      }else{
+        window.location.href = "{:url('Passport/login')}";
+      }
       $(window).on('tap', '.action-clickview', function() {
         var state = app.getState();
         var _this = $(this).data('view');

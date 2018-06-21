@@ -32,7 +32,7 @@
   <script type="text/html" id="widget_category">
 	<section class="widgets-category-nav section-white">
         <ul class="widgets-icons-nav">
-          <a href="{:url('Artical/tlist')}"><li class="a" ><i><a href="#"><img src="../../img/widgets_02_07.png"></a></i><span>心理测试</li>
+          
         	<% for(var i=0; i<list.length; i++) { %>
           <li class="action-clickview" data-webview="{:url('Counsellor/counsellor')}" data-webparam='<%= list[i].id %>'><i><a href="#"><img src="<%= $add_server(list[i].cover) %>"></a></i><span><%= list[i].title %></li>
        	<% } %>

@@ -9,6 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <link rel="stylesheet" href="__M_CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__C_CSS__/mui.picker.min.css" />
     <style type="text/css">
         .require-item{
             color: red;
@@ -209,6 +210,11 @@
     <script src="__M_JS__/config.js"></script>
     <script src="__M_JS__/app.js"></script>
     <script src="__M_JS__/mui.picker.min.js"></script>
+
+    <script src="__M_JS__/im/webim.config.js"></script>
+    <script src="__M_JS__/im/strophe-1.2.8.js"></script>
+    <script src="__M_JS__/im/websdk-1.4.13.js"></script>
+    <script src="__M_JS__/im/im.js"></script>
     <script type="text/html" id="agency_list">
             <% for(var i in list) { %>  
             <option value="<%= list[i].id %>"><%= list[i].title %></option>
@@ -216,7 +222,6 @@
     </script>
 
     <script>
-      mui.plusReady(function() {
 
 //      log(conn);
 //      var entrance = plus.webview.currentWebview().entrance;
@@ -276,7 +281,8 @@
         //     });
         // });
 
-        $('#register_next').on('tap', function() {
+        // $('#register_next').on('click', function() {
+        document.getElementById('register_next').addEventListener('tap', function(event) {
          var account = $('#account').val();
          var email = $('#email').val();
          var mobile = $('#mobile').val();
@@ -333,7 +339,25 @@
           $.dataRequest(param, function(rs) {
             var data = rs.data;
               sendSms(mobile);
-                
+              // 环信SDK注册
+              var options = {
+                  username : mobile,
+                  password : '123456',
+                  nickname : account,
+                  appKey : WebIM.config.appkey,
+                  apiUrl: WebIM.config.apiURL,
+                  success : function(result) {
+                      //注册成功;
+                      console.log(JSON.stringify(result))
+                      mui.toast('同步成功');
+                  },
+                  error : function(e) {
+                      //注册失败;
+                      console.log(JSON.stringify(e));
+                      mui.toast('同步失败：'+e.error);
+                  }
+              };
+              conn.registerUser(options);
           });
         });
         function sendSms(account){
@@ -351,7 +375,6 @@
 
         }
         
-      });
 
       
 
