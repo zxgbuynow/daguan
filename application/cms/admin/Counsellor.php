@@ -54,6 +54,7 @@ class Counsellor extends Admin
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
                 ['mobile', '手机号'],
+                ['nickname', '姓名'],
                 ['qq', 'QQ'],
                 ['weixin', '微信'],
                 ['alipay', '支付宝'],
