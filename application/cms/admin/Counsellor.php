@@ -50,7 +50,7 @@ class Counsellor extends Admin
         return ZBuilder::make('table')
             ->setPageTitle('咨询师管理') // 设置页面标题
             ->setTableName('member') // 设置数据表名
-            ->setSearch(['mobile' => '手机号']) // 设置搜索参数
+            ->setSearch(['mobile' => '手机号','nickname'=>'姓名']) // 设置搜索参数
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
                 ['mobile', '手机号'],
