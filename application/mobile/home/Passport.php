@@ -14,7 +14,10 @@ class Passport extends Common
 {
     public function login()
     {
-        session('user_mobile_auth',null);
+        // session('user_mobile_auth',null);
+        if (session('user_mobile_auth')) {
+            $this->redirect('index/index');
+        }
         return $this->fetch(); // 渲染模板
     }
 
