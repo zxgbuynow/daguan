@@ -60,6 +60,10 @@ class Member extends Home
     {
         return $this->fetch(); // 渲染模板
     }
+    public function uppay()
+    {
+        return $this->fetch(); // 渲染模板
+    }
     public function record()
     {
         return $this->fetch(); // 渲染模板
