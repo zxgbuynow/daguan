@@ -1253,9 +1253,12 @@ class Index
 
         $where['mobile'] = array('in',explode(',', $users)) ;
         $rs = db('member')->where($where)->column('mobile,avar,nickname');
-        if (is_numeric($rs['avar'])) {
-            $rs['avar'] = get_file_path($rs['avar']);
+        foreach ($rs as $key => $value) {
+            if (is_numeric($value['avar'])) {
+                $rs[$key]['avar'] = get_file_path($value['avar']);
+            }
         }
+        
         //返回信息
         $data = [
             'code'=>'1',
@@ -2464,8 +2467,10 @@ class Index
         $where['mobile'] = array('in',explode(',', $users)) ;
         $rs = db('member')->where($where)->column('mobile,avar,nickname');
         // get_file_path
-        if (is_numeric($rs['avar'])) {
-            $rs['avar'] = get_file_path($rs['avar']);
+        foreach ($rs as $key => $value) {
+            if (is_numeric($value['avar'])) {
+                $rs[$key]['avar'] = get_file_path($value['avar']);
+            }
         }
         //返回信息
         $data = [
