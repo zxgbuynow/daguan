@@ -60,7 +60,11 @@
     <script src="__C_JS__/template.min.js"></script>
     <script src="__C_JS__/config.js"></script>
     <script src="__C_JS__/app.js"></script>
-
+  
+    <script src="__M_JS__/im/webim.config.js"></script>
+    <script src="__M_JS__/im/strophe-1.2.8.js"></script>
+    <script src="__M_JS__/im/websdk-1.4.13.js"></script>
+    <script src="__M_JS__/im/im.js"></script>
      <script type="text/html" id="agency_list">
         <% for(var i in list) { %>  
           <option value="<%= list[i].id %>"><%= list[i].title %></option>
@@ -110,6 +114,25 @@ console.log(rs);
           $.dataRequest(param, function(rs) {
             var data = rs.data;
               sendSms(mobile);
+              // 环信SDK注册
+              var options = {
+                  username : mobile,
+                  password : '123456',
+                  nickname : account,
+                  appKey : WebIM.config.appkey,
+                  apiUrl: WebIM.config.apiURL,
+                  success : function(result) {
+                      //注册成功;
+                      console.log(JSON.stringify(result))
+                      mui.toast('同步成功');
+                  },
+                  error : function(e) {
+                      //注册失败;
+                      console.log(JSON.stringify(e));
+                      mui.toast('同步失败：'+e.error);
+                  }
+              };
+              conn.registerUser(options);
 
           });
         });
