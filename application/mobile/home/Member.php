@@ -72,4 +72,12 @@ class Member extends Home
     {
         return $this->fetch('member/ondate/evaluate'); // 渲染模板
     }
+    public function ondate()
+    {
+        return $this->fetch('member/ondate/index'); // 渲染模板
+    }
+    public function hour()
+    {
+        return $this->fetch('member/ondate/hour'); // 渲染模板
+    }
 }

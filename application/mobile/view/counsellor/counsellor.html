@@ -95,7 +95,7 @@
         <section class="widgets-category-nav section-white">
             <div class="mui-table-view">
               <ul class="mui-table-view mui-table-view-chevron">
-                <% for(var i=0; i<list.length; i++) { %>
+                <% for(var i in list) { %>
           <li class="mui-table-view-cell mui-media action-clickview" data-webview="{:url('Counsellor/detail')}" data-webparam='<%= list[i].memberid %>'>
             <a class="mui-navigate-right"> 
               <img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].avar) %>">

@@ -58,8 +58,10 @@
       $.dataRequest(param, function(rs) {
         var data = rs;
         if (data.avar) {
-          $('#avatar').backgroundImage='url('+data.avar+')';
-          // document.getElementById('avatar').value = data.avar;  
+          if ($('.image-item')) {
+            $(".image-item").css("background-image","url(" + config.imgser+'/'+data.avar + ")");
+          }
+          // $('#avatar').backgroundImage='url('+config.imgser+data.avar+')';
         }
       });
 

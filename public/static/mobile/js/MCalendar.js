@@ -1,4 +1,4 @@
-(function($){
+﻿(function($){
 	  $.hasClass = function(obj, cls) {
             return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
         }
@@ -31,7 +31,7 @@
 	
 }(mui));
 
-
+ 
 (function($){
 	
 	var MonthView =(function($){
@@ -147,7 +147,7 @@
 					changeDate($.DateUtil.addDate(firstDateinMonthView,idx))
 					var curd = new Date($.DateUtil.addDate(firstDateinMonthView,idx));
 					//查看当天按排
-					window.location.href = "{:url('Member/hour')}"+'?counsellor_id='+counsellor_id+'&curdate='+curd.getTime()+'&tid='+tid;
+					window.location.href = "/mobile.php/member/hour.html"+'?counsellor_id='+counsellor_id+'&curdate='+curd.getTime()+'&tid='+tid;
 
 				});
 				var swipeMonth = function(direction){

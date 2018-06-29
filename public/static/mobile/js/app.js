@@ -1,4 +1,4 @@
-var nodata_el = '<div class="nodata-wrapper"><div class="nodata-layout"><div class="nodata-icon"><i class="bbc-icon bbc-icon-nodata"></i></div><div class="nodata-tip">亲，暂无数据～</div></div></div>';
+﻿var nodata_el = '<div class="nodata-wrapper"><div class="nodata-layout"><div class="nodata-icon"><i class="bbc-icon bbc-icon-nodata"></i></div><div class="nodata-tip">亲，暂无数据～</div></div></div>';
 var error_page = '<div class="nodata-wrapper"><div class="nodata-layout"><div class="nodata-icon"><i class="bbc-icon bbc-icon-missing missing-icon"></i></div><div class="nodata-tip content-bottom-padded">哎呀，找不到了!</div><div class="nodata-guide"><button class="mui-btn mui-btn-warning bbc-btn-warning mui-action-back">返回</button></div></div></div>';
 var nodata_el_active = '<div class="nodata-wrapper nodata-wrapper-active"><div class="nodata-layout"><div class="nodata-icon"><i class="bbc-icon bbc-icon-history-gap"></i></div><div class="nodata-tip">活动尚未开启，敬请期待</div></div></div>';
 document.addEventListener("plusready", onPlusReady, false);
@@ -370,6 +370,7 @@ var Currency = {
       },
       error: function(xhr, type, errorThrown) {
         //异常处理；
+        console.log(xhr);
       }
     });
   };
@@ -818,6 +819,7 @@ function preateClear() {
             var self = this;
             count++
             data.page_no = count;
+            console.log(data);
             $.dataRequest(data, function(response) {
               if(!isEmptyObject(response.data) && response.data.pagers.total){
                 var total = Math.ceil(response.data.pagers.total / config.pagesize);
@@ -848,7 +850,7 @@ function preateClear() {
 
     document.getElementById('slider').addEventListener('slide', function(e) {
       var el = document.getElementById('scroll' + (e.detail.slideNumber + 1));
-      data.queryData[renderType] = el.querySelector('.mui-table-view').dataset.type;
+      data[renderType] = el.querySelector('.mui-table-view').dataset.type;
       count = el.querySelector('.mui-scroll').dataset.count;
       if(document.getElementById('scroll' + (e.detail.slideNumber + 1)).querySelector('.mui-loading')) {
         count = 0

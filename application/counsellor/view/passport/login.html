@@ -101,10 +101,7 @@
             window.location.href = "{:url('Index/index')}";
           };
           //检查 "登录状态/锁屏状态" 开始
-          if(state.token) {
-            document.getElementById('account').value = state.account;
-            // toMain();
-          } else {
+          
 	          //检查 "登录状态/锁屏状态" 结束
 	          var loginButton = document.getElementById('login');
 	          var accountBox = document.getElementById('account');
@@ -125,7 +122,6 @@
 	            });
 	          });
           
-		    }
 
 		      var regButton = document.getElementById('reg');
           regButton.addEventListener('tap', function(event) {

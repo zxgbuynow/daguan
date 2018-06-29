@@ -102,6 +102,7 @@
         var btns = mui('.pickTime');
         btns.each(function(i, btn) {
           btn.addEventListener('tap', function() {
+            
             var optionsJson = this.getAttribute('data-options') || '{}';
             var options = JSON.parse(optionsJson);
             var that = this;
