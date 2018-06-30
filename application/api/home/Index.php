@@ -393,7 +393,7 @@ class Index
                 
                
             }else{
-                $class['pic'][$key]['webview'] = '_www/view/index.html';
+                $class['pic'][$key]['webview'] = '';
                 $class['pic'][$key]['webparam'] = [];
             }
         }
@@ -603,6 +603,12 @@ class Index
         //从业时间
         $counsellor['employment'] = '从业'.ceil(date('Y',time())-date('Y',$counsellor['employment'])).'年';
         
+        //星级
+        $counsellor['start'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where(array('a.id'=>$params['id']))->avg('sorce');
+        //少于4星默认 4星
+        if ($counsellor['start']<8) {
+            $counsellor['start'] = 8;
+        }
         //沟通方式
         $counsellor['chartArr'] = array(
             array(
@@ -695,7 +701,6 @@ class Index
             $map['status'] = $status;
         }
         $startpg = ($page_no-1)*$page_size;
-
         $data = db('trade')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
 
         foreach ($data as $key => $value) {
@@ -855,7 +860,7 @@ class Index
         $data['nickname'] = $nickname;
         $map['username'] = $account;
         if(!db('member')->where($map)->update($data)){
-            return $this->error('服务器忙，请稍后');
+            // return $this->error('服务器忙，请稍后');
         }
         
         //返回信息
@@ -1610,7 +1615,7 @@ class Index
             return $this->error('用户不存在或被禁用！');
         }
         if ($user['shopid']) {
-            $user['agency'] = db('shop_agency')->where('id',$user['shopid'])->column('title')[0];
+            $user['agency'] = db('shop_agency')->where('id',$user['shopid'])->value('title');
         }else{
             $user['agency'] = '';
         }
