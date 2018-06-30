@@ -6,6 +6,8 @@ use \think\Db;
 use think\Model;
 use think\helper\Hash;
 use think\Session;
+
+use app\api\home\Hx as Hx;
 /**
  * 前台首页控制器
  * @package app\index\controller
@@ -2868,6 +2870,93 @@ class Index
         ];
         return json($data);
     }
+
+    /**
+     * [cancleDate_shop 取消预约]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function cancleDate_shop($params)
+    {
+        //参数
+        $cid = trim($params['cid']);
+
+        if (isset($params['cid'])) {
+            //短信通知
+            $mobile = db('calendar')->alias('a')->join('trade b',' b.tid = a.id','LEFT')->join(' member m',' mid = t.memberid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
+            if ($mobile) {
+                $this->sendcanlcemsg($mobile);
+            }
+            db('calendar')->where(['id'=>$cid])->delete();
+            
+            
+        }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+
+    /**
+     * [setallcalenda 批量设置]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function setallcalenda_shop($params)
+    {
+        //参数
+        $account = trim($params['account']);
+        $day =  trim($params['day']);
+
+        $times = array('9:00~10:00','10:00~11:00','11:00~12:00','12:00~13:00','13:00~14:00','14:00~15:00','14:00~15:00','15:00~16:00','16:00~17:00','17:00~18:00','18:00~19:00','19:00~20:00','20:00~21:00');
+        foreach ($times as $key => $value) {
+            $hour = explode('~', $value);
+            $data['ondatetime'] = strtotime($day.' '.$hour[1]);
+            $data['memberid'] = $account;
+            if (!db('connsellor_ondate')->where($data)->find()) {
+                db('connsellor_ondate')->insert($data);
+            }
+            
+        }
+
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+
+    /**
+     * [getUserMsgCount_shop 获取用户离线消息]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function getUserMsgCount_shop($params)
+    {   
+        //参数
+        $account = trim($params['account']);
+
+        $ret = Hx::getUserMsgCount($account);
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$ret
+        ];
+        return json($data);
+    }
+    public function test_shop($params)
+    {
+        $a = Hx::test();
+        print_r($a);exit;
+    }
     /*
     |--------------------------------------------------------------------------
     | 公用方法
@@ -2957,6 +3046,46 @@ class Index
                 return false;  
             }  
         }  
+    }
+
+    /**
+     * [sendmsg description]
+     * @param  [type] $mobile [description]
+     * @return [type]         [description]
+     */
+    public function sendcanlcemsg($mobile,$content)
+    {
+        $apikey = "8df6ed7129c50581eecdf1e875edbaa3"; 
+
+        $text = '【大观心理】温馨提示：您有新的心理咨询预约：'.$content; 
+
+        // error_log($text,3,'/home/wwwroot/daguan/mobile.log');
+        $ch = curl_init();
+ 
+         /* 设置验证方式 */
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept:text/plain;charset=utf-8',
+             'Content-Type:application/x-www-form-urlencoded', 'charset=utf-8'));
+         /* 设置返回结果为流 */
+         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+         
+         /* 设置超时时间*/
+         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+         
+         /* 设置通信方式 */
+         curl_setopt($ch, CURLOPT_POST, 1);
+         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+         
+         // 发送短信
+         $data = array('text'=>$text,'apikey'=>$apikey,'mobile'=>$mobile);
+         $json_data = $this->send($ch,$data);
+         // error_log($json_data,3,'/home/wwwroot/daguan/sendmsg.log');
+         $array = json_decode($json_data,true); 
+         // print_r($array);exit; 
+         if ($array['code']==0) {
+            return true;
+         }else{
+            return false;
+         }
     }
 
     /**
