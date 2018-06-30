@@ -2952,6 +2952,37 @@ class Index
         ];
         return json($data);
     }
+
+    /**
+     * [getCurrentCander_shop 当前天后预约记录]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function getCurrentCander_shop($params)
+    {
+        //参数
+        $account = trim($params['account']);
+
+        $firstday = date('Y-m-01', strtotime(date("Y-m-d")));
+        $lastday = date('Y-m-d', strtotime("$firstday +1 month -1 day"));
+        $current = date('Y-m-d', time());
+        $info =  db('calendar')->where(['memberid'=>$account])->whereTime('start_time', '<', [$current, $lastday])->select();
+
+        $ret = array();
+        foreach ($info as $key => $value) {
+            $ret[] = date('d',$value['start_time']);
+        }
+
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$ret
+        ];
+        return json($data);
+    }
+
     public function test_shop($params)
     {
         $a = Hx::test();
