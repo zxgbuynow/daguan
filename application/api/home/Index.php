@@ -1590,6 +1590,58 @@ class Index
         ];
         return json($data);
     }
+
+    /**
+     * [getUserMsgCount_custom 获取用户离线消息]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function getUserMsgCount_custom($params)
+    {   
+        //参数
+        $account = trim($params['account']);
+
+        $ret = Hx::getUserMsgCount($account);
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$ret
+        ];
+        return json($data);
+    }
+
+    /**
+     * [cancleDate_custom 取消预约]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function cancleDate_custom($params)
+    {
+        //参数
+        $cid = trim($params['cid']);
+
+        if (isset($params['cid'])) {
+            //短信通知
+            // $mobile = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.memberid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
+            $mobile = db('calendar')->alias('a')->join('member m',' m.id = a.memberid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
+            if ($mobile) {
+                $counsellor = db('calendar')->alias('a')->join('member m',' m.id = a.memberid','LEFT')->where(array('a.id'=>$cid))->value('nickname');
+                $this->sendcanlcemsg($mobile,$counsellor);
+            }
+            db('calendar')->where(['id'=>$cid])->delete();
+            
+            
+        }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API
@@ -1806,6 +1858,8 @@ class Index
         $pmap['behavior_type'] = 0;
         $user['point'] = db('member_point')->where($pmap)->sum('point');
 
+        //简介
+        $user['intro'] = db('member_counsellor')->where(['memberid'=>$user['id']])->value('intro');
          //返回信息
         $data = [
             'code'=>'1',
@@ -2427,7 +2481,7 @@ class Index
         }
         $data['cerback'] = $identifi;
         $map['id'] = $account;
-
+        $data['status'] = 0;
         if(!db('member')->where($map)->update($data)){
             // return $this->error('服务器忙，请稍后');
         }
@@ -2880,12 +2934,12 @@ class Index
     {
         //参数
         $cid = trim($params['cid']);
-
         if (isset($params['cid'])) {
             //短信通知
-            $mobile = db('calendar')->alias('a')->join('trade b',' b.tid = a.id','LEFT')->join(' member m',' mid = t.memberid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
+            $mobile = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.mid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
             if ($mobile) {
-                $this->sendcanlcemsg($mobile);
+                 $username = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.mid','LEFT')->where(array('a.id'=>$cid))->value('nickname');
+                $this->sendcanlcemsg($mobile,$username);
             }
             db('calendar')->where(['id'=>$cid])->delete();
             
@@ -2979,6 +3033,23 @@ class Index
             'code'=>'1',
             'msg'=>'',
             'data'=>$ret
+        ];
+        return json($data);
+    }
+
+    public function userIntro_shop($params)
+    {
+        //参数
+        $intro = trim($params['intro']);
+        $account = trim($params['account']);
+
+        $data['intro'] = $intro;
+        db('member_counsellor')->where(['memberid'=>$account])->save($data);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
         ];
         return json($data);
     }
@@ -3088,7 +3159,9 @@ class Index
     {
         $apikey = "8df6ed7129c50581eecdf1e875edbaa3"; 
 
-        $text = '【大观心理】温馨提示：您有新的心理咨询预约：'.$content; 
+        $text = '【大观心理】温馨提示：您的心理咨询预约'.$content.'已被取消'; 
+
+        // $text = '【大观心理】温馨提示：您有新的心理咨询预约：'.$content; 
 
         // error_log($text,3,'/home/wwwroot/daguan/mobile.log');
         $ch = curl_init();

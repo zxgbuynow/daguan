@@ -33,7 +33,12 @@ class Counsellor extends Admin
 
         // 获取查询条件
         $map = $this->getMap();
-
+        if (isset($map['status'])&&$map['status'][1]=='%待审核%') {
+            $map['status']=0;
+        }
+        if (isset($map['status'])&&$map['status'][1]=='%上线%') {
+            $map['status']=1;
+        }
         $map['type'] = 1;
         // 数据列表
         $data_list = CounsellorModel::where($map)->order('id desc')->paginate();
@@ -45,12 +50,13 @@ class Counsellor extends Admin
 
         $btnAdd = ['icon' => 'fa fa-plus', 'title' => '积分列表', 'href' => url('point', ['id' => '__id__'])];
         $incomeBtn = ['icon' => 'fa fa-fw fa-cny', 'title' => '收列表', 'href' => url('income', ['id' => '__id__'])];
-
+       
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setPageTitle('咨询师管理') // 设置页面标题
             ->setTableName('member') // 设置数据表名
-            ->setSearch(['mobile' => '手机号','nickname'=>'姓名']) // 设置搜索参数
+            ->setSearch(['mobile' => '手机号','nickname'=>'姓名','status'=>'审核状态']) // 设置搜索参数
+            // ->addFilter('status', $statuslist)
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
                 ['mobile', '手机号'],
@@ -60,11 +66,13 @@ class Counsellor extends Admin
                 ['alipay', '支付宝'],
                 ['shopid', '机构', 'select', $list_type],
                 ['create_time', '创建时间', 'datetime'],
+                ['verifystatus', '审核状态', '', '', ['待审核', '上线']],
                 ['status', '状态', 'switch'],
                 ['recommond', '推荐', 'switch'],
                 ['sort', '排序', 'text.edit'],
                 ['right_button', '操作', 'btn']
             ])
+            ->raw('verifystatus')
             ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
             ->addRightButtons('delete,edit') // 批量添加右侧按钮
             ->addRightButton('custom', $btnAdd)
