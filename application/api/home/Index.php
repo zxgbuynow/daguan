@@ -1752,6 +1752,25 @@ class Index
         ];
         return json($data);
     }
+    /**
+     * [filteritems_custom description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function filteritems_custom($params)
+    {
+        $info = db('shop_agency')->where(['status'=>1])->select();
+        foreach ($info as $key => $value) {
+            $info[$key]['title'] = str_replace('大观', '', str_replace('心理咨询中心', '', $value['title']));
+        }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$info
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API

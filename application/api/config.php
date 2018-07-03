@@ -61,6 +61,8 @@ return [
         'getCurrentCander'=>'getCurrent.cander',
         'userIntro'=>'user.intro',
         'startondate'=>'start.ondate',
-        'updatemember'=>'update.member'
+        'updatemember'=>'update.member',
+        'filteritems'=>'filter.items'
+
     ]
 ];
