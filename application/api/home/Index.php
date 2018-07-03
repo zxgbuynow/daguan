@@ -415,7 +415,7 @@ class Index
      */
     public function updatemember_custom($params)
     {
-        $map['typeid'] = '5';//会员升级
+        $map['typeid'] = '4';//会员升级
         $map['status'] = 1;
         $ismobile = trim($params['ismobile']);
         $info = db('cms_advert')->where($map)->order('id DESC')->find();
