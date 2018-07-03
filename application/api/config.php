@@ -59,6 +59,8 @@ return [
         'setallcalenda'=>'setall.calenda',//设置批量预约
         'getUserMsgCount'=>'getUser.msgCount',
         'getCurrentCander'=>'getCurrent.cander',
-        'userIntro'=>'user.intro'
+        'userIntro'=>'user.intro',
+        'startondate'=>'start.ondate',
+        'updatemember'=>'update.member'
     ]
 ];

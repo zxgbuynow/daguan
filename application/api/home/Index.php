@@ -409,6 +409,38 @@ class Index
         return json($data);
     }
     /**
+     * [updatemember_custom 升级会员]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function updatemember_custom($params)
+    {
+        $map['typeid'] = '5';//会员升级
+        $map['status'] = 1;
+        $ismobile = trim($params['ismobile']);
+        $info = db('cms_advert')->where($map)->order('id DESC')->find();
+
+        if (strstr($info['link'], 'member')) {//会员升级
+            if ($ismobile) {
+                $info['webview'] = "/mobile.php/member/updatelv.html";
+                $info['webparam'] = '';
+            }else{
+                $info['webview'] = '_www/view/member/updatelv.html';
+                $info['webparam'] = [];
+            }
+        }else{
+            $info['pic']['webview'] = '';
+            $info['pic']['webparam'] = [];
+        }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$info
+        ];
+        return json($data);
+    }
+    /**
      * [activeList_custom 活动]
      * @param  [type] $params [description]
      * @return [type]         [description]
@@ -1639,6 +1671,61 @@ class Index
             'code'=>'1',
             'msg'=>'',
             'data'=>1
+        ];
+        return json($data);
+    }
+    /**
+     * [getCurrentCander_custom 当前天后预约记录]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function getCurrentCander_custom($params)
+    {
+        //参数
+        $account = trim($params['account']);
+
+        $firstday = date('Y-m-01', strtotime(date("Y-m-d")));
+        $lastday = date('Y-m-d', strtotime("$firstday +1 month -1 day"));
+        $current = date('Y-m-d', time());
+        $info =  db('connsellor_ondate')->where(['memberid'=>$account])->whereTime('ondatetime', '<', [$current, $lastday])->select();
+
+        $ret = array();
+        foreach ($info as $key => $value) {
+            $ret[] = date('d',$value['ondatetime']);
+        }
+
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$ret
+        ];
+        return json($data);
+    }
+
+    /**
+     * [startondate_custom description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function startondate_custom($params)
+    {
+        //参数
+        $account = trim($params['account']);//id
+
+        $start_time = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->where(array('b.memberid'=>$account))->order('a.start_time DESC')->value('start_time');
+        $end_time = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->where(array('b.memberid'=>$account))->order('a.start_time DESC')->value('end_time');
+
+        $ret = 0;
+        if ($start_time<time()&&time()<$end_time) {
+            $ret = 1;
+        }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$ret
         ];
         return json($data);
     }
