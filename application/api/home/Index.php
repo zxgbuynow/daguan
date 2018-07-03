@@ -418,20 +418,43 @@ class Index
         $map['typeid'] = '4';//会员升级
         $map['status'] = 1;
         $ismobile = trim($params['ismobile']);
-        $info = db('cms_advert')->where($map)->order('id DESC')->find();
+        if (isset($params['account'])) {
+            $m = db('member')->where(['id'=>$params['account']])->value('is_diamonds');
+            if ($m!=1) {
+                $info = db('cms_advert')->where($map)->order('id DESC')->find();
 
-        if (strstr($info['link'], 'member')) {//会员升级
-            if ($ismobile) {
-                $info['webview'] = "/mobile.php/member/updatelv.html";
-                $info['webparam'] = '';
+                if (strstr($info['link'], 'member')) {//会员升级
+                    if ($ismobile) {
+                        $info['webview'] = "/mobile.php/member/updatelv.html";
+                        $info['webparam'] = '';
+                    }else{
+                        $info['webview'] = '_www/view/member/updatelv.html';
+                        $info['webparam'] = [];
+                    }
+                }else{
+                    $info['webview'] = '';
+                    $info['webparam'] = [];
+                }
             }else{
-                $info['webview'] = '_www/view/member/updatelv.html';
-                $info['webparam'] = [];
+                //返回信息
+                $data = [
+                    'code'=>'1',
+                    'msg'=>'',
+                    'data'=>1
+                ];
+                return json($data);
             }
+            
         }else{
-            $info['webview'] = '';
-            $info['webparam'] = [];
+           //返回信息
+            $data = [
+                'code'=>'1',
+                'msg'=>'',
+                'data'=>1
+            ];
+            return json($data); 
         }
+        
         //返回信息
         $data = [
             'code'=>'1',
