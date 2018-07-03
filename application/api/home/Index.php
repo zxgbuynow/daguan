@@ -429,8 +429,8 @@ class Index
                 $info['webparam'] = [];
             }
         }else{
-            $info['pic']['webview'] = '';
-            $info['pic']['webparam'] = [];
+            $info['webview'] = '';
+            $info['webparam'] = [];
         }
         //返回信息
         $data = [
