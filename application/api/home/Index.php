@@ -1780,27 +1780,27 @@ class Index
     {
         //参数
         //关键字
-        if (isset($params['search_keywords'])) {
+        if ($params['search_keywords']) {
             $keyword = trim($params['search_keywords']);
             $map['a.nickname|s.title'] = array('like','%'.$keyword.'%');
         }
         //性别
-        if (isset($params['sex'])) {
+        if ($params['sex']) {
             $sex = trim($params['sex']);
             $map['a.sex'] = array('in',$sex);
         }
         //分中心
-        if (isset($params['shopid'])) {
+        if ($params['shopid']) {
             $shopid = trim($params['shopid']);
             $map['a.shopid'] = array('in',$shopid);
         }
         //是否在线
-        if (isset($params['online'])) {
+        if ($params['online']) {
             $online = trim($params['online']);
             $map['b.online'] = array('in',$online);
         }
         //今日是否有空
-        if (isset($params['ondate'])) {
+        if ($params['ondate']) {
             $ondate = explode(',', $params['ondate']);
         }
         
