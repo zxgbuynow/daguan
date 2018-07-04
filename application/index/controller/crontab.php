@@ -16,11 +16,20 @@ class Crontab
     public function index()
     {
        //发短信
-       $info = db('msg')->alias('a')->field('a.*,a.id as aid,m.*')->join('member m',' m.id = a.reciveid','LEFT')->where('a.is_send',0)->whereTime('a.create_time', 'today')->select();
+       $info = db('msg')->alias('a')->field('a.*,a.id as aid,m.*')->join('member m',' m.id = a.reciveid','LEFT')->where(['a.is_send'=>0,'a.type'=>1,'a.is_pay'=>1])->whereTime('a.create_time', 'today')->select();
         foreach ($info as $key => $value) {
+            // if (!strstr($value['descrption'], '面对面')) {
+            //     continue;
+            // }
             if ($value['mobile']&&$this->sendmsg($value['mobile'],$value['descrption'])) {
+                $umobile = db('member')->where(['id'=>$value['sendid']])->value('mobile');
+                sleep(1);
+                $this->sendmsg($umobile,$value['display']);
                 db('msg')->where(['id'=>$value['aid']])->update(['is_send'=>1]);
+            }else{
+                echo 'fail';
             }
+                        
         }
     }
 
@@ -34,7 +43,7 @@ class Crontab
     {
         $apikey = "8df6ed7129c50581eecdf1e875edbaa3"; 
 
-        $text = $content; 
+        $text = '【大观心理】温馨提示：您有新的心理咨询预约：'.$content; 
 
         // error_log($text,3,'/home/wwwroot/daguan/mobile.log');
         $ch = curl_init();
@@ -56,7 +65,8 @@ class Crontab
          $data = array('text'=>$text,'apikey'=>$apikey,'mobile'=>$mobile);
          $json_data = $this->send($ch,$data);
          // error_log($json_data,3,'/home/wwwroot/daguan/sendmsg.log');
-         $array = json_decode($json_data,true);  
+         $array = json_decode($json_data,true); 
+         // print_r($array);exit; 
          if ($array['code']==0) {
             return true;
          }else{
