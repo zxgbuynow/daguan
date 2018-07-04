@@ -62,7 +62,8 @@ return [
         'userIntro'=>'user.intro',
         'startondate'=>'start.ondate',
         'updatemember'=>'update.member',
-        'filteritems'=>'filter.items'
+        'filteritems'=>'filter.items',
+        'searchcounsellor'=>'search.counsellor'
 
     ]
 ];

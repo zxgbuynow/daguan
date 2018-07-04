@@ -1043,7 +1043,7 @@ class Index
             $counsellor['list'][$key]['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
             //从业时间
             $counsellor['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年'; 
-        }    
+        }   
         
         
         // if (!$counsellor) {
@@ -1768,6 +1768,77 @@ class Index
             'code'=>'1',
             'msg'=>'',
             'data'=>$info
+        ];
+        return json($data);
+    }
+
+    /**
+     * [searchcounsellor_custom 搜索咨询师]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function searchcounsellor_custom($params)
+    {
+        //参数
+        //关键字
+        if (isset($params['search_keywords'])) {
+            $keyword = trim($params['search_keywords']);
+            $map['a.nickname|s.title'] = array('like','%'.$keyword.'%');
+        }
+        //性别
+        if (isset($params['sex'])) {
+            $sex = trim($params['sex']);
+            $map['a.sex'] = array('in',$sex);
+        }
+        //分中心
+        if (isset($params['shopid'])) {
+            $shopid = trim($params['shopid']);
+            $map['a.shopid'] = array('in',$shopid);
+        }
+        //是否在线
+        if (isset($params['online'])) {
+            $online = trim($params['online']);
+            $map['b.online'] = array('in',$online);
+        }
+        //今日是否有空
+        if (isset($params['ondate'])) {
+            $ondate = explode(',', $params['ondate']);
+        }
+        
+
+        $map['a.status'] = 1;
+        $map['a.type'] = 1;
+
+        $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.shopid = s.id','LEFT')->where($map)->select();
+        
+        foreach ($counsellor['list'] as $key => $value) {
+            //今日是否有空
+            if (isset($ondate)&&count($ondate)==1) {
+                $isondate = db('connsellor_ondate')->where(['memberid'=>$value['memberid']])->whereTime('ondatetime','today')->find();
+                if ($ondate[0]==1&&!$isondate) {//在线并 今日没空的删除
+                    unset($counsellor['list'][$key]);
+                    continue;
+                }
+                if ($ondate[0]==0&&$isondate) {//不在线 今日设置有空的删除
+                    unset($counsellor['list'][$key]);
+                    continue;
+                }
+            }
+            
+            if (is_numeric($counsellor['list'][$key]['avar'])) {
+                $counsellor['list'][$key]['avar'] = get_file_path($counsellor['list'][$key]['avar']);
+            }  
+
+            //标识
+            $smap['id'] = array('in',$value['tags']);
+            $counsellor['list'][$key]['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
+        }
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$counsellor
         ];
         return json($data);
     }
