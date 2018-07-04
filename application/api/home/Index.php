@@ -1710,8 +1710,7 @@ class Index
         $firstday = date('Y-m-01', strtotime(date("Y-m-d")));
         $lastday = date('Y-m-d', strtotime("$firstday +1 month -1 day"));
         $current = date('Y-m-d', time());
-        $info =  db('connsellor_ondate')->where(['memberid'=>$account])->whereTime('ondatetime', '<', [$current, $lastday])->select();
-
+        $info =  db('connsellor_ondate')->where(['memberid'=>$account])->whereTime('ondatetime', 'between', [$current, $lastday])->select();
         $ret = array();
         foreach ($info as $key => $value) {
             $ret[] = date('d',$value['ondatetime']);
@@ -3220,7 +3219,7 @@ class Index
         $firstday = date('Y-m-01', strtotime(date("Y-m-d")));
         $lastday = date('Y-m-d', strtotime("$firstday +1 month -1 day"));
         $current = date('Y-m-d', time());
-        $info =  db('calendar')->where(['memberid'=>$account])->whereTime('start_time', '<', [$current, $lastday])->select();
+        $info =  db('calendar')->where(['memberid'=>$account])->whereTime('start_time', 'between', [$current, $lastday])->select();
 
         $ret = array();
         foreach ($info as $key => $value) {
