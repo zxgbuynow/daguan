@@ -1713,7 +1713,7 @@ class Index
         $info =  db('connsellor_ondate')->where(['memberid'=>$account])->whereTime('ondatetime', 'between', [$current, $lastday])->select();
         $ret = array();
         foreach ($info as $key => $value) {
-            $ret[] = date('d',$value['ondatetime']);
+            $ret[] = (int)date('d',$value['ondatetime']);
         }
 
         
@@ -1721,7 +1721,7 @@ class Index
         $data = [
             'code'=>'1',
             'msg'=>'',
-            'data'=>$ret
+            'data'=>array_unique($ret)
         ];
         return json($data);
     }
@@ -3223,7 +3223,7 @@ class Index
 
         $ret = array();
         foreach ($info as $key => $value) {
-            $ret[] = date('d',$value['start_time']);
+            $ret[] = (int) date('d',$value['start_time']);
         }
 
         
@@ -3231,7 +3231,7 @@ class Index
         $data = [
             'code'=>'1',
             'msg'=>'',
-            'data'=>$ret
+            'data'=>array_unique($ret)
         ];
         return json($data);
     }
