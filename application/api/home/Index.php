@@ -1678,14 +1678,16 @@ class Index
         $cid = trim($params['cid']);
 
         if (isset($params['cid'])) {
+
             //短信通知
+            
             // $mobile = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.memberid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
             $mobile = db('calendar')->alias('a')->join('member m',' m.id = a.memberid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
             if ($mobile) {
                 $counsellor = db('calendar')->alias('a')->join('member m',' m.id = a.memberid','LEFT')->where(array('a.id'=>$cid))->value('nickname');    
                 $this->sendcanlcemsg($mobile,$counsellor);
             }
-            // db('calendar')->where(['id'=>$cid])->delete();
+            db('calendar')->where(['id'=>$cid])->delete();
             
             
         }
@@ -3135,9 +3137,9 @@ class Index
         $cid = trim($params['cid']);
         if (isset($params['cid'])) {
             //短信通知
-            $mobile = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.mid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
+            $mobile = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.memberid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
             if ($mobile) {
-                 $username = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.mid','LEFT')->where(array('a.id'=>$cid))->value('nickname');
+                 $username = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.memberid','LEFT')->where(array('a.id'=>$cid))->value('nickname');
                 $this->sendcanlcemsg($mobile,$username);
             }
             db('calendar')->where(['id'=>$cid])->delete();
