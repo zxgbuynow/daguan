@@ -3383,7 +3383,6 @@ class Index
          $json_data = $this->send($ch,$data);
          // error_log($json_data,3,'/home/wwwroot/daguan/sendmsg.log');
          $array = json_decode($json_data,true); 
-         print_r($json_data);exit;
          if ($array['code']==0) {
             return true;
          }else{
