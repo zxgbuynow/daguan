@@ -2678,7 +2678,7 @@ class Index
         if (!$data['cerback']) {
             return $this->error('身份反面上传失败，请稍后重试');
         }
-        $data['cerback'] = $identifi;
+        $data['identifi'] = $identifi;
         $map['id'] = $account;
         $data['status'] = 0;
         if(!db('member')->where($map)->update($data)){
