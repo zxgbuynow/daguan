@@ -1682,10 +1682,10 @@ class Index
             // $mobile = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.memberid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
             $mobile = db('calendar')->alias('a')->join('member m',' m.id = a.memberid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
             if ($mobile) {
-                $counsellor = db('calendar')->alias('a')->join('member m',' m.id = a.memberid','LEFT')->where(array('a.id'=>$cid))->value('nickname');                
+                $counsellor = db('calendar')->alias('a')->join('member m',' m.id = a.memberid','LEFT')->where(array('a.id'=>$cid))->value('nickname');    
                 $this->sendcanlcemsg($mobile,$counsellor);
             }
-            db('calendar')->where(['id'=>$cid])->delete();
+            // db('calendar')->where(['id'=>$cid])->delete();
             
             
         }
@@ -3358,7 +3358,7 @@ class Index
     {
         $apikey = "8df6ed7129c50581eecdf1e875edbaa3"; 
 
-        $text = '【大观心理】温馨提示：您的心理咨询预约'.$content.'已被取消'; 
+        $text = "【大观心理】温馨提示：您的心理咨询预约".$content."已取消。"; 
 
         // $text = '【大观心理】温馨提示：您有新的心理咨询预约：'.$content; 
 
@@ -3377,13 +3377,13 @@ class Index
          /* 设置通信方式 */
          curl_setopt($ch, CURLOPT_POST, 1);
          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-         
+
          // 发送短信
          $data = array('text'=>$text,'apikey'=>$apikey,'mobile'=>$mobile);
          $json_data = $this->send($ch,$data);
          // error_log($json_data,3,'/home/wwwroot/daguan/sendmsg.log');
          $array = json_decode($json_data,true); 
-         // print_r($array);exit; 
+         print_r($json_data);exit;
          if ($array['code']==0) {
             return true;
          }else{
