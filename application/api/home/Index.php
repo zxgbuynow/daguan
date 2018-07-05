@@ -1683,9 +1683,12 @@ class Index
 
             // $mobile = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.memberid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
             $mobile = db('calendar')->alias('a')->join('member m',' m.id = a.memberid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
+            
             if ($mobile) {
-                $counsellor = db('calendar')->alias('a')->join('member m',' m.id = a.memberid','LEFT')->where(array('a.id'=>$cid))->value('nickname');    
-                $this->sendcanlcemsg($mobile,$counsellor);
+                // $counsellor = db('calendar')->alias('a')->join('member m',' m.id = a.memberid','LEFT')->where(array('a.id'=>$cid))->value('nickname');  
+                $username = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.memberid','LEFT')->where(array('a.id'=>$cid))->value('nickname');  
+                $sj = db('calendar')->alias('a')->join('member m',' m.id = a.memberid','LEFT')->where(array('a.id'=>$cid))->value('a.start_time');
+                $this->sendcanlcemsg($mobile,$username,$sj);
             }
             db('calendar')->where(['id'=>$cid])->delete();
             
@@ -3139,8 +3142,10 @@ class Index
             //短信通知
             $mobile = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.memberid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
             if ($mobile) {
-                 $username = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.memberid','LEFT')->where(array('a.id'=>$cid))->value('nickname');
-                $this->sendcanlcemsg($mobile,$username);
+                 // $username = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.memberid','LEFT')->where(array('a.id'=>$cid))->value('nickname');
+                $counsellor = db('calendar')->alias('a')->join('member m',' m.id = a.memberid','LEFT')->where(array('a.id'=>$cid))->value('nickname');  
+                $sj = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.memberid','LEFT')->where(array('a.id'=>$cid))->value('a.start_time');
+                $this->sendcanlcemsg($mobile,$counsellor,$sj);
             }
             db('calendar')->where(['id'=>$cid])->delete();
             
@@ -3356,11 +3361,11 @@ class Index
      * @param  [type] $mobile [description]
      * @return [type]         [description]
      */
-    public function sendcanlcemsg($mobile,$content)
+    public function sendcanlcemsg($mobile,$content,$sj)
     {
         $apikey = "8df6ed7129c50581eecdf1e875edbaa3"; 
 
-        $text = "【大观心理】温馨提示：您的心理咨询预约".$content."已取消。"; 
+        $text = "【大观心理】温馨提示：您的心理咨询预约".$content."【".date('Y-m-d H:i',$sj)."】已取消。"; 
 
         // $text = '【大观心理】温馨提示：您有新的心理咨询预约：'.$content; 
 
