@@ -1680,7 +1680,7 @@ class Index
         if (isset($params['cid'])) {
 
             //短信通知
-            
+
             // $mobile = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->join(' member m',' m.id = b.memberid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
             $mobile = db('calendar')->alias('a')->join('member m',' m.id = a.memberid','LEFT')->where(array('a.id'=>$cid))->value('mobile');
             if ($mobile) {
@@ -3169,7 +3169,7 @@ class Index
         $times = array('9:00~10:00','10:00~11:00','11:00~12:00','12:00~13:00','13:00~14:00','14:00~15:00','14:00~15:00','15:00~16:00','16:00~17:00','17:00~18:00','18:00~19:00','19:00~20:00','20:00~21:00');
         foreach ($times as $key => $value) {
             $hour = explode('~', $value);
-            $data['ondatetime'] = strtotime($day.' '.$hour[1]);
+            $data['ondatetime'] = strtotime($day.' '.$hour[0]);
             $data['memberid'] = $account;
             if (!db('connsellor_ondate')->where($data)->find()) {
                 db('connsellor_ondate')->insert($data);
