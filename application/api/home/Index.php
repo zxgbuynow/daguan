@@ -2375,7 +2375,7 @@ class Index
 
         //查询消息
         $map['reciveid'] = $id;
-        $user =  db('msg')->where($map)->select();
+        $user =  db('msg')->where($map)->order('create_time DESC')->select();
         $ret = [];
         foreach ($user as $key => $value) {
             $ret[$value['type']][$key] = $value;
