@@ -753,7 +753,7 @@ class Index
         $map['paytype'] = 0;        
 
         if ($status == 'all') {
-            // $map['status'] = array('gt',0);
+            $map['status'] = array('gt',0);
         }else{
             $map['status'] = $status;
         }
