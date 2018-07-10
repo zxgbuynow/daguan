@@ -3250,6 +3250,9 @@ class Index
 
         $data['intro'] = $intro;
         db('member_counsellor')->where(['memberid'=>$account])->update($data);
+        
+        $save['status'] = 0;
+        db('member')->where(['id'=>$account])->update($save);
         //返回信息
         $data = [
             'code'=>'1',
