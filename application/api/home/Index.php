@@ -1785,31 +1785,30 @@ class Index
     {
         //参数
         //关键字
-        if (!empty($params['search_keywords'])) {
+        if (isset($params['search_keywords'])&&$params['search_keywords']!='') {
             $keyword = trim($params['search_keywords']);
             $map['a.nickname|s.title'] = array('like','%'.$keyword.'%');
         }
         //性别
-        if (!empty($params['sex'])) {
+        if (isset($params['sex'])&&$params['sex']!='') {
             $sex = trim($params['sex']);
             $map['a.sex'] = array('in',$sex);
         }
         //分中心
-        if (!empty($params['shopid'])) {
+        if (isset($params['shopid'])&&$params['shopid']!='') {
             $shopid = trim($params['shopid']);
             $map['a.shopid'] = array('in',$shopid);
         }
         //是否在线
-        if (!empty($params['online'])) {
+        if (isset($params['online'])&&$params['online']!='') {
             $online = trim($params['online']);
             $map['b.online'] = array('in',$online);
         }
         //今日是否有空
-        if (!empty($params['ondate'])) {
+        if (isset($params['ondate'])&&$params['ondate']!='') {
             $ondate = explode(',', $params['ondate']);
         }
         
-
         $map['a.status'] = 1;
         $map['a.type'] = 1;
 
