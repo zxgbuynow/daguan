@@ -3249,7 +3249,7 @@ class Index
         $account = trim($params['account']);
 
         $data['intro'] = $intro;
-        db('member_counsellor')->where(['memberid'=>$account])->save($data);
+        db('member_counsellor')->where(['memberid'=>$account])->update($data);
         //返回信息
         $data = [
             'code'=>'1',
