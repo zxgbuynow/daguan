@@ -3367,7 +3367,7 @@ class Index
     {
         $apikey = "8df6ed7129c50581eecdf1e875edbaa3"; 
 
-        $text = "【大观心理】温馨提示：您的心理咨询预约".$content."【".date('Y-m-d H:i',$sj)."】已取消。"; 
+        $text = "【大观心理】温馨提示：您的心理咨询预约".$content."（".date('Y-m-d H:i',$sj)."）已取消。"; 
 
         // $text = '【大观心理】温馨提示：您有新的心理咨询预约：'.$content; 
 
