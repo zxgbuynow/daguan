@@ -1025,7 +1025,7 @@ class Index
         $map['a.status'] = 1;
         $map['a.type'] = 1;
 
-        $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.shopid = s.id','LEFT')->where($map)->select();
+        $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.shopid = s.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC')->select();
         
         foreach ($counsellor['list'] as $key => $value) {
             if ($category) {
@@ -1213,12 +1213,15 @@ class Index
         $data['title'] = $username[0].'预约'.$counsellor[0].$str;
         //机构
         $data['shopid'] = db('member')->where('id',$account)->column('shopid')?db('member')->where('id',$account)->column('shopid')[0]:0;
+        if ($data['shopid']==0) {
+            return $this->error('咨询师没设置所属机构');
+        }
         //订单号
         $data['tid'] = date('YmdHis',time()).rand(1000,9999);
         //插入数据
         $trade = db('trade')->insert($data);
         if (!$trade) {
-            return $this->error('生成订单');
+            return $this->error('生成订单失败');
         }
         //生成消息
         $msg['type'] = 1;

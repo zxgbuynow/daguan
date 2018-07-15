@@ -192,7 +192,7 @@ class Counserllericome extends Shop
         if (!$info['shopid']) {
              $this->error('缺少参数');
         }
-        $map['shopid'] = $info['shopid'];
+        // $map['shopid'] = $info['shopid'];
 
         $map['mid'] = $id;
         $map['status'] = 1;//已支付
