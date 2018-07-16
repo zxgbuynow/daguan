@@ -61,6 +61,7 @@ class Counsellor extends Admin
                 ['id', 'ID'],
                 ['mobile', '手机号'],
                 ['nickname', '姓名'],
+                ['sex', '性别', 'select',['0' =>'女','1' => '男']],
                 ['qq', 'QQ'],
                 ['weixin', '微信'],
                 ['alipay', '支付宝'],
@@ -72,6 +73,7 @@ class Counsellor extends Admin
                 ['sort', '排序', 'text.edit'],
                 ['right_button', '操作', 'btn']
             ])
+            // ->addColumn('sex', '性别', 'status', '', ['女', '男'])
             ->raw('verifystatus')
             ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
             ->addRightButtons('delete,edit') // 批量添加右侧按钮

@@ -7,7 +7,7 @@ use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\cms\model\Page as PageModel;
 use app\cms\model\Category as CategoryModel;
-
+use app\cms\model\Counsellor as CounsellorModel;
 /**
  * 单页控制器
  * @package app\cms\admin
@@ -28,6 +28,7 @@ class Page extends Admin
         // 数据列表
         $data_list = PageModel::where($map)->order($order)->paginate();
 
+        $author = CounsellorModel::where(['type'=>1])->column('id,nickname');
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setSearch(['title' => '标题']) // 设置搜索框
@@ -38,6 +39,7 @@ class Page extends Admin
                 ['update_time', '更新时间', 'datetime'],
                 ['status', '状态', 'switch'],
                 ['sort', '排序', 'text.edit'],
+                ['userid', '作者', 'select',$author],
                 ['right_button', '操作', 'btn']
             ])
             ->addTopButtons('add,enable,disable,delete') // 批量添加顶部按钮

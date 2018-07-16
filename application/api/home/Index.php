@@ -2049,7 +2049,7 @@ class Index
 
         //是否存在
         $map['username'] = $username;
-        $map['status'] = 1;
+        // $map['status'] = 1;
         //用户信息
         $user = db('member')->where($map)->find();
         if (!$user) {

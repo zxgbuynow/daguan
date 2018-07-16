@@ -29,6 +29,29 @@ class Trade extends Admin
         // 获取查询条件
         $map = $this->getMap();
 
+        if (isset($map['u'])&&$map['u'][1]) {
+            $s['nickname'] =array('like',$map['u'][1]);
+            $usernames = db('member')->where($s)->column('id');
+            if ($usernames) {
+                $map['mid']= array('in',$usernames);
+            }
+
+            unset($map['u']);
+            
+        }
+
+        if (isset($map['status'])&&$map['status'][1]=='%待支付%') {
+            $map['status'] = 0;
+        }
+        if (isset($map['status'])&&$map['status'][1]=='%已支付%') {
+            $map['status'] = 1;
+        }
+        if (isset($map['status'])&&$map['status'][1]=='%取消%') {
+            $map['status'] = 2;
+        }
+        if (isset($map['status'])&&$map['status'][1]=='%冻结%') {
+            $map['status'] = 3;
+        }
         // 数据列表
         $data_list = TradeModel::where($map)->order('id desc')->paginate();
 
@@ -38,7 +61,7 @@ class Trade extends Admin
         //机构列表
         $agency_list = AgencyModel::where('status', 1)->column('id,title');
         //用户列表
-        $counsellor_list =  CounsellorModel::where('status', 1)->column('id,username');
+        $counsellor_list =  CounsellorModel::where('status', 1)->column('id,nickname');
 
         $btncancle = [
             // 'class' => 'btn btn-info',
@@ -59,7 +82,7 @@ class Trade extends Admin
         return ZBuilder::make('table')
             ->setPageTitle('订单管理') // 设置页面标题
             ->setTableName('trade') // 设置数据表名
-            ->setSearch(['id' => '订单编号']) // 设置搜索参数
+            ->setSearch(['id' => '订单编号','payment'=>'支付金额','u'=>'用户名','status'=>'支付状态']) // 设置搜索参数
             ->hideCheckbox()
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
