@@ -1211,9 +1211,15 @@ class Index
         $username = db('member')->where('id',$account)->column('nickname');
 
         $data['title'] = $username[0].'预约'.$counsellor[0].$str;
-        //机构
-        $data['shopid'] = db('member')->where('id',$account)->column('shopid')?db('member')->where('id',$account)->column('shopid')[0]:0;
-        if ($data['shopid']==0) {
+        //机构 取会员机构
+        
+        // $data['shopid'] = db('member')->where('id',$account)->column('shopid')?db('member')->where('id',$account)->column('shopid')[0]:0;
+        // if ($data['shopid']==0) {
+        //     return $this->error('咨询师没设置所属机构');
+        // }
+        //机构 取咨询师机构counsellor_id
+        $data['shopid'] = db('member')->where('id',$counsellor_id)->value('shopid');
+        if (!$data['shopid']) {
             return $this->error('咨询师没设置所属机构');
         }
         //订单号
