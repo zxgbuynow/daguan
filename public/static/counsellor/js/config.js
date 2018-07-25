@@ -1,4 +1,4 @@
-var config = {
+﻿var config = {
     // server:'http://47.97.97.95/api.php/',
     // imgser:'http://47.97.97.95',
     server:'http://zg.daguan.com/api.php',
@@ -48,6 +48,12 @@ var config = {
         getMemberInfoByTid:'getMemberInfoByTid',
         caseAdd:'caseAdd',
         calendaondate:'calenda.ondate',
-        setcalenda:'setcalenda'
+        setcalenda:'setcalenda',
+        findPassword:'user.findPassword',
+        cancleDate:'cancle.date',
+        setallcalenda:'setall.calenda',
+        getUserMsgCount:'getUser.msgCount',
+        getCurrentCander:'getCurrent.cander',
+        userIntro:'user.intro'
     }
 }

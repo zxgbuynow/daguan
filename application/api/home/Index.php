@@ -2071,7 +2071,7 @@ class Index
 
         //是否存在
         $map['username'] = $username;
-        // $map['status'] = 1;
+        $map['type'] = 1;
         //用户信息
         $user = db('member')->where($map)->find();
         if (!$user) {
@@ -3278,6 +3278,7 @@ class Index
         
         $save['status'] = 0;
         db('member')->where(['id'=>$account])->update($save);
+
         //返回信息
         $data = [
             'code'=>'1',

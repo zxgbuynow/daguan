@@ -74,6 +74,11 @@ class Member extends Home
         return $this->fetch('member/info/identifi'); // 渲染模板
     }
 
+    public function experience()
+    {
+        return $this->fetch('member/info/exprice'); // 渲染模板
+    }
+
     public function social()
     {
         return $this->fetch('member/info/social'); // 渲染模板
