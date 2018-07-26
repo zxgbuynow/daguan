@@ -4,7 +4,7 @@ var config = {
     server: 'http://zg.daguan.com/api.php',
     imgser: 'http://zg.daguan.com',
     source: 'custom', //来源
-    
+   
     pagesize: 10, // 分页组件每页显示数量
     cpage: 1, //分页当前页
     apimethod: { //接口method集合
@@ -46,6 +46,13 @@ var config = {
         evaluate: 'user.evaluate',
         oncalenda: 'oncalenda',
         recordlist: 'recordlist',
-        articlebycate: 'articlebycate'
+        articlebycate: 'articlebycate',
+        getUserMsgCount:'getUser.msgCount',
+        cancleDate:'cancle.date',
+        getCurrentCander:'getCurrent.cander',
+        startondate:'start.ondate',
+        updatemember:'update.member',
+        filteritems:'filter.items',
+        searchcounsellor:'search.counsellor'
     }
 }

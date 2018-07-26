@@ -1,208 +1,489 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="stylesheet" href="__M_CSS__/style.css" />
-    <link rel="stylesheet" href="__M_CSS__/widgets.css" />
-    <style>
-    		.main{
-    			margin-right: 10px;
-    		}
-    		.mui-table-view .mui-media-object{
-		    max-width: 72px; 
-    			height: 72px;
-    		}
-    		.mui-media-text {
-    			color: #646464;
-    			font-size: 15px;
-    		}
-    		.mui-media-author { 
-    			font-size: 13px;
-    			margin-top: 5px;
-    		} 
-    		.mui-media-action{
-    			font-size: 13px;
-    		}
-    		.float-right{
-    			float: right;
-    		}
-    </style>
-  </head>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <body>
-    <header class="home-header">
-      <div class="header-logo"><img src="__M_IMG__/newlogo.png"></div>
-      <div class="main">
-        <form onsubmit="return false;">
-          <div class="mui-input-row header-search-form"><input type="search" onfocus="toSearch(this,'/mobile.php/counsellor/counsellor.html')" class="header-search mui-input-clear" placeholder="寻找咨询师"></div>
-        </form>
-      </div>
-      <a href="#" class="txt-func search-cancel" style="display:none;">取消</a>
-    </header>
-    <div class="container" style="margin-bottom: 50px">
-      <div class="mui-scroll-wrapper bbc-pullrefresh-top">
-        <div class="mui-scroll">
-          <div class="mui-content content-bottom-padded-nav">
-          	  <!--情感标签 start-->
-		      <!--<section class="widgets-category-nav section-white">
-		      	<div class="section-title">
-		          <div class="title-txt">咨询分类</div>
-		          <div class="more-link action-webview" data-webview="_www/view/category/category.html"><i class="bbc-icon bbc-icon-forward"></i></div>
-		        </div>
-		        <ul class="widgets-icons-nav">
-		          <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_05.png"></a></i><span>婚姻家庭</li>
-		          <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_07.png"></a></i><span>情绪管理</li>
-		          <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_09.png"></a></i><span>恋爱心理</li>
-		          <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_11.png"></a></i><span>职场心理</li>
-		          	
-		          <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_17.png"></a></i><span>人际关系</li>
-		          <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_18.png"></a></i><span>亲子教育</li>
-		          <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_19.png"></a></i><span>个人成长</li>
-		          <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_20.png"></a></i><span>心理健康</li>	
-		        </ul>
-		      </section>-->
-		      <!--情感标签 end-->
-		      
-		      <!--咨询师 start-->
-		      <!--<section class="widgets-category-nav section-white">
-		        <div class="section-title">
-		          <div class="title-txt">人气排行</div>
-		        </div>
-		        <div class="mui-table-view">
-		          <ul class="mui-table-view mui-table-view-chevron">
-					<li class="mui-table-view-cell mui-media">
-						<a class="mui-navigate-right">
-							<img class="mui-media-object mui-pull-left" src="../../img/widgets_54.gif">
-							<div class="mui-media-body">
-								<p>
-									<span class="mui-text-left">张医生</span>
-									<span class="mui-text-right mui-media-action float-right mui-hidden">立即预约</span>
-								</p>
-								<p class='mui-ellipsis mui-media-text'>从业10年|中科院</p>
-								<p class="mui-ellipsis mui-media-text mui-media-author">我在大观心理温暖过1000人次</p>
-							</div>
-						</a>
-					</li>
-					
-				  </ul>		
-		        </div>
-		      </section>-->
-		      <!--咨询师 end-->
-		      
-          </div>
+        <!-- <link rel="stylesheet" href="__M_CSS__/mui.min.css"> -->
+        <link rel="stylesheet" href="__M_CSS__/style.css" />
+        <link rel="stylesheet" href="__M_CSS__/widgets.css" />
+        <style>
+            html,
+            body {
+                background-color: #efeff4;
+            }
+            .mui-off-canvas-right {
+                background: #efeff4!important;
+                left: 30%;
+            }
+            .main{
+                margin-right: 10px;
+            }
+            .mui-table-view .mui-media-object{
+            max-width: 72px; 
+                height: 72px;
+            }
+            .mui-media-text {
+                color: #646464;
+                font-size: 15px;
+            }
+            .mui-media-author { 
+                font-size: 13px;
+                margin-top: 5px;
+            } 
+            .mui-media-action{
+                font-size: 13px;
+            }
+            .float-right{
+                float: right;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable">
+            <!--侧滑菜单部分-->
+            <aside id="offCanvasSide" class="mui-off-canvas-right">
+                <div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+                    <div class="mui-content filters">
+                      <div class="section-white section-container filters-header">
+                        <div class="filters-op reset-filters-options">重置</div>
+                        <div class="section-init">筛选</div>
+                        <div id="close-btn" class="filters-op">确定</div>
+                      </div>
+                      <div id="filters_box" class="mui-scroll">
+                        <!-- <div class="filters-options mui-content-padded clearfix" style="height: auto;">
+                            <div class="clearfix"><div class="mui-pull-left options-name">状态:&nbsp;</div></div>
+                            <span data-name="online" data-value="1" >在线</span>
+                            <span data-name="online" data-value="0" >下线</span>
+                        </div>
+                        
+                        <div class="filters-options mui-content-padded clearfix" style="height: auto;">
+                            <div class="clearfix"><div class="mui-pull-left options-name">性别:&nbsp;</div></div>
+                            <span data-name="sex" data-value="1" >男</span>
+                            <span data-name="sex" data-value="0" >女</span>
+                        </div>
+                        
+                        <div class="filters-options mui-content-padded clearfix" style="height: auto;">
+                            <div class="clearfix"><div class="mui-pull-left options-name">今日空闲:&nbsp;</div></div>
+                            <span data-name="ondate" data-value="1" >是</span>
+                            <span data-name="ondate" data-value="0" >否</span>
+                        </div>
+                        <div class="filters-options mui-content-padded clearfix">
+                          <div class="clearfix"><div class="mui-pull-left options-name">地区:&nbsp;</div> <label class="font-red fontS mui-pull-left options-choose"></label><i class="mui-pull-right mui-icon mui-icon-arrowdown action-all"></i></div>
+
+                          <span data-name="cat_id" data-value="1" class="checked" >111 </span>
+                          <span data-name="cat_id" data-value="2" class="checked" >222</span>
+                          <span data-name="cat_id" data-value="3" class="checked" >333</span>
+                          <span data-name="cat_id" data-value="4" class="checked" >444</span>
+
+                        </div> -->
+                        
+                      </div>
+                    </div>
+                </div>
+            </aside>
+            <!--主界面部分-->
+            <div class="mui-inner-wrap">
+                <header class="home-header">
+                  <div class="header-logo"><img src="__M_IMG__/newlogo.png"></div>
+                  <div class="main">
+                    <form onsubmit="return false;">
+                      <div class="mui-input-row header-search-form"><input type="search"  class="header-search mui-input-clear" placeholder="寻找咨询师"></div>
+                    </form>
+                  </div>
+                  <a href="#offCanvasSide" ><i class="search-hide icon-func bbc-icon bbc-icon-submenu mui-action-menu"></i></a>
+                  <a href="#" class="txt-func search-cancel" style="display:none;">取消</a>
+                </header>
+
+                <header class="mui-bar mui-bar-nav">
+                    <a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
+                    <a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>
+                    <h1 class="mui-title">div模式右滑菜单</h1>
+                </header>
+
+                <div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
+                    <div class="mui-scroll contentl">
+                        
+
+                         <!--情感标签 start-->
+                          <!-- <section class="widgets-category-nav section-white">
+                            <div class="section-title">
+                              <div class="title-txt">咨询分类</div>
+                              <div class="more-link action-webview" data-webview="_www/view/category/category.html"><i class="bbc-icon bbc-icon-forward"></i></div>
+                            </div>
+                            <ul class="widgets-icons-nav">
+                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_05.png"></a></i><span>婚姻家庭</li>
+                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_07.png"></a></i><span>情绪管理</li>
+                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_09.png"></a></i><span>恋爱心理</li>
+                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_11.png"></a></i><span>职场心理</li>
+                                
+                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_17.png"></a></i><span>人际关系</li>
+                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_18.png"></a></i><span>亲子教育</li>
+                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_19.png"></a></i><span>个人成长</li>
+                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_20.png"></a></i><span>心理健康</li> 
+                            </ul>
+                          </section> -->
+                          <!--情感标签 end-->
+                          
+                          <!--咨询师 start-->
+                          <!-- <section class="widgets-category-nav section-white">
+                            <div class="section-title">
+                              <div class="title-txt">人气排行</div>
+                            </div>
+                            <div class="mui-table-view">
+                              <ul class="mui-table-view mui-table-view-chevron">
+                                <li class="mui-table-view-cell mui-media">
+                                    <a class="mui-navigate-right">
+                                        <img class="mui-media-object mui-pull-left" src="../../img/widgets_54.gif">
+                                        <div class="mui-media-body">
+                                            <p>
+                                                <span class="mui-text-left">张医生</span>
+                                                <span class="mui-text-right mui-media-action float-right mui-hidden">立即预约</span>
+                                            </p>
+                                            <p class='mui-ellipsis mui-media-text'>从业10年|中科院</p>
+                                            <p class="mui-ellipsis mui-media-text mui-media-author">我在大观心理温暖过1000人次</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                
+                              </ul>     
+                            </div>
+                          </section> -->
+                          <!--咨询师 end-->
+
+                    </div>
+                </div>
+                <!-- off-canvas backdrop -->
+                <div class="mui-off-canvas-backdrop"></div>
+            </div>
         </div>
-      </div>
-    </div>
-    <nav class="mui-bar bbc-bar-tab">
-      <a class="bbc-tab-item " href="{:url('Index/index')}">
-        <span class="mui-icon bbc-icon bbc-icon-home"></span>
-        <span class="mui-tab-label">首页</span>
-      </a>
-      <a class="bbc-tab-item bbc-active" >
-        <span class="mui-icon bbc-icon bbc-icon-list"></span>
-        <span class="mui-tab-label">咨询</span>
-      </a>
-      <a class="bbc-tab-item" href="{:url('Member/member')}">
-        <span class="mui-icon bbc-icon bbc-icon-user-empty"></span>
-        <span class="mui-tab-label">我的</span>
-      </a>
-    </nav>
-    <script src="__M_JS__/zepto.js"></script>
-    <script src="__M_JS__/mui.min.js"></script>
-    <script src="__M_JS__/template.min.js"></script>
-    <script src="__M_JS__/config.js"></script>
-    <script src="__M_JS__/app.js"></script>
-    
-	<script type="text/html" id="widget_category">
-		<section class="widgets-category-nav section-white">
-	      	<div class="section-title">
-	          <div class="title-txt">咨询分类</div>
-	          <div class="more-link action-clickview" data-webview="{:url('Category/category')}"><i class="bbc-icon bbc-icon-forward"></i></div>
-	        </div>
-	        <ul class="widgets-icons-nav">
-	        	<% for(var i=0; i<list.length; i++) { %>
-	          <li class="action-clickview" data-webview="{:url('Counsellor/counsellor')}" data-webparam='<%= list[i].id %>'><i><a href="#"><img src="<%= $add_server(list[i].cover) %>"></a></i><span><%= list[i].title %></li>
-	       	<% } %>
-	        </ul>
-	      </section>
-	</script>	
-    
-    <script type="text/html" id="widget_recommend">
-    		<section class="widgets-category-nav section-white">
-		        <div class="section-title">
-		          <div class="title-txt">人气排行</div>
-		        </div>
-		        <div class="mui-table-view">
-		          <ul class="mui-table-view mui-table-view-chevron">
-		          	<% for(var i=0; i<list.length; i++) { %>
-					<li class="mui-table-view-cell mui-media action-clickview" data-webview="{:url('Counsellor/detail')}" data-webparam='<%= list[i].memberid %>'>
-						<a class="mui-navigate-right"> 
-							<img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].avar) %>">
-							<div class="mui-media-body">
-								<p>
-									<span class="mui-text-left"><%= list[i].nickname %></span>
-									<span class="mui-text-right mui-media-action float-right mui-hidden">立即预约</span>
-								</p>
-								<p class='mui-ellipsis mui-media-text'><%= list[i].employment %>|<%= list[i].sign %></p>
-								<p class="mui-ellipsis mui-media-text mui-media-author">我在大观心理温暖过<%= list[i].trade %>人次</p>
-							</div>
-						</a>
-					</li>
-					<% } %>
-				  </ul>		
-		        </div>
-		      </section>
-    </script>
-
-    <script type="text/javascript">
-      mui.init({
-        swipeBack: true //启用右滑关闭功能
-      });
-		//获取数据 
-	  	//分类 
-	  	var param = {
-            'method': config.apimethod.category,
-            'source':config.source
-       }
-        $.dataRequest(param, function(rs) {
-        	var widgets = template('widget_category', rs);
-            $('.mui-content').append(widgets);
-            //recommond
-	        var aparam = {
-	            'method': config.apimethod.recommend,
-	            'source':config.source
-	        }
-	        $.dataRequest(aparam, function(rs) {
-	        	var widgets = template('widget_recommend', rs);
-	            $('.mui-content').append(widgets);
-	            mui('.mui-scroll-wrapper').scroll({
-		            indicators: false
-		        });
-                $(window).on('tap', '.action-clickview', function() {
-                  var webview = $(this).data('webview');
-                  var webparam = $(this).data('webparam');
-                  if (webview.indexOf("counsellor") != -1) {
-                    if (webview.indexOf("detail") != -1){
-                        window.location.href = webview+'?counsellor_id='+webparam;
-                    }else{
-                        window.location.href = webview+'?cat_id='+webparam;
-                    }
-
-                  }else{
-                    window.location.href = webview;
-                  }
-                  
-                })
-	        })
-        })
+        <script src="__M_JS__/zepto.js"></script>
+        <script src="__M_JS__/mui.min.js"></script>
+        <script src="__M_JS__/template.min.js"></script>
+        <script src="__M_JS__/config.js"></script>
+        <script src="__M_JS__/app.js"></script>
+        <script type="text/html" id="widget_category">
+        <section class="widgets-category-nav section-white">
+            <div class="section-title">
+              <div class="title-txt">咨询分类</div>
+              <div class="more-link action-clickview" data-webview="{:url('Category/category')}"><i class="bbc-icon bbc-icon-forward"></i></div>
+            </div>
+            <ul class="widgets-icons-nav">
+                <% for(var i=0; i<list.length; i++) { %>
+              <li class="action-clickview" data-webview="{:url('Counsellor/counsellor')}" data-webparam='<%= list[i].id %>'><i><a href="#"><img src="<%= $add_server(list[i].cover) %>"></a></i><span><%= list[i].title %></li>
+            <% } %>
+            </ul>
+          </section>
+        </script>   
         
+        <script type="text/html" id="widget_recommend">
+            <section class="widgets-category-nav section-white">
+                <div class="section-title">
+                  <div class="title-txt">人气排行</div>
+                </div>
+                <div class="mui-table-view">
+                  <ul class="mui-table-view mui-table-view-chevron">
+                    <% for(var i=0; i<list.length; i++) { %>
+                    <li class="mui-table-view-cell mui-media action-clickview" data-webview="{:url('Counsellor/detail')}" data-webparam='<%= list[i].memberid %>'>
+                        <a class="mui-navigate-right"> 
+                            <img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].avar) %>">
+                            <div class="mui-media-body">
+                                <p>
+                                    <span class="mui-text-left"><%= list[i].nickname %></span>
+                                    <span class="mui-text-right mui-media-action float-right mui-hidden">立即预约</span>
+                                </p>
+                                <p class='mui-ellipsis mui-media-text'><%if(list[i].tearch){%>大观讲师 |<%}%><%if(list[i].leader){%>大观Leader<%}%>|<%= list[i].sign %></p>
+                                <p class="mui-ellipsis mui-media-text mui-media-author">我在大观心理温暖过<%= list[i].trade %>人次</p>
+                            </div>
+                        </a>
+                    </li>
+                    <% } %>
+                  </ul>     
+                </div>
+            </section>
+        </script>
+        <script type="text/html" id="filters_list">
+        <div class="filters-options mui-content-padded clearfix" style="height: auto;">
+            <div class="clearfix"><div class="mui-pull-left options-name">状态:&nbsp;</div></div>
+            <span data-name="online" data-value="1" >在线</span>
+            <span data-name="online" data-value="0" >下线</span>
+        </div>
+        
+        <div class="filters-options mui-content-padded clearfix" style="height: auto;">
+            <div class="clearfix"><div class="mui-pull-left options-name">性别:&nbsp;</div></div>
+            <span data-name="sex" data-value="1" >男</span>
+            <span data-name="sex" data-value="0" >女</span>
+        </div>
+        
+        <div class="filters-options mui-content-padded clearfix" style="height: auto;">
+            <div class="clearfix"><div class="mui-pull-left options-name">今日空闲:&nbsp;</div></div>
+            <span data-name="ondate" data-value="1" >是</span>
+            <span data-name="ondate" data-value="0" >否</span>
+        </div>
+    
+        <%if(list != null) {%>
+        <div class="filters-options mui-content-padded clearfix">
+          <div class="clearfix"><div class="mui-pull-left options-name">地区:&nbsp;</div> <label class="font-red fontS mui-pull-left options-choose"></label><i class="mui-pull-right mui-icon mui-icon-arrowdown action-all"></i></div>
+          <% for(var i=0; i<list.length; i++) { %>
+          <span data-name="shopid" data-value="<%=list[i].id %>"  ><%=list[i].title %> </span>
+          <% } %>
+        </div>
+        <% } %>
+        
+     </script>
+        <script>
+            mui.init();
+             //侧滑容器父节点
+            var offCanvasWrapper = mui('#offCanvasWrapper');
+             //主界面容器
+            var offCanvasInner = offCanvasWrapper[0].querySelector('.mui-inner-wrap');
+             //菜单容器
+            var offCanvasSide = document.getElementById("offCanvasSide");
+           
+             //移动效果是否为整体移动
+            var moveTogether = true;
+             //侧滑容器的class列表，增加.mui-slide-in即可实现菜单移动、主界面不动的效果；
+            var classList = offCanvasWrapper[0].classList;
+            classList.add('mui-slide-in');
+            
+             //主界面和侧滑菜单界面均支持区域滚动；
+            mui('#offCanvasSideScroll').scroll();
+            mui('#offCanvasContentScroll').scroll();
+            //获取数据 
+            //分类 
+            var param = {
+                'method': config.apimethod.category,
+                'source':config.source
+            }
+            $.dataRequest(param, function(rs) {
+                var widgets = template('widget_category', rs);
+                $('.contentl').append(widgets);
+                //recommond
+                var aparam = {
+                    'method': config.apimethod.recommend,
+                    'source':config.source
+                }
+                $.dataRequest(aparam, function(rs) {
+                    var widgets = template('widget_recommend', rs);
+                    $('.contentl').append(widgets);
+                    mui('.mui-scroll-wrapper').scroll({
+                        indicators: false
+                    });
+                    $(window).on('tap', '.action-clickview', function() {
+                      var webview = $(this).data('webview');
+                      var webparam = $(this).data('webparam');
+                      if (webview.indexOf("counsellor") != -1) {
+                        if (webview.indexOf("detail") != -1){
+                            window.location.href = webview+'?counsellor_id='+webparam;
+                        }else{
+                            window.location.href = webview+'?cat_id='+webparam;
+                        }
 
-    </script>
-  </body>
+                      }else{
+                        window.location.href = webview;
+                      }
+                      
+                    })
+                })
+            })
+
+            var shopid = 0;
+            var sex,online,ondate,keyword;
+
+
+            var form = $('input[type="search"]').parents('form');
+            var sinput = $('input[type="search"]');
+            $(form).submit(function() {
+                var search_val = $('input[type="search"]').val();
+                $('.contentl').empty();
+                var param = {
+                    'method': config.apimethod.category,
+                    'source':config.source
+                }
+                $.dataRequest(param, function(rs) {
+                    var widgets = template('widget_category', rs);
+                    $('.contentl').append(widgets);
+                    //recommond
+                    var aparam = {
+                        'method': config.apimethod.searchcounsellor,
+                        'source':config.source,
+                        'sex':sex,
+                        'shopid':shopid,
+                        'online':online,
+                        'ondate':ondate,
+                        'search_keywords':search_val
+                    }
+                    $.dataRequest(aparam, function(rt) {
+                        for (var i in rt['list']) {
+                            if(rt['list'][i].avar==''){
+                                rt['list'][i].avar = 'static/admin/img/none.png';
+                            }
+                        }
+                        var widgets = template('widget_recommend', rt);
+                        $('.contentl').append(widgets);
+                         mui('.mui-scroll-wrapper').scroll({
+                          indicators: false
+                        });
+                    })
+                })
+                   
+                sinput.blur();
+            });
+
+            var flag = false;
+            $('.reset-filters-options').on('tap', function(){
+                clearOption();
+            });
+              
+            var param = {
+                'method': config.apimethod.filteritems,
+                'source':config.source
+            }
+
+            $.dataRequest(param, function(response) {
+              if(!isEmptyObject(response)){
+                var rs = {
+                    'list':response
+                }
+                var result = template('filters_list', rs);
+                $('#filters_box').html(result);
+                
+                $('.filters-options').on('tap', 'span', function() {
+                  $(this).toggleClass('checked');
+                  var ele = $(this).parent().find('label');
+                  var eleText = ele.text();
+                  var chooseOptions = [];
+                  var txt = $(this).text();
+                  if(eleText != null && eleText != "") {
+                      if(eleText.indexOf(';') < 0) {
+                          chooseOptions.push(eleText);
+                      } else {
+                          chooseOptions = eleText.split(';');
+                      }
+                  }
+                  if($(this).hasClass('checked')) {
+                      chooseOptions.push(txt);
+                  } else {
+                      chooseOptions.splice($.inArray(txt, chooseOptions), 1);
+                  }
+                  ele.html(chooseOptions.join(';'));
+                });
+                
+                $('.filters-options').on('tap', '.action-all', function(){
+                  $(this).toggleClass('mui-icon-arrowdown').toggleClass('mui-icon-arrowup');
+                  if($(this).hasClass('mui-icon-arrowdown')) {
+                      $(this).parents('.filters-options').css('height', '5rem');
+                  } else {
+                      $(this).parents('.filters-options').css('height', 'auto');
+                  } 
+                });
+                initChooseOptions();
+              }
+            });
+            function initChooseOptions(){
+                $('.filters-options').each(function(){
+                    var filters = [];
+                    $(this).find('span.checked').each(function(){
+                      filters.push($(this).text());
+                    });
+                    $(this).find('.options-choose').html(filters.join(';'));
+                });
+            }
+
+            document.getElementById("close-btn").addEventListener('tap', function() {
+                var sexs = [];
+                var shopids = [];
+                var onlines = [];
+                var ondates = [];
+                shopid = '';
+                var sex = '';
+                var ondate = '';
+                var online = '';
+                $('.filters-options span.checked').each(function() {
+                    var checkedFiltersOptions = $(this).hasClass('checked');
+                    var name = $(this).data('name');
+                    if(name == "sex") {
+                        sexs.push($(this).data('value'));
+                    } else if(name == "shopid") {
+                        shopids.push($(this).data('value'));
+                    } else if(name == "ondate") {
+                        ondates.push($(this).data('value'));
+                    } else if(name == "online") {
+                        onlines.push($(this).data('value'));
+                    } 
+                });
+                
+                if(sexs.length > 0) {
+                    sex = sexs.join(',');
+                }
+                if(shopids.length > 0) {
+                    shopid = shopids.join(',');
+                }
+                if(onlines.length > 0) {
+                    online = onlines.join(',');
+                }
+                if(ondates.length > 0) {
+                    ondate = ondates.join(',');
+                }
+
+                //搜索
+                $('.contentl').empty();
+                var search_val = $('input[type="search"]').val();
+
+                  
+                var param = {
+                    'method': config.apimethod.category,
+                    'source':config.source
+                }
+                $.dataRequest(param, function(rs) {
+                    var widgets = template('widget_category', rs);
+                    $('.contentl').append(widgets);
+                    //recommond
+                    var aparam = {
+                        'method': config.apimethod.searchcounsellor,
+                        'source':config.source,
+                        'sex':sex,
+                        'shopid':shopid,
+                        'online':online,
+                        'ondate':ondate,
+                        'search_keywords':search_val
+                    }
+                    $.dataRequest(aparam, function(rt) {
+                        for (var i in rt['list']) {
+                            if(rt['list'][i].avar==''){
+                                rt['list'][i].avar = 'static/admin/img/none.png';
+                            }
+                        }
+                        var widgets = template('widget_recommend', rt);
+                        $('.contentl').append(widgets);
+                        mui('.mui-scroll-wrapper').scroll({
+                          indicators: false
+                        });
+                    })
+                })
+
+                closeMenu()
+            });
+
+            function closeMenu() {
+                offCanvasWrapper.offCanvas('close');
+            }
+
+            function clearOption() {
+                $('.filters-options span').removeClass('checked');
+                $('.filters-options .options-choose').html("");
+                if(shopid != "") {
+                   var chk_filter = $('.filters-options').find('span[data-value="' + shopid + '"]');
+                   chk_filter.addClass('checked');
+                   chk_filter.parent().find('.options-choose').html(chk_filter.html());
+                }
+            }
+        </script>
+    </body>
 
 </html>

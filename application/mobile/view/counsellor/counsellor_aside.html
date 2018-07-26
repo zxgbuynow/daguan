@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+
+  <body>
+    <div class="mui-content filters">
+      <div class="section-white section-container filters-header">
+        <div class="filters-op reset-filters-options">重置</div>
+        <div class="section-init">筛选</div>
+        <div id="close-btn" class="filters-op">确定</div>
+      </div>
+      <div id="filters_box" class="mui-scroll">
+        <div class="filters-options mui-content-padded clearfix" style="height: auto;">
+            <div class="clearfix"><div class="mui-pull-left options-name">状态:&nbsp;</div></div>
+            <span data-name="online" data-value="1" >在线</span>
+            <span data-name="online" data-value="0" >下线</span>
+        </div>
+        
+        <div class="filters-options mui-content-padded clearfix" style="height: auto;">
+            <div class="clearfix"><div class="mui-pull-left options-name">性别:&nbsp;</div></div>
+            <span data-name="sex" data-value="1" >男</span>
+            <span data-name="sex" data-value="0" >女</span>
+        </div>
+        
+        <div class="filters-options mui-content-padded clearfix" style="height: auto;">
+            <div class="clearfix"><div class="mui-pull-left options-name">今日空闲:&nbsp;</div></div>
+            <span data-name="ondate" data-value="1" >是</span>
+            <span data-name="ondate" data-value="0" >否</span>
+        </div>
+        <div class="filters-options mui-content-padded clearfix">
+          <div class="clearfix"><div class="mui-pull-left options-name">地区:&nbsp;</div> <label class="font-red fontS mui-pull-left options-choose"></label><i class="mui-pull-right mui-icon mui-icon-arrowdown action-all"></i></div>
+
+          <span data-name="cat_id" data-value="1" class="checked" >111 </span>
+          <span data-name="cat_id" data-value="2" class="checked" >222</span>
+          <span data-name="cat_id" data-value="3" class="checked" >333</span>
+          <span data-name="cat_id" data-value="4" class="checked" >444</span>
+
+        </div>
+        
+      </div>
+    </div>
+    <script src="../../js/zepto.js"></script>
+    <script src="../../js/mui.min.js"></script>
+    <script src="../../js/template.min.js"></script>
+    <script src="../../config.js"></script>
+    <script src="../../js/app.js"></script>
+    
+    <script type="text/html" id="filters_list">
+        <div class="filters-options mui-content-padded clearfix" style="height: auto;">
+            <div class="clearfix"><div class="mui-pull-left options-name">状态:&nbsp;</div></div>
+            <span data-name="online" data-value="1" >在线</span>
+            <span data-name="online" data-value="0" >下线</span>
+        </div>
+        
+        <div class="filters-options mui-content-padded clearfix" style="height: auto;">
+            <div class="clearfix"><div class="mui-pull-left options-name">性别:&nbsp;</div></div>
+            <span data-name="sex" data-value="1" >男</span>
+            <span data-name="sex" data-value="0" >女</span>
+        </div>
+        
+        <div class="filters-options mui-content-padded clearfix" style="height: auto;">
+            <div class="clearfix"><div class="mui-pull-left options-name">今日空闲:&nbsp;</div></div>
+            <span data-name="ondate" data-value="1" >是</span>
+            <span data-name="ondate" data-value="0" >否</span>
+        </div>
+    
+        <%if(list != null) {%>
+        <div class="filters-options mui-content-padded clearfix">
+          <div class="clearfix"><div class="mui-pull-left options-name">地区:&nbsp;</div> <label class="font-red fontS mui-pull-left options-choose"></label><i class="mui-pull-right mui-icon mui-icon-arrowdown action-all"></i></div>
+          <% for(var i=0; i<list.length; i++) { %>
+          <span data-name="shopid" data-value="<%=list[i].id %>"  ><%=list[i].title %> </span>
+          <% } %>
+        </div>
+        <% } %>
+        
+     </script>
+    
+    <script type="text/javascript" charset="utf-8">
+      //关闭back、menu按键监听，这样侧滑主界面会自动获得back和memu的按键事件，仅在主界面处理按键逻辑即可；
+      //地区、人名、今天是否有空、现在是否在线、性别
+      mui.init({
+        keyEventBind: {
+          backbutton: false,
+          menubutton: false
+        }
+      });
+      var flag = false,
+            main = null;
+      $('.reset-filters-options').on('tap', function(){
+        clearOption();
+      });
+      
+     var cat_id;
+     var shopid;
+
+      mui.plusReady(function() {
+        main = plus.webview.currentWebview().opener();
+        cat_id = main.catid || '';
+        var keyword = main.keyword || '';
+
+        var param = {
+            'method': config.apimethod.filteritems,
+            'source':config.source
+        }
+
+        $.dataRequest(param, function(response) {
+          if(!isEmptyObject(response)){
+            var rs = {
+                'list':response
+            }
+            var result = template('filters_list', rs);
+            $('#filters_box').html(result);
+            
+            $('.filters-options').on('tap', 'span', function() {
+              $(this).toggleClass('checked');
+              var ele = $(this).parent().find('label');
+              var eleText = ele.text();
+              var chooseOptions = [];
+              var txt = $(this).text();
+              if(eleText != null && eleText != "") {
+                  if(eleText.indexOf(';') < 0) {
+                      chooseOptions.push(eleText);
+                  } else {
+                      chooseOptions = eleText.split(';');
+                  }
+              }
+              if($(this).hasClass('checked')) {
+                  chooseOptions.push(txt);
+              } else {
+                  chooseOptions.splice($.inArray(txt, chooseOptions), 1);
+              }
+              ele.html(chooseOptions.join(';'));
+            });
+            
+            $('.filters-options').on('tap', '.action-all', function(){
+              $(this).toggleClass('mui-icon-arrowdown').toggleClass('mui-icon-arrowup');
+              if($(this).hasClass('mui-icon-arrowdown')) {
+                  $(this).parents('.filters-options').css('height', '5rem');
+              } else {
+                  $(this).parents('.filters-options').css('height', 'auto');
+              } 
+            });
+            initChooseOptions();
+          }
+        });
+      });
+      function initChooseOptions(){
+          $('.filters-options').each(function(){
+              var filters = [];
+              $(this).find('span.checked').each(function(){
+                  filters.push($(this).text());
+              });
+              $(this).find('.options-choose').html(filters.join(';'));
+          });
+      }
+      document.getElementById("close-btn").addEventListener('tap', function() {
+//      mui.toast('search')
+        var sexs = [];
+        var shopids = [];
+        var onlines = [];
+        var ondates = [];
+        shopid = '';
+        var sex = '';
+        var ondate = '';
+        var online = '';
+        $('.filters-options span.checked').each(function() {
+            var checkedFiltersOptions = $(this).hasClass('checked');
+            var name = $(this).data('name');
+            if(name == "sex") {
+                sexs.push($(this).data('value'));
+            } else if(name == "shopid") {
+                shopids.push($(this).data('value'));
+            } else if(name == "ondate") {
+                ondates.push($(this).data('value'));
+            } else if(name == "online") {
+                onlines.push($(this).data('value'));
+            } 
+        });
+        
+        if(sexs.length > 0) {
+            sex = sexs.join(',');
+        }
+        if(shopids.length > 0) {
+            shopid = shopids.join(',');
+        }
+        if(onlines.length > 0) {
+            online = onlines.join(',');
+        }
+        if(ondates.length > 0) {
+            ondate = ondates.join(',');
+        }
+        mui.fire(main, 'getkey', {
+          'sex': sex,
+          'shopid': shopid,
+          'online': online,
+          'ondate': ondate
+        });
+        closeMenu()
+      });
+
+      function closeMenu() {
+        mui.fire(main, "menu:swiperight");
+      }
+
+      function clearOption() {
+        $('.filters-options span').removeClass('checked');
+        $('.filters-options .options-choose').html("");
+        if(shopid != "") {
+           var chk_filter = $('.filters-options').find('span[data-value="' + shopid + '"]');
+           chk_filter.addClass('checked');
+           chk_filter.parent().find('.options-choose').html(chk_filter.html());
+        }
+      }
+      //左滑显示出来的菜单，只需监听右滑，然后将菜单关闭即可；在该菜单上左滑，不做任何操作；
+      window.addEventListener("swiperight", function(e){
+        var detail = e.detail;
+        if(Math.abs(detail.deltaX)>150){
+          closeMenu();
+//        clearOption();
+        }
+      });
+    </script>
+  </body>
+
+</html>
