@@ -2071,7 +2071,7 @@ class Index
 
         //是否存在
         $map['username'] = $username;
-        $map['type'] = 1;
+        // $map['type'] = 1;
         //用户信息
         $user = db('member')->where($map)->find();
         if (!$user) {
