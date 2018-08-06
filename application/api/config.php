@@ -63,7 +63,9 @@ return [
         'startondate'=>'start.ondate',
         'updatemember'=>'update.member',
         'filteritems'=>'filter.items',
-        'searchcounsellor'=>'search.counsellor'
+        'searchcounsellor'=>'search.counsellor',
+        'clca'=>'clca.index'
+
 
     ]
 ];
