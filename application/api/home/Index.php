@@ -1994,6 +1994,9 @@ class Index
         $mid = trim($params['account']);
 
         $map['type'] = $type;
+        if ($type==1||$type==2) {
+            $map['type'] = array('in','1,2');
+        }
         $map['mid'] = $mid;
         $info = db('cms_fav')->where($map)->select();
 
