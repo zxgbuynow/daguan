@@ -2021,7 +2021,7 @@ class Index
         //取数据
         foreach ($info as $key => $value) {
             $pop = $modl->where(['id'=>$value['fid']])->find();
-            @$data[$key]['title'] = isset($pop['username'])?$pop['username']:$pop['title'];
+            @$data[$key]['title'] = isset($pop['nickname'])?$pop['nickname']:$pop['title'];
             if ($type==0) {
                 if (is_numeric($pop['avar'])) {
                    $data[$key]['pic'] =  get_file_path($pop['avar']);
