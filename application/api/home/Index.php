@@ -1929,19 +1929,22 @@ class Index
             $info = db('cms_active')->where($map)->find();
         }
 
-        $info['pic'] = get_file_path($info['pic']);
+        if ($info) {
+            $info['pic'] = get_file_path($info['pic']);
 
-        $info['isfav'] = 0;//是否收藏
+            $info['isfav'] = 0;//是否收藏
 
-        //登录状态
-        if (isset($params['account'])) {//用户id
-            $map['type'] = $type;
-            $map['fid'] = $fid;
-            $map['mid'] = $params['account'];
-            if (db('cms_fav')->where($map)->find()) {
-               $info['isfav'] = 1;
+            //登录状态
+            if (isset($params['account'])) {//用户id
+                $map['type'] = $type;
+                $map['fid'] = $acid;
+                $map['mid'] = $params['account'];
+                if (db('cms_fav')->where($map)->find()) {
+                   $info['isfav'] = 1;
+                }
             }
         }
+        
 
         //返回信息
         $data = [
