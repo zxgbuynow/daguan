@@ -1991,7 +1991,10 @@ class Index
     {
 
         $type = trim($params['typeid']);
+        $mid = trim($params['account']);
+
         $map['type'] = $type;
+        $map['mid'] = $mid;
         $info = db('cms_fav')->where($map)->select();
 
         $modl = db('member');
