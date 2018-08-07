@@ -2040,6 +2040,7 @@ class Index
             if ($type==1||$type==2) {
                $data[$key]['pic'] =  get_file_path($pop['pic']);
             }
+            $data[$key]['id'] = $pop['id'];
             
         }
 
