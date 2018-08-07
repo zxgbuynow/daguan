@@ -1910,6 +1910,168 @@ class Index
         return json($data);
     }
 
+    /**
+     * [clcadetail 课程活动祥情]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function clcadetail_custom($params)
+    {
+        $type = trim($params['typeid']);
+        $acid = trim($params['acid']);
+        
+        $map['id'] = $acid;
+        if ($type==0) {//课程
+
+            $info = db('cms_classes')->where($map)->find();
+        }
+        if ($type==1) {//活动
+            $info = db('cms_active')->where($map)->find();
+        }
+
+        $info['pic'] = get_file_path($info['pic']);
+
+        $info['isfav'] = 0;//是否收藏
+
+        //登录状态
+        if (isset($params['account'])) {//用户id
+            $map['type'] = $type;
+            $map['fid'] = $fid;
+            $map['mid'] = $params['account'];
+            if (db('cms_fav')->where($map)->find()) {
+               $info['isfav'] = 1;
+            }
+        }
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$info
+        ];
+        return json($data);
+    }
+
+    /**
+     * [addfav 添加收藏]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function addfav_custom($params)
+    {
+        $type = trim($params['typeid']);
+        $fid = trim($params['fid']);
+        $mid = trim($params['account']);
+
+        $map['type'] = $type;
+        $map['fid'] = $fid;
+        $map['mid'] = $mid;
+        if (!db('cms_fav')->where($map)->find()) {
+            db('cms_fav')->insert($map);
+        }
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+
+    /**
+     * [favlist 收藏列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function favlist_custom($params)
+    {
+
+        $type = trim($params['typeid']);
+        $map['type'] = $type;
+        $info = db('cms_fav')->where($map)->select();
+
+        $modl = db('member');
+        switch ($type) {
+            case '0':
+                $modl = db('member');
+                break;
+            case '1':
+                $modl = db('cms_classes');
+                break;
+            case '2':
+                $modl = db('cms_active');
+                break;
+            case '3':
+                $modl = db('cms_page');
+                break;
+            
+            default:
+                $modl = db('member');
+                break;
+        }
+
+        $data = [];
+        //取数据
+        foreach ($info as $key => $value) {
+            $pop = $modl->where(['id'=>$value['fid']])->find();
+            @$data[$key]['title'] = isset($pop['username'])?$pop['username']:$pop['title'];
+            if ($type==0) {
+                if (is_numeric($pop['avar'])) {
+                   $data[$key]['pic'] =  get_file_path($pop['avar']);
+                }else{
+                    $data[$key]['pic'] =  $pop['avar'];
+                }
+            }
+            if ($type==3) {
+                if (is_numeric($pop['cover'])) {
+                   $data[$key]['pic'] =  get_file_path($pop['cover']);
+                }else{
+                    $data[$key]['pic'] =  $pop['cover'];
+                }
+            }
+
+            if ($type==1||$type==2) {
+               $data[$key]['pic'] =  get_file_path($pop['pic']);
+            }
+            
+        }
+
+        //返回信息
+        $res = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$data
+        ];
+        return json($res);
+    }
+
+    /**
+     * [clacorder_custom 课程活动订单列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function clacorder_custom($params)
+    {
+        $type = trim($params['typeid']);//订单类型
+
+        $map['paytype'] = $type;//2课程 或是 3 活动
+
+        //订单数据
+        // $info = db('trade')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->select();
+        $info = db('trade')->where($map)->select();
+
+        //返回信息
+        $res = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$info
+        ];
+        return json($res);
+
+
+    }
+
     /*
     |--------------------------------------------------------------------------
     | 商家版API

@@ -64,7 +64,11 @@ return [
         'updatemember'=>'update.member',
         'filteritems'=>'filter.items',
         'searchcounsellor'=>'search.counsellor',
-        'clca'=>'clca.index'
+        'clca'=>'clca.index',
+        'clcadetail'=>'clca.detail',
+        'addfav'=>'fav.add',
+        'favlist'=>'fav.list',
+        'clacorder'=>'clac.order'
 
 
     ]
