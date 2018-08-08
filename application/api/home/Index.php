@@ -3629,6 +3629,51 @@ class Index
         return json($data);
     }
 
+    /**
+     * [clcadetail_shop 课程活动祥情]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function clcadetail_shop($params)
+    {
+        $type = trim($params['typeid']);
+        $acid = trim($params['acid']);
+        
+        $map['id'] = $acid;
+        if ($type==0) {//课程
+
+            $info = db('cms_classes')->where($map)->find();
+        }
+        if ($type==1) {//活动
+            $info = db('cms_active')->where($map)->find();
+        }
+
+        if ($info) {
+            $info['pic'] = get_file_path($info['pic']);
+
+            $info['isfav'] = 0;//是否收藏
+
+            //登录状态
+            if (isset($params['account'])) {//用户id
+                $map['type'] = $type;
+                $map['fid'] = $acid;
+                $map['mid'] = $params['account'];
+                if (db('cms_fav')->where($map)->find()) {
+                   $info['isfav'] = 1;
+                }
+            }
+        }
+        
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$info
+        ];
+        return json($data);
+    }
+
     public function test_shop($params)
     {
         $a = Hx::test();
