@@ -2064,19 +2064,42 @@ class Index
      */
     public function clacorder_custom($params)
     {
-        $type = trim($params['typeid']);//订单类型
-
-        $map['paytype'] = $type;//2课程 或是 3 活动
-
+        // $type = trim($params['typeid']);//订单类型
+        $mid = trim($params['account']);
+        $map['paytype'] = array('in','2,3');//2课程 或是 3 活动
+        $map['memberid']= $mid;
         //订单数据
         // $info = db('trade')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->select();
         $info = db('trade')->where($map)->select();
+        $data = [];
+        foreach ($info as $key => $value) {
+            if ($value['paytype']==2) {//课程
+                $sm['id'] = $value['classid'];
+                $r = db('cms_classes')->where($sm)->find();
+                if ($r) {
+                    $data[$key]['pic'] =  get_file_path($r['pic']);
+                    $data[$key]['typeid'] = $value['paytype']==2?0:1;
+                    $data[$key]['id'] = $r['id'];
+                }
+                
+            }
 
+            if ($value['paytype']==3) {//活动
+                $sm['id'] = $value['classid'];
+                $r = db('cms_active')->where($sm)->find();
+                if ($r) {
+                    $data[$key]['pic'] =  get_file_path($r['pic']);
+                    $data[$key]['typeid'] = $value['paytype']==3?1:0;
+                    $data[$key]['id'] = $r['id'];
+                }
+                
+            }
+        }
         //返回信息
         $res = [
             'code'=>'1',
             'msg'=>'',
-            'data'=>$info
+            'data'=>$data
         ];
         return json($res);
 
