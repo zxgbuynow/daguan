@@ -2078,6 +2078,7 @@ class Index
                 $r = db('cms_classes')->where($sm)->find();
                 if ($r) {
                     $data[$key]['pic'] =  get_file_path($r['pic']);
+                    $data[$key]['title'] =  $r['title'];
                     $data[$key]['typeid'] = $value['paytype']==2?0:1;
                     $data[$key]['id'] = $r['id'];
                 }
@@ -2089,6 +2090,7 @@ class Index
                 $r = db('cms_active')->where($sm)->find();
                 if ($r) {
                     $data[$key]['pic'] =  get_file_path($r['pic']);
+                    $data[$key]['title'] =  $r['title'];
                     $data[$key]['typeid'] = $value['paytype']==3?1:0;
                     $data[$key]['id'] = $r['id'];
                 }
