@@ -138,6 +138,14 @@ class Pay
             if ($info['paytype']==1) {
                 db('member')->where(['id'=>$info['memberid']])->update(['is_diamonds'=>1]);
             }
+
+            if ($info['paytype']==2) {
+                db('cms_classes')->where(['id'=>$info['classid']])->setInc('num');
+            }
+
+            if ($info['paytype']==3) {
+                db('cms_active')->where(['id'=>$info['classid']])->setInc('num');
+            }
             
             db('trade')->where($where)->update($data);//修改订单状态
             db('msg')->where(['tid'=>$where['tid']])->update(['is_pay'=>1]);//修改订单状态
