@@ -3590,6 +3590,45 @@ class Index
         return json($data);
     }
 
+    /**
+     * [clca_shop 课程活动]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function clca_shop($params)
+    {
+
+        $cateid = trim($params['cateid']);
+        $page_no = trim($params['page_no']);
+        $page_size = trim($params['page_size']);
+
+        //活动结束的过滤
+        $map['endtime'] = array('gt',time());
+
+        if ($cateid != 'all') {
+            $map['cateid'] = $cateid;
+        }
+
+        $startpg = ($page_no-1)*$page_size;
+        $data = db('cms_clac_temp')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
+
+        foreach ($data as $key => $value) {
+            $data[$key]['pic'] =  get_file_path($value['pic']);
+        }
+        $pages = array(
+                'total'=>db('cms_clac_temp')->where($map)->count()
+            );
+        $trade['data']['pagers'] = $pages;
+        $trade['data']['list'] = array_values($data);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$trade
+        ];
+        return json($data);
+    }
+
     public function test_shop($params)
     {
         $a = Hx::test();
