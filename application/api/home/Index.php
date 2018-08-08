@@ -2108,6 +2108,70 @@ class Index
 
     }
 
+    public function createClacTrade_custom($params)
+    {
+        $clacid = trim($params['clacid']);
+        $account = trim($params['account']);
+        $paytype = trim($params['paytype']);
+
+        //取商品
+        $map['id'] = $clacid;
+        if ($paytype==2) {//课程
+            $goodsinfo = db('cms_classes')->where($map)->find();
+        }
+        if ($paytype==3) {//活动
+            $goodsinfo = db('cms_active')->where($map)->find();
+        }
+        
+
+        //shopid  uid tid payment title paytype
+        
+
+        $data['memberid'] = $account;
+        $data['payment'] = $goodsinfo['price'];
+        $data['created_time'] = time();
+        $data['num'] = 0;
+        $data['paytype'] = $paytype;
+
+        
+        $username = db('member')->where('id',$account)->column('nickname');
+
+        $data['title'] = $username[0].'购买了'.$goodsinfo['title'];
+        
+        //机构 取咨询师机构counsellor_id
+        $data['shopid'] = db('member')->where('id',$account)->value('shopid');
+        
+        //订单号
+        $data['tid'] = date('YmdHis',time()).rand(1000,9999);
+        //插入数据
+        $trade = db('trade')->insert($data);
+        if (!$trade) {
+            return $this->error('生成订单失败');
+        }
+
+        //生成消息
+        // $msg['type'] = 1;
+        // $msg['subtitle'] = '预约'.$counsellor[0].$str;
+        // $msg['title'] = '预约您的'.$str;
+        // $msg['descrption'] = $username[0].'预约您的'.$str;
+        // $msg['display'] = $username[0].'预约'.$counsellor[0].'的'.$str;
+        // $msg['sendid'] = $account;
+        // $msg['reciveid'] = $counsellor_id;
+        // $msg['tid'] = $data['tid'];
+
+        // $lastid = $this->create_msg($msg);
+        
+        $ret = array('tid'=>$data['tid'],'price'=>$goodsinfo['price']);
+
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$ret
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API
