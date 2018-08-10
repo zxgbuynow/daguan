@@ -3866,6 +3866,8 @@ class Index
                 $s = db('cms_active')->where(['id'=>$value['classid']])->find();
             }
             if ($s) {
+                $s['pic'] = get_file_path($s['pic']);
+                $s['type'] = $value['paytype']==2?0:1;
                 $rt[] = $s;
             }
             
