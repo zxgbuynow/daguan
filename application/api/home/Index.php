@@ -3702,7 +3702,7 @@ class Index
             }
             
             if ($uclac) {
-                $ret[$key]['pic'] = $uclac['pic'];
+                $ret[$key]['pic'] = get_file_path($uclac['pic']);
                 $ret[$key]['id'] = $uclac['classid'];
                 $ret[$key]['typeid'] = $value['type'];
                 $ret[$key]['title'] = $uclac['title'];
