@@ -3777,6 +3777,59 @@ class Index
         return json($data);
 
     }
+
+    /**
+     * [clcauserlist_shop 用户列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function clcauserlist_shop($params)
+    {
+        
+        //clacid  
+        $clacid = trim($params['clacid']);
+        $clactype = trim($params['clactype']);
+
+        if ($clactype==0) {//课程
+            $info = db('cms_classes')->where(['id'=>$clacid])->find();
+        }else{
+            $info = db('cms_active')->where(['id'=>$clacid])->find();
+        }
+
+        $rs = [];
+        if ($info) {
+            $rs['title'] = $info['title'];
+            //ulist
+            $typeid = $clactype == 0?2:3;
+            $map['classid'] = $clacid;
+            $map['paytype'] = $typeid;
+            $rs['ulist'] = db('trade')->alias('a')->field('b.id,b.username,b.nickname,b.sex,b.avar')->join('member b',' b.id = a.memberid','LEFT')->where($map)->select();
+
+            foreach ($rs['ulist'] as $key => $value) {
+                $rs['ulist'][$key]['sex']  = $value['sex']==0?'男':'女';
+
+                if (is_numeric($value['avar'])) {
+                    $value['avar'] = get_file_path($value['avar']);
+                }
+
+                $rs['ulist'][$key]['avar']  = $value['avar'];
+
+            }
+
+        }
+        
+        //title  ulist
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rs
+        ];
+        return json($data);
+
+    }
+
     public function test_shop($params)
     {
         $a = Hx::test();

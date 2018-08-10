@@ -71,7 +71,8 @@ return [
         'clacorder'=>'clac.order',
         'createClacTrade'=>'create.clactrade',
         'clcamanger'=>'clca.manger',
-        'clcamy'=>'clca.my'
+        'clcamy'=>'clca.my',
+        'clcauserlist'=>'clca.userlist'
 
 
     ]
