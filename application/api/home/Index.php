@@ -3808,7 +3808,7 @@ class Index
             foreach ($rs['ulist'] as $key => $value) {
                 $rs['ulist'][$key]['sex']  = $value['sex']==0?'男':'女';
 
-                if (is_numeric($value['avar'])) {
+                if (is_numeric($value['avar'])||$value['avar']==null) {
                     $value['avar'] = get_file_path($value['avar']);
                 }
 
