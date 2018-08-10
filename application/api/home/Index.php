@@ -3764,6 +3764,7 @@ class Index
             if ($value['endtime']<time()) {
                 continue;
             }
+            $value['pic'] = get_file_path($value['pic']);
             $rs[] = $value;
         }
 
