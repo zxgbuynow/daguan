@@ -70,7 +70,8 @@ return [
         'favlist'=>'fav.list',
         'clacorder'=>'clac.order',
         'createClacTrade'=>'create.clactrade',
-        'clcamanger'=>'clca.manger'
+        'clcamanger'=>'clca.manger',
+        'clcamy'=>'clca.my'
 
 
     ]

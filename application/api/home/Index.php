@@ -3743,6 +3743,39 @@ class Index
 
         
     }
+
+    /**
+     * [clcamy_shop 我的课程活动未结束的]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function clcamy_shop($params)
+    {
+
+        //account 
+        $account = trim($params['account']);
+
+        $map['adminid'] = $account;
+
+        $info = db('shop_classes_allot')->alias('a')->join('cms_clac_temp b',' b.classid = a.classid','LEFT')->where($map)->select();
+        $rs = [];
+
+        foreach ($info as $key => $value) {
+            if ($value['endtime']<time()) {
+                continue;
+            }
+            $rs[] = $value;
+        }
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rs
+        ];
+        return json($data);
+
+    }
     public function test_shop($params)
     {
         $a = Hx::test();
