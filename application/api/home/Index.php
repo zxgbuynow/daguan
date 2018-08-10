@@ -3601,6 +3601,7 @@ class Index
         $cateid = trim($params['cateid']);
         $page_no = trim($params['page_no']);
         $page_size = trim($params['page_size']);
+        $account = trim($params['account']);
 
         //活动结束的过滤
         $map['endtime'] = array('gt',time());
@@ -3609,6 +3610,8 @@ class Index
             $map['cateid'] = $cateid;
         }
 
+        //管理员
+        
         $startpg = ($page_no-1)*$page_size;
         $data = db('cms_clac_temp')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
 
@@ -3674,11 +3677,78 @@ class Index
         return json($data);
     }
 
+    /**
+     * [clcamanger_shop 课程活动管理]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function clcamanger_shop($params)
+    {
+        //account 
+        $account = trim($params['account']);
+
+        //
+        $info = db('cms_clac_temp')->select();
+        $count = db('cms_clac_temp')->count();
+        $ret = []; //ucount nlist flist  
+        $map['adminid'] = $account;
+        foreach ($info as $key => $value) {
+            $map['classid'] = $value['classid'];
+            //查询是否当前用户的
+            if ($value['type']==0) {//课程
+                $uclac = db('shop_classes_allot')->alias('a')->join('cms_classes b',' b.id = a.classid','LEFT')->where($map)->find();
+            }else{
+                $uclac = db('shop_classes_allot')->alias('a')->join('cms_active b',' b.id = a.classid','LEFT')->where($map)->find();
+            }
+            
+            if ($uclac) {
+                $ret[$key]['pic'] = $uclac['pic'];
+                $ret[$key]['id'] = $uclac['classid'];
+                $ret[$key]['typeid'] = $value['type'];
+                $ret[$key]['title'] = $uclac['title'];
+                $ret[$key]['start_time'] = $uclac['start_time'];
+                $ret[$key]['endtime'] = $uclac['endtime'];
+            }
+            
+            
+        }
+        $rs = [];
+        $rs['fcount'] = 0;
+        if ($ret) {
+            $nlist = [];
+            $flist = [];
+            foreach ($ret as $key => $value) {
+                if ($value['endtime']<time()) {
+                   $flist[] = $value; 
+                }
+                if ($value['endtime']>time()) {
+                   $nlist[] = $value; 
+                }
+            }
+            // $rs['list'] = $ret;
+            $rs['nlist'] = $nlist;
+            $rs['flist'] = $flist;
+            $rs['fcount'] = count($flist);
+            
+        }
+        $rs['count'] = $count;
+        $rs['ucount'] = count($ret);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rs
+        ];
+        return json($data);
+
+        
+    }
     public function test_shop($params)
     {
         $a = Hx::test();
         print_r($a);exit;
     }
+
     /*
     |--------------------------------------------------------------------------
     | 公用方法

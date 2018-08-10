@@ -69,7 +69,8 @@ return [
         'addfav'=>'fav.add',
         'favlist'=>'fav.list',
         'clacorder'=>'clac.order',
-        'createClacTrade'=>'create.clactrade'
+        'createClacTrade'=>'create.clactrade',
+        'clcamanger'=>'clca.manger'
 
 
     ]
