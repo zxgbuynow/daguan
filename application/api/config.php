@@ -72,7 +72,8 @@ return [
         'createClacTrade'=>'create.clactrade',
         'clcamanger'=>'clca.manger',
         'clcamy'=>'clca.my',
-        'clcauserlist'=>'clca.userlist'
+        'clcauserlist'=>'clca.userlist',
+        'clcauserinfo'=>'clca.userinfo'
 
 
     ]

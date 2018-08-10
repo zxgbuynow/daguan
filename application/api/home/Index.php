@@ -3806,7 +3806,7 @@ class Index
             $rs['ulist'] = db('trade')->alias('a')->field('b.id,b.username,b.nickname,b.sex,b.avar')->join('member b',' b.id = a.memberid','LEFT')->where($map)->select();
 
             foreach ($rs['ulist'] as $key => $value) {
-                $rs['ulist'][$key]['sex']  = $value['sex']==0?'男':'女';
+                $rs['ulist'][$key]['sex']  = $value['sex']==1?'男':'女';
 
                 if (is_numeric($value['avar'])||$value['avar']==null) {
                     $value['avar'] = get_file_path($value['avar']);
@@ -3829,6 +3829,61 @@ class Index
         return json($data);
 
     }
+
+    /**
+     * [clcauserinfo 用户信息]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function clcauserinfo_shop($params)
+    {
+        $uid = trim($params['uid']);
+
+        //用户
+        $uinfo = db('member')->field('username,nickname,avar,sex,preference')->where(['id'=>$uid])->find();
+
+        if (is_numeric($uinfo['avar'])||$uinfo['avar']==null) {
+            $uinfo['avar'] = get_file_path($uinfo['avar']);
+        }
+        $uinfo['sex'] = $uinfo['sex']==1?'男':'女';
+
+        if ($uinfo['preference']) {
+            $pmap['id'] = array('in',$uinfo['preference']);
+            $uinfo['preference'] = db('cms_category')->where($pmap)->value('title');
+        }
+        
+        //课程
+        $tmap['memberid'] = $uid;
+        $tmap['paytype'] = array('in','2,3');
+        $trade = db('trade')->where($tmap)->select();
+            
+        $rt = [];
+        foreach ($trade as $key => $value) {
+            if ($value['paytype']==2) {
+                $s = db('cms_classes')->where(['id'=>$value['classid']])->find();
+            }
+            if ($value['paytype']==3) {
+                $s = db('cms_active')->where(['id'=>$value['classid']])->find();
+            }
+            if ($s) {
+                $rt[] = $s;
+            }
+            
+        }
+
+        $rs = [];
+        $rs['user'] = $uinfo;
+        $rs['trade'] = $rt;
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rs
+        ];
+        return json($data);
+    }
+
 
     public function test_shop($params)
     {
