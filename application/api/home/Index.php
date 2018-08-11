@@ -1936,7 +1936,7 @@ class Index
 
             //登录状态
             if (isset($params['account'])) {//用户id
-                $amap['type'] = $type;
+                $amap['type'] = $type==0?1:2;
                 $amap['fid'] = $acid;
                 $amap['mid'] = $params['account'];
                 if (db('cms_fav')->where($amap)->find()) {
