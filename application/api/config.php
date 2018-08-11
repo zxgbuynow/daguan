@@ -73,7 +73,8 @@ return [
         'clcamanger'=>'clca.manger',
         'clcamy'=>'clca.my',
         'clcauserlist'=>'clca.userlist',
-        'clcauserinfo'=>'clca.userinfo'
+        'clcauserinfo'=>'clca.userinfo',
+        'clacshare'=>'clac.share'
 
 
     ]

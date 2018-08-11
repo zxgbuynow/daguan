@@ -2172,6 +2172,46 @@ class Index
         ];
         return json($data);
     }
+
+    /**
+     * [clacshare_custom 分享]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function clacshare_custom($params)
+    {
+        $account = trim($params['account']);
+
+        $set = db('cms_coupon_set')->find();
+        if ($set) {
+            $map['memberid'] = $account;
+            if (db('cms_coupon')->where($map)->whereTime('created_time','today')->find()) {
+                return $this->error('今日优惠券已发完，请明天参与');   
+            }
+            $n = rand($set['min'], $set['max']);
+            $data['title'] = $n.'元抵用券';
+            $data['price'] = $n;
+            $data['created_time'] = time();
+            $data['memberid'] = $account;
+
+            db('cms_coupon')->insert($data);
+            //返回信息
+            $data = [
+                'code'=>'1',
+                'msg'=>'',
+                'data'=>$data['title']
+            ];
+            return json($data);
+        }
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API
