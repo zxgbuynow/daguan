@@ -3708,6 +3708,7 @@ class Index
                 $ret[$key]['title'] = $uclac['title'];
                 $ret[$key]['start_time'] = $uclac['start_time'];
                 $ret[$key]['endtime'] = $uclac['endtime'];
+                $ret[$key]['address'] = $uclac['address'];
             }
             
             
