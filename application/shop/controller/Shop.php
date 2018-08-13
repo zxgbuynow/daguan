@@ -47,7 +47,6 @@ class Shop extends Common
         if (!$this->request->isAjax()) {
             // 读取顶部菜单
             $this->assign('_top_menus', MenuModel::getTopMenu(config('top_menu_max'), '_top_menus'));
-
             // 读取全部顶级菜单
             $this->assign('_top_menus_all', MenuModel::getTopMenu('', '_top_menus_all'));
             // 获取侧边栏菜单

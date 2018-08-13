@@ -16,7 +16,7 @@ class Database extends Admin
     /**
      * 数据库管理
      * @param string $group 分组
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function index($group = 'export')
@@ -159,7 +159,7 @@ class Database extends Admin
      * 备份数据库(参考onthink 麦当苗儿 <zuojiazi@vip.qq.com>)
      * @param null|array $ids 表名
      * @param integer $start 起始行数
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function export($ids = null, $start = 0)
     {
@@ -227,7 +227,7 @@ class Database extends Admin
     /**
      * 还原数据库(参考onthink 麦当苗儿 <zuojiazi@vip.qq.com>)
      * @param int $time 文件时间戳
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function import($time = 0)
     {
@@ -276,7 +276,7 @@ class Database extends Admin
     /**
      * 优化表
      * @param null|string|array $ids 表名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function optimize($ids = null)
     {
@@ -311,7 +311,7 @@ class Database extends Admin
     /**
      * 修复表
      * @param null|string|array $ids 表名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function repair($ids = null)
     {
@@ -346,7 +346,7 @@ class Database extends Admin
     /**
      * 删除备份文件
      * @param int $ids 备份时间
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function delete($ids = 0)

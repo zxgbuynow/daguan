@@ -17,7 +17,7 @@ class Index extends Admin
 {
     /**
      * 后台首页
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     public function index()
@@ -33,7 +33,7 @@ class Index extends Admin
 
     /**
      * 清空系统缓存
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function wipeCache()
     {
@@ -58,7 +58,7 @@ class Index extends Admin
 
     /**
      * 个人设置
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function profile()
     {
@@ -103,7 +103,7 @@ class Index extends Admin
 
     /**
      * 检查版本更新
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return \think\response\Json
      */
     public function checkUpdate()

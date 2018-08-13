@@ -9,7 +9,7 @@ use think\Exception;
 /**
  * 表单构建器
  * @package app\common\builder\type
- * @author 蔡伟明 <314013107@qq.com>
+ * @author zg
  */
 class Builder extends ZBuilder
 {
@@ -62,7 +62,7 @@ class Builder extends ZBuilder
 
     /**
      * 初始化
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function _initialize()
     {
@@ -74,7 +74,7 @@ class Builder extends ZBuilder
      * 模板变量赋值
      * @param mixed $name 要显示的模板变量
      * @param string $value 变量的值
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function assign($name, $value = '')
@@ -90,7 +90,7 @@ class Builder extends ZBuilder
     /**
      * 设置页面标题
      * @param string $title 页面标题
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function setPageTitle($title = '')
@@ -105,7 +105,7 @@ class Builder extends ZBuilder
      * 设置表单页提示信息
      * @param string $tips 提示信息
      * @param string $type 提示类型：success,info,danger,warning
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function setPageTips($tips = '', $type = 'info')
@@ -120,7 +120,7 @@ class Builder extends ZBuilder
     /**
      * 设置表单提交地址
      * @param string $post_url 提交地址
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function setUrl($post_url = '')
@@ -134,7 +134,7 @@ class Builder extends ZBuilder
     /**
      * 隐藏按钮
      * @param array|string $btn 要隐藏的按钮，如：['submit']，其中'submit'->确认按钮，'back'->返回按钮
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function hideBtn($btn = [])
@@ -148,7 +148,7 @@ class Builder extends ZBuilder
     /**
      * 添加底部额外按钮
      * @param string $btn 按钮内容
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function addBtn($btn = '')
@@ -163,7 +163,7 @@ class Builder extends ZBuilder
      * 设置按钮标题
      * @param string|array $btn 按钮名 'submit' -> “提交”，'back' -> “返回”
      * @param string $title 按钮标题
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function setBtnTitle($btn = '', $title = '')
@@ -180,7 +180,7 @@ class Builder extends ZBuilder
 
     /**
      * 设置提交表单时显示确认框
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function submitConfirm()
@@ -191,7 +191,7 @@ class Builder extends ZBuilder
 
     /**
      * 隐藏表单头部标题
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function hideHeaderTitle()
@@ -203,7 +203,7 @@ class Builder extends ZBuilder
     /**
      * 设置表单头部标题
      * @param string $title 标题
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function setHeaderTitle($title = '')
@@ -218,7 +218,7 @@ class Builder extends ZBuilder
      * @param string $values 触发的值
      * @param string $show 触发后要显示的表单项名，目前不支持普通联动、范围、拖动排序、静态文本
      * @param bool $clear 是否清除值
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function setTrigger($trigger = '', $values = '', $show = '', $clear = true)
@@ -244,7 +244,7 @@ class Builder extends ZBuilder
     /**
      * 添加触发
      * @param array $triggers 触发数组
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function addTrigger($triggers = [])
@@ -276,7 +276,7 @@ class Builder extends ZBuilder
      * @param string $title 标题
      * @param string $tips 提示
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addArchive($name = '', $title = '', $tips = '', $extra_class = '')
@@ -303,7 +303,7 @@ class Builder extends ZBuilder
      * @param string $title 标题
      * @param string $tips 提示
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addArchives($name = '', $title = '', $tips = '', $extra_class = '')
@@ -334,7 +334,7 @@ class Builder extends ZBuilder
      * @param string $address 默认地址
      * @param string $level 地图显示级别
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addBmap($name = '', $title = '', $ak = '', $tips = '', $default = '', $address = '', $level = '', $extra_class = '')
@@ -364,7 +364,7 @@ class Builder extends ZBuilder
      * @param string $name 表单项名，也是按钮id
      * @param array $attr 按钮属性
      * @param string $ele_type 按钮类型，默认为button，也可以为a标签
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this|array
      */
     public function addButton($name = '', $attr = [], $ele_type = 'button')
@@ -406,7 +406,7 @@ class Builder extends ZBuilder
      *      shape-形状(rounded,square)，默认rounded
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addCheckbox($name = '', $title = '', $tips = '', $options = [], $default = '', $attr = [], $extra_attr = '', $extra_class = '')
@@ -441,7 +441,7 @@ class Builder extends ZBuilder
      * @param integer $height 编辑器高度，默认400px
      * @param string $default 默认值
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addCkeditor($name = '', $title = '', $tips = '', $default = '', $width = '100%', $height = 400, $extra_class = '')
@@ -474,7 +474,7 @@ class Builder extends ZBuilder
      * @param string $mode 模式：默认为rgba(含透明度)，也可以是rgb
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addColorpicker($name = '', $title = '', $tips = '', $default = '', $mode = 'rgba', $extra_attr = '', $extra_class = '')
@@ -507,7 +507,7 @@ class Builder extends ZBuilder
      * @param string $format 日期格式
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addDate($name = '', $title = '', $tips = '', $default = '', $format = '', $extra_attr = '', $extra_class = '')
@@ -540,7 +540,7 @@ class Builder extends ZBuilder
      * @param string $format 格式
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addDaterange($name = '', $title = '', $tips = '', $default = '', $format = '', $extra_attr = '', $extra_class = '')
@@ -597,7 +597,7 @@ class Builder extends ZBuilder
      * @param string $format 日期时间格式
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addDatetime($name = '', $title = '', $tips = '', $default = '', $format = '', $extra_attr = '', $extra_class = '')
@@ -629,7 +629,7 @@ class Builder extends ZBuilder
      * @param string $default 默认值
      * @param bool $watch 是否实时预览
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addEditormd($name = '', $title = '', $tips = '', $default = '', $watch = true, $extra_class = '')
@@ -661,7 +661,7 @@ class Builder extends ZBuilder
      * @param string $size 文件大小，单位为kb
      * @param string $ext 文件后缀
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addFile($name = '', $title = '', $tips = '', $default = '', $size = '', $ext = '', $extra_class = '')
@@ -697,7 +697,7 @@ class Builder extends ZBuilder
      * @param string $size 图片大小，单位为kb
      * @param string $ext 文件后缀
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addFiles($name = '', $title = '', $tips = '', $default = '', $size = '', $ext = '', $extra_class = '')
@@ -731,7 +731,7 @@ class Builder extends ZBuilder
      * @param string $tips 提示
      * @param string $default 默认值
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addGallery($name = '', $title = '', $tips = '', $default = '', $extra_class = '')
@@ -756,7 +756,7 @@ class Builder extends ZBuilder
     /**
      * 添加分组
      * @param array $groups 分组数据
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addGroup($groups = [])
@@ -793,7 +793,7 @@ class Builder extends ZBuilder
      * @param string $name 表单项名
      * @param string $default 默认值
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addHidden($name = '', $default = '', $extra_class = '')
@@ -821,7 +821,7 @@ class Builder extends ZBuilder
      * @param string $default 默认值
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addIcon($name = '', $title = '', $tips = '', $default = '', $extra_attr = '', $extra_class = '')
@@ -853,7 +853,7 @@ class Builder extends ZBuilder
      * @param string $size 图片大小，单位为kb，0为不限制
      * @param string $ext 文件后缀
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addImage($name = '', $title = '', $tips = '', $default = '', $size = '', $ext = '', $extra_class = '')
@@ -889,7 +889,7 @@ class Builder extends ZBuilder
      * @param string $size 图片大小，单位为kb，0为不限制
      * @param string $ext 文件后缀
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addImages($name = '', $title = '', $tips = '', $default = '', $size = '', $ext = '', $extra_class = '')
@@ -924,7 +924,7 @@ class Builder extends ZBuilder
      * @param string $default 默认值
      * @param array $options 参数
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addJcrop($name = '', $title = '', $tips = '', $default = '', $options = [], $extra_class = '')
@@ -972,7 +972,7 @@ class Builder extends ZBuilder
      * @param string $param 指定请求参数的key名称，默认为$name的值
      *      比如$param为“key”
      *      那么请求数据的时候会发送参数key=某个下拉框选项值
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addLinkage($name = '', $title = '', $tips = '', $options = [], $default = '', $ajax_url = '', $next_items = '', $param = '')
@@ -1006,7 +1006,7 @@ class Builder extends ZBuilder
      * @param int $level 级别
      * @param string $default 默认值
      * @param array|string $fields 字段名，默认为id,name,pid
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addLinkages($name = '', $title = '', $tips = '', $table = '', $level = 2, $default = '', $fields = [])
@@ -1065,7 +1065,7 @@ class Builder extends ZBuilder
      * @param string $default 默认值
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addMasked($name = '', $title = '', $tips = '', $format = '', $default = '', $extra_attr = '', $extra_class = '')
@@ -1100,7 +1100,7 @@ class Builder extends ZBuilder
      * @param string $step 步进值
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addNumber($name = '', $title = '', $tips = '', $default = '', $min = '', $max = '', $step = '', $extra_attr = '', $extra_class = '')
@@ -1140,7 +1140,7 @@ class Builder extends ZBuilder
      * @param string $default 默认值
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addPassword($name = '', $title = '', $tips = '', $default = '', $extra_attr = '', $extra_class = '')
@@ -1181,7 +1181,7 @@ class Builder extends ZBuilder
      *      size-尺寸(sm,nm,lg)，默认sm
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addRadio($name = '', $title = '', $tips = '', $options = [], $default = '', $attr = [], $extra_attr = '', $extra_class = '')
@@ -1216,7 +1216,7 @@ class Builder extends ZBuilder
      * @param array $options 参数
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addRange($name = '', $title = '', $tips = '', $default = '', $options = [], $extra_attr = '', $extra_class = '')
@@ -1252,7 +1252,7 @@ class Builder extends ZBuilder
      * @param string $default 默认值
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addSelect($name = '', $title = '', $tips = '', $options = [], $default = '', $extra_attr = '', $extra_class = '')
@@ -1298,7 +1298,7 @@ class Builder extends ZBuilder
      * @param string $tips 提示
      * @param array $value 值
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addSort($name = '', $title = '', $tips = '', $value = [], $extra_class = '')
@@ -1335,7 +1335,7 @@ class Builder extends ZBuilder
      * @param string $default 默认值
      * @param string $hidden 需要提交的值
      * @param string $extra_class 额外css类
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addStatic($name = '', $title = '', $tips = '', $default = '', $hidden = '', $extra_class = '')
@@ -1367,7 +1367,7 @@ class Builder extends ZBuilder
      * @param string $width 编辑器宽度
      * @param int $height 编辑器高度
      * @param string $extra_class
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addSummernote($name = '', $title = '', $tips = '', $default = '', $width = '100%', $height = 350, $extra_class = '')
@@ -1403,7 +1403,7 @@ class Builder extends ZBuilder
      *      shape-形状(rounded,square)，默认rounded
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addSwitch($name = '', $title = '', $tips = '', $default = '', $attr = [], $extra_attr = '', $extra_class = '')
@@ -1435,7 +1435,7 @@ class Builder extends ZBuilder
      * @param string $tips 提示
      * @param string $default 默认值
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addTags($name = '', $title = '', $tips = '', $default = '', $extra_class = '')
@@ -1466,7 +1466,7 @@ class Builder extends ZBuilder
      * @param array $group 标签组，可以在文本框前后添加按钮或者文字
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addText($name = '', $title = '', $tips = '', $default = '', $group = [], $extra_attr = '', $extra_class = '')
@@ -1504,7 +1504,7 @@ class Builder extends ZBuilder
      * @param string $default 默认值
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addTextarea($name = '', $title = '', $tips = '', $default = '', $extra_attr = '', $extra_class = '')
@@ -1542,7 +1542,7 @@ class Builder extends ZBuilder
      * @param string $format 日期时间格式
      * @param string $extra_attr 额外属性
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addTime($name = '', $title = '', $tips = '', $default = '', $format = '', $extra_attr = '', $extra_class = '')
@@ -1573,7 +1573,7 @@ class Builder extends ZBuilder
      * @param string $tips 提示
      * @param string $default 默认值
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addUeditor($name = '', $title = '', $tips = '', $default = '', $extra_class = '')
@@ -1602,7 +1602,7 @@ class Builder extends ZBuilder
      * @param string $tips 提示
      * @param string $default 默认值
      * @param string $extra_class 额外css类名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function addWangeditor($name = '', $title = '', $tips = '', $default = '', $extra_class = '')
@@ -1629,7 +1629,7 @@ class Builder extends ZBuilder
      * 这个是addCheckbox等方法的别名方法，第一个参数传表单项类型，其余参数与各自方法中的参数一致
      * @param string $type 表单项类型
      * @param string $name 表单项名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function addFormItem($type = '', $name = '')
@@ -1653,7 +1653,7 @@ class Builder extends ZBuilder
     /**
      * 一次性添加多个表单项
      * @param array $items 表单项
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function addFormItems($items = [])
@@ -1669,7 +1669,7 @@ class Builder extends ZBuilder
     /**
      * 直接设置表单项数据
      * @param array $items 表单项数据
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function setFormItems($items = [])
@@ -1696,7 +1696,7 @@ class Builder extends ZBuilder
      * 扩展额外表单项
      * @param $methodName
      * @param $argument
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      * @throws Exception
      */
@@ -1738,7 +1738,7 @@ class Builder extends ZBuilder
      * 解析扩展表单项资源url
      * @param array $urls 资源url
      * @param string $type 表单项类型名称
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array
      */
     private function parseUrl($urls = [], $type = '')
@@ -1755,7 +1755,7 @@ class Builder extends ZBuilder
      * 设置Tab按钮列表
      * @param array $tab_list Tab列表 如：['tab1' => ['title' => '标题', 'url' => 'http://www.dolphinphp.com']]
      * @param string $curr_tab 当前tab名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function setTabNav($tab_list = [], $curr_tab = '')
@@ -1772,7 +1772,7 @@ class Builder extends ZBuilder
     /**
      * 设置表单数据
      * @param array $form_data 表单数据
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function setFormData($form_data = [])
@@ -1787,7 +1787,7 @@ class Builder extends ZBuilder
      * 设置额外HTML代码
      * @param string $extra_html 额外HTML代码
      * @param string $tag 标记
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function setExtraHtml($extra_html = '', $tag = '')
@@ -1802,7 +1802,7 @@ class Builder extends ZBuilder
     /**
      * 设置额外JS代码
      * @param string $extra_js 额外JS代码
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function setExtraJs($extra_js = '')
@@ -1816,7 +1816,7 @@ class Builder extends ZBuilder
     /**
      * 设置额外CSS代码
      * @param string $extra_css 额外CSS代码
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function setExtraCss($extra_css = '')
@@ -1830,7 +1830,7 @@ class Builder extends ZBuilder
     /**
      * 表单项布局
      * @param array $column 布局参数 ['表单项名' => 所占宽度,....]
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function layout($column = [])
@@ -1872,7 +1872,7 @@ class Builder extends ZBuilder
     /**
      * 设置表单提交方式
      * @param string $value 提交方式
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function method($value = '')
@@ -1905,7 +1905,7 @@ class Builder extends ZBuilder
     /**
      * 设置ajax方式提交
      * @param bool $ajax_submit 默认true，false为关闭ajax方式提交
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function isAjax($ajax_submit = true)
@@ -1917,7 +1917,7 @@ class Builder extends ZBuilder
     /**
      * 设置模版路径
      * @param string $template 模板路径
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     public function setTemplate($template = '')
@@ -1931,7 +1931,7 @@ class Builder extends ZBuilder
     /**
      * 根据表单项类型，加载不同js和css文件，并合并
      * @param string $type 表单项类型
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     private function loadMinify($type = '')
     {
@@ -2039,7 +2039,7 @@ class Builder extends ZBuilder
 
     /**
      * 设置表单项的值
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     private function setFormValue()
     {
@@ -2142,7 +2142,7 @@ class Builder extends ZBuilder
      * @param array  $vars     模板输出变量
      * @param array  $replace  模板替换
      * @param array  $config   模板参数
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function fetch($template = '', $vars = [], $replace = [], $config = [])

@@ -14,7 +14,7 @@ use app\shop\model\Plugin as SPluginModel;
 /**
  * 注册钩子
  * @package app\common\behavior
- * @author 蔡伟明 <314013107@qq.com>
+ * @author zg
  */
 class Hook
 {

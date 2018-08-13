@@ -43,6 +43,19 @@ class Trade extends Shop
         //用户列表
         $counsellor_list =  CounsellorModel::where('status', 1)->column('id,username');
 
+        $btncancle = [
+            // 'class' => 'btn btn-info',
+            'title' => '取消',
+            'icon'  => 'fa fa-fw fa-times-circle',
+            'href'  => url('cancle', ['id' => '__id__'])
+        ];
+
+        $btnfrzee = [
+            // 'class' => 'btn btn-info',
+            'title' => '冰结',
+            'icon'  => 'fa fa-fw fa-snowflake-o',
+            'href'  => url('frzee', ['id' => '__id__'])
+        ];
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
@@ -63,6 +76,9 @@ class Trade extends Shop
             ])
             // ->addTopButtons('delete') // 批量添加顶部按钮
             // ->addRightButtons('delete') // 批量添加右侧按钮
+            ->addRightButton('custom', $btncancle) // 添加右侧按钮
+            ->addRightButton('custom', $btnfrzee) // 添加右侧按钮
+            ->replaceRightButton(['status' => ['>', 1]], '', ['custom'])
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
@@ -175,6 +191,39 @@ class Trade extends Shop
             ->fetch();
     }
 
+    /**
+     * [cancle description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function cancle($id = null)
+    {
+        if (!$id) {
+            $this->error('操作失败');
+        }
+        if (db('trade')->where(['id'=>$id])->update(['status'=>2])) {
+            $this->success('取消成功', url('index'));
+        }else{
+            $this->error('操作失败');
+        }
+    }
+
+    /**
+     * [frzee description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function frzee($id = null)
+    {
+        if (!$id) {
+            $this->error('操作失败');
+        }
+        if (db('trade')->where(['id'=>$id])->update(['status'=>3])) {
+            $this->success('冻结成功', url('index'));
+        }else{
+            $this->error('操作失败');
+        }
+    }
    
     /**
      * 删除用户

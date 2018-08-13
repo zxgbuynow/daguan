@@ -9,7 +9,7 @@ use think\Exception;
 /**
  * 插件类
  * @package app\common\controller
- * @author 蔡伟明 <314013107@qq.com>
+ * @author zg
  */
 abstract class Plugin
 {
@@ -47,7 +47,7 @@ abstract class Plugin
 
     /**
      * 获取插件名称
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     final public function getName()
@@ -64,7 +64,7 @@ abstract class Plugin
      * @param array $config 模板参数
      * @param bool $renderContent 是否渲染内容
      * @throws Exception
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     final protected function fetch($template = '', $vars = [], $replace = [], $config = [], $renderContent = false)
     {
@@ -84,7 +84,7 @@ abstract class Plugin
      * 模板变量赋值
      * @param string $name 要显示的模板变量
      * @param string $value 变量的值
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return $this
      */
     final protected function assign($name = '', $value='')
@@ -96,7 +96,7 @@ abstract class Plugin
     /**
      * 获取插件配置值，先从数据库获取，如果没有则从插件配置文件获取
      * @param string $name 插件名称
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array|mixed
      */
     final public function getConfigValue($name='')
@@ -126,7 +126,7 @@ abstract class Plugin
 
     /**
      * 获取错误信息
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     final public function getError()
@@ -136,14 +136,14 @@ abstract class Plugin
 
     /**
      * 必须实现安装方法
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     abstract public function install();
 
     /**
      * 必须实现卸载方法
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     abstract public function uninstall();

@@ -7,7 +7,7 @@ use think\Cache;
 use think\helper\Hash;
 use think\Db;
 use app\common\builder\ZBuilder;
-use app\user\model\User as UserModel;
+use app\shop\model\User as UserModel;
 
 /**
  * 后台默认控制器
@@ -75,7 +75,7 @@ class Index extends Shop
             }
 
             $UserModel = new UserModel();
-            if ($user = $UserModel->allowField(['nickname', 'email', 'password', 'mobile', 'avatar'])->update($data)) {
+            if ($user = $UserModel->allowField(['nickname', 'email', 'password', 'mobile', 'avatar','alipay','weixin','unioncard'])->update($data)) {
                 // 记录行为
                 action_shop_log('user_edit', 'shop_user', UID, UID, get_shop_nickname(UID));
                 $this->success('编辑成功');
@@ -86,13 +86,15 @@ class Index extends Shop
 
         // 获取数据
         $info = UserModel::where('id', UID)->field('password', true)->find();
-
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->addFormItems([ // 批量添加表单项
                 ['static', 'username', '用户名', '不可更改'],
                 ['text', 'nickname', '昵称', '可以是中文'],
                 ['text', 'email', '邮箱', ''],
+                ['text', 'alipay', '收款支付宝', ''],
+                ['text', 'weixin', '收款微信', ''],
+                ['text', 'unioncard', '收款银行卡', ''],
                 ['password', 'password', '密码', '必填，6-20位'],
                 ['text', 'mobile', '手机号'],
                 ['image', 'avatar', '头像']

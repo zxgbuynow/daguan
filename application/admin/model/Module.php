@@ -19,7 +19,7 @@ class Module extends Model
 
     /**
      * 获取所有模块的名称和标题
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public static function getModule()
@@ -39,7 +39,7 @@ class Module extends Model
      * 获取所有模块信息
      * @param string $keyword 查找关键词
      * @param string $status 查找状态
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array|bool
      */
     public function getAll($keyword = '', $status = '')
@@ -193,7 +193,7 @@ class Module extends Model
     /**
      * 从文件获取模块信息
      * @param string $name 模块名称
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array|mixed
      */
     public static function getInfoFromFile($name = '')
@@ -211,7 +211,7 @@ class Module extends Model
     /**
      * 检查模块模块信息是否完整
      * @param string $info 模块模块信息
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return bool
      */
     private function checkInfo($info = '')
@@ -229,7 +229,7 @@ class Module extends Model
      * 获取模型配置信息
      * @param string $name 模型名
      * @param string $item 指定返回的模块配置项
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public static function getConfig($name = '', $item = '')
@@ -319,7 +319,7 @@ class Module extends Model
     /**
      * 从文件获取模块菜单
      * @param string $name 模块名称
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return array|mixed
      */
     public static function getMenusFromFile($name = '')

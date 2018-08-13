@@ -52,6 +52,7 @@ class Member extends Admin
                 ['mobile', '手机号'],
                 ['shopid', '机构', 'select', $list_type],
                 ['create_time', '创建时间', 'datetime'],
+                ['is_diamonds', '心窝会员', 'switch'],
                 ['status', '状态', 'switch'],
                 ['right_button', '操作', 'btn']
             ])
@@ -65,7 +66,7 @@ class Member extends Admin
 
     /**
      * 新增
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function add()
@@ -107,7 +108,7 @@ class Member extends Admin
     /**
      * 编辑
      * @param null $id 用户id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function edit($id = null)
@@ -223,7 +224,7 @@ class Member extends Admin
     /**
      * 删除用户
      * @param array $ids 用户id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function delete($ids = [])
@@ -235,7 +236,7 @@ class Member extends Admin
     /**
      * 启用用户
      * @param array $ids 用户id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function enable($ids = [])
@@ -247,7 +248,7 @@ class Member extends Admin
     /**
      * 禁用用户
      * @param array $ids 用户id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function disable($ids = [])
@@ -260,7 +261,7 @@ class Member extends Admin
      * 设置用户状态：删除、禁用、启用
      * @param string $type 类型：delete/enable/disable
      * @param array $record
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function setStatus($type = '', $record = [])
@@ -273,7 +274,7 @@ class Member extends Admin
     /**
      * 快速编辑
      * @param array $record 行为日志
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function quickEdit($record = [])

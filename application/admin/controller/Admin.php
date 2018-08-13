@@ -21,7 +21,7 @@ class Admin extends Common
 {
     /**
      * 初始化
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     protected function _initialize()
     {
@@ -80,7 +80,7 @@ class Admin extends Common
 
     /**
      * 获取当前操作模型
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return object|\think\db\Query
      */
     final protected function getCurrModel()
@@ -118,7 +118,7 @@ class Admin extends Common
 
     /**
      * 设置分页参数
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     final protected function setPageParam()
     {
@@ -130,7 +130,7 @@ class Admin extends Common
 
     /**
      * 检查是否登录，没有登录则跳转到登录页面
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return int
      */
     final protected function isLogin()
@@ -148,7 +148,7 @@ class Admin extends Common
     /**
      * 禁用
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function disable($record = [])
@@ -159,7 +159,7 @@ class Admin extends Common
     /**
      * 启用
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function enable($record = [])
@@ -170,7 +170,7 @@ class Admin extends Common
     /**
      * 启用
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function delete($record = [])
@@ -181,7 +181,7 @@ class Admin extends Common
     /**
      * 快速编辑
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function quickEdit($record = [])
     {
@@ -377,7 +377,7 @@ class Admin extends Common
      * 禁用、启用、删除都是调用这个内部方法
      * @param string $type 操作类型：enable,disable,delete
      * @param array $record 行为日志内容
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function setStatus($type = '', $record = [])
@@ -397,12 +397,10 @@ class Admin extends Common
             config('database.prefix').'admin_role',
             config('database.prefix').'admin_module',
         ];
-
         // 禁止操作核心表的主要数据
         if (in_array($Model->getTable(), $protect_table) && in_array('1', $ids)) {
             $this->error('禁止操作');
         }
-
         // 主键名称
         $pk = $Model->getPk();
         $map[$pk] = ['in', $ids];
@@ -437,7 +435,7 @@ class Admin extends Common
 
     /**
      * 模块设置
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function moduleConfig()

@@ -15,7 +15,7 @@ class Log extends Admin
 {
     /**
      * 日志列表
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function index()
@@ -54,7 +54,7 @@ class Log extends Admin
     /**
      * 日志详情
      * @param null $id 日志id
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function details($id = null)
     {

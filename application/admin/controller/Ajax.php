@@ -22,7 +22,7 @@ class Ajax extends Common
      * @param string $key 下拉选项的值
      * @param string $option 下拉选项的名称
      * @param string $pidkey 父级id字段名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return \think\response\Json
      */
     public function getLevelData($table = '', $pid = 0, $key = 'id', $option = 'name', $pidkey = 'pid')
@@ -56,7 +56,7 @@ class Ajax extends Common
      * @param array $map 查询条件
      * @param string $options 选项，用于显示转换
      * @param string $list 选项缓存列表名称
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return \think\response\Json
      */
     public function getFilterList($table = '', $field = '', $map = [], $options = '', $list = '')
@@ -123,7 +123,7 @@ class Ajax extends Common
     /**
      * 获取指定模块的菜单
      * @param string $module 模块名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return mixed
      */
     public function getModuleMenus($module = '')
@@ -140,7 +140,7 @@ class Ajax extends Common
     /**
      * 设置配色方案
      * @param string $theme 配色名称
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      */
     public function setTheme($theme = '') {
         $map['name'] = 'system_color';
@@ -157,7 +157,7 @@ class Ajax extends Common
      * @param string $module_id 模块id
      * @param string $module 模型名
      * @param string $controller 控制器名
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return string
      */
     public function getSidebarMenu($module_id = '', $module = '', $controller = '')
@@ -182,7 +182,7 @@ class Ajax extends Common
     /**
      * 检查附件是否存在
      * @param string $md5 文件md5
-     * @author 蔡伟明 <314013107@qq.com>
+     * @author zg
      * @return \think\response\Json
      */
     public function check($md5 = '')

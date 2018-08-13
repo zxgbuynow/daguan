@@ -76,7 +76,12 @@ class Trade extends Admin
             'icon'  => 'fa fa-fw fa-snowflake-o',
             'href'  => url('frzee', ['id' => '__id__'])
         ];
-
+        $btnlook = [
+            // 'class' => 'btn btn-info',
+            'title' => '查看',
+            'icon'  => 'fa fa-fw fa-search',
+            'href'  => url('look', ['id' => '__id__'])
+        ];
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
@@ -100,6 +105,7 @@ class Trade extends Admin
             // ->addRightButtons('cancle,frzee') // 批量添加右侧按钮
             ->addRightButton('custom', $btncancle) // 添加右侧按钮
             ->addRightButton('custom', $btnfrzee) // 添加右侧按钮
+            // ->addRightButton('custom', $btnlook) // 添加右侧按钮
             ->replaceRightButton(['status' => ['>', 1]], '', ['custom'])
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据

@@ -36,4 +36,123 @@ class Counsellor extends Model
     {
         return $data['status'];
     }
+
+    public  function getAgencyAttr($v,$data)
+    {
+        $map['id'] = $data['shopid'];
+        return db('shop_agency')->where($map)->value('title');
+
+    }
+
+    public  function getOffnumAttr($v,$data)
+    {
+        $map['chart'] = 'facechart';
+        $map['status'] = 1;
+        $map['mid'] = $data['id'];
+        return db('trade')->where($map)->count();
+
+    }
+
+    public  function getOffincomeAttr($v,$data)
+    {
+        $map['chart'] = 'facechart';
+        $map['status'] = 1;
+        $map['mid'] = $data['id'];
+        return number_format(db('trade')->where($map)->sum('payment'),1);
+
+    }
+
+    public  function getWordnumAttr($v,$data)
+    {
+        $map['chart'] = 'wordchart';
+        $map['status'] = 1;
+        $map['mid'] = $data['id'];
+        return db('trade')->where($map)->count();
+
+    }
+
+    public  function getWordincomeAttr($v,$data)
+    {
+        $map['chart'] = 'wordchart';
+        $map['status'] = 1;
+        $map['mid'] = $data['id'];
+        return number_format(db('trade')->where($map)->sum('payment'),1);
+
+    }
+
+    public  function getVoicenumAttr($v,$data)
+    {
+        $map['chart'] = 'speechchart';
+        $map['status'] = 1;
+        $map['mid'] = $data['id'];
+        return db('trade')->where($map)->count();
+
+    }
+
+    public  function getVoiceincomeAttr($v,$data)
+    {
+        $map['chart'] = 'speechchart';
+        $map['status'] = 1;
+        $map['mid'] = $data['id'];
+        return number_format(db('trade')->where($map)->sum('payment'),1);
+
+    }
+
+    public  function getTalkincomeAttr($v,$data)
+    {
+        $map['paytype'] = 0;
+        $map['status'] = 1;
+        $map['mid'] = $data['id'];
+        return number_format(db('trade')->where($map)->sum('payment'),1);
+
+    }
+
+    public  function getClassnumeAttr($v,$data)
+    {
+        $map['adminid'] = $data['id'];
+        return db('shop_classes_allot')->alias('a')->join('cms_classes b',' b.id = a.classid','LEFT')->where($map)->count();
+
+    }
+
+    public  function getClassincomeAttr($v,$data)
+    {
+        // $map['mid'] = $data['id'];
+        // return db('shop_classes_allot')->alias('a')->join('cms_classes b',' b.id = a.classid','LEFT')->where($map)->count();
+        return 0;
+
+    }
+
+    public  function getActivenumAttr($v,$data)
+    {
+        $map['adminid'] = $data['id'];
+        return db('shop_classes_allot')->alias('a')->join('cms_active b',' b.id = a.classid','LEFT')->where($map)->count();
+
+    }
+
+    public  function getActiveincomeAttr($v,$data)
+    {
+        // $map['mid'] = $data['id'];
+        // return db('shop_classes_allot')->alias('a')->join('cms_classes b',' b.id = a.classid','LEFT')->where($map)->count();
+        return 0;
+
+    }
+
+    public  function getClacincomeAttr($v,$data)
+    {
+        // $map['mid'] = $data['id'];
+        // return db('shop_classes_allot')->alias('a')->join('cms_classes b',' b.id = a.classid','LEFT')->where($map)->count();
+        return 0;
+
+    }
+
+    public  function getTotalAttr($v,$data)
+    {
+        // $map['mid'] = $data['id'];
+        // return db('shop_classes_allot')->alias('a')->join('cms_classes b',' b.id = a.classid','LEFT')->where($map)->count();
+        return 0;
+
+    }
+
+
+
 }
