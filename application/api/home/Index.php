@@ -2212,6 +2212,61 @@ class Index
         ];
         return json($data);
     }
+
+    /**
+     * [couponmy_custom 我的可使用优惠券]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function couponmy_custom($params)
+    {
+        $account = trim($params['account']);
+
+        //
+        $map['use'] = 0;
+        $map['memberid'] = $account;
+        $info = db('cms_coupon')->where($map)->select();
+
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$info
+        ];
+        return json($data);
+    }
+
+    /**
+     * [couponlist_custom 我的可使用优惠券]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function couponlist_custom($params)
+    {
+        $account = trim($params['account']);
+
+        //
+        $map['memberid'] = $account;
+        $info = db('cms_coupon')->where($map)->select();
+
+        $ret = [];
+        foreach ($info as $key => $value) {
+
+            $ret[$key]['stautstx'] = $value['status']==0?'未使用':'已使用';
+            $ret[$key]['title'] = $value['title'];
+            $ret[$key]['created_time'] = $value['created_time'];
+            $ret[$key]['status'] = $value['status'];
+        }
+        $rs['list'] = array_values($ret);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rs
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API

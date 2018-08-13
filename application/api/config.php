@@ -74,7 +74,9 @@ return [
         'clcamy'=>'clca.my',
         'clcauserlist'=>'clca.userlist',
         'clcauserinfo'=>'clca.userinfo',
-        'clacshare'=>'clac.share'
+        'clacshare'=>'clac.share',
+        'couponmy'=>'coupon.my',
+        'couponlist'=>'coupon.list'
 
 
     ]
