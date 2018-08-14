@@ -105,7 +105,7 @@ class Classes extends Admin
                 ['textarea', 'intro', '目录'],
             ])
             ->addWangeditor('describe', '内容')
-            ->addFile('file', '语音', '', '', '5120', 'mp3,wav')
+            ->addFile('audio', '语音', '', '', '5120', 'mp3,wav')
             ->fetch();
     }
 
@@ -162,7 +162,7 @@ class Classes extends Admin
                 ['image', 'pic', '课程封面'],
             ])
              ->addWangeditor('describe', '内容')
-             ->addFile('file', '语音', '', '', '5120', 'mp3,wav')
+             ->addFile('audio', '语音', '', '', '5120', 'mp3,wav')
             ->setFormData(ClassModel::get($id))
             ->fetch();
     }
