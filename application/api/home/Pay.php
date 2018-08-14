@@ -74,6 +74,14 @@ class Pay
         $request = Request::instance();
         $params = $request->param();
 
+        //优惠券
+        if (isset($params['couponid'])) {
+            $price = db('cms_coupon')->where(['id'=>$params['couponid']])->value('price');
+            $data['coupon'] = $price;
+            $data['couponid'] = $params['couponid'];
+            db('trade')->where(['tid'=>$params['payment_id']])->update($data);
+            db('cms_coupon')->where(['id'=>$params['couponid']])->update(['use'=>1]);
+        }
         $where['tid'] = $params['payment_id'];
         //查询订单信息
         $payment = db('trade')->where($where)->find();
@@ -83,6 +91,11 @@ class Pay
         $seller_account_name = $this->seller_account_name;
 
         $payment['payment'] = 0.01;
+
+        //if price
+        // if ($price) {
+        //     $payment['payment'] = floatval($payment['payment'])- floatval($price);
+        // }
 
         $parameter = array(
             'service'        => 'mobile.securitypay.pay',                        // 必填，接口名称，固定值
