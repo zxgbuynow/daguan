@@ -1931,6 +1931,7 @@ class Index
 
         if ($info) {
             $info['pic'] = get_file_path($info['pic']);
+            $info['audio'] = get_file_path($info['audio']);
 
             $info['isfav'] = 0;//是否收藏
 
