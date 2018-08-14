@@ -2227,12 +2227,12 @@ class Index
         $map['memberid'] = $account;
         $info = db('cms_coupon')->where($map)->select();
 
-
+        $rs['list'] = array_values($info);
         //返回信息
         $data = [
             'code'=>'1',
             'msg'=>'',
-            'data'=>$info
+            'data'=>$rs
         ];
         return json($data);
     }
