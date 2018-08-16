@@ -44,6 +44,7 @@ class Page extends Admin
             ])
             ->addTopButtons('add,enable,disable,delete') // 批量添加顶部按钮
             ->addRightButtons(['edit', 'delete' => ['data-tips' => '删除后无法恢复。']]) // 批量添加右侧按钮
+            ->replaceRightButton(['userid' => ['neq', '0']], '', 'edit')
             ->addOrder('id,title,create_time,update_time')
             ->setRowList($data_list) // 设置表格数据
             ->addValidate('Page', 'title')
