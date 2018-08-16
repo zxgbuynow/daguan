@@ -703,8 +703,8 @@ class Index
         $counsellor['is_diamonds'] = $is_diamonds;
 
         //相关文章
-        $pmap['userid'] = $account;
-        $article['list'] = db('cms_page')->where($pmap)->order('sort ASC, view DESC')->select();
+        $pmap['userid'] = $params['id'];
+        $article['list'] = db('cms_page')->where($pmap)->order('sort ASC, view DESC')->limit(2)->select();
 
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
