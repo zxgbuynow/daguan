@@ -83,6 +83,7 @@ return [
         'articlemy'=>'article.my',
         'articleadd'=>'article.add',
         'articleedit'=>'article.edit',
+        'articlemydl'=>'article.mydl',
 
 
     ]

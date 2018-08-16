@@ -4184,7 +4184,25 @@ class Index
         return json($data);
 
     }
+    /**
+     * [articlemydl_shop description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function articlemydl_shop($params)
+    {
 
+        $id = trim($params['aid']);
+        $article = db('cms_page')->where($map)->find();
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$article
+        ];
+        return json($data);
+    }
     public function test_shop($params)
     {
         $a = Hx::test();
