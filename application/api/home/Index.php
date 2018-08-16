@@ -2319,7 +2319,37 @@ class Index
         return json($data);
 
     }
+    /**
+     * [clcareply_custom ]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function clcareply_custom($params)
+    {
+        $account = trim($params['account']);
+        $typeid = trim($params['typeid']);
+        $acid = trim($params['acid']);
+        $msg = trim($params['msg']);
 
+        if (isset($params['ruid'])) {
+            $data['ruid'] = $params['ruid'];
+        }
+
+        $data['classid'] = $acid;
+        $data['type'] = $typeid;
+        $data['suid'] = $account;
+        $data['msg'] = $msg;
+        $data['create_time'] = time();
+
+        db('cms_reply')->insert($data);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API
