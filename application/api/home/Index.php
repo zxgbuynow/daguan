@@ -1962,9 +1962,9 @@ class Index
             $rmap['status'] = 1;
             $reply = db('cms_reply')->where($rmap)->select();
             foreach ($reply as $key => $value) {
-                $reply[$key]['suname'] = db('member')->where(['id'=>$value['suid'])->value('nickname');
+                $reply[$key]['suname'] = db('member')->where(['id'=>$value['suid']])->value('nickname');
                 if ($value['ruid']) {
-                    $reply[$key]['runame'] = db('member')->where(['id'=>$value['ruid'])->value('nickname');
+                    $reply[$key]['runame'] = db('member')->where(['id'=>$value['ruid']])->value('nickname');
                 }
             }
             $info['reply'] = $reply ;
