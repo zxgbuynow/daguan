@@ -4193,6 +4193,7 @@ class Index
     {
 
         $id = trim($params['aid']);
+        $map['id'] = $id;
         $article = db('cms_page')->where($map)->find();
 
         //返回信息
