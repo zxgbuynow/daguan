@@ -1963,7 +1963,7 @@ class Index
             $reply = db('cms_reply')->where($rmap)->select();
             foreach ($reply as $key => $value) {
                 $reply[$key]['suname'] = db('member')->where(['id'=>$value['suid'])->value('nickname');
-                if ($reply[$key]['ruid']) {
+                if ($value['ruid']) {
                     $reply[$key]['runame'] = db('member')->where(['id'=>$value['ruid'])->value('nickname');
                 }
             }
