@@ -4084,10 +4084,10 @@ class Index
 
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
-            $article['list'][$key]['cover']  = $value['cover'];
-            if (is_numeric($value['cover'])) {
-                $article['list'][$key]['cover'] = get_file_path($value['cover']);
-            }
+            $article['list'][$key]['cover']  = $value['fcover'];
+            // if (is_numeric($value['cover'])) {
+            //     $article['list'][$key]['cover'] = get_file_path($value['cover']);
+            // }
             
         }
 
@@ -4114,12 +4114,16 @@ class Index
         $description = trim($params['description']);
         $content = trim($params['content']);
 
-
-        $data['cover'] =$this->_seve_img($cover);
-        if (!$data['cover']) {
-            return $this->error('封图上传失败，请稍后重试');
+        if ($cover) {
+            $img = explode(',', $cover);
+            $data['fcover'] =$this->_seve_img($img[1]);
+            if (!$data['fcover']) {
+                return $this->error('封图上传失败，请稍后重试');
+            }
         }
+        
 
+        $data['create_time'] = time();
         $data['userid'] = $account;
         $data['title'] = $title;
         $data['cid'] = $cid;
@@ -4155,8 +4159,9 @@ class Index
 
         if (isset($params['cover'])) {
             $cover = trim($params['cover']);
-            $data['cover'] =$this->_seve_img($cover);
-            if (!$data['cover']) {
+            $img = explode(',', $cover);
+            $data['fcover'] =$this->_seve_img($img[1]);
+            if (!$data['fcover']) {
                 return $this->error('封图上传失败，请稍后重试');
             }
         }
