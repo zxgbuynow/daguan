@@ -80,7 +80,7 @@ return [
         'feedbackup'=>'feedback.up',
         'msgsys'=>'msg.sys',
         'smsginfo'=>'smsg.info',
-        'articlemy'=>'article.my'
+        'articlemy'=>'article.my',
         'articleadd'=>'article.add',
         'articleedit'=>'article.edit',
 
