@@ -2268,6 +2268,34 @@ class Index
         ];
         return json($data);
     }
+    /**
+     * [feedbackup_custom 反馈]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function feedbackup_custom($params)
+    {
+
+        $account = trim($params['account']);
+        $ph = trim($params['ph']);
+        $ct = trim($params['ct']);
+
+        $data['uid'] = $account;
+        $data['phone'] = $ph;
+        $data['content'] = $ct;
+        $data['create_time'] = time();
+
+        db('cms_feedback')->insert($data);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+
+    }
+
     /*
     |--------------------------------------------------------------------------
     | 商家版API
@@ -3983,6 +4011,174 @@ class Index
         return json($data);
     }
 
+    /**
+     * [msgsys_shop 系统消息]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function msgsys_shop($params)
+    {
+        $account = trim($params['account']);
+
+        //msg
+        $map['status'] = 1;
+        $msgs = db('cms_notice')->where($map)->order('id DESC')->select();
+
+        $rt = [];
+        foreach ($msgs as $key => $value) {
+            if ($value['obj']!=0) {
+                if (!in_array($account, explode(',', $value['obj']))) {
+                    continue;
+                }
+            }
+            $rt[$key]['id'] = $value['id'];
+            $rt[$key]['title'] = $value['title'];
+            $rt[$key]['create_time'] = $value['create_time'];
+            $rt[$key]['type'] = $value['type']==1?'分中心消息':'平台消息';
+        }
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rt
+        ];
+        return json($data);
+
+    }   
+
+    /**
+     * [smsginfo_shop 系统消息祥情]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function smsginfo_shop($params)
+    {
+        $id = trim($params['id']);
+
+        //查询消息
+        $map['id'] = $id;
+        $msg =  db('cms_notice')->where($map)->find();
+        
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$msg
+        ];
+        return json($data);
+    }
+
+    /**
+     * [articlemy_shop 文章列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function articlemy_shop($params)
+    {
+
+        $account = trim($params['account']);
+        $map['userid'] = $account;
+        $article['list'] = db('cms_page')->where($map)->order('sort ASC, view DESC')->select();
+
+        foreach ($article['list'] as $key => $value) {
+            unset($article['list'][$key]['content']);
+            $article['list'][$key]['cover']  = $value['cover'];
+            if (is_numeric($value['cover'])) {
+                $article['list'][$key]['cover'] = get_file_path($value['cover']);
+            }
+            
+        }
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$article
+        ];
+        return json($data);
+    }
+
+    /**
+     * [articleadd_shop description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function articleadd_shop($params)
+    {
+        $title = trim($params['title']);
+        $account = trim($params['account']);
+        $cover = trim($params['cover']);
+        $cid = trim($params['cid']);
+        $description = trim($params['description']);
+        $content = trim($params['content']);
+
+
+        $data['cover'] =$this->_seve_img($cover);
+        if (!$data['cover']) {
+            return $this->error('封图上传失败，请稍后重试');
+        }
+
+        $data['userid'] = $account;
+        $data['title'] = $title;
+        $data['cid'] = $cid;
+        $data['description'] = $description;
+        $data['content'] = $content;
+
+        db('cms_page')->insert($data);
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+
+    }
+
+    /**
+     * [articleedit_shop description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function articleedit_shop($params)
+    {
+        $title = trim($params['title']);
+        $account = trim($params['account']);
+        
+        $cid = trim($params['cid']);
+        $description = trim($params['description']);
+        $content = trim($params['content']);
+        $id = trim($params['aid']);
+
+        if (isset($params['cover'])) {
+            $cover = trim($params['cover']);
+            $data['cover'] =$this->_seve_img($cover);
+            if (!$data['cover']) {
+                return $this->error('封图上传失败，请稍后重试');
+            }
+        }
+        
+
+        $data['userid'] = $account;
+        $data['title'] = $title;
+        $data['cid'] = $cid;
+        $data['description'] = $description;
+        $data['content'] = $content;
+
+        db('cms_page')->where(['id'=>$id])->update($data);
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+
+    }
 
     public function test_shop($params)
     {
