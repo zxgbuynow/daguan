@@ -1956,6 +1956,18 @@ class Index
                    $info['isfav'] = 1;
                 }
             }
+            //回复
+            $rmap['type'] = $type;
+            $rmap['classid'] = $acid;
+            $rmap['status'] = 1;
+            $reply = db('cms_reply')->where($rmap)->select();
+            foreach ($reply as $key => $value) {
+                $reply[$key]['suname'] = db('member')->where(['id'=>$value['suid'])->value('nickname');
+                if ($reply[$key]['ruid']) {
+                    $reply[$key]['runame'] = db('member')->where(['id'=>$value['ruid'])->value('nickname');
+                }
+            }
+            $info['reply'] = $reply ;
         }
         
 
