@@ -2339,7 +2339,7 @@ class Index
         $data['type'] = $typeid;
         $data['suid'] = $account;
         $data['msg'] = $msg;
-        $data['create_time'] = time();
+        $data['created_time'] = time();
 
         db('cms_reply')->insert($data);
         //返回信息
