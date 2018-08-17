@@ -1947,6 +1947,9 @@ class Index
 
             $info['isfav'] = 0;//是否收藏
 
+            $tm['paytype'] = $type==0?2:3;
+            $tm['classid'] = $acid;
+            $info['num'] = db('trade')->where($tm)->count();
             //登录状态
             if (isset($params['account'])) {//用户id
                 $amap['type'] = $type==0?1:2;
@@ -3834,7 +3837,9 @@ class Index
             $info['pic'] = get_file_path($info['pic']);
 
             $info['isfav'] = 0;//是否收藏
-
+            $tm['paytype'] = $type==0?2:3;
+            $tm['classid'] = $acid;
+            $info['num'] = db('trade')->where($tm)->count();
             //登录状态
             if (isset($params['account'])) {//用户id
                 $map['type'] = $type;
