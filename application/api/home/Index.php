@@ -2151,11 +2151,12 @@ class Index
 
         //shopid  uid tid payment title paytype
         
+        $data['classid'] = $clacid;
 
         $data['memberid'] = $account;
         $data['payment'] = $goodsinfo['price'];
         $data['created_time'] = time();
-        $data['num'] = 0;
+        $data['num'] = 1;
         $data['paytype'] = $paytype;
 
         
