@@ -170,6 +170,41 @@ class Agency extends Admin
             ->fetch();
     }
 
+
+   public function adminlist()
+    {
+
+        cookie('__forward__', $_SERVER['REQUEST_URI']);
+
+        // 获取查询条件
+        $map = $this->getMap();
+
+        // 数据列表
+        $data_list = UserModel::where($map)->order('id desc')->paginate();
+
+        // 分页数据
+        $page = $data_list->render();
+
+
+        $list_type = AgencyModel::where('status', 1)->column('id,title');
+
+        // 使用ZBuilder快速创建数据表格
+        return ZBuilder::make('table')
+            ->setPageTitle('分中心管理员维护') // 设置页面标题
+            ->setTableName('shop_user') // 设置数据表名
+            ->setSearch(['nickname' => '名称','username'=>'用户名']) // 设置搜索参数
+            ->addColumns([ // 批量添加列
+                ['id', 'ID'],
+                ['username', '用户名'],
+                ['nickname', '名称'],
+                ['shopid', '所属机构', 'select', $list_type],
+                ['create_time', '创建时间', 'datetime']
+            ])
+            ->setRowList($data_list) // 设置表格数据
+            ->setPages($page) // 设置分页数据
+            ->fetch(); // 渲染页面
+
+    }
    public function admin($id = null)
    {
        if ($id === null) $this->error('缺少参数');

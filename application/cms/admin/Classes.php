@@ -160,6 +160,7 @@ class Classes extends Admin
                 ['datetime', 'start_time', '开始时间'],
                 ['datetime', 'endtime', '结束时间'],
                 ['image', 'pic', '课程封面'],
+                ['textarea', 'intro', '目录'],
             ])
              ->addWangeditor('describe', '内容')
              ->addFile('audio', '语音', '', '', '5120', 'mp3,wav')
