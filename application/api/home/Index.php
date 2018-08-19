@@ -704,6 +704,7 @@ class Index
 
         //相关文章
         $pmap['userid'] = $params['id'];
+        $pmap['status'] = 1;
         $article['list'] = db('cms_page')->where($pmap)->order('sort ASC, view DESC')->limit(2)->select();
 
         foreach ($article['list'] as $key => $value) {
@@ -1949,7 +1950,9 @@ class Index
 
             $tm['paytype'] = $type==0?2:3;
             $tm['classid'] = $acid;
+            $tm['status'] = 1;
             $info['num'] = db('trade')->where($tm)->count();
+            $info['ispay'] = 0;
             //登录状态
             if (isset($params['account'])) {//用户id
                 $amap['type'] = $type==0?1:2;
@@ -1958,6 +1961,15 @@ class Index
                 if (db('cms_fav')->where($amap)->find()) {
                    $info['isfav'] = 1;
                 }
+                //是否已报名
+                $bm['paytype'] = $type==0?2:3;
+                $bm['classid'] = $acid;
+                $bm['status'] = 1;
+                $bm['memberid'] = $params['account'];
+                if (db('trade')->where($bm)->count()) {
+                    $info['ispay'] = 1;
+                }
+                
             }
             //回复
             $rmap['type'] = $type;
@@ -1971,6 +1983,8 @@ class Index
                 }
             }
             $info['reply'] = $reply ;
+
+
         }
         
 
@@ -1998,7 +2012,37 @@ class Index
         $map['fid'] = $fid;
         $map['mid'] = $mid;
         if (!db('cms_fav')->where($map)->find()) {
-            db('cms_fav')->insert($map);
+            $data['type'] = $type;
+            $data['fid'] = $fid;
+            $data['create_time'] = time();
+            $data['mid'] = $mid;
+            db('cms_fav')->insert($data);
+        }
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+    /**
+     * [delfav description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function delfav($params)
+    {
+        $type = trim($params['typeid']);
+        $fid = trim($params['fid']);
+        $mid = trim($params['account']);
+
+        $map['type'] = $type;
+        $map['fid'] = $fid;
+        $map['mid'] = $mid;
+        if (db('cms_fav')->where($map)->find()) {
+            db('cms_fav')->where($map)->delete();
         }
 
         //返回信息
@@ -2135,13 +2179,18 @@ class Index
 
 
     }
-
+    /**
+     * [createClacTrade_custom description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
     public function createClacTrade_custom($params)
     {
         $clacid = trim($params['clacid']);
         $account = trim($params['account']);
         $paytype = trim($params['paytype']);
 
+        
         //取商品
         $map['id'] = $clacid;
         if ($paytype==2) {//课程
@@ -2957,7 +3006,38 @@ class Index
         
         $trade['list'] = db('trade')->where($map)->order('id DESC')->select();
 
-       $trade['income'] =db('trade')->where($map)->sum('payment'); 
+        $clarr =db('shop_classes_allot')->alias('a')->join('cms_classes b',' b.id = a.classid','LEFT')->where('adminid','like',$account)->whereOr('tearchid','like','%'.$account.'%')->whereOr('coachid','like','%'.$account.'%')->select();
+
+        $cltrarr = [];
+        foreach ($clarr as $key => $value) {
+            if ($value['adminid']!= $account &&!in_array($account, explode(',', $value['tearchid']) )&&!in_array($account, explode(',', $value['coachid']) ) ) {
+                unset($clinc[$key]);
+
+            }
+            $clm['classid'] = $value['classid'];
+            $clm['paytype'] = 2;
+            $cltrarr = db('trade')->where($clm)->order('id DESC')->select();
+        }
+
+        $trade['list'] = array_merge($trade['list'],$cltrarr);
+
+        $acarr =db('shop_acitve_allot')->alias('a')->join('cms_active b',' b.id = a.activeid','LEFT')->where('adminid','like',$account)->whereOr('tearchid','like','%'.$account.'%')->whereOr('coachid','like','%'.$account.'%')->select();
+
+        $actrarr = [];
+        foreach ($acarr as $key => $value) {
+            if ($value['adminid']!= $account &&!in_array($account, explode(',', $value['tearchid']) )&&!in_array($account, explode(',', $value['coachid']) ) ) {
+                unset($acarr[$key]);
+
+            }
+            $acm['classid'] = $value['classid'];
+            $acm['paytype'] = 2;
+            $actrarr = db('trade')->where($acm)->order('id DESC')->select();
+        }
+
+        $trade['list'] = array_merge($trade['list'],$actrarr);
+        // $trade['income'] =db('trade')->where($map)->sum('payment'); 
+
+
         //返回信息
         $data = [
             'code'=>'1',
@@ -2980,8 +3060,88 @@ class Index
         $map['mid'] = $account;
         $map['paytype'] = 0;
         $map['status'] = 1;
-        $user['income'] =db('trade')->where($map)->sum('payment'); 
 
+        $user['income'] = db('trade')->where($map)->sum('payment'); 
+
+        //活动课程收入计算
+        $clinc = db('shop_classes_allot')->alias('a')->join('cms_classes b',' b.id = a.classid','LEFT')->where('adminid','like',$account)->whereOr('tearchid','like','%'.$account.'%')->whereOr('coachid','like','%'.$account.'%')->select();
+
+        $clincs = 0;
+        foreach ($clinc as $key => $value) {
+            if ($value['adminid']!= $account &&!in_array($account, explode(',', $value['tearchid']) )&&!in_array($account, explode(',', $value['coachid']) ) ) {
+                unset($clinc[$key]);
+
+            }
+            if ($value['tearchid'] == $account) {
+                $clincs += floatval($value['ascale'] * $value['price']/100);
+            }
+
+            if (in_array($account, explode(',', $value['tearchid'])) ) {
+                $tarr =  array_flip( explode(',', $value['tearchid']) );
+                $scarr = explode(',', $value['tscale']);
+                if (!isset($scarr[$tarr[$account]])) {
+                    $clincs += 0;
+                }else{
+                    $clincs += floatval( intval($scarr[$tarr[$account]]) * $value['price']/100);    
+                }
+                
+            }
+
+            if (in_array($account, explode(',', $value['coachid']) ) ){
+                $tarr =  array_flip( explode(',', $value['coachid']) );
+                $scarr = explode(',', $value['cscale']);
+
+                if (!isset($scarr[$tarr[$account]])) {
+                    $clincs += 0;
+                }else{
+                    $clincs += floatval( intval($scarr[$tarr[$account]]) * $value['price']/100);    
+                }
+            }
+            
+        }
+
+        $user['income'] += $clincs;
+
+        
+        //活动
+        $acinc = db('shop_acitve_allot')->alias('a')->join('cms_active b',' b.id = a.activeid','LEFT')->where('adminid','like',$account)->whereOr('tearchid','like','%'.$account.'%')->whereOr('coachid','like','%'.$account.'%')->select();
+
+        $acincs = 0;
+        foreach ($acinc as $key => $value) {
+            if ($value['adminid']!= $account &&!in_array($account, explode(',', $value['tearchid']) )&&!in_array($account, explode(',', $value['coachid']) ) ) {
+                unset($acinc[$key]);
+
+            }
+            if ($value['tearchid'] == $account) {
+                $acincs += floatval($value['ascale'] * $value['price']/100);
+            }
+
+            if (in_array($account, explode(',', $value['tearchid'])) ) {
+                $tarr =  array_flip( explode(',', $value['tearchid']) );
+                $scarr = explode(',', $value['tscale']);
+                if (!isset($scarr[$tarr[$account]])) {
+                    $acincs += 0;
+                }else{
+                    $acincs += floatval( intval($scarr[$tarr[$account]]) * $value['price']/100);    
+                }
+                
+            }
+
+            if (in_array($account, explode(',', $value['coachid']) ) ){
+                $tarr =  array_flip( explode(',', $value['coachid']) );
+                $scarr = explode(',', $value['cscale']);
+
+                if (!isset($scarr[$tarr[$account]])) {
+                    $acincs += 0;
+                }else{
+                    $acincs += floatval( intval($scarr[$tarr[$account]]) * $value['price']/100);    
+                }
+            }
+            
+        }
+
+        $user['income'] += $acincs;
+        
         //积分
         $pmap['memberid'] = $account;
         $pmap['behavior_type'] = 0;
@@ -3839,6 +3999,7 @@ class Index
             $info['isfav'] = 0;//是否收藏
             $tm['paytype'] = $type==0?2:3;
             $tm['classid'] = $acid;
+            $tm['status'] = 1;
             $info['num'] = db('trade')->where($tm)->count();
             //登录状态
             if (isset($params['account'])) {//用户id
@@ -3988,6 +4149,7 @@ class Index
             $typeid = $clactype == 0?2:3;
             $map['classid'] = $clacid;
             $map['paytype'] = $typeid;
+            $map['a.status'] = 1;
             $rs['ulist'] = db('trade')->alias('a')->field('b.id,b.username,b.nickname,b.sex,b.avar')->join('member b',' b.id = a.memberid','LEFT')->where($map)->select();
 
             foreach ($rs['ulist'] as $key => $value) {

@@ -67,6 +67,7 @@ return [
         'clca'=>'clca.index',
         'clcadetail'=>'clca.detail',
         'addfav'=>'fav.add',
+        'delfav'=>'fav.del',
         'favlist'=>'fav.list',
         'clacorder'=>'clac.order',
         'createClacTrade'=>'create.clactrade',
