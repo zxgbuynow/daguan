@@ -57,7 +57,7 @@ class Member extends Admin
                 ['right_button', '操作', 'btn']
             ])
             ->addTopButtons('enable,disable') // 批量添加顶部按钮
-            // ->addRightButtons('delete') // 批量添加右侧按钮
+            ->addRightButtons('delete') // 批量添加右侧按钮
             ->addRightButton('custom', $btnAdd)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
