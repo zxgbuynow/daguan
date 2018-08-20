@@ -2032,7 +2032,7 @@ class Index
      * @param  [type] $params [description]
      * @return [type]         [description]
      */
-    public function delfav($params)
+    public function delfav_custom($params)
     {
         $type = trim($params['typeid']);
         $fid = trim($params['fid']);
