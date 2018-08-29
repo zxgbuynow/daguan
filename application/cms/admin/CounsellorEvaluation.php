@@ -41,6 +41,13 @@ class CounsellorEvaluation extends Admin
         // 分页数据
         $page = $data_list->render();
 
+        $btnlook = [
+            // 'class' => 'btn btn-info',
+            'title' => '查看',
+            'icon'  => 'fa fa-fw fa-search',
+            'href'  => url('look', ['id' => '__id__'])
+        ];
+
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setPageTitle('咨询师评价管理') // 设置页面标题
@@ -58,12 +65,38 @@ class CounsellorEvaluation extends Admin
                 ['right_button', '操作', 'btn']
             ])
             ->addRightButtons('delete') // 批量添加右侧按钮
+            ->addRightButton('custom', $btnlook) // 添加右侧按钮
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
     }
 
-    
+    /**
+     * [look 查看评价祥情]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function look($id=null)
+    {
+
+        if ($id === null) $this->error('缺少参数');
+
+        $map['a.id'] = $id;
+        $info = Db::name('evaluate')->alias('a')->field('a.*,m.mobile as mobile,m.nickname as nickname,shop_agency.title as title')->join(' calendar c',' c.id = a.cid','LEFT')->join(' trade b',' b.id = c.tid','LEFT')->join(' member m',' m.id = b.mid','LEFT')->join(' shop_agency shop_agency',' shop_agency.id = m.shopid','LEFT')->where($map)->order('a.id desc')->find();
+
+        // 显示编辑页面
+        return ZBuilder::make('form')
+            ->addFormItems([
+                ['text', 'mobile', '手机号'],
+                ['text', 'nickname', '咨询师'],
+                ['text', 'title', '分中心'],
+                ['text', 'sorce', '评分'],
+                ['textarea', 'cotent', '评价内容'],
+            ])
+            ->setFormdata($info)
+            ->hideBtn('submit')
+            ->fetch();
+    }
     /**
      * 删除用户
      * @param array $ids 用户id

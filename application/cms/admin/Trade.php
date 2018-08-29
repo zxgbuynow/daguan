@@ -83,6 +83,8 @@ class Trade extends Admin
             'href'  => url('look', ['id' => '__id__'])
         ];
 
+        //约时间
+        
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setPageTitle('订单管理') // 设置页面标题
@@ -97,10 +99,12 @@ class Trade extends Admin
                 ['memberid', '用户', 'select', $counsellor_list],
                 ['mid', '咨询师', 'select', $counsellor_list],
                 ['created_time', '创建时间', 'datetime'],
+                ['ondate', '预约时间','datetime'],
                 ['status', '状态', 'text', '', ['待支付', '已支付', '取消', '冻结']],
                 ['right_button', '操作', 'btn']
                 
             ])
+            ->raw('ondate')
             // ->addTopButtons('delete') // 批量添加顶部按钮
             // ->addRightButtons('cancle,frzee') // 批量添加右侧按钮
             ->addRightButton('custom', $btncancle) // 添加右侧按钮

@@ -24,4 +24,11 @@ class Trade extends Model
        // return 68788878;
        return db('member')->where(['id'=>$data['memberid']])->value('nickname');
     }
+
+    public  function getOndateAttr($v,$data)
+    {
+       return db('calendar')->where(['tid'=>$data['id']])->order('id DESC')->value('start_time');
+    }
+
+
 }

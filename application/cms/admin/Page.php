@@ -40,6 +40,7 @@ class Page extends Admin
                 ['status', '状态', 'switch'],
                 ['sort', '排序', 'text.edit'],
                 ['userid', '作者', 'select',$author],
+                ['author', '署名作者', 'text.edit'],
                 ['right_button', '操作', 'btn']
             ])
             ->addTopButtons('add,enable,disable,delete') // 批量添加顶部按钮

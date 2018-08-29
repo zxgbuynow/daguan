@@ -249,7 +249,8 @@ class Counsellor extends Admin
                     $save1['leader'] = $data['leader'];
                     
                     //业务类弄
-                    $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
+                    // $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
+                    $save1['tags'] = implode(',', $data['tags']);
                     CounsellorotModel::update($save1);
 
                 }else{
@@ -276,7 +277,8 @@ class Counsellor extends Admin
                     $save1['tearch'] = $data['tearch'];
                     $save1['leader'] = $data['leader'];
                     //业务类弄
-                    @$save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
+                    // @$save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
+                    $save1['tags'] = implode(',', $data['tags']);
                     CounsellorotModel::create($save1);
                 }
                 
@@ -296,7 +298,14 @@ class Counsellor extends Admin
             $info['status'] = 0;
         }
         // print_r($info);exit;
-        $list_type = CategoryModel::where('status', 1)->column('id,title');
+        $list_type = [];
+        if ($info['shopid']) {
+            $cids = CateAccessModel::where('shopid', $info['shopid'])->value('cids');
+            $emap['status'] = 1;
+            $emap['id'] = array('in',$cids);
+            $list_type = CategoryModel::where($emap)->column('id,title');
+        }
+        
 
         // 使用ZBuilder快速创建表单 
         return ZBuilder::make('form')
@@ -337,7 +346,7 @@ class Counsellor extends Admin
                 ['textarea', 'intro', '简介'],
             ])
             ->addDatetime('employment', '从业时间', '', '', 'YYYY-MM-DD')
-            // ->addSelect('tags', '业务分类', '', $list_type)
+            ->addSelect('tags', '业务分类', '', $list_type,'','multiple')
             ->addUeditor('remark', '祥细说明')
             ->setFormData($info) // 设置表单数据
             ->fetch();
