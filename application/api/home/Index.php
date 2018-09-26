@@ -683,13 +683,13 @@ class Index
                 'show'=>'语音咨询'
 
             ),
-            array(
-                'chart'=>'videochart',
-                'status'=>$counsellor['isvideochart'],
-                'price'=>$counsellor['videochart'],
-                'price1'=>$counsellor['videochartlv'],
-                'show'=>'视频咨询'
-            ),
+            // array(
+            //     'chart'=>'videochart',
+            //     'status'=>$counsellor['isvideochart'],
+            //     'price'=>$counsellor['videochart'],
+            //     'price1'=>$counsellor['videochartlv'],
+            //     'show'=>'视频咨询'
+            // ),
             array(
                 'chart'=>'facechart',
                 'status'=>$counsellor['isfacechart'],
