@@ -10,19 +10,17 @@ use think\helper\Hash;
  * 前台首页控制器
  * @package app\index\controller
  */
-class Checkout extends Home
+class Clac extends Home
 {
     public function index()
     {
         return $this->fetch(); // 渲染模板
     }
 
-    public function payment()
+    public function detail()
     {
         return $this->fetch(); // 渲染模板
     }
-    public function clacpay()
-    {
-        return $this->fetch(); // 渲染模板
-    }
+
+    
 }
