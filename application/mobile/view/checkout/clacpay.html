@@ -127,7 +127,7 @@
                 return
               }
               pay_id = $('input[name="payment"]:checked').val();
-              var SERVER = config.server +  '/pay/dopay?accessToken=' + state.token + '&payment_id=' + pid + '&method=' + config.apimethod.tradepay + '&pay_app_id=' + pay_id+'&source='+config.source+"&couponid="+couponid;
+              var SERVER = config.server +  '/Mpay/dopay?accessToken=' + state.token + '&payment_id=' + pid + '&method=' + config.apimethod.tradepay + '&pay_app_id=' + pay_id+'&source='+config.source+"&couponid="+couponid;
               //更新优惠券
               //发起支付
               pay(SERVER, pay_id, pid, total);
@@ -136,10 +136,11 @@
 
       };
 
+
       // 2. 发起支付请求
       function pay(server, id, pid, total) {
         window.location.href = server;return true;
-        console.log(server);
+        // console.log(server);
         var xhr = new XMLHttpRequest();
         var PAYSERVER = server;
         xhr.onreadystatechange = function() {
