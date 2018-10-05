@@ -95,9 +95,9 @@
     </section>
     <section class="section-white">
       <ul class="mui-table-view">
-        <li data-needlog="true" data-view="_www/view/member/return/returns.html" class="mui-table-view-cell ">
+        <!-- li data-needlog="true" data-view="_www/view/member/return/returns.html" class="mui-table-view-cell ">
           <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-history user-returns"></i> 我的资历</a>
-        </li>
+        </li> -->
         <li data-needlog="true" data-view="_www/view/member/safe/safe.html" class="mui-table-view-cell ">
           <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-password user-safe"></i> 我的课程</a>
         </li>
@@ -115,7 +115,7 @@
         <li data-needlog="true" data-view="{:url('Member/ondate')}" class="mui-table-view-cell action-clickview">
           <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-communication user-complain"></i>预约时间 </a>
         </li>
-        <li data-needlog="true" data-view="_www/view/member/favorite/favorite.html" class="mui-table-view-cell ">
+        <li data-needlog="true" data-view="{:url('Member/articlein')}" class="mui-table-view-cell action-clickview">
           <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-star-empty user-favorite"></i> 我的文章</a>
         </li>
       </ul>
@@ -130,7 +130,10 @@
         <span class="mui-icon bbc-icon bbc-icon-package"><span class="cesllor-badge mui-badge mui-badge-danger"></span></span>
         <span class="mui-tab-label">工作台</span>
       </a>
-      
+      <a class="bbc-tab-item" href="{:url('Clac/index')}">
+        <span class="mui-icon bbc-icon bbc-icon-moments"></span>
+        <span class="mui-tab-label">课程/活动</span>
+      </a>
       <a class="bbc-tab-item bbc-active" >
         <span class="mui-icon bbc-icon bbc-icon-user-empty"><i  class="msg-badge mui-badge mui-badge-danger mui-hidden"></i></span>
         <span class="mui-tab-label">我的</span>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <style type="text/css">
+            .box {
+      height: 10rem;
+      position: relative;
+      overflow: hidden;
+      background: #FFF;
+      transform: translate3d(0, 0, 0); }
+
+     .box:after {
+      content: '';
+      display: block;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, #fff, rgba(221, 238, 255, 0) 80%, rgba(255, 255, 255, 0.5));
+      z-index: 5;
+      transform: translate3d(0, 0, 0); }
+
+         .wave {
+      opacity: .4;
+      position: absolute;
+      top: 3%;
+      left: 50%;
+      background: #0af;
+      width: 800px;
+      height: 800px;
+      margin-left: -400px;
+      margin-top: -600px;
+      transform-origin: 50% 48%;
+      border-radius: 43%;
+      animation: drift 20000ms infinite linear; }
+
+    .wave.three {
+      animation: drift 19500ms infinite linear; }
+
+    .wave.two {
+      animation: drift 22000ms infinite linear;
+      opacity: .1;
+      background: yellow; }
+
+    @keyframes drift {
+      from {
+        transform: rotate(0deg); }
+      from {
+        transform: rotate(360deg); } }
+
+      .user-header {
+        min-height: 10rem;
+      }
+      .user-accout{
+        color: #555555;
+      }
+      p img {
+        max-width: 100%;
+        height: auto;
+    }
+    .mui-table-view .mui-media-object{
+        max-width: 80px; 
+        height: 80px;
+    }
+    .mui-text-title{
+        color: #000000;
+    }
+    .mui-media-text {
+        color: #646464;
+        font-size: 13px;
+    }
+    .mui-media-author { 
+        font-size: 13px;
+        margin-top: 10px;
+    } 
+    .mui-text-num{
+        color: #666;
+    }
+    </style>
+  </head>
+
+  
+  <body class="body-padding-xs">
+        <header class="">
+          <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+        </header>
+        <div class="user-header box">
+          <div id="user_info" class="user-logined " data-view="_www/view/member/userinfo/userinfo.html">
+            <!--<i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back" style="color: red;"></i>-->
+            <div class="login-avatar">
+                    <img class="userinfo-avatar" id="head-img" src="" />
+            </div>
+            
+          </div>
+              
+        </div>  
+        <section class="section-white">
+                <ul class="mui-table-view">
+                <li  data-view="_www/view/member/return/returns.html" class="mui-table-view-cell ">
+                   用户名：<i class="username"></i>
+                </li>
+                <li  data-view="_www/view/member/return/returns.html" class="mui-table-view-cell ">
+                   昵称：<i class="nickname"></i>
+                </li>
+                <li  data-view="_www/view/member/return/returns.html" class="mui-table-view-cell ">
+                   性别：<i class="sex"></i>
+                </li>
+                <li  data-view="_www/view/member/return/returns.html" class="mui-table-view-cell ">
+                   偏好：<i class="preference"></i>
+                </li>
+            </ul>   
+        </section>
+        <section class="section-white">
+          <div class="section-title user-title">
+            <div class="title-txt"> 参与过的课程/活动</div>
+          </div>
+              <ul class="mui-table-view" id="flist">
+                <!--<li class="mui-table-view-cell mui-media action-webview" data-webview="_www/view/clac/userlist.html" data-webparam='{"acid":<%= list[i].id %>, "actype":<%= list[i].type %>}'>
+                <a class="mui-navigate-right">
+                    <img class="mui-media-object mui-pull-left" src="../../img/widgets_36.jpg" >
+                    <div class="mui-media-body">
+                        <p>
+                            <span class="mui-text-title">标题0101</span>
+                        </p>
+                        <p class="mui-ellipsis  ">地点：上海</p>
+                        <p class='mui-ellipsis  mui-media-author'>时间：2016</p>
+                    </div>
+                </a>
+            </li>-->
+           </ul>
+        </section>
+    
+    
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script type="text/html" id="f_list">
+        <% for(var i in trade) { %>
+        <li class="mui-table-view-cell mui-media action-clickview" data-webview="{:url('Clac/detail')}" data-acid="<%= trade[i].id %>" data-actype="<%= trade[i].type %>" >
+            <a class="mui-navigate-right">
+                <img class="mui-media-object mui-pull-left" src="<%= $add_server(trade[i].pic) %>" >
+                <div class="mui-media-body">
+                    <p>
+                        <span class="mui-text-title"><%= trade[i].title %></span>
+                    </p>
+                    <p class="mui-ellipsis  ">地点：<%= trade[i].address %></p>
+                    <p class='mui-ellipsis mui-media-author'>时间：<%= $timestamp_To_Time(trade[i].start_time) %></p>
+                </div>
+            </a>
+        </li>
+        <% } %> 
+    </script>
+    <script type="text/javascript" charset="utf-8">
+        var result = window.location.href;
+        var uid = $.getUrlParam(result,'uid');
+        var state = app.getState();
+        var param = {
+          'method': config.apimethod.clcauserinfo,
+          'source':config.source,
+          'uid': uid
+        }
+        $.dataRequest(param, function(rs) { 
+            $('.preference').text(rs.user.preference)
+            $('.nickname').text(rs.user.nickname)
+            $('.username').text(rs.user.username)
+            $('.sex').text(rs.user.sex)
+
+            if(rs.user.avar){
+                document.getElementById("head-img").src = config.imgser+rs.user.avar;
+            }
+            //list
+            var fwidget = template('f_list', rs);
+            $('#flist').append(fwidget);
+            $(window).on('tap', '.action-clickview', function() {
+              var webview = $(this).data('webview');
+              var acid = $(this).data('acid');
+              var actype = $(this).data('actype');
+              window.location.href = webview+'?acid='+acid+'&actype='+actype;
+              
+            }) 
+        })
+    </script>
+  </body>
+
+</html>

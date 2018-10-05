@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__C_CSS__/style.css" />
+    <style>
+            
+            .counsellor-info{
+                margin-bottom: 0.6rem;
+            }
+            .counsellor-info img{
+                width: 100%;
+                max-height: 200px;
+            }
+        
+        .op-group .op-group-item{
+                color: #fff;
+                height: 100%;
+                line-height: 3.25rem;
+        }
+        .op-group .trade-talk{
+                background: #FFFFFF;
+                color: #000;
+        }
+        .op-group .trade-confirm{
+            background: #41B7D9;
+            box-shadow: 4px 4px 10px #d84f34;
+        }
+        .op-group .trade-date{
+            background: #41C5D9; 
+        }
+        .op-group .op-group-item.col-half:after{
+            display: none;
+        }
+        .qualification-block.desc{
+            margin-bottom: 0;
+        }
+        .col-9x{
+            width: 75%;
+        }
+        .col-3x{
+            width: 25%;
+        }
+        .font-red{
+            color: #D84F34!important;
+        }
+        .join-user {
+            height: 35px;
+            font-size: 13px;
+            color: #666;
+            line-height: 23px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-all;
+            -webkit-box-orient: vertical;
+        }
+        .certification{
+            margin-bottom: 5px!important;
+            height: auto!important;
+        }
+        .mui-control-item{
+            width: 47%!important;
+        }
+        .listen{
+            font-size: 16px;
+            margin-top: -2px;
+                margin-right: 2px;
+        }
+        .bbc-tab-bar .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+            color: #00C7C9;
+        }
+        .qualification-block{
+            margin: 10px 10px;
+        }
+    </style>
+    
+  </head>
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title"></div>
+    </header>
+    <div class="counsellor-homepage-content">
+        <!--<section class=" section-white counsellor-info">
+             <img src="https://ossimg.xinli001.com/20170823/c91ab41f014b8df7bb2e8d4df9b594ca.png!120x120" class="avatar">   
+        </section>
+         <section class="qualification-block">
+            <div class="section">
+                <h3 class="title">我是标题是标题是标题是标题是标题</h3>
+                <p class="certification font-red">129元</p>
+                <p class="join-user">
+                    129人参与
+                </p>
+            </div>
+        </section>
+        
+        <section class="qualification-block">
+            <div class="section">
+                <div id="slider" class="mui-slider  bbc-tab-bar">
+                  <div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                    <div class="mui-scroll sliderSegmentedControl">
+                            <a class="mui-control-item mui-active" href="#item1mobile">祥情</a>
+                            <a class="mui-control-item " href="#item2mobile">目录</a>
+                            <a class="mui-control-item " href="#item3mobile">评论</a>
+                            
+                    </div>
+                  </div>
+                  <div class="mui-slider-group">
+                    <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+                            <ul class="mui-table-view coupons-list rate-list" >
+                            祥情
+                            
+                        </ul>
+                    </div>
+                    <div id="item2mobile" class="mui-slider-item mui-control-content ">
+                      <ul class="mui-table-view coupons-list rate-list" >
+                            目录
+                            
+                      </ul>
+                    </div>
+                    <div id="item3mobile" class="mui-slider-item mui-control-content ">
+                      <ul class="mui-table-view coupons-list rate-list" >
+                            评论
+                            
+                      </ul>
+                    </div>
+                    </div>    
+                </div>
+            </div>
+        </section>-->
+        
+    </div>
+    <nav class="action-bar-mini op-group mui-bar bbc-bar-tab">
+        <div class="op-group-item  trade-talk col-3x" id="listen"><i class="bbc-icon bbc-icon-weixin listen" >分享</i></a></div>
+        <div class="op-group-item  trade-date col-9x">查看/管理</div>
+    </nav>
+    <div id="share_sheet" class="mui-popover mui-popover-bottom mui-popover-action">
+      <div class="section-white">
+        <div class="section-title theme-border-bottom">分享到</div>
+        <div class="section-container">
+          <div class="section-init action-share" data-platform="weixin"><i class="bbc-icon bbc-icon-weixin-member"></i></div>
+          <div class="section-init action-share" data-platform="timeline"><i class="bbc-icon bbc-icon-moments"></i></div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="__C_JS__/zepto.js"></script>
+  <script src="__C_JS__/mui.min.js"></script>
+  <script src="__C_JS__/template.min.js"></script>
+  <script src="__C_JS__/config.js"></script>
+  <script src="__C_JS__/app.js"></script>
+  <script src="__C_JS__/share.js"></script>
+
+  <script type="text/html" id="counsellor_info">
+        <section class=" section-white counsellor-info">
+             <img src="<%= $add_server(pic) %>" class="avatar"> 
+        </section>
+         <section class="qualification-block">
+            <div class="section">
+                <h3 class="title"><%= title %></h3>
+                <p class="certification font-red">距离开课时间：<%= $getDateDiff(endtime)%></p>
+                <p class="join-user ">
+                    当前预约人数 <%= num %>
+                </p>
+            </div>
+        </section>
+        
+        <section class="qualification-block">
+            <div class="section">
+                <div id="slider" class="mui-slider  bbc-tab-bar">
+                  <div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                    <div class="mui-scroll sliderSegmentedControl">
+                            <a class="mui-control-item mui-active" href="#item1mobile">详情</a>
+                            <a class="mui-control-item " href="#item2mobile">目录</a>
+                            <a class="mui-control-item " href="#item3mobile">评论</a>
+                            
+                    </div>
+                  </div>
+                  <div class="mui-slider-group">
+                    <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+                            <ul class="mui-table-view coupons-list rate-list describe" >
+                            <%= describe %>
+                        </ul>
+                    </div>
+                    <div id="item2mobile" class="mui-slider-item mui-control-content ">
+                      <ul class="mui-table-view coupons-list rate-list intro" >
+                            <%= intro %>
+                            
+                      </ul>
+                    </div>
+                    <div id="item3mobile" class="mui-slider-item mui-control-content ">
+                      <ul class="mui-table-view coupons-list rate-list" >
+                            评论
+                            
+                      </ul>
+                    </div>
+                    </div>    
+                </div>
+            </div>
+        </section>
+  </script> 
+  <script>
+      var result = window.location.href;
+      var acid = $.getUrlParam(result,'acid');
+      var actype = $.getUrlParam(result,'actype');
+      //登录状态
+      var state = app.getState();
+      var param = {
+          'method': config.apimethod.clcadetail,
+          'source':config.source,
+          'typeid': actype,
+          'acid': acid
+      }
+      if(state.token){
+        var param = {
+          'method': config.apimethod.clcadetail,
+          'source':config.source,
+          'typeid': actype,
+          'acid': acid,
+          'account': state.token
+          
+        }
+      }
+      $.dataRequest(param, function(rs) {
+        $('.header-title').text(rs.title)
+
+        var widgets = template('counsellor_info', rs);
+        $('.counsellor-homepage-content').append(widgets);
+        
+        var desc = rs.describe
+        $('.describe').html(desc); 
+        var intro = rs.intro
+        $('.intro').html(intro); 
+        
+        mui(".mui-slider").slider();
+        $(window).on('tap','.listen',function(){
+            var shareData = {
+                title: rs.title, 
+                href: 'http://www.pgyer.com/Tg8V', 
+                desc: rs.title,
+                pic: 'http://39.105.4.51:88/uploads/images/logo.png'
+              };
+              log(shareData)
+              appshare(shareData);
+            
+        })
+        $(window).on('tap', '.trade-date', function() {
+            var state = app.getState();
+            if(state.token){
+//              if(actype==0){
+//                  actype = 2;
+//              }else{
+//                  actype = 3;
+//              }
+                window.location.href = "{:url('Clac/manager')}"+"?anum="+rs.num+"&actype="+actype+"&acid="+acid
+                // clicked('_www/view/clac/manager.html',{
+                //     'anum':rs.num,
+                //     'actype':actype,
+                //     'acid':acid
+                // })
+                
+            }else{
+              window.location.href = "{:url('Passport/login')}"
+                //去登录 
+                // var faid = plus.webview.currentWebview().id;
+                // clicked('_www/view/passport/login.html', {
+                //   'faid': faid
+                // }, 'slide-in-bottom');
+            }
+            
+          })
+      });
+      
+  </script>
+</html>

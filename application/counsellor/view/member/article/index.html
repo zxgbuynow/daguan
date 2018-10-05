@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <style>
+     .mui-content{
+        margin-top: 45px;
+     }
+      .main{
+                margin-right: 10px;
+            }
+            .mui-table-view .mui-media-object{
+            max-width: 72px; 
+                height: 72px;
+            }
+            .mui-media-text {
+                color: #646464;
+                font-size: 15px;
+            }
+            .mui-media-author {
+                font-size: 13px;
+                margin-top: 5px;
+            } 
+    </style>
+  </head>
+  <body>
+    <header class="page-header">
+          <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+          <div class="header-title">文章列表</div>
+          <a href="{:url('Member/articleadd')}"><i class="header-right txt-func " data-webview="_www/view/member/article/add.html">发布</i></a>
+    </header>
+    <div class="mui-content" >
+    
+    </div>
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script type="text/html" id="artical_list">
+         <section>  
+              <!--文章 start-->
+          <section class="widgets-category-nav section-white">
+            <div class="mui-table-view">
+              <ul class="mui-table-view mui-table-view-chevron">
+                <% for(var i in list) { %>
+                <li class="mui-table-view-cell mui-media action-clickview" data-webview="{:url('Member/articledit')}" data-article_id="<%= list[i].id %>" >
+                    <a class="mui-navigate-right">
+                        <img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].cover) %>">
+                        <div class="mui-media-body">
+                            <%= list[i].title %>
+                            <p class='mui-ellipsis mui-media-text'><%= list[i].description %></p>
+                            <p class="mui-ellipsis mui-media-text mui-media-author">作者：本人</p>
+                        </div>
+                    </a>
+                </li>
+                 <% } %>
+              </ul>     
+            </div>
+          </section>
+    </script>
+    <script>
+        var state = app.getState();
+            var param = {
+            'method': config.apimethod.articlemy,
+            'source':config.source,
+            'account': state.token
+        }
+        $.dataRequest(param, function(rs) {
+                var widgets = template('artical_list', rs);
+            $('.mui-content').append(widgets);
+                 // 
+             mui('.mui-scroll-wrapper').scroll({
+              indicators: false
+            });
+
+            $(window).on('tap', '.action-clickview', function() {
+              var webview = $(this).data('webview');
+              var article_id = $(this).data('article_id');
+              window.location.href = webview+'?article_id='+article_id;
+              
+            })
+         })
+
+    </script>
+  </body>
+
+</html>

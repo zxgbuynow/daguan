@@ -112,6 +112,21 @@ class Member extends Home
         return $this->fetch('member/ondate/hour'); // 渲染模板
     }
 
+
+    //文章相关
+    public function articlein()
+    {
+        return $this->fetch('member/article/index'); // 渲染模板
+    }
+    public function articleadd()
+    {
+        return $this->fetch('member/article/add'); // 渲染模板
+    }
+    public function articledit()
+    {
+        return $this->fetch('member/article/edit'); // 渲染模板
+    }
+
     /*
     |---
     | 公共方法

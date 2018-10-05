@@ -706,7 +706,6 @@ class Index
         $pmap['userid'] = $params['id'];
         $pmap['status'] = 1;
         $article['list'] = db('cms_page')->where($pmap)->order('sort ASC, view DESC')->limit(2)->select();
-
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
             $article['list'][$key]['cover']  = $value['fcover'];
@@ -4395,11 +4394,14 @@ class Index
         $content = trim($params['content']);
 
         if ($cover) {
-            $img = explode(',', $cover);
-            $data['fcover'] =$this->_seve_img($img[1]);
-            if (!$data['fcover']) {
-                return $this->error('封图上传失败，请稍后重试');
+            if (strstr($cover,"http")==false) {
+                $img = explode(',', $cover);
+                $data['fcover'] =$this->_seve_img($img[1]);
+                if (!$data['fcover']) {
+                    return $this->error('封图上传失败，请稍后重试');
+                }
             }
+            
         }
         
 

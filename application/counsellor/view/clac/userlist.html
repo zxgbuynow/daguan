@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <style type="text/css">
+            .clac-list{
+                margin-top: 50px;
+            }
+        .clac-list li{
+            height: auto;
+        }
+        .mui-table-view .mui-media-object{
+            width: 50px!important; 
+            height: 50px!important;
+            max-width:50px;
+            border-radius: 50%;
+        }
+        
+    </style>
+  </head>
+
+  <body class="body-padding-xs">
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">人员列表</div>
+    </header>
+    
+    <section class="section-white clac-list">
+      <div class="section-title user-title">
+        <div class="title-txt utitle"></div>
+      </div>
+      <div class=" user-assetses font-gray-20 ">
+            <ul class="mui-table-view" id="ulist">
+                <!--<li class="mui-table-view-cell mui-media action-webview" data-webview="_www/view/clac/userd.html" data-webparam='{"acid":<%= list[i].id %>, "actype":<%= list[i].type %>}'>
+                <a class="mui-navigate-right">
+                    <img class="mui-media-object mui-pull-left" src="../../img/widgets_36.jpg" >
+                    <div class="mui-media-body">
+                        幸福
+                        <p class='mui-ellipsis'>女</p>
+                    </div>
+                </a>
+            </li>-->
+            
+         </ul>
+      </div>
+    </section>
+    
+    
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script type="text/html" id="u_list">
+            <% for(var i in ulist) { %>
+                <li class="mui-table-view-cell mui-media action-clickview" data-webview="{:url('Clac/userd')}" data-uid="<%= ulist[i].id %>" >
+                <a class="mui-navigate-right">
+                    <img class="mui-media-object mui-pull-left" src="<%= $add_server(ulist[i].avar) %>" >
+                    <div class="mui-media-body">
+                        <%= ulist[i].nickname %>
+                        <p class='mui-ellipsis'><%= ulist[i].sex %></p>
+                    </div>
+                </a>
+            </li>
+            <%}%>
+              
+        </script>
+    <script type="text/javascript" charset="utf-8">
+        var result = window.location.href;
+        var acid = $.getUrlParam(result,'acid');
+        var actype = $.getUrlParam(result,'actype');
+
+        var state = app.getState();
+        var param = {
+          'method': config.apimethod.clcauserlist,
+          'source':config.source,
+          'clacid': acid,
+          'clactype': actype
+        }
+        // log(param) 
+        $.dataRequest(param, function(rs) { 
+            // log(rs)
+            console.log(rs);
+            $('.utitle').text(rs.title)
+            var fwidget = template('u_list', rs);
+            $('#ulist').append(fwidget); 
+            $(window).on('tap', '.action-clickview', function() {
+              var webview = $(this).data('webview');
+              var uid = $(this).data('uid');
+              window.location.href = webview+'?uid='+uid;
+              
+            })
+        })
+        
+    </script>
+  </body>
+
+</html>
