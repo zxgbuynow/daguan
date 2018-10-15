@@ -119,7 +119,15 @@
           $(window).on('click', '.coupon-radio', function() {
             couponid = $(this).val();
             var price = $(this).attr('price');
-            $('.pay-num').text('￥'+(parseFloat(total)-parseFloat(price)).toFixed(2))
+            if(parseFloat(total)-parseFloat(price)<0){
+              couponid = 0;
+              mui.toast('不能使用该优惠券');return false;
+              $('.pay-num').text('￥0.01')
+              
+            }else{
+              $('.pay-num').text('￥'+(parseFloat(total)-parseFloat(price)).toFixed(2))
+            }
+            
           })
           $(window).on('tap', '.action-pay', function() {
               if($('input[name="payment"]:checked').length == 0) {
