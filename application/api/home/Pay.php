@@ -75,22 +75,27 @@ class Pay
         $params = $request->param();
 
         //优惠券
+        $price =0;
+        //查询订单信息
+        $where['tid'] = $params['payment_id'];
+        $payment = db('trade')->where($where)->find();
         if (isset($params['couponid'])) {
             $price = db('cms_coupon')->where(['id'=>$params['couponid']])->value('price');
             $data['coupon'] = $price;
             $data['couponid'] = $params['couponid'];
+            $data['payment'] = floatval($payment['payment'])- floatval($price)<0?'0.01':floatval($payment['payment'])- floatval($price);
+            $payment['payment'] = $data['payment'];
             db('trade')->where(['tid'=>$params['payment_id']])->update($data);
             db('cms_coupon')->where(['id'=>$params['couponid']])->update(['use'=>1]);
         }
-        $where['tid'] = $params['payment_id'];
-        //查询订单信息
-        $payment = db('trade')->where($where)->find();
+        
+        
 
         $mer_id = $this->mer_id;
         $mer_key = $this->mer_key;
         $seller_account_name = $this->seller_account_name;
 
-        $payment['payment'] = 0.01;
+        // $payment['payment'] = 0.01;
 
         //if price
         // if ($price) {

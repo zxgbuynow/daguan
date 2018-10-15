@@ -82,6 +82,19 @@ gwIDAQAB",
         //查询订单信息
         $payment = db('trade')->where($where)->find();
 
+        //优惠券
+        $price =0;
+        //查询订单信息
+        if (isset($params['couponid'])) {
+            $price = db('cms_coupon')->where(['id'=>$params['couponid']])->value('price');
+            $data['coupon'] = $price;
+            $data['couponid'] = $params['couponid'];
+            $data['payment'] = floatval($payment['payment'])- floatval($price)<0?'0.01':floatval($payment['payment'])- floatval($price);
+            $payment['payment'] = $data['payment'];
+            db('trade')->where(['tid'=>$params['payment_id']])->update($data);
+            db('cms_coupon')->where(['id'=>$params['couponid']])->update(['use'=>1]);
+        }
+        
 
         //商户订单号，商户网站订单系统中唯一订单号，必填
         
