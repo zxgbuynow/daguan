@@ -105,7 +105,7 @@ gwIDAQAB",
 
         //付款金额，必填
         $total_amount = number_format($payment['payment'],2,".","");
-        $total_amount = 0.01;
+        // $total_amount = 0.01;
 
         //商品描述，可空
         $body = $payment['title'].'...';
