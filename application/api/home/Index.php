@@ -347,6 +347,16 @@ class Index
                 }
                 
                
+            }else if (strstr($value['link'], 'clac')) {
+                if ($ismobile) {
+                    $lunbo['pic'][$key]['webview'] = "/mobile.php/clac/detail.html";
+                     $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                }else{
+                    $lunbo['pic'][$key]['webview'] = '_www/view/clac/detail.html';
+                     $lunbo['pic'][$key]['webparam'] = ['acid'=>explode('.',explode('/', $value['link'])[1])[0]];
+                }
+                
+               
             }else{
                 $class['pic'][$key]['webview'] = '_www/view/index.html';
                 $class['pic'][$key]['webparam'] = [];

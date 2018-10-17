@@ -159,7 +159,7 @@ class Advert extends Admin
                 ['textarea', 'code', '代码', '<code>必填</code>，支持html代码'],
                 ['image', 'src', '图片', '<code>必须</code>'],
                 ['text', 'title', '文字内容', '<code>必填</code>'],
-                ['text', 'link', '链接', '<code>如文章：article/1.html 咨询师：counsellor/1.html必填</code>'],
+                ['text', 'link', '链接', '<code>如文章：article/1.html 咨询师：counsellor/1.html 课程活动：calc/1.html必填</code>'],
                 ['colorpicker', 'color', '文字颜色', '', '', 'rgb'],
                 ['text', 'size', '文字大小', '只需填写数字，例如:12，表示12px', '',  ['', 'px']],
                 ['text', 'width', '宽度', '不用填写单位，只需填写具体数字'],
