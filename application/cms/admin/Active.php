@@ -171,6 +171,11 @@ class Active extends Admin
      */
     public function delete($ids = null)
     {
+        //关联删除
+        
+        if ($ids) {
+            db('cms_clac_temp')->where(['classid'=>$ids,'type'=>1])->delete();
+        }
         
         return $this->setStatus('delete');
     }

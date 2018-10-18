@@ -176,7 +176,9 @@ class Classes extends Admin
      */
     public function delete($ids = null)
     {
-        
+        if ($ids) {
+            db('cms_clac_temp')->where(['classid'=>$ids,'type'=>0])->delete();
+        }
         return $this->setStatus('delete');
     }
 
