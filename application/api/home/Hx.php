@@ -193,11 +193,19 @@ class Hx
      * @param
      *          $owner_username
      */
-    public function showFriend($owner_username) {
-        $url = $this->url . "users/" . $owner_username . "/contacts/users/";
-        $access_token = $this->getToken ();
+    static function showFriend($owner_username) {
+
+        $url = self::URL. "users/" . $owner_username . "/contacts/users/";
+        $access_token = self::getToken ();
         $header [] = 'Authorization: Bearer ' . $access_token;
-        $result = $this->postCurl ( $url, '', $header, $type = "GET" );
+        $result = self::postCurl ( $url, '', $header, $type = "GET" );
+        $result = json_decode($result,true);
+
+        if (isset($result['error'])) {
+            return 0;
+        }else{
+            return $result['data'];
+        }
     }
     // +----------------------------------------------------------------------
     // | 聊天相关的方法

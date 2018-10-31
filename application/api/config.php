@@ -86,7 +86,8 @@ return [
         'articleedit'=>'article.edit',
         'articlemydl'=>'article.mydl',
         'clcareply'=>'clca.reply',
-        'ismsg'=>'is.msg'
+        'ismsg'=>'is.msg',
+        'getUserList'=>'getUser.list'
 
 
     ]

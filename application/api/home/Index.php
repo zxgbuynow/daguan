@@ -1715,6 +1715,46 @@ class Index
     }
 
     /**
+     * [getUserMsgCount_custom 获取用户好友]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function getUserList_custom($params)
+    {   
+        //参数
+        $account = trim($params['account']);
+
+        $ret = Hx::showFriend($account);
+        //处理用户列表
+        $user = [];
+        if ($ret) {
+            foreach ($ret as $key => $value) {
+                $u = db('member')->where(['username'=>$value])->find();
+                if (!$u) {
+                    continue;
+                }
+                $user[$value]['nickname'] = $u['nickname'];
+                $user[$value]['mobile'] = $value;
+                $user[$value]['avar'] = $u['avar'];
+                if (is_numeric($u['avar'])) {
+                    $user[$value]['avar'] = get_file_path($u['avar']);
+                }
+                
+            }
+        }
+        
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$user
+        ];
+        
+        return json($data);
+    }
+
+    /**
      * [cancleDate_custom 取消预约]
      * @param  [type] $params [description]
      * @return [type]         [description]
@@ -3887,6 +3927,46 @@ class Index
             'msg'=>'',
             'data'=>$ret
         ];
+        return json($data);
+    }
+
+    /**
+     * [getUserList_shop 获取用户好友]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function getUserList_shop($params)
+    {   
+        //参数
+        $account = trim($params['account']);
+
+        $ret = Hx::showFriend($account);
+        //处理用户列表
+        $user = [];
+        if ($ret) {
+            foreach ($ret as $key => $value) {
+                $u = db('member')->where(['username'=>$value])->find();
+                if (!$u) {
+                    continue;
+                }
+                $user[$value]['nickname'] = $u['nickname'];
+                $user[$value]['mobile'] = $value;
+                $user[$value]['avar'] = $u['avar'];
+                if (is_numeric($u['avar'])) {
+                    $user[$value]['avar'] = get_file_path($u['avar']);
+                }
+                
+            }
+        }
+        
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$user
+        ];
+        
         return json($data);
     }
 
