@@ -357,6 +357,14 @@ class Index
                 }
                 
                
+            }else if (strstr($value['link'], 'member')) {
+                if ($ismobile) {
+                    $lunbo['pic'][$key]['webview'] = "/mobile.php/member/member.html";
+                }else{
+                    $lunbo['pic'][$key]['webview'] = '_www/view/member/member.html';
+                }
+                
+               
             }else{
                 $class['pic'][$key]['webview'] = '_www/view/index.html';
                 $class['pic'][$key]['webparam'] = [];
@@ -367,6 +375,69 @@ class Index
             'code'=>'1',
             'msg'=>'',
             'data'=>$lunbo
+        ];
+        return json($data);
+    }
+
+    /**
+     * [adv_custom 首页adv]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+     public function adv_custom($params)
+    {
+        $map['tagname'] = 'single';
+        $map['status'] = 1;
+        $ismobile = trim($params['ismobile']);
+        $adv = db('cms_advert')->where($map)->order('id DESC')->find();
+        if (strstr($adv['link'], 'article')) {//文章
+            if ($ismobile) {
+                $adv['webview'] = "/mobile.php/artical/detail.html";
+                $adv['webparam'] = explode('.',explode('/', $adv['link'])[1])[0];
+            }else{
+                $adv['webview'] = '_www/view/artical/detail.html';
+                $adv['webparam'] = ['article_id'=>explode('.',explode('/', $adv['link'])[1])[0]];
+            }
+            
+             
+        }else if (strstr($adv['link'], 'counsellor')) {
+            if ($ismobile) {
+                $adv['webview'] = "/mobile.php/counsellor/detail.html";
+                $adv['webparam'] = explode('.',explode('/', $adv['link'])[1])[0];
+            }else{
+                $adv['webview'] = '_www/view/counsellor/detail.html';
+                $adv['webparam'] = ['counsellor_id'=>explode('.',explode('/', $adv['link'])[1])[0]];
+            }
+            
+           
+        }else if (strstr($adv['link'], 'clac')) {
+            if ($ismobile) {
+                $adv['webview'] = "/mobile.php/clac/detail.html";
+                $adv['webparam'] = explode('.',explode('/', $adv['link'])[1])[0];
+            }else{
+                $adv['webview'] = '_www/view/clac/detail.html';
+                $adv['webparam'] = ['acid'=>explode('.',explode('/', $adv['link'])[1])[0]];
+            }
+            
+           
+        }else if (strstr($adv['link'], 'member')) {
+            if ($ismobile) {
+                $adv['webview'] = "/mobile.php/member/member.html";
+            }else{
+                $adv['webview'] = '_www/view/member/member.html';
+            }
+            
+           
+        }else{
+            $adv['webview'] = '_www/view/index.html';
+            $adv['webparam'] = [];
+        }
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$adv
         ];
         return json($data);
     }
@@ -1751,6 +1822,28 @@ class Index
             'data'=>$user
         ];
         
+        return json($data);
+    }
+
+    /**
+     * [getUserMsg_custom 获取用户离线消息]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function getUserMsg_custom($params)
+    {   
+        //参数
+        $account = trim($params['account']);
+
+        $sl = "select+*+where+from='" . $account . "'+or+to='". '18321271831';
+        $ret = Hx::chatRecord($sl);
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$ret
+        ];
         return json($data);
     }
 

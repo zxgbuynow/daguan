@@ -12,6 +12,7 @@ return [
         'article'=>'home.article',//好文推荐
         'articlebycate'=>'articlebycate',
         'lunbo'=>'home.lunbo',// 广告
+        'adv'=>'home.adv',// 固定广告
         'classList'=>'class.list',// 课程广告
         'activeList'=>'active.list',// 活动广告
         'category'=>'counsellor.category',//咨询分类
@@ -87,7 +88,8 @@ return [
         'articlemydl'=>'article.mydl',
         'clcareply'=>'clca.reply',
         'ismsg'=>'is.msg',
-        'getUserList'=>'getUser.list'
+        'getUserList'=>'getUser.list',
+        'getUserMsg'=>'getUser.msg'
 
 
     ]
