@@ -619,7 +619,7 @@ class Index
         
         $map['b.online'] = 1;
         $map['a.recommond'] = 1;
-        $recommend['list'] = db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC')->limit(3)->order('rand()')->select();
+        $recommend['list'] = db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->limit(3)->order('rand()')->select();
         // $recommend['list'] = db('member')->where($map)->order('sort ASC,recommond DESC')->limit(3)->order('rand()')->select();
 
         foreach ($recommend['list'] as $key => $value) {
