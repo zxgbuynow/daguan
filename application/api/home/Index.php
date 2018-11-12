@@ -871,7 +871,7 @@ class Index
             
         }
         //评价
-        $evmap['a.id'] = 2;
+        $evmap['a.id'] = 503;
         $evmap['e.id'] = array('neq','null');
         $counsellor['evalist'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where($evmap)->select();
 
