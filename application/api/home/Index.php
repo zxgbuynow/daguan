@@ -618,26 +618,28 @@ class Index
     {
         
         $map['b.online'] = 1;
-        $recommend['list'] = db('member')->where($map)->order('a.sort ASC,a.recommond DESC')->limit(3)->order('rand()')->select();
+        $map['a.recommond'] = 1;
+        $recommend['list'] = db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC')->limit(3)->order('rand()')->select();
+        // $recommend['list'] = db('member')->where($map)->order('sort ASC,recommond DESC')->limit(3)->order('rand()')->select();
 
         foreach ($recommend['list'] as $key => $value) {
-            unset($recommend['list'][$key]['intro']);
-            unset($recommend['list'][$key]['remark']);
-            if (!$value['memberid']) {
-                unset($recommend['list'][$key]);
-                continue;
-            }
-            if ($value['tags']) {
-                $tags = explode(',', $value['tags']);
-                if (empty(array_intersect($tags,$preferencearr))&&$preferencearr) {
-                    unset($recommend['list'][$key]);
-                    continue;
-                }
+            // unset($recommend['list'][$key]['intro']);
+            // unset($recommend['list'][$key]['remark']);
+            // if (!$value['memberid']) {
+            //     unset($recommend['list'][$key]);
+            //     continue;
+            // }
+            // if ($value['tags']) {
+            //     $tags = explode(',', $value['tags']);
+            //     if (empty(array_intersect($tags,$preferencearr))&&$preferencearr) {
+            //         unset($recommend['list'][$key]);
+            //         continue;
+            //     }
                 
-            }else{
-                unset($recommend['list'][$key]);
-                continue;
-            }
+            // }else{
+            //     unset($recommend['list'][$key]);
+            //     continue;
+            // }
             // get_file_path
             if (is_numeric($recommend['list'][$key]['avar'])) {
                 $recommend['list'][$key]['avar'] = get_file_path($recommend['list'][$key]['avar']);
