@@ -859,7 +859,17 @@ class Index
         
         //
         $counsellor['is_diamonds'] = $is_diamonds;
-
+        //登录状态
+        $counsellor['isfav'] =0 ;
+        if (isset($params['account'])) {//用户id
+            $amap['type'] = 0;
+            $amap['fid'] = $params['id'];
+            $amap['mid'] = $params['account'];
+            if (db('cms_fav')->where($amap)->find()) {
+               $counsellor['isfav'] = 1;
+            }
+            
+        }
         //相关文章
         $pmap['userid'] = $params['id'];
         $pmap['status'] = 1;
