@@ -873,7 +873,7 @@ class Index
         //评价
         $evmap['a.id'] = 503;
         $evmap['e.id'] = array('neq','null');
-        $counsellor['evalist'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where($evmap)->select();
+        $counsellor['evalist'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where($evmap)->limit(5)->select();
 
         foreach ($counsellor['evalist'] as $key => $value) {
             $u = db('member')->where(['id'=>$value['memberid']])->find();
@@ -902,6 +902,44 @@ class Index
         $counsellor['article'] = $article['list'];
         
         //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$counsellor
+        ];
+        return json($data);
+    }
+
+    /**
+     * [evalist_custom description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function evalist_custom($params)
+    {
+
+        $id = $params['id'];
+        //评价
+        $evmap['a.id'] = 503;
+        $evmap['e.id'] = array('neq','null');
+        $counsellor['evalist'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where($evmap)->select();
+
+        foreach ($counsellor['evalist'] as $key => $value) {
+            $u = db('member')->where(['id'=>$value['memberid']])->find();
+            if (!$u) {
+                unset($counsellor['evalist'][$key]);
+                continue;
+            }
+
+            $counsellor['evalist'][$key]['nickname'] = $this->handleNm($u['nickname']);
+            $counsellor['evalist'][$key]['avar'] = $u['avar'];
+            $counsellor['evalist'][$key]['is_diamonds'] = $u['is_diamonds'];
+            if (is_numeric($u['avar'])) {
+                $counsellor['evalist'][$key]['avar'] = get_file_path($u['avar']);
+            }
+        }
+
+         //返回信息
         $data = [
             'code'=>'1',
             'msg'=>'',

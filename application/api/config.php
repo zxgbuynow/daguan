@@ -19,6 +19,7 @@ return [
         'recommend'=>'counsellor.recommend',//推荐咨询师
         'deskrecommend'=>'counsellor.deskrecommend',//推荐咨询师
         'counsellor'=>'counsellor.info',//咨询师
+        'evalist'=>'counsellor.evalist',//咨询师评价
         'ondate'=>'counsellor.ondate',//预约
         'point'=>'user.point',//积分明细
         'trade'=>'user.trade',//订单信息
