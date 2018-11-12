@@ -714,9 +714,9 @@ class Index
             $recommend['list'][$key]['start'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where(array('a.id'=>$value['memberid']))->avg('sorce');
             //少于4星默认 4星
             if ($recommend['list'][$key]['start']<8) {
-                $recommend['list'][$key] = round(8 / 10, 2)*100.'%';
+                $recommend['list'][$key] = (round(8 / 10, 2)*100).'%';
             }else{
-                $recommend['list'][$key] = round($recommend['list'][$key]['start'] / 10, 2)*100.'%';
+                $recommend['list'][$key] = (round($recommend['list'][$key]['start'] / 10, 2)*100).'%';
             }
 
             //从业时间
