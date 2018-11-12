@@ -1891,11 +1891,12 @@ class Index
                 if (!$u) {
                     continue;
                 }
+                $co = db('member_counsellor')->where(['memberid'=>$u['id']])->find();
                 $user[$value]['nickname'] = $u['nickname'];
                 $user[$value]['mobile'] = $value;
                 $user[$value]['avar'] = $u['avar'];
-                $smap['id'] = array('in',$value['tags']);
-                $user[$value]['signarr'] =  db('cms_category')->where($smap)->column('title') ;
+                $smap['id'] = array('in',$co['tags']);
+                @$user[$value]['signarr'] =  db('cms_category')->where($smap)->column('title');
                 if (is_numeric($u['avar'])) {
                     $user[$value]['avar'] = get_file_path($u['avar']);
                 }
@@ -4131,11 +4132,12 @@ class Index
                 if (!$u) {
                     continue;
                 }
+                $co = db('member_counsellor')->where(['memberid'=>$u['id']])->find();
                 $user[$value]['nickname'] = $u['nickname'];
                 $user[$value]['mobile'] = $value;
                 $user[$value]['avar'] = $u['avar'];
-                $smap['id'] = array('in',$value['tags']);
-                $user[$value]['signarr'] =  db('cms_category')->where($smap)->column('title') ;
+                $smap['id'] = array('in',$co['tags']);
+                @$user[$value]['signarr'] =  db('cms_category')->where($smap)->column('title') ;
                 if (is_numeric($u['avar'])) {
                     $user[$value]['avar'] = get_file_path($u['avar']);
                 }
