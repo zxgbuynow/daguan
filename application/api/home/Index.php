@@ -1902,6 +1902,7 @@ class Index
                 }
                 
             }
+            array_multisort(array_column($user,'nickname'),SORT_ASC,$user);
         }
         
 
@@ -4143,6 +4144,7 @@ class Index
                 }
                 
             }
+            array_multisort(array_column($user,'nickname'),SORT_ASC,$user);
         }
         
 
