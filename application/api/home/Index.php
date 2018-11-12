@@ -708,12 +708,21 @@ class Index
             $recommend['list'][$key]['trade'] = db('trade')->where(array('status'=>1,'mid'=>$value['memberid']))->count();
             //标识
             $smap['id'] = array('in',$value['tags']);
-            $recommend['list'][$key]['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
+            // $recommend['list'][$key]['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
             $recommend['list'][$key]['signarr'] =  db('cms_category')->where($smap)->column('title') ;
+            //星级
+            $recommend['list'][$key]['start'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where(array('a.id'=>$value['memberid']))->avg('sorce');
+            //少于4星默认 4星
+            if ($recommend['list'][$key]['start']<8) {
+                $recommend['list'][$key] = round(8 / 10, 2)*100.'%';
+            }else{
+                $recommend['list'][$key] = round($recommend['list'][$key]['start'] / 10, 2)*100.'%';
+            }
+
             //从业时间
-            $recommend['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
+            // $recommend['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
             //分中心
-            $recommend['list'][$key]['shopname'] = $value['shopid']?db('shop_agency')->where(['id'=>$value['shopid']])->value('title'):'中国大陆';
+            // $recommend['list'][$key]['shopname'] = $value['shopid']?db('shop_agency')->where(['id'=>$value['shopid']])->value('title'):'中国大陆';
         }
         $recommend['list'] = array_values($recommend['list']);
         //返回信息
