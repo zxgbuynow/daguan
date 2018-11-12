@@ -610,25 +610,15 @@ class Index
         return json($data);
     }
     /**
-     * [recommend_custom 推荐咨询师]
+     * [deskrecommend_custom 平台推荐]
      * @param  [type] $params [description]
      * @return [type]         [description]
      */
-    public function recommend_custom($params)
+    public function deskrecommend_custom($params)
     {
-        $map['a.status'] = 1;
-        $map['a.type'] = 1;
-        $preferencearr = [];
-        if (isset($params['account'])) {
-            $preference = db('member')->where(['id'=>$params['account']])->column('preference');
-            if ($preference&&$preference[0]) {
-                $preferencearr = explode(',', $preference[0]);
-            }
-            
-        }
-
+        
         $map['b.online'] = 1;
-        $recommend['list'] = db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC')->limit(20)->order('rand()')->select();
+        $recommend['list'] = db('member')->where($map)->order('a.sort ASC,a.recommond DESC')->limit(3)->select();
 
         foreach ($recommend['list'] as $key => $value) {
             unset($recommend['list'][$key]['intro']);
@@ -657,6 +647,69 @@ class Index
             //标识
             $smap['id'] = array('in',$value['tags']);
             $recommend['list'][$key]['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
+            //从业时间
+            $recommend['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
+            //分中心
+            $recommend['list'][$key]['shopname'] = $value['shopid']?db('shop_agency')->where(['id'=>$value['shopid']])->value('title'):'中国大陆';
+        }
+        $recommend['list'] = array_values($recommend['list']);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$recommend
+        ];
+        return json($data);
+    }
+    /**
+     * [recommend_custom 推荐咨询师]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function recommend_custom($params)
+    {
+        $map['a.status'] = 1;
+        $map['a.type'] = 1;
+        $preferencearr = [];
+        if (isset($params['account'])) {
+            $preference = db('member')->where(['id'=>$params['account']])->column('preference');
+            if ($preference&&$preference[0]) {
+                $preferencearr = explode(',', $preference[0]);
+            }
+            
+        }
+
+        $map['b.online'] = 1;
+        $recommend['list'] = db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC')->limit(20)->select();
+
+        foreach ($recommend['list'] as $key => $value) {
+            unset($recommend['list'][$key]['intro']);
+            unset($recommend['list'][$key]['remark']);
+            if (!$value['memberid']) {
+                unset($recommend['list'][$key]);
+                continue;
+            }
+            if ($value['tags']) {
+                $tags = explode(',', $value['tags']);
+                if (empty(array_intersect($tags,$preferencearr))&&$preferencearr) {
+                    unset($recommend['list'][$key]);
+                    continue;
+                }
+                
+            }else{
+                unset($recommend['list'][$key]);
+                continue;
+            }
+            // get_file_path
+            if (is_numeric($recommend['list'][$key]['avar'])) {
+                $recommend['list'][$key]['avar'] = get_file_path($recommend['list'][$key]['avar']);
+            }
+            //订单数
+            $recommend['list'][$key]['trade'] = db('trade')->where(array('status'=>1,'mid'=>$value['memberid']))->count();
+            //标识
+            $smap['id'] = array('in',$value['tags']);
+            $recommend['list'][$key]['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
+            $recommend['list'][$key]['signarr'] =  db('cms_category')->where($smap)->column('title') ;
             //从业时间
             $recommend['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
             //分中心
