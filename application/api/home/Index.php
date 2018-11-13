@@ -1819,6 +1819,38 @@ class Index
     }
 
     /**
+     * [clacevaluate_custom 评价]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function clacevaluate_custom($params)
+    {   
+        //参数
+        $account = trim($params['account']);
+        $c_id = trim($params['c_id']);
+        $actype = trim($params['actype']);
+        $sorce = trim($params['sorce']);
+        $cotent = trim($params['cotent']);
+
+        $save['sorce'] = $sorce;
+        $save['memberid'] = $account;
+        $save['cotent'] = $cotent;
+        $save['cid'] = $c_id;
+        $save['create_time'] = time();
+        if (!db('clac_evaluate')->insert($save)) {
+            $this->error('评论失败！');
+        }
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+
+    /**
      * [oncalenda_custom 客户端预约时间]
      * @param  [type] $params [description]
      * @return [type]         [description]

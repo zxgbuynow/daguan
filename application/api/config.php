@@ -54,6 +54,7 @@ return [
         'getMemberInfoByTid'=>'getMemberInfoByTid',
         'caseAdd'=>'caseAdd',
         'evaluate'=>'user.evaluate',
+        'clacevaluate'=>'user.clacevaluate',
         'oncalenda'=>'oncalenda',
         'recordlist'=>'recordlist',
         'calendaondate'=>'calenda.ondate',
