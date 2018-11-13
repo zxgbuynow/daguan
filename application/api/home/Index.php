@@ -2534,6 +2534,9 @@ class Index
                 }
                 
             }
+
+            //查看评价
+            $data[$key]['claceva'] = db('clac_evaluate')->where(['cid'=>$value['classid'],'actype'=>$value['paytype'],'memberid'=>$mid])->count();
         }
         //返回信息
         $res = [
