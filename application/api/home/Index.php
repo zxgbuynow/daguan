@@ -2043,6 +2043,30 @@ class Index
         return json($data);
     }
     /**
+     * [cancleUp_custom description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function cancleUp_custom($params)
+    {
+        //参数
+        $cid = trim($params['cid']);
+
+        if (isset($params['cid'])) {
+
+            db('calendar')->where(['id'=>$cid])->update(['status'=>1]);;
+            
+            
+        }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+    /**
      * [getCurrentCander_custom 当前天后预约记录]
      * @param  [type] $params [description]
      * @return [type]         [description]
@@ -4098,6 +4122,7 @@ class Index
         ];
         return json($data);
     }
+
 
     /**
      * [cancleDate_shop 取消预约]

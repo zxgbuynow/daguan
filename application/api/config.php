@@ -59,6 +59,7 @@ return [
         'calendaondate'=>'calenda.ondate',
         'setcalenda'=>'setcalenda',
         'cancleDate'=>'cancle.date',//取消预约
+        'cancleUp'=>'cancle.up',//更新预约
         'setallcalenda'=>'setall.calenda',//设置批量预约
         'getUserMsgCount'=>'getUser.msgCount',
         'getCurrentCander'=>'getCurrent.cander',
