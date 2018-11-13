@@ -2481,6 +2481,8 @@ class Index
                 if ($r) {
                     $data[$key]['pic'] =  get_file_path($r['pic']);
                     $data[$key]['title'] =  $r['title'];
+                    $data[$key]['address'] =  $r['address'];
+                    $data[$key]['start_time'] =  $r['start_time'];
                     $data[$key]['typeid'] = $value['paytype']==2?0:1;
                     $data[$key]['id'] = $r['id'];
                 }
@@ -2493,6 +2495,8 @@ class Index
                 if ($r) {
                     $data[$key]['pic'] =  get_file_path($r['pic']);
                     $data[$key]['title'] =  $r['title'];
+                    $data[$key]['address'] =  $r['address'];
+                    $data[$key]['start_time'] =  $r['start_time'];
                     $data[$key]['typeid'] = $value['paytype']==3?1:0;
                     $data[$key]['id'] = $r['id'];
                 }
