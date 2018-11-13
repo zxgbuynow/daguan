@@ -2465,6 +2465,23 @@ class Index
                 }else{
                     $data[$key]['pic'] =  $pop['avar'];
                 }
+                $mcounsellor = db('member_counsellor')->where(['memberid'=>$value['fid']])->find();
+                //订单数
+                $data[$key]['trade'] = db('trade')->where(array('status'=>1,'mid'=>$mcounsellor['memberid']))->count();
+                //标识
+                $smap['id'] = array('in',$mcounsellor['tags']);
+                $data[$key]['signarr'] =  db('cms_category')->where($smap)->column('title') ;
+                //星级
+                $data[$key]['start'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where(array('a.id'=>$mcounsellor['memberid']))->avg('sorce');
+                //少于4星默认 4星
+                if ($data[$key]['start']<8) {
+                    $data[$key]['start'] = (round(8 / 10, 2)*100).'%';
+                }else{
+                    $data[$key]['start'] = (round($data[$key]['start'] / 10, 2)*100).'%';
+                }
+                //分中心
+                $data[$key]['shopname'] = $pop['shopid']?db('shop_agency')->where(['id'=>$pop['shopid']])->value('city'):'中国大陆';
+
             }
             if ($type==3) {
                 if (is_numeric($pop['cover'])) {
