@@ -2466,6 +2466,18 @@ class Index
                     $data[$key]['pic'] =  $pop['avar'];
                 }
                 $mcounsellor = db('member_counsellor')->where(['memberid'=>$value['fid']])->find();
+                //tearch
+                $data[$key]['tearch'] = $mcounsellor['tearch'];
+                //leader
+                $data[$key]['leader'] = $mcounsellor['leader'];
+                //nickname
+                $data[$key]['nickname'] = $pop['nickname'];
+                //slogan
+                $data[$key]['slogan'] = $pop['slogan'];
+                //online
+                $data[$key]['online'] = $mcounsellor['online'];
+                //memberid
+                $data[$key]['memberid'] = $value['fid'];
                 //订单数
                 $data[$key]['trade'] = db('trade')->where(array('status'=>1,'mid'=>$mcounsellor['memberid']))->count();
                 //标识
