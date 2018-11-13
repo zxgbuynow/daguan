@@ -2475,7 +2475,7 @@ class Index
                 //文章简介
                 $data[$key]['description'] =  $pop['description'];
                 //作者
-                $data[$key]['description'] =  $pop['userid']?db('member')->where(['id'=>$pop['userid']])->value('nickname'):$pop['author'];
+                $data[$key]['author'] =  $pop['userid']?db('member')->where(['id'=>$pop['userid']])->value('nickname'):$pop['author'];
             }
 
             if ($type==1||$type==2) {
