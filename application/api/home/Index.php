@@ -1896,7 +1896,9 @@ class Index
                     $str = '文字咨询';
                     break;
             }
+            $data[$key]['chartkey'] = $value['chart'];
             $data[$key]['chart'] = $str;
+
 
             $member =  db('member')->alias('a')->field('a.*,b.mid')->join(' trade b',' b.memberid = a.id','LEFT')->where(array('b.id'=>$value['tid']))->find();
             $data[$key]['member'] =  $member['nickname'];
