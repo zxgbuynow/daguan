@@ -661,7 +661,7 @@ class Index
             //从业时间
             // $recommend['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
             //分中心
-            // $recommend['list'][$key]['shopname'] = $value['shopid']?db('shop_agency')->where(['id'=>$value['shopid']])->value('title'):'中国大陆';
+            $recommend['list'][$key]['shopname'] = $value['shopid']?db('shop_agency')->where(['id'=>$value['shopid']])->value('city'):'中国大陆';
         }
         $recommend['list'] = array_values($recommend['list']);
         //返回信息
@@ -733,7 +733,7 @@ class Index
             //从业时间
             // $recommend['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
             //分中心
-            // $recommend['list'][$key]['shopname'] = $value['shopid']?db('shop_agency')->where(['id'=>$value['shopid']])->value('title'):'中国大陆';
+            $recommend['list'][$key]['shopname'] = $value['shopid']?db('shop_agency')->where(['id'=>$value['shopid']])->value('city'):'中国大陆';
         }
         $recommend['list'] = array_values($recommend['list']);
         //返回信息
@@ -823,6 +823,8 @@ class Index
         }else{
             $counsellor['percent'] = (round($counsellor['start'] / 10, 2)*100).'%';
         }
+
+        $counsellor['shopname'] = $counsellor['shopid']?db('shop_agency')->where(['id'=>$counsellor['shopid']])->value('city'):'中国大陆';
         
         //沟通方式
         $counsellor['chartArr'] = array(
@@ -901,6 +903,11 @@ class Index
 
         $counsellor['article'] = $article['list'];
         
+        //预约时间
+        $cmap['memberid'] = $params['id'];
+        $cmap['ondatetime'] = array('gt',strtotime(date('Y-m-d',time())));
+        $counsellor['condate'] = db('connsellor_ondate')->where($cmap)->count();
+
         //返回信息
         $data = [
             'code'=>'1',
@@ -1598,7 +1605,8 @@ class Index
 
         $calendar['list'] = db('calendar')->where($pmap)->whereTime('start_time', 'between', [ intval($cstime) , $cetime])->select();
         // $times = array('9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00');
-        $times = array('9:00~10:00','10:00~11:00','11:00~12:00','12:00~13:00','13:00~14:00','14:00~15:00','15:00~16:00','16:00~17:00','17:00~18:00','18:00~19:00','19:00~20:00','20:00~21:00');
+        // $times = array('9:00~10:00','10:00~11:00','11:00~12:00','12:00~13:00','13:00~14:00','14:00~15:00','15:00~16:00','16:00~17:00','17:00~18:00','18:00~19:00','19:00~20:00','20:00~21:00');
+        $times = array('0:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00');
         $timesarr['list'] = [];
         //过去的时间
         if ($today>strtotime(date('Y-m-d ',$cstime))) {
@@ -1611,7 +1619,8 @@ class Index
         }else{
             foreach ($times as $key => $value) {
                 //订单记录
-                $sval = explode('~', $value)[0];
+                // $sval = explode('~', $value)[0];
+                $sval = $value;
                 $tpoint = strtotime(date('Y-m-d',$cstime).$sval)+60;//加上60秒处理时间间隔
                 $timesarr['list'][$key]['t'] = $value;
                 $timesarr['list'][$key]['s'] = 0;
@@ -1836,6 +1845,8 @@ class Index
         if (!db('calendar')->insert($save)) {
             $this->error('保存失败！');
         }
+        //更新预约表状态
+        // db('connsellor_ondate')->where(['memberid'=>$account,'ondatetime'=>strtotime($start_time)])->update(['status'=>1]);
         //返回信息
         $data = [
             'code'=>'1',
