@@ -1327,7 +1327,7 @@ class Index
             $map['title'] = array('like','%'.$keyword.'%');
         }
         $map['status'] = 1;
-        $article['list'] = db('cms_page')->where($map)->order('sort ASC, view DESC')->select();
+        $article['list'] = db('cms_page')->where($map)->order('sort ASC, view DESC')->limit(10)->select();
 
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
