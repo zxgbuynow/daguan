@@ -1219,6 +1219,11 @@ class Index
         }
         $article = db('cms_page')->where('id',$id)->find();
 
+        //查询咨询师信息
+        if ($article['userid']) {
+            $article['counsellor'] = db()->where(['id'=>$article['userid']])->find();
+        }
+
         //返回信息
         $data = [
             'code'=>'1',
