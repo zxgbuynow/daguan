@@ -1760,23 +1760,10 @@ class Index
     public function articalcate_custom($params)
     {
         $ret = array();
-        // $article = db('cms_page')->where('status',1)->order('view DESC')->limit(10)->select();
 
-        $cates = db('cms_category')->where('status',1)->order('id DESC')->select();
+        $cates = db('cms_articlecategory')->where('status',1)->order('id DESC')->select();
 
-        foreach ($cates as $k => $v) {
-            $ret[$k]['name'] = $v['title'];
-            $ret[$k]['cid'] = $v['id'];
-            //取分类下数据
-            $article = db('cms_page')->where(['status'=>1,'cid'=>$v['id']])->order('sort ASC, view DESC')->limit(10)->select();
-            foreach ($article as $key => $value) {
-                unset($value['content']);
-                $ret[$k]['list'][$key] = $value;
-                $ret[$k]['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
-                $ret[$k]['list'][$key]['cover'] = get_file_path($value['cover']);
-            }
-        }
-        $rs['data'] = array_values($ret);
+        $rs['data'] = array_values($cates);
         //返回信息
         $data = [
             'code'=>'1',
@@ -1784,6 +1771,32 @@ class Index
             'data'=>$rs
         ];
         return json($data);
+
+        // $ret = array();
+        // // $article = db('cms_page')->where('status',1)->order('view DESC')->limit(10)->select();
+
+        // $cates = db('cms_category')->where('status',1)->order('id DESC')->select();
+
+        // foreach ($cates as $k => $v) {
+        //     $ret[$k]['name'] = $v['title'];
+        //     $ret[$k]['cid'] = $v['id'];
+        //     //取分类下数据
+        //     $article = db('cms_page')->where(['status'=>1,'cid'=>$v['id']])->order('sort ASC, view DESC')->limit(10)->select();
+        //     foreach ($article as $key => $value) {
+        //         unset($value['content']);
+        //         $ret[$k]['list'][$key] = $value;
+        //         $ret[$k]['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
+        //         $ret[$k]['list'][$key]['cover'] = get_file_path($value['cover']);
+        //     }
+        // }
+        // $rs['data'] = array_values($ret);
+        // //返回信息
+        // $data = [
+        //     'code'=>'1',
+        //     'msg'=>'',
+        //     'data'=>$rs
+        // ];
+        // return json($data);
     }
 
     /**
