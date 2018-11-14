@@ -1332,7 +1332,7 @@ class Index
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
             $value['author'] = $value['author']?$value['author']:'ADMIN';
-            $article['list'][$key]['author'] = $value['userid']==0?$value['author']:db('member')->where('status',1)->column('nickname');
+            $article['list'][$key]['author'] = $value['userid']==0?$value['author']:db('member')->where(['id'=>$value['userid']])->value('nickname');
             $article['list'][$key]['cover'] = get_file_path($value['cover']);
         }
 
