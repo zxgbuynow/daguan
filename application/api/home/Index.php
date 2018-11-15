@@ -1902,7 +1902,7 @@ class Index
             $this->error('保存失败！');
         }
         //更新预约表状态
-        // db('connsellor_ondate')->where(['memberid'=>$account,'ondatetime'=>strtotime($start_time)])->update(['status'=>1]);
+        db('connsellor_ondate')->where(['memberid'=>$account,'ondatetime'=>strtotime($start_time)])->update(['status'=>1]);
         //返回信息
         $data = [
             'code'=>'1',
@@ -2090,7 +2090,9 @@ class Index
                 $sj = db('calendar')->alias('a')->join('member m',' m.id = a.memberid','LEFT')->where(array('a.id'=>$cid))->value('a.start_time');
                 $this->sendcanlcemsg($mobile,$username,$sj);
             }
+            $co = db('calendar')->where(['id'=>$cid])->find();
             db('calendar')->where(['id'=>$cid])->delete();
+            db('connsellor_ondate')->where(['memberid'=>$co['memberid'],'ondatetime'=>$co['start_time']])->update(['status'=>0]);
             
             
         }
