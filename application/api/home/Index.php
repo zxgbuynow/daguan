@@ -908,6 +908,12 @@ class Index
         $cmap['ondatetime'] = array('gt',strtotime(date('Y-m-d',time())));
         $counsellor['condate'] = db('connsellor_ondate')->where($cmap)->count();
 
+        //挂靠分中心
+        // $agmap['id'] = $counsellor['openshop']?array('in',$counsellor['openshop']):array('in',$counsellor['shopids']);
+        $agmap['id'] = array('in',$counsellor['openshop']);
+        $counsellor['shopidsnm'] = array_filter(db('shop_agency')->where($agmap)->column('city'));
+        $counsellor['shopidsmap'] = array_filter(db('shop_agency')->where($agmap)->column('map_address'));
+        
         //返回信息
         $data = [
             'code'=>'1',
