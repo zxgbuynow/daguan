@@ -2140,17 +2140,29 @@ class Index
         $lastday = date('Y-m-d', strtotime("$firstday +1 month -1 day"));
         $current = date('Y-m-d', time());
         $info =  db('connsellor_ondate')->where(['memberid'=>$account])->whereTime('ondatetime', 'between', [$current, $lastday])->select();
+        // echo db('connsellor_ondate')->getlastsql();exit;
         $ret = array();
-        foreach ($info as $key => $value) {
-            $ret[] = (int)date('d',$value['ondatetime']);
-        }
 
+        //可约
+        //约满
+        //不可约
         
+        foreach ($info as $key => $value) {
+            //candar
+            $ret[date('d',$value['ondatetime'])][] = $value['status'];
+        }
+        $rs = array();
+        foreach ($ret as $k => $v) {
+            $ret[$k] =in_array(1, $v)?1:0;
+            $rs['k'][] = $k;
+        }
+        $rs['v'] = $ret;
+        $rs['k'] = array_unique($rs['k']);
         //返回信息
         $data = [
             'code'=>'1',
             'msg'=>'',
-            'data'=>array_unique($ret)
+            'data'=>$rs
         ];
         return json($data);
     }
