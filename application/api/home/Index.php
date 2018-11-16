@@ -1772,7 +1772,7 @@ class Index
     {
         $ret = array();
 
-        $cates = db('cms_articlecategory')->where('status',1)->order('id DESC')->select();
+        $cates = db('cms_articlecategory')->where('status',1)->order('sort DESC,id DESC')->limit(8)->select();
 
         $rs['data'] = array_values($cates);
         //返回信息
@@ -1808,6 +1808,27 @@ class Index
         //     'data'=>$rs
         // ];
         // return json($data);
+    }
+
+    /**
+     * [articalcate_custom 文章分类]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function claccate_custom($params)
+    {
+        $ret = array();
+
+        $cates = db('cms_clacategory')->where('status',1)->order('sort DESC,id DESC')->limit(4)->select();
+
+        $rs['data'] = array_values($cates);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rs
+        ];
+        return json($data);
     }
 
     /**

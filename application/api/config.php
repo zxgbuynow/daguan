@@ -93,7 +93,9 @@ return [
         'clcareply'=>'clca.reply',
         'ismsg'=>'is.msg',
         'getUserList'=>'getUser.list',
-        'getUserMsg'=>'getUser.msg'
+        'getUserMsg'=>'getUser.msg',
+        'claccate'=>'clac.cate'
+
 
 
     ]
