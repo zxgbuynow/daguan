@@ -2891,10 +2891,15 @@ class Index
         $sendid = trim($params['account']);
         $reciveid = trim($params['reciveid']);
         $msg = trim($params['msg']);
+        $status = 0;
+        if (isset($params['status'])) {
+           $status = $params['status'];
+        }
 
         $data['sendid'] = $sendid;
         $data['reciveid'] = $reciveid;
         $data['msg'] = $msg;
+        $data['status'] = $status;
         $data['create_time'] = time();
         //二人会话标识
         $data['tag'] = 'u'.$sendid.'c'.$reciveid;
