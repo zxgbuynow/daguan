@@ -2080,6 +2080,8 @@ class Index
         return json($data);
     }
 
+
+
     /**
      * [getUserMsg_custom 获取用户离线消息]
      * @param  [type] $params [description]
@@ -2892,10 +2894,11 @@ class Index
         $sendid = trim($params['account']);
         $reciveid = trim($params['reciveid']);
         $msg = trim($params['msg']);
-        $status = 0;
-        if (isset($params['status'])) {
-           $status = $params['status'];
-        }
+        $status = $params['status'];
+        // $status = 0;
+        // if (isset($params['status'])) {
+        //    $status = $params['status'];
+        // }
 
 
         $data['sendid'] = $sendid;
@@ -3005,6 +3008,30 @@ class Index
             'code'=>'1',
             'msg'=>'',
             'data'=>$info
+        ];
+        return json($data);
+    }
+
+
+    /**
+     * [hxmsgup_custom up消息状态]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function hxmsgup_custom($params)
+    {
+
+        $sendid = trim($params['account']);
+        $reciveid = trim($params['reciveid']);
+
+        //二人会话标识
+        $map['tag'] = array('in',['u'.$sendid.'c'.$reciveid,'u'.$reciveid.'c'.$sendid]) ;
+        db('hx_msg')->where($map)->update(['status'=>1]);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
         ];
         return json($data);
     }

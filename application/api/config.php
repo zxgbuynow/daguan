@@ -98,6 +98,7 @@ return [
         'sendhxmsg'=>'send.hxmsg',
         'hxmsgls'=>'hxmsg.ls',
         'hxmsgtwo'=>'hxmsg.two',
+        'hxmsgup'=>'hxmsg.up'
 
 
 
