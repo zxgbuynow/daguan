@@ -94,7 +94,10 @@ return [
         'ismsg'=>'is.msg',
         'getUserList'=>'getUser.list',
         'getUserMsg'=>'getUser.msg',
-        'claccate'=>'clac.cate'
+        'claccate'=>'clac.cate',
+        'sendhxmsg'=>'send.hxmsg',
+        'hxmsgls'=>'hxmsg.ls',
+        'hxmsgtwo'=>'hxmsg.two',
 
 
 

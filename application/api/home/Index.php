@@ -72,6 +72,9 @@ class Index
         if ($ismobile) {
              session('user_mobile_auth',$user);
         }
+        if (is_numeric($user['avar'])) {
+            $user['avar'] = get_file_path($user['avar']);
+        }
         $data = [
             'code'=>'1',
             'msg'=>'',
@@ -126,6 +129,8 @@ class Index
         $data['tel'] = trim($params['tel']);
         $data['isconsolle'] = trim($params['isconsolle']);
         $data['consolletime'] = trim($params['consolletime']);
+
+        $data['preference'] = trim($params['preference']);
 
         if (isset($params['ismobile'])) {
             $data['source_from'] = 1;
@@ -1398,11 +1403,19 @@ class Index
 
         //冲值订单处理
         if (isset($params['type'])) {
-            $username = db('member')->where('id',$account)->column('nickname');
-
-            $data['title'] = $username[0].'成为心窝会员';
-            //机构
-            @$data['shopid'] = db('member')->where('id',$account)->value('shopid');
+            $buyname = db('member')->where('id',$account)->value('nickname');
+            //赠送
+            if (isset($params['username'])) {
+                $username = $params['nm'];
+                
+                $data['title'] = $buyname .'赠送'.$username.'心窝会员';
+                $data['username'] = $params['username'];
+            }else{//升级
+                
+                $data['title'] = $buyname.'成为心窝会员';
+            }
+            
+            
             //订单号
             $data['tid'] = date('YmdHis',time()).rand(1000,9999);
             //插入数据
@@ -2326,7 +2339,6 @@ class Index
 
         $startpg = ($page_no-1)*$page_size;
         $data = db('cms_clac_temp')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
-
         foreach ($data as $key => $value) {
             $data[$key]['pic'] =  get_file_path($value['pic']);
         }
@@ -2865,6 +2877,122 @@ class Index
             'code'=>'1',
             'msg'=>'',
             'data'=>1
+        ];
+        return json($data);
+    }
+
+    /**
+     * [sendhxmsg_custom description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function sendhxmsg_custom($params)
+    {
+        $sendid = trim($params['account']);
+        $reciveid = trim($params['reciveid']);
+        $msg = trim($params['msg']);
+
+        $data['sendid'] = $sendid;
+        $data['reciveid'] = $reciveid;
+        $data['msg'] = $msg;
+        $data['create_time'] = time();
+        //二人会话标识
+        $data['tag'] = 'u'.$sendid.'c'.$reciveid;
+
+        db('hx_msg')->insert($data);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+
+    /**
+     * [hxmsgls_custom 会话列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function hxmsgls_custom($params)
+    {
+
+        $sendid = trim($params['account']);
+
+        $map['sendid|reciveid'] = $sendid;
+        $info = db('hx_msg')->where($map)->order('id DESC')->group('tag')->select();
+
+        $now = date('Y-m-d',time());
+        $res = [];
+        //头像 时间
+        foreach ($info as $key => $value) {
+            //avar
+            if ($value['sendid']==$sendid) {//取 rc头像
+                $su = db('member')->where(['id'=>$value['reciveid']])->find();
+                $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
+                $res[$key]['nickname'] = $su['nickname'];//name
+                $res[$key]['mid'] = $su['id'];//id
+            }else{
+                $su = db('member')->where(['id'=>$value['sendid']])->find();
+                $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
+                $res[$key]['nickname'] = $su['nickname'];//name
+                $res[$key]['mid'] = $su['id'];//id
+            }
+            
+            //msg
+            $news = db('hx_msg')->where($map)->order('id DESC')->find();
+            $res[$key]['nmsg'] = $news['msg'];
+
+            //time
+            $res[$key]['times'] = date('Y-m-d',$news['create_time']) == $now? date('H:i',$news['create_time']):date('Y-m-d H:i',$news['create_time']);
+        }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$res
+        ];
+        return json($data);
+    }
+
+    /**
+     * [hxmsgtwo_custom 二人沟通记录]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function hxmsgtwo_custom($params)
+    {
+        $sendid = trim($params['account']);
+        $reciveid = trim($params['reciveid']);
+
+        // $map['sendid'] = $sendid;
+        // $map['reciveid'] = $reciveid;
+        $map['tag'] = 'u'.$sendid.'c'.$reciveid;
+        $info =  db('hx_msg')->where($map)->limit(10)->select();
+
+        //获得头像处理
+        $now = date('Y-m-d',time());
+        foreach ($info as $key => $value) {
+            if ($value['sendid'] == $sendid) {
+                $info[$key]['isme'] = 1;
+                // @$info[$key]['rcavar'] = is_numeric(db('member')->where(['id'=>$value['reciveid']])->value('avar'))?get_file_path(db('member')->where(['id'=>$value['reciveid']])->value('avar')):db('member')->where(['id'=>$value['reciveid']])->value('avar');
+                // @$info[$key]['sdavar'] = is_numeric(db('member')->where(['id'=>$value['sendid']])->value('avar'))?get_file_path(db('member')->where(['id'=>$value['sendid']])->value('avar')):db('member')->where(['id'=>$value['sendid']])->value('avar');
+            }else{
+                $info[$key]['isme'] = 0;
+                // @$info[$key]['rcavar'] = is_numeric(db('member')->where(['id'=>$value['sendid']])->value('avar'))?get_file_path(db('member')->where(['id'=>$value['sendid']])->value('avar')):db('member')->where(['id'=>$value['sendid']])->value('avar');
+                // @$info[$key]['sdavar'] = is_numeric(db('member')->where(['id'=>$value['reciveid']])->value('avar'))?get_file_path(db('member')->where(['id'=>$value['reciveid']])->value('avar')):db('member')->where(['id'=>$value['reciveid']])->value('avar');
+            }
+            
+            // @$info[$key]['rcavar'] = is_numeric(db('member')->where(['id'=>$value['reciveid']])->value('avar'))?get_file_path(db('member')->where(['id'=>$value['reciveid']])->value('avar')):db('member')->where(['id'=>$value['reciveid']])->value('avar');
+            @$info[$key]['sdavar'] = is_numeric(db('member')->where(['id'=>$value['sendid']])->value('avar'))?get_file_path(db('member')->where(['id'=>$value['sendid']])->value('avar')):db('member')->where(['id'=>$value['sendid']])->value('avar');
+            $info[$key]['times'] = date('Y-m-d',$value['create_time']) == $now? date('H:i:s',$value['create_time']):date('Y-m-d H:i:s',$value['create_time']);
+        }
+        $rs['list'] = $info; 
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$info
         ];
         return json($data);
     }
