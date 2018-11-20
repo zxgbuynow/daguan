@@ -1233,6 +1233,9 @@ class Index
         //查询咨询师信息
         if ($article['userid']) {
             $article['counsellor'] = db('member')->where(['id'=>$article['userid']])->find();
+            if (is_numeric($article['counsellor']['avar'])) {
+                $article['counsellor']['avar'] = get_file_path($article['counsellor']['avar']);
+            }
         }
 
         //返回信息
