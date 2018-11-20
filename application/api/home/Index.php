@@ -2932,11 +2932,13 @@ class Index
                 $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
                 $res[$key]['nickname'] = $su['nickname'];//name
                 $res[$key]['mid'] = $su['id'];//id
+                $res[$key]['account'] = $su['username'];//id
             }else{
                 $su = db('member')->where(['id'=>$value['sendid']])->find();
                 $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
                 $res[$key]['nickname'] = $su['nickname'];//name
                 $res[$key]['mid'] = $su['id'];//id
+                $res[$key]['account'] = $su['username'];//id
             }
             
             //msg
