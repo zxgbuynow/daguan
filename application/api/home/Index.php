@@ -2950,6 +2950,7 @@ class Index
             //状态
             $res[$key]['st'] = $news['status'];
         }
+        $rt['list'] = $res;
         //返回信息
         $data = [
             'code'=>'1',
