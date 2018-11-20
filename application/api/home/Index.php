@@ -2056,6 +2056,7 @@ class Index
                 }
                 $co = db('member_counsellor')->where(['memberid'=>$u['id']])->find();
                 $user[$value]['nickname'] = $u['nickname'];
+                $user[$value]['mid'] = $u['id'];
                 $user[$value]['mobile'] = $value;
                 $user[$value]['avar'] = $u['avar'];
                 $smap['id'] = array('in',$co['tags']);
@@ -2895,7 +2896,7 @@ class Index
         if (isset($params['status'])) {
            $status = $params['status'];
         }
-        
+
 
         $data['sendid'] = $sendid;
         $data['reciveid'] = $reciveid;
