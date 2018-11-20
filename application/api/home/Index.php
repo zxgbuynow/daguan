@@ -2947,6 +2947,8 @@ class Index
 
             //time
             $res[$key]['times'] = date('Y-m-d',$news['create_time']) == $now? date('H:i',$news['create_time']):date('Y-m-d H:i',$news['create_time']);
+            //状态
+            $res[$key]['st'] = $news['status'];
         }
         //返回信息
         $data = [
