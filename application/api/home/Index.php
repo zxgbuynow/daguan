@@ -3007,7 +3007,7 @@ class Index
         $data = [
             'code'=>'1',
             'msg'=>'',
-            'data'=>$info
+            'data'=>$rs
         ];
         return json($data);
     }
