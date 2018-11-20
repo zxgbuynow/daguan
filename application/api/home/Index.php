@@ -3025,7 +3025,9 @@ class Index
         $reciveid = trim($params['reciveid']);
 
         //二人会话标识
-        $map['tag'] = array('in',['u'.$sendid.'c'.$reciveid,'u'.$reciveid.'c'.$sendid]) ;
+        // $map['tag'] = array('in',['u'.$sendid.'c'.$reciveid,'u'.$reciveid.'c'.$sendid]) ;
+        $map['sendid'] = $sendid ;
+        $map['reciveid'] = $reciveid ;
         db('hx_msg')->where($map)->update(['status'=>1]);
         //返回信息
         $data = [
