@@ -1232,7 +1232,7 @@ class Index
 
         //查询咨询师信息
         if ($article['userid']) {
-            $article['counsellor'] = db()->where(['id'=>$article['userid']])->find();
+            $article['counsellor'] = db('member')->where(['id'=>$article['userid']])->find();
         }
 
         //返回信息
