@@ -1238,6 +1238,14 @@ class Index
             }
         }
 
+        //收藏
+        if (isset($params['account'])) {
+            $fm['fid'] = $id;
+            $fm['type'] = 3;
+            $fm['mid'] = $params['account'];
+            $article['isfav'] = db('cms_fav')->where($fm)->count();
+        }
+        
         //返回信息
         $data = [
             'code'=>'1',
