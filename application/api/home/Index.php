@@ -395,6 +395,15 @@ class Index
         $map['status'] = 1;
         $ismobile = trim($params['ismobile']);
         $adv = db('cms_advert')->where($map)->order('id DESC')->find();
+        if (!$adv) {
+            //返回信息
+            $data = [
+                'code'=>'1',
+                'msg'=>'',
+                'data'=>1
+            ];
+            return json($data);
+        }
         if (strstr($adv['link'], 'article')) {//文章
             if ($ismobile) {
                 $adv['webview'] = "/mobile.php/artical/detail.html";
