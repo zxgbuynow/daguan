@@ -3425,6 +3425,44 @@ class Index
         if (!$counsellor) {
             return $this->error('咨询师不存在或是已注销');
         }
+
+        //咨询地点 
+        $counsellor['spids'] = $counsellor['id'];
+        if ($counsellor['shopids']) {
+            $spids = $counsellor['shopids'].','.$counsellor['shopid'];
+            $counsellor['spids'] = implode(',', array_unique(explode(',', $spids))) ;
+        }
+        $sm['id'] = array('in',$counsellor['spids']);
+        $shopnm = db('shop_agency')->where($sm)->select();
+        foreach ($shopnm as $key => $value) {
+            $shopnm[$key]['ischecked'] = in_array($value['id'], explode(',', $counsellor['openshop']))?1:0;
+            
+        }
+        $counsellor['shopnm'] = $shopnm;
+        //咨询方式
+        $chartarr = array(
+            array(
+                'chart'=>'wordchart',
+                'show'=>'文字咨询'
+            ),
+            array(
+                'chart'=>'speechchart',
+                'show'=>'语音咨询'
+
+            ),
+            array(
+                'chart'=>'videochart',
+                'show'=>'视频咨询'
+            ),
+            array(
+                'chart'=>'facechart',
+                'show'=>'面对面咨询'
+            )
+        );
+        foreach ($chartarr as $key => $value) {
+            $chartarr[$key]['ischecked'] = in_array($value['chart'], explode(',', $counsellor['openchart']))?1:0;
+        }
+        $counsellor['chararr'] = $chartarr;
         //返回信息
         $data = [
             'code'=>'1',
@@ -3798,6 +3836,8 @@ class Index
         }
 
         $user['income'] += $acincs;
+        
+
         
         //积分
         $pmap['memberid'] = $account;
