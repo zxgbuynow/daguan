@@ -3472,6 +3472,40 @@ class Index
         ];
         return json($data);
     }
+    
+    /**
+     * [counsellorst_shop 咨询设置]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function counsellorst_shop($params)
+    {
+        $id = $params['id'];
+
+        $online = $params['online'];
+        $shopids = $params['shopids'];
+        $openchart = $params['openchart'];
+
+        if (!$id) {
+            return $this->error('参数必填');
+        }
+
+        $sa['openshop'] = $shopids;
+        $sa['openchart'] = $openchart;
+        db('member')->where('id',$id)->update($sa);
+
+        $cs['online'] = $online;
+        db('member_counsellor')->where('memberid',$id)->update($cs);
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+
     /**
      * [point 积分明细]
      * @param  [type] $params [description]
