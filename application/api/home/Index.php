@@ -3406,6 +3406,26 @@ class Index
         return json($data);
     }
     /**
+     * [articalcate_custom 文章分类]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function articalcate_shop($params)
+    {
+        $ret = array();
+
+        $cates = db('cms_articlecategory')->where('status',1)->order('sort DESC,id DESC')->limit(8)->select();
+
+        $rs['data'] = array_values($cates);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rs
+        ];
+        return json($data);
+    }
+    /**
      * [recommend_shop 推荐咨询师]
      * @param  [type] $params [description]
      * @return [type]         [description]
