@@ -4439,9 +4439,11 @@ class Index
        //日程
         $pmap['memberid'] = $account;
 
-        $calendar['list'] = db('calendar')->where($pmap)->whereTime('start_time', 'between', [ intval($cstime) , $cetime])->select();
+        $calendar['list'] = db('calendar')->where($pmap)->whereTime('start_time', 'between', [ $cstime , $cetime])->select();
         // $times = array('9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00');
-        $times = array('9:00~10:00','10:00~11:00','11:00~12:00','12:00~13:00','13:00~14:00','14:00~15:00','15:00~16:00','16:00~17:00','17:00~18:00','18:00~19:00','19:00~20:00','20:00~21:00');
+        // $times = array('9:00~10:00','10:00~11:00','11:00~12:00','12:00~13:00','13:00~14:00','14:00~15:00','15:00~16:00','16:00~17:00','17:00~18:00','18:00~19:00','19:00~20:00','20:00~21:00');
+        $times = array('0:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00');
+        $timearrr = array('0:00~6:00','6:00~18:00','18:00~24:00');
         $timesarr['list'] = [];
         //过去的时间
         if ($today>strtotime(date('Y-m-d ',$cstime))) {
@@ -4451,10 +4453,13 @@ class Index
                 $timesarr['list'][$key]['t'] = $value;
                 $timesarr['list'][$key]['s'] = 2;
             }
+            $timebt['0:00~6:00']['s'] = 2;
+            $timebt['6:00~18:00']['s'] = 2;
+            $timebt['18:00~24:00']['s'] = 2;
         }else{
             foreach ($times as $key => $value) {
                 //订单记录
-                $sval = explode('~', $value)[0];
+                $sval = $value;
                 $tpoint = strtotime(date('Y-m-d',$cstime).$sval)+60;//加上60秒处理时间间隔
                 $timesarr['list'][$key]['t'] = $value;
                 $timesarr['list'][$key]['s'] = 0;
@@ -4476,10 +4481,51 @@ class Index
                 }
 
             }
+
+            //处理批量
+            $mbts = strtotime(date('Y-m-d',$cstime).' 0:00');
+            $mbte = strtotime(date('Y-m-d',$cstime).' 6:00');
+            $condatemp['memberid'] = $cid;
+            if (db('connsellor_ondate')->where(['memberid'=>$cid])->whereTime('ondatetime', 'between', [ $mbts , $mbte])->find()) {
+                $timebt['0:00~6:00']['s'] = 3;
+            }else{
+                $timebt['0:00~6:00']['s'] = 0;
+                if ($mbte<time()) {
+                    $timebt['0:00~6:00']['s'] = 2;
+                }
+                
+            }
+
+            $gbts = strtotime(date('Y-m-d',$cstime).' 6:00');
+            $gbte = strtotime(date('Y-m-d',$cstime).' 18:00');
+            $condatemp['memberid'] = $cid;
+            if (db('connsellor_ondate')->where(['memberid'=>$cid])->whereTime('ondatetime', 'between', [ $gbts , $gbte])->find()) {
+                $timebt['6:00~18:00']['s'] = 3;
+            }else{
+                $timebt['6:00~18:00']['s'] = 0;
+                if ($gbte<time()) {
+                    $timebt['6:00~18:00']['s'] = 2;
+                }
+                
+            }
+
+            $ebts = strtotime(date('Y-m-d',$cstime).' 18:00');
+            $ebte = strtotime(date('Y-m-d',$cstime).' 24:00');
+            $condatemp['memberid'] = $cid;
+            if (db('connsellor_ondate')->where(['memberid'=>$cid])->whereTime('ondatetime', 'between', [ $ebts , $ebte])->find()) {
+                $timebt['18:00~24:00']['s'] = 3;
+            }else{
+                $timebt['18:00~24:00']['s'] = 0;
+                if ($ebte<time()) {
+                    $timebt['18:00~24:00']['s'] = 2;
+                }
+                
+            }
         }
         
+        $timesarr['timebt'] = $timebt;
         //咨询师
-        $timesarr['user'] = db('member')->where(['id'=>$account])->column('username');
+        // $timesarr['user'] = db('member')->where(['id'=>$account])->column('username');
 
         //返回信息
         $data = [
