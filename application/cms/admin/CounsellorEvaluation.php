@@ -52,7 +52,7 @@ class CounsellorEvaluation extends Admin
         return ZBuilder::make('table')
             ->setPageTitle('咨询师评价管理') // 设置页面标题
             ->setTableName('evaluate') // 设置数据表名
-            ->setSearch(['m.mobile' => '手机号','m.nickname'=>'用户名称']) // 设置搜索参数
+            ->setSearch(['m.mobile' => '手机号','m.nickname'=>'用户名称','sorce'=>'评分']) // 设置搜索参数
             ->addFilter('shop_agency.title') // 添加筛选
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],

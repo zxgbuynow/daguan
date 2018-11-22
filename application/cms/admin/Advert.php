@@ -151,7 +151,7 @@ class Advert extends Admin
             ->setPageTips('如果出现无法添加的情况，可能由于浏览器将本页面当成了广告，请尝试关闭浏览器的广告过滤功能再试。', 'warning')
             ->addFormItems([
                 ['select', 'typeid', '广告分类', '', $list_type, 0],
-                ['text', 'tagname', '广告位标识', '由小写字母、数字或下划线组成，不能以数字开头'],
+                ['text', 'tagname', '广告位标识', '<code>custom 用户端轮播图 shop 咨询师轮播图 single 固定广告位</code>'],
                 ['text', 'name', '广告位名称'],
                 ['radio', 'timeset', '时间限制', '', ['永不过期', '在设内时间内有效'], 0],
                 ['daterange', 'start_time,end_time', '开始时间-结束时间'],
@@ -159,7 +159,7 @@ class Advert extends Admin
                 ['textarea', 'code', '代码', '<code>必填</code>，支持html代码'],
                 ['image', 'src', '图片', '<code>必须</code>'],
                 ['text', 'title', '文字内容', '<code>必填</code>'],
-                ['text', 'link', '链接', '<code>如文章：article/1.html 咨询师：counsellor/1.html 课程活动：calc/1.html必填</code>'],
+                ['text', 'link', '链接', '<code>如文章：article/1.html 咨询师：counsellor/1.html 课程活动：calc/1.html 会员页：member/member.html必填</code>'],
                 ['colorpicker', 'color', '文字颜色', '', '', 'rgb'],
                 ['text', 'size', '文字大小', '只需填写数字，例如:12，表示12px', '',  ['', 'px']],
                 ['text', 'width', '宽度', '不用填写单位，只需填写具体数字'],

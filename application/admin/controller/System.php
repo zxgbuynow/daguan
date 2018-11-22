@@ -6,6 +6,7 @@ namespace app\admin\controller;
 use app\common\builder\ZBuilder;
 use app\admin\model\Config as ConfigModel;
 use app\admin\model\Module as ModuleModel;
+use app\admin\model\Payset as PaysetModel;
 
 /**
  * 系统模块控制器
@@ -85,7 +86,6 @@ class System extends Admin
 
                 $list_group[$name] = $module['title'];
             }
-
             $tab_list   = [];
             foreach ($list_group as $key => $value) {
                 if ($key!='base') {
@@ -110,7 +110,6 @@ class System extends Admin
                         $value['options'] = parse_attr($value['options']);
                     }
                 }
-
                 // 默认模块列表
                 if (isset($data_list['home_default_module'])) {
                     $list_module['index'] = '默认';
@@ -143,5 +142,40 @@ class System extends Admin
                     ->fetch();
             }
         }
+    }
+    /*
+    **支付设置
+    */
+    public function payset()
+    {
+        // 保存数据
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+            
+            if (PaysetModel::update($data)) {
+
+                $this->success('编辑成功', cookie('__forward__'));
+            } else {
+                $this->error('编辑失败');
+            }
+        }
+
+        // 获取数据
+        $info = PaysetModel::where(1)->find();
+
+        // 使用ZBuilder快速创建表单
+        return ZBuilder::make('form')
+            ->setPageTitle('支付设置') // 设置页面标题
+            ->addFormItems([ // 批量添加表单项
+                ['text', 'mer_key', 'mer_key', '支付宝mer_key'],
+                ['text', 'mer_id', 'mer_id', '支付宝mer_id'],
+                ['text', 'seller_account_name', '支付宝账号', '支付宝账号'],
+                ['text', 'appId', 'appId', 'appId微信'],
+                ['text', 'Mchid', 'Mchid', 'Mchid微信'],
+                ['text', 'Key', 'Key', 'Key微信'],
+                ['text', 'Appsecret', 'Appsecret', 'Appsecret微信'],
+            ])
+            ->setFormData($info) // 设置表单数据
+            ->fetch();
     }
 }

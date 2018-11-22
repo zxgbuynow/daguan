@@ -31,7 +31,7 @@ class Agency extends Admin
 
         // 获取查询条件
         $map = $this->getMap();
-
+        
         // 数据列表
         $data_list = AgencyModel::where($map)->order('id desc')->paginate();
 
@@ -58,7 +58,7 @@ class Agency extends Admin
                 ['right_button', '操作', 'btn']
             ])
             ->addTopButtons('enable,disable,delete,add') // 批量添加顶部按钮
-            ->addRightButtons('delete') // 批量添加右侧按钮
+            ->addRightButtons('delete,edit') // 批量添加右侧按钮
             ->addRightButton('custom', $btnAdd)
             ->replaceRightButton(['adminid' => ['<>', 0]], '', ['custom'])
             ->addRightButton('custom1', $cateAdd)
@@ -77,6 +77,9 @@ class Agency extends Admin
         // 保存数据
         if ($this->request->isPost()) {
             $data = $this->request->post();
+            if ($data['map_address']) {
+                $data['city'] = mb_substr($data['map_address'],0,5,'utf-8');
+            }
             // 验证
             $result = $this->validate($data, 'Agency');
             // 验证失败 输出错误信息
@@ -96,11 +99,21 @@ class Agency extends Admin
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['text', 'title', '分机构名'],
-                ['text', 'city', '地区','<code>最合适四个字</code>'],
+                // ['text', 'city', '地区','<code>最合适四个字</code>'],
                 ['text', 'description', '描述'],
+                ['image', 'lincence', '营业执照'],
+                // ['text', 'address', '地址'],
+                ['text', 'manager', '负责人'],
+                ['text', 'tel', '电话'],
+                ['text', 'webchat', '微信'],
+                ['text', 'aptiude', '资质'],
+                ['text', 'longvity', '质历'],
+                ['text', 'bail', '保证金'],
+                ['datetime', 'setup', '创办时间'],
                 ['select', 'adminid', '分机构管理员', '', $list],
-                ['radio', 'status', '状态', '', ['禁用', '启用'], 1]
+                ['radio', 'status', '状态', '', ['冻结', '审核','认证'], 1]
             ])
+            ->addBmap('map', '地图', 'fDNzsAsd9KpOfOR1GEvvYo1ysQMcTwIM', '', '', '')
             ->fetch();
     }
 
@@ -117,32 +130,16 @@ class Agency extends Admin
         // 保存数据
         if ($this->request->isPost()) {
             $data = $this->request->post();
-
-            // 禁止修改分中心超级管理员的角色和状态
-            if ($data['id'] == 1 && $data['role'] != 1) {
-                $this->error('禁止修改分中心超级管理员角色');
+            if ($data['map_address']) {
+                $data['city'] = mb_substr($data['map_address'],0,5,'utf-8');
             }
-
-            // 禁止修改分中心超级管理员的状态
-            if ($data['id'] == 1 && $data['status'] != 1) {
-                $this->error('禁止修改分中心超级管理员状态');
-            }
-
             // 验证
-            $result = $this->validate($data, 'User.update');
+            $result = $this->validate($data, 'Agency');
             // 验证失败 输出错误信息
             if(true !== $result) $this->error($result);
 
-            // 如果没有填写密码，则不更新密码
-            if ($data['password'] == '') {
-                unset($data['password']);
-            }
-
-            if (UserModel::update($data)) {
-                $user = UserModel::get($data['id']);
-                Hook::listen('user_edit', $user);
-                // 记录行为
-                action_shop_log('user_edit', 'shop_user', $user['id'], UID, get_shop_nickname($user['id']));
+            if (AgencyModel::update($data)) {
+                
                 $this->success('编辑成功', cookie('__forward__'));
             } else {
                 $this->error('编辑失败');
@@ -150,22 +147,30 @@ class Agency extends Admin
         }
 
         // 获取数据
-        $info = UserModel::where('id', $id)->field('password', true)->find();
-
+        $info = AgencyModel::where('id', $id)->find();
+        $map['status'] = 1;
+        $list = UserModel::where($map)->column('id,username');
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
                 ['hidden', 'id'],
-                ['static', 'username', '用户名', '不可更改'],
-                ['text', 'nickname', '昵称', '可以是中文'],
-                ['select', 'role', '角色', '', RoleModel::getTree(null, false)],
-                ['text', 'email', '邮箱', ''],
-                ['password', 'password', '密码', '必填，6-20位'],
-                ['text', 'mobile', '手机号'],
-                ['image', 'avatar', '头像'],
-                ['radio', 'status', '状态', '', ['禁用', '启用']]
+                ['text', 'title', '分机构名'],
+                // ['text', 'city', '地区','<code>最合适四个字</code>'],
+                ['text', 'description', '描述'],
+                ['image', 'lincence', '营业执照'],
+                // ['text', 'address', '地址'],
+                ['text', 'manager', '负责人'],
+                ['text', 'tel', '电话'],
+                ['text', 'webchat', '微信'],
+                ['text', 'aptiude', '资质'],
+                ['text', 'longvity', '质历'],
+                ['text', 'bail', '保证金'],
+                ['datetime', 'setup', '创办时间'],
+                ['select', 'adminid', '分机构管理员', '', $list],
+                ['radio', 'status', '状态', '', ['冻结', '审核','认证'], 1]
             ])
+            ->addBmap('map', '地图', 'fDNzsAsd9KpOfOR1GEvvYo1ysQMcTwIM')
             ->setFormData($info) // 设置表单数据
             ->fetch();
     }

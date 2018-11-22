@@ -70,6 +70,10 @@ if (!function_exists('get_file_path')) {
      */
     function get_file_path($id = 0)
     {
+        if (!is_numeric($id)) {
+            return 'http://'.$_SERVER['SERVER_NAME'].'/'.$id;   
+        }
+        
         $path = model('admin/attachment')->getFilePath($id);
         if (!$path) {
             return config('public_static_path').'admin/img/none.png';
@@ -131,6 +135,9 @@ if (!function_exists('get_thumb')) {
      */
     function get_thumb($id = 0)
     {
+        if (!is_numeric($id)) {
+            return 'http://'.$_SERVER['SERVER_NAME'].'/'.$id;   
+        }
         $path = model('admin/attachment')->getThumbPath($id);
         if (!$path) {
             return config('public_static_path').'admin/img/none.png';

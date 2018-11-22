@@ -21,7 +21,10 @@ class Agency extends Model
 
     public  function getIncomeAttr($v,$data)
     {
-       return number_format(db('trade')->where(['shopid'=>$data['id'],'status'=>1])->sum('payment'));
+       $map['shopid'] = $data['id'];
+       $map['status'] = 1;
+       $map['paytype'] = array('in','0,2,3');
+       return number_format(db('trade')->where($map)->sum('payment'));
     }
 
     public  function getRunumAttr($v,$data)

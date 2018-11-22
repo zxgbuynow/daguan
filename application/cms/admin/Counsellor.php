@@ -12,6 +12,7 @@ use app\cms\model\Point as PointModel;
 use app\cms\model\Category as CategoryModel;
 use app\cms\model\CateAccess as CateAccessModel;
 use app\cms\model\Trade as TradeModel;
+use app\cms\model\Calendar as CalendarModel;
 use util\Tree;
 use think\Db;
 use think\Hook;
@@ -42,6 +43,7 @@ class Counsellor extends Admin
         $map['type'] = 1;
         // 数据列表
         $data_list = CounsellorModel::where($map)->order('id desc')->paginate();
+        // $data_list = Db::name('member')->alias('a')->field('a.*')->join(' calendar c',' c.id = a.cid','LEFT')->where($map)->order('a.id desc')->paginate();
 
         // 分页数据
         $page = $data_list->render();
@@ -50,6 +52,14 @@ class Counsellor extends Admin
 
         $btnAdd = ['icon' => 'fa fa-plus', 'title' => '积分列表', 'href' => url('point', ['id' => '__id__'])];
         $incomeBtn = ['icon' => 'fa fa-fw fa-cny', 'title' => '收列表', 'href' => url('income', ['id' => '__id__'])];
+        $articleBtn = ['icon' => 'fa fa-fw fa-file-text-o', 'title' => '文章列表', 'href' => url('cms/page/index', ['id' => '__id__'])];
+        $orderBtn = ['icon' => 'fa fa-fw fa-skype', 'title' => '订单列表', 'href' => url('cms/trade/index', ['id' => '__id__'])];
+        $btncalendar = [
+            // 'class' => 'btn btn-info',
+            'title' => '预约列表',
+            'icon'  => 'fa fa-fw fa-calendar',
+            'href'  => url('calendar', ['id' => '__id__'])
+        ];
        
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
@@ -61,6 +71,9 @@ class Counsellor extends Admin
                 ['id', 'ID'],
                 ['mobile', '手机号'],
                 ['nickname', '姓名'],
+                ['ondatenums', '咨询次数'],
+                ['ondatenum', '设置咨询次数', 'text.edit'],
+                ['sources', '星级评分', 'text.edit'],
                 ['sex', '性别', 'select',['0' =>'女','1' => '男']],
                 ['qq', 'QQ'],
                 ['weixin', '微信'],
@@ -75,15 +88,83 @@ class Counsellor extends Admin
             ])
             // ->addColumn('sex', '性别', 'status', '', ['女', '男'])
             ->raw('verifystatus')
+            ->raw('ondatenums')
             ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
             ->addRightButtons('delete,edit') // 批量添加右侧按钮
             ->addRightButton('custom', $btnAdd)
+            ->addRightButton('custom', $articleBtn)
+            ->addRightButton('custom', $orderBtn)
+            ->addRightButton('custom', $btncalendar)
             // ->addRightButton('custom', $incomeBtn)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
     }
 
+    /**
+     * [calendar description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function calendar($id=null)
+    {
+        if ($id === null) $this->error('缺少参数');
+
+        cookie('__forward__', $_SERVER['REQUEST_URI']);
+
+        // 获取查询条件
+        $map = $this->getMap();
+
+        $map['memberid'] = $id;
+        // 数据列表
+        $data_list = CalendarModel::where($map)->order('id desc')->paginate();
+
+        // 分页数据
+        $page = $data_list->render();
+
+
+        // 使用ZBuilder快速创建数据表格
+        return ZBuilder::make('table')
+            ->setPageTitle('咨询师咨询管理') // 设置页面标题
+            ->setTableName('calendar') // 设置数据表名
+            ->setSearch(['title' => '标题']) // 设置搜索参数
+            ->hideCheckbox()
+            ->addColumns([ // 批量添加列
+                ['id', 'ID'],
+                ['title', '标题'],
+                ['tids', '订单编号'],
+                ['counsollor', '咨询师'],
+                ['username', '用户姓名'],
+                ['chart', '咨询方式'],
+                ['place', '咨询地点'],
+                ['status', '状态', '', '', ['待咨询', '已咨询','已填写案历','已评价']],
+                ['start_time', '开始时间', 'datetime'],
+                ['end_time', '结束时间', 'datetime'],
+            ])
+            ->raw('counsollor')
+            ->raw('username')
+            ->raw('chart')
+            ->raw('tids')
+            ->raw('place')
+            ->addTopButton('back', [
+                'title' => '返回咨询师列表',
+                'icon'  => 'fa fa-reply',
+                'href'  => url('counsellor/index')
+            ])
+            // ->addTopButtons('delete') // 批量添加顶部按钮
+            // ->addRightButtons('delete') // 批量添加右侧按钮
+            ->setRowList($data_list) // 设置表格数据
+            ->setPages($page) // 设置分页数据
+            ->fetch(); // 渲染页面
+
+    }
+
+    public function articlelt($id = null)
+    {
+        if ($id === null) $this->error('缺少参数');
+        $this->redirect('cms/page/index'.'?cid='.$id);exit;
+
+    }
     /**
      * 新增
      * @author zg
@@ -132,9 +213,9 @@ class Counsellor extends Admin
                 $save1['leader'] = $data['leader'];
                 $save1['cerfornt'] = $data['cerfornt'];
                 $save1['cerback'] = $data['cerback'];
-
+                $save1['tags'] = implode(',', $data['tags']);
                 //业务类弄
-                $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
+                // $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
                 CounsellorotModel::create($save1);
                 
                 
@@ -146,6 +227,7 @@ class Counsellor extends Admin
             }
         }
 
+        
         // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
@@ -186,7 +268,8 @@ class Counsellor extends Admin
                 ['textarea', 'intro', '简介'],
             ])
             ->addDatetime('employment', '从业时间', '', '', 'YYYY-MM-DD')
-            // ->addSelect('tags', '业务分类', '', $list_type)
+            ->addSelect('tags', '咨询类型', '', $list_type)
+            ->addSelect('shopis', '挂靠分机构', '', $agency_type)
             ->addUeditor('remark', '祥细说明')
             ->fetch();
     }
@@ -305,7 +388,8 @@ class Counsellor extends Admin
             $emap['id'] = array('in',$cids);
             $list_type = CategoryModel::where($emap)->column('id,title');
         }
-        
+        //分中心
+        $agency_type = AgencyModel::where(['status'=>1])->column('id,title');
 
         // 使用ZBuilder快速创建表单 
         return ZBuilder::make('form')
@@ -320,8 +404,8 @@ class Counsellor extends Admin
                 ['text', 'truename', '真实姓名', '中文'],
                 ['text', 'identifi', '身份证'],
                 ['image', 'diploma', '咨询师证书'],
-                ['radio', 'tearch', '是否是讲师', '', ['否', '是']],
-                ['radio', 'leader', '是否是团队Leader', '', ['否', '是']],
+                ['radio', 'tearch', '是否是讲师', '', ['否', '是'],1],
+                ['radio', 'leader', '是否是团队Leader', '', ['否', '是'],1],
 
                 ['password', 'password', '密码', '必填，6-20位'],
                 ['text', 'mobile', '手机号'],
@@ -346,7 +430,8 @@ class Counsellor extends Admin
                 ['textarea', 'intro', '简介'],
             ])
             ->addDatetime('employment', '从业时间', '', '', 'YYYY-MM-DD')
-            ->addSelect('tags', '业务分类', '', $list_type,'','multiple')
+            ->addSelect('tags', '咨询类型', '', $list_type,'','multiple')
+            ->addSelect('shopis', '挂靠分机构', '', $agency_type,'','multiple')
             ->addUeditor('remark', '祥细说明')
             ->setFormData($info) // 设置表单数据
             ->fetch();

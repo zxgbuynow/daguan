@@ -84,8 +84,11 @@ class Role extends Shop
         // 菜单列表
         $menus = cache('access_menus');
         if (!$menus) {
-            $modules = Db::name('shop_module')->where('status', 1)->column('name');
-            $menus = MenuModel::where('module', 'in', $modules)->order('sort,id')->column('id,pid,sort,title,icon');
+            $sm['status'] = 1;
+            $modules = Db::name('shop_module')->where($sm)->column('name');
+            $mm['module'] = array('in',$modules);
+            $mm['status'] = 1;
+            $menus = MenuModel::where($mm)->order('sort,id')->column('id,pid,sort,title,icon');
             $menus = Tree::toLayer($menus);
             $menus = $this->buildJsTree($menus);
 

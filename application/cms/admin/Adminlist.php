@@ -48,14 +48,51 @@ class Adminlist extends Admin
                 ['username', '用户名'],
                 ['nickname', '名称'],
                 ['shopid', '所属机构', 'select', $list_type],
-                ['create_time', '创建时间', 'datetime']
+                ['create_time', '创建时间', 'datetime'],
+                ['right_button', '操作', 'btn']
             ])
+            ->addRightButtons('edit') // 批量添加右侧按钮
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
 
     }
-   
+    
+    public function edit($id =  null)
+    {   
+        if ($id === null) $this->error('缺少参数');
+
+        // 保存数据
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
+
+            // 如果没有填写密码，则不更新密码
+            if ($data['password'] == '') {
+                unset($data['password']);
+            }
+
+            if (UserModel::update($data)) {
+                $this->success('编辑成功', cookie('__forward__'));
+            } else {
+                $this->error('编辑失败');
+            }
+        }
+
+        // 获取数据
+        $info = UserModel::where('id', $id)->field('password', true)->find();
+
+        // 使用ZBuilder快速创建表单
+        return ZBuilder::make('form')
+            ->setPageTitle('编辑') // 设置页面标题
+            ->addFormItems([ // 批量添加表单项
+                ['hidden', 'id'],
+                ['static', 'username', '用户名', '不可更改'],
+                ['password', 'password', '密码', '必填，6-20位'],
+            ])
+            ->setFormData($info) // 设置表单数据
+            ->fetch();
+
+    }
     /**
      * 快速编辑
      * @param array $record 行为日志

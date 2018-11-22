@@ -154,5 +154,16 @@ class Counsellor extends Model
     }
 
 
+    public  function getOndatenumsAttr($v,$data)
+    {
+        $tids = db('trade')->where(['mid'=>$data['id'],'paytype'=>0])->column('id');
+        $map['tid'] = array('in',$tids);
+        $num =  db('calendar')->where($map)->count();
+        if ($num>0) {
+            db('member')->where(['id'=>$data['id']])->update(['ondatenum'=>$num]);
+        }
+        
+        return $num;
+    }
 
 }

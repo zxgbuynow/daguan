@@ -22,4 +22,10 @@ class Feedback extends ThinkModel
        return db('member')->where(['id'=>$data['uid']])->value('nickname');
     }
 
+    public  function getStatusxtAttr($v,$data)
+    {
+       
+       return $data['status'];
+    }
+
 }

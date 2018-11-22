@@ -6,8 +6,8 @@ namespace app\cms\admin;
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\cms\model\Classes as ClassModel;
+use app\cms\model\CmsReply as CmsReplyModel;
 use app\cms\model\Classestemp as ClassestempModel;
-use app\cms\model\Clacategory as ClacategoryModel;
 use app\cms\model\Category as CategoryModel;
 use app\cms\model\Agency as AgencyModel;
 use util\Tree;
@@ -17,7 +17,7 @@ use think\Db;
  * 属性控制器
  * @package app\cms\admin
  */
-class Classes extends Admin
+class Replyclac extends Admin
 {
     /**
      * 菜单列表
@@ -31,30 +31,28 @@ class Classes extends Admin
         $map = $this->getMap();
 
         // 数据列表
-        $data_list = ClassModel::where($map)->order('id desc')->paginate();
+        $data_list = CmsReplyModel::where($map)->order('id desc')->paginate();
 
         // 分页数据
         $page = $data_list->render();
 
 
-        $list_module = ClacategoryModel::where(1)->order('id desc')->column('id as cateid,title');
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
-            ->setSearch(['title' => '标题'])// 设置搜索框
+            ->setSearch(['msg' => '评价内容'])// 设置搜索框
             ->addColumns([ // 批量添加数据列
                 ['id', 'ID'],
-                ['title', '标题'],
-                ['cateid', '分类名','','',$list_module],
-                ['price', '金额'],
-                ['num', '限定人数'],
-                ['start_time', '开始时间','datetime'],
-                ['endtime', '结束时间','datetime'],
+                ['clactitle', '课程活动标题'],
+                ['suname', '评价人'],
+                ['runame', '回复人'],
+                ['msg', '内容'],
+                ['created_time', '结束时间','datetime'],
                 ['statustext', '状态'],
                 ['right_button', '操作', 'btn']
             ])
-            ->raw('statustext')
-            ->addTopButton('add', ['href' => url('add')])
-            ->addRightButton('edit')
+            ->raw('clactitle')
+            // ->addTopButton('add', ['href' => url('add')])
+            // ->addRightButton('edit')
             ->addRightButton('delete', ['data-tips' => '删除后无法恢复。'])// 批量添加右侧按钮
             ->setRowList($data_list)// 设置表格数据
             ->fetch(); // 渲染模板
@@ -89,7 +87,7 @@ class Classes extends Admin
 
         $list_type = AgencyModel::where('status', 1)->column('id,title');
 
-        $catelist = ClacategoryModel::where('status', 1)->column('id,title');
+        $catelist = CategoryModel::where('status', 1)->column('id,title');
 
         // 显示添加页面
         return ZBuilder::make('form')
@@ -145,7 +143,7 @@ class Classes extends Admin
         }
         $list_type = AgencyModel::where('status', 1)->column('id,title');
 
-        $catelist = ClacategoryModel::where('status', 1)->column('id,title');
+        $catelist = CategoryModel::where('status', 1)->column('id,title');
 
         // 显示添加页面
         return ZBuilder::make('form')
@@ -177,9 +175,7 @@ class Classes extends Admin
      */
     public function delete($ids = null)
     {
-        if ($ids) {
-            db('cms_clac_temp')->where(['classid'=>$ids,'type'=>0])->delete();
-        }
+        
         return $this->setStatus('delete');
     }
 
@@ -215,7 +211,7 @@ class Classes extends Admin
     public function setStatus($type = '', $record = [])
     {
         $ids        = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
-        $menu_title = ClassModel::where('id', 'in', $ids)->column('title');
+        $menu_title = CmsReplyModel::where('id', 'in', $ids)->column('title');
         return parent::setStatus($type, ['class_'.$type, 'class', 0, UID, implode('、', $menu_title)]);
     }
 

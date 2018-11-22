@@ -87,7 +87,6 @@ class Role extends Admin
             $sm['status'] = 1;
             $sm['system_module'] = 0;
             $modules = Db::name('admin_module')->where($sm)->column('name');
-
             $menus = MenuModel::where('module', 'in', $modules)->order('sort,id')->column('id,pid,sort,title,icon');
             $menus = Tree::toLayer($menus);
             $menus = $this->buildJsTree($menus);

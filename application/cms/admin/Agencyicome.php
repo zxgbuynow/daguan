@@ -179,7 +179,6 @@ class Agencyicome extends Admin
 
         $map['shopid'] = $id;
         $map['status'] = 1;//已支付
-
         // 数据列表
         $data_list = TradeModel::where($map)->order('id desc')->paginate();
 
@@ -205,6 +204,7 @@ class Agencyicome extends Admin
                 ['payment', '支付金额'],
                 ['username', '用户'],
                 ['created_time', '创建时间', 'datetime'],
+                ['paytype', '来源', 'text', '', ['预约订单', '冲值订单', '课程订单', '活动订单']],
                 ['status', '状态', 'text', '', ['待支付', '已支付', '取消', '冻结']],
                 
             ])

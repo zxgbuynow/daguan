@@ -8,6 +8,7 @@ use think\helper\Hash;
 use think\Db;
 use app\common\builder\ZBuilder;
 use app\shop\model\User as UserModel;
+use app\cms\model\Agency as AgencyModel;
 
 /**
  * 后台默认控制器
@@ -102,7 +103,63 @@ class Index extends Shop
             ->setFormData($info) // 设置表单数据
             ->fetch();
     }
+    /**
+     * [shopinfo 配置分中心信息]
+     * @return [type] [description]
+     */
+    public function shopinfo()
+    {
+        // 保存数据
+        if ($this->request->isPost()) {
+            $data = $this->request->post();
 
+            // 验证
+            $result = $this->validate($data, 'Agency');
+            // 验证失败 输出错误信息
+            if(true !== $result) $this->error($result);
+
+            if (AgencyModel::update($data)) {
+                
+                $this->success('编辑成功', cookie('__forward__'));
+            } else {
+                $this->error('编辑失败');
+            }
+        }
+
+        $info = UserModel::where('id', UID)->field('password', true)->find();
+        if (!$info['shopid']) {
+             $this->error('缺少参数');
+        }
+        // $map['shopid'] = $info['shopid'];
+
+        $id = $info['shopid'];
+        // 获取数据
+        $info = AgencyModel::where('id', $id)->find();
+        $map['status'] = 1;
+        $list = UserModel::where($map)->column('id,username');
+        // 使用ZBuilder快速创建表单
+        return ZBuilder::make('form')
+            ->setPageTitle('编辑') // 设置页面标题
+            ->addFormItems([ // 批量添加表单项
+                ['hidden', 'id'],
+                ['text', 'title', '分机构名'],
+                ['text', 'city', '地区','<code>最合适四个字</code>'],
+                ['text', 'description', '描述'],
+                ['image', 'lincence', '营业执照'],
+                ['text', 'address', '地址'],
+                ['text', 'manager', '负责人'],
+                ['text', 'tel', '电话'],
+                ['text', 'webchat', '微信'],
+                ['text', 'aptiude', '资质'],
+                ['text', 'longvity', '质历'],
+                ['text', 'bail', '保证金'],
+                ['datetime', 'setup', '创办时间'],
+                ['select', 'adminid', '分机构管理员', '', $list],
+                // ['radio', 'status', '状态', '', ['冻结', '审核','认证'], 1]
+            ])
+            ->setFormData($info) // 设置表单数据
+            ->fetch();
+    }
     /**
      * 检查版本更新
      * @author zg

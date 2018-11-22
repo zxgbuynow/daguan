@@ -33,6 +33,14 @@ class Feedback extends Admin
         // 获取查询条件
         $map = $this->getMap();
 
+        if (isset($map['status'])&&$map['status'][1]=='%已处理%') {
+            $map['status'] = 1;
+        }
+        if (isset($map['status'])&&$map['status'][1]=='%未处理%') {
+            $map['status'] = 0;
+        }
+        
+
         // 数据列表
         $data_list = FeedbackModel::where($map)->order('id desc')->paginate();
 
@@ -43,17 +51,21 @@ class Feedback extends Admin
         return ZBuilder::make('table')
             ->setPageTitle('投诉管理') // 设置页面标题
             ->setTableName('cms_feedback') // 设置数据表名
-            ->setSearch(['content' => '内容']) // 设置搜索参数
+            ->setSearch(['content' => '内容','status'=>'状态']) // 设置搜索参数
+            ->addTimeFilter('create_time')
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
                 ['username', '用户'],
                 ['phone', '手机号'],
                 ['content', '内容'],
                 ['create_time', '创建时间', 'datetime'],
+                ['statusxt', '状态', ['未处理', '已处理']],
+                ['status', '设置状态', 'switch'],
                 ['right_button', '操作', 'btn']
             ])
             ->hideCheckbox()
             ->raw('username')
+            ->raw('statusxt')
             // ->addTopButtons('delete') // 批量添加顶部按钮
             ->addRightButtons('delete') // 批量添加右侧按钮
             ->setRowList($data_list) // 设置表格数据

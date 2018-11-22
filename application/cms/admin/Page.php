@@ -7,6 +7,7 @@ use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\cms\model\Page as PageModel;
 use app\cms\model\Category as CategoryModel;
+use app\cms\model\Articlecategory as ArticlecategoryModel;
 use app\cms\model\Counsellor as CounsellorModel;
 /**
  * 单页控制器
@@ -19,10 +20,13 @@ class Page extends Admin
      * @author zg
      * @return mixed
      */
-    public function index()
+    public function index($id=null)
     {
         // 查询
         $map = $this->getMap();
+        if ($id) {
+            $map['userid'] = $id;
+        }
         // 排序
         $order = $this->getOrder();
         // 数据列表
@@ -38,6 +42,7 @@ class Page extends Admin
                 ['create_time', '创建时间', 'datetime'],
                 ['update_time', '更新时间', 'datetime'],
                 ['status', '状态', 'switch'],
+                ['to', '展示对象', 'select',['用户端','咨询师端']],
                 ['sort', '排序', 'text.edit'],
                 ['userid', '作者', 'select',$author],
                 ['author', '署名作者', 'text.edit'],
@@ -45,7 +50,7 @@ class Page extends Admin
             ])
             ->addTopButtons('add,enable,disable,delete') // 批量添加顶部按钮
             ->addRightButtons(['edit', 'delete' => ['data-tips' => '删除后无法恢复。']]) // 批量添加右侧按钮
-            ->replaceRightButton(['userid' => ['neq', '0']], '', 'edit')
+            // ->replaceRightButton(['userid' => ['neq', '0']], '', 'edit')
             ->addOrder('id,title,create_time,update_time')
             ->setRowList($data_list) // 设置表格数据
             ->addValidate('Page', 'title')
@@ -76,7 +81,7 @@ class Page extends Admin
                 $this->error('新增失败');
             }
         }
-        $list_type = CategoryModel::where('status', 1)->column('id,title');
+        $list_type = ArticlecategoryModel::where('status', 1)->column('id,title');
 
         $alist = PageModel::where(['status'=>1])->column('id,title');
         // 显示添加页面
@@ -92,7 +97,7 @@ class Page extends Admin
                 ['radio', 'type', '测试文章模式', '', ['否', '是'], 0],
                 ['radio', 'status', '立即启用', '', ['否', '是'], 1]
             ])
-            ->addSelect('cid', '业务分类', '', $list_type)
+            ->addSelect('cid', '文章分类', '', $list_type)
             ->addSelect('conrrelation_id', '关联文章ID', '', $alist)
             ->setTrigger('type', '1', 'conrrelation_id')
             ->fetch();
@@ -127,9 +132,12 @@ class Page extends Admin
         }
 
         $info = PageModel::get($id);
-        $list_type = CategoryModel::where('status', 1)->column('id,title');
+        $list_type = ArticlecategoryModel::where('status', 1)->column('id,title');
         
         $alist = PageModel::where(['status'=>1])->column('id,title');
+        $html = <<<EOF
+            <p>这是一个段落</p>
+EOF;
         // 显示编辑页面
         return ZBuilder::make('form')
             ->addFormItems([
@@ -139,14 +147,16 @@ class Page extends Admin
                 ['textarea', 'description', '页面描述', '100字左右'],
                 ['text', 'template', '模板文件名'],
                 ['ckeditor', 'content', '页面内容'],
-                ['image', 'cover', '单页封面'],
+                ['gallery', 'cover', '单页封面'],
+                ['gallery', 'fcover', '单页封面1'],
                 ['text', 'view', '阅读量', '', 0],
                 ['radio', 'type', '测试文章模式', '', ['否', '是']],
                 ['radio', 'status', '立即启用', '', ['否', '是']]
             ])
-            ->addSelect('cid', '业务分类', '', $list_type)
+            ->setExtraHtml($html,'form_top')
+            ->addSelect('cid', '文章分类', '', $list_type)
             ->addSelect('conrrelation_id', '关联文章ID', '', $alist)
-            ->setTrigger('type', '1', 'conrrelation_id')
+            ->setTrigger('userid', '0', 'cover')
             ->setFormdata($info)
             ->fetch();
     }

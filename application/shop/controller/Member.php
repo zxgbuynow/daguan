@@ -8,6 +8,7 @@ use app\common\builder\ZBuilder;
 use app\shop\model\Member as MemberModel;
 use app\shop\model\Module as ModuleModel;
 use app\cms\model\Agency as AgencyModel;
+use app\cms\model\Calendar as CalendarModel;
 use app\cms\model\Point as PointModel;
 use util\Tree;
 use think\Db;
@@ -42,6 +43,13 @@ class Member extends Shop
         $list_type = AgencyModel::where('status', 0)->column('id,title');
 
         $btnAdd = ['icon' => 'fa fa-plus', 'title' => '积分列表', 'href' => url('point', ['id' => '__id__'])];
+        $orderBtn = ['icon' => 'fa fa-fw fa-skype', 'title' => '订单列表', 'href' => url('shop/trade/index', ['id' => '__id__'])];
+        $btncalendar = [
+            // 'class' => 'btn btn-info',
+            'title' => '预约列表',
+            'icon'  => 'fa fa-fw fa-calendar',
+            'href'  => url('calendar', ['id' => '__id__'])
+        ];
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
@@ -59,11 +67,69 @@ class Member extends Shop
             ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
             ->addRightButtons('delete') // 批量添加右侧按钮
             ->addRightButton('custom', $btnAdd)
+            ->addRightButton('custom', $orderBtn)
+            ->addRightButton('custom', $btncalendar)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
     }
 
+    /**
+     * [calendar description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function calendar($id=null)
+    {
+        if ($id === null) $this->error('缺少参数');
+
+        cookie('__forward__', $_SERVER['REQUEST_URI']);
+
+        // 获取查询条件
+        $map = $this->getMap();
+
+        $map['memberid'] = $id;
+        // 数据列表
+        $data_list = CalendarModel::where($map)->order('id desc')->paginate();
+
+        // 分页数据
+        $page = $data_list->render();
+
+        $btncalendar = [
+            // 'class' => 'btn btn-info',
+            'title' => '评价列表',
+            'icon'  => 'fa fa-fw fa-smile-o',
+            'href'  => url('evaluation', ['id' => '__id__'])
+        ];
+
+        // 使用ZBuilder快速创建数据表格
+        return ZBuilder::make('table')
+            ->setPageTitle('预约列表') // 设置页面标题
+            ->setTableName('calendar') // 设置数据表名
+            ->setSearch(['title' => '标题']) // 设置搜索参数
+            ->hideCheckbox()
+            ->addColumns([ // 批量添加列
+                ['id', 'ID'],
+                ['title', '标题'],
+                ['counsollor', '咨询师'],
+                ['start_time', '开始时间', 'datetime'],
+                ['end_time', '结束时间', 'datetime'],
+                ['right_button', '操作', 'btn']
+            ])
+            ->raw('counsollor')
+            ->addTopButton('back', [
+                'title' => '返回会员列表',
+                'icon'  => 'fa fa-reply',
+                'href'  => url('member/index')
+            ])
+            ->addRightButton('custom', $btncalendar) // 添加右侧按钮
+            // ->addTopButtons('delete') // 批量添加顶部按钮
+            // ->addRightButtons('delete') // 批量添加右侧按钮
+            ->setRowList($data_list) // 设置表格数据
+            ->setPages($page) // 设置分页数据
+            ->fetch(); // 渲染页面
+
+    }
     /**
      * 新增
      * @author zg
@@ -174,7 +240,7 @@ class Member extends Shop
      * 积分处理
      * @return mixed
      */
-    public function point()
+    public function point( $id = null)
     {
         if ($id === null) $this->error('缺少参数');
 
@@ -205,10 +271,15 @@ class Member extends Shop
                 ['memberid', '会员', 'select', $list_type],
                 ['point', '积分值'],
                 ['create_time', '创建时间', 'datetime'],
-                ['right_button', '操作', 'btn']
+                // ['right_button', '操作', 'btn']
             ])
-            ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
-            ->addRightButtons('delete') // 批量添加右侧按钮
+            ->addTopButton('back', [
+                'title' => '返回会员列表',
+                'icon'  => 'fa fa-reply',
+                'href'  => url('member/index')
+            ])
+            // ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
+            // ->addRightButtons('delete') // 批量添加右侧按钮
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面

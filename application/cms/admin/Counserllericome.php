@@ -44,11 +44,11 @@ class Counserllericome extends Admin
             ->setPageTitle('咨询师收入管理') // 设置页面标题
             ->setTableName('member') // 设置数据表名
             ->hideCheckbox()
-            ->setSearch(['mobile' => '手机号']) // 设置搜索参数
+            ->setSearch(['mobile' => '手机号','nickname'=>'姓名']) // 设置搜索参数
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
                 ['mobile', '手机号'],
-                ['nickname', '名字'],
+                ['nickname', '姓名'],
                 ['income', '收入'],
                 ['right_button', '操作', 'btn']
             ])

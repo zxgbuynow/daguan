@@ -8,6 +8,7 @@ use app\common\builder\ZBuilder;
 use app\cms\model\Counsellor as CounsellorModel;
 use app\cms\model\Trade as TradeModel;
 use app\cms\model\Agency as AgencyModel;
+use app\cms\model\Calendar as CalendarModel;
 use util\Tree;
 use think\Db;
 use think\Hook;
@@ -22,12 +23,16 @@ class Trade extends Admin
      * 咨询师首页
      * @return mixed
      */
-    public function index()
+    public function index($id = null)
     {
         cookie('__forward__', $_SERVER['REQUEST_URI']);
 
         // 获取查询条件
         $map = $this->getMap();
+
+        if ($id) {
+            $map['mid'] = $id;
+        }
 
         if (isset($map['u'])&&$map['u'][1]) {
             $s['nickname'] =array('like',$map['u'][1]);
@@ -82,6 +87,12 @@ class Trade extends Admin
             'icon'  => 'fa fa-fw fa-search',
             'href'  => url('look', ['id' => '__id__'])
         ];
+        $btncalendar = [
+            // 'class' => 'btn btn-info',
+            'title' => '预约列表',
+            'icon'  => 'fa fa-fw fa-calendar',
+            'href'  => url('calendar', ['id' => '__id__'])
+        ];
 
         //约时间
         
@@ -89,33 +100,87 @@ class Trade extends Admin
         return ZBuilder::make('table')
             ->setPageTitle('订单管理') // 设置页面标题
             ->setTableName('trade') // 设置数据表名
-            ->setSearch(['id' => '订单编号','payment'=>'支付金额','u'=>'用户名','status'=>'支付状态']) // 设置搜索参数
+            ->setSearch(['id' => '订单编号','payment'=>'支付金额','u'=>'用户名','status'=>'付费状态','title'=>'订单内容']) // 设置搜索参数
+            ->addTimeFilter('created_time')
             ->hideCheckbox()
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
                 ['title', '交易标题'],
                 ['payment', '支付金额'],
+                ['num', '可约数'],
+                ['process', '进度'],
                 ['shopid', '机构', 'select', $agency_list],
                 ['memberid', '用户', 'select', $counsellor_list],
                 ['mid', '咨询师', 'select', $counsellor_list],
                 ['created_time', '创建时间', 'datetime'],
                 ['ondate', '预约时间','datetime'],
+                ['paytype', '来源', 'text', '', ['预约订单', '冲值订单', '课程订单', '活动订单']],
                 ['status', '状态', 'text', '', ['待支付', '已支付', '取消', '冻结']],
                 ['right_button', '操作', 'btn']
                 
             ])
             ->raw('ondate')
+            ->raw('process')
             // ->addTopButtons('delete') // 批量添加顶部按钮
             // ->addRightButtons('cancle,frzee') // 批量添加右侧按钮
             ->addRightButton('custom', $btncancle) // 添加右侧按钮
             ->addRightButton('custom', $btnfrzee) // 添加右侧按钮
+            ->addRightButton('custom1', $btncalendar) // 添加右侧按钮
             // ->addRightButton('custom', $btnlook) // 添加右侧按钮
             ->replaceRightButton(['status' => ['>', 1]], '', ['custom'])
+             ->replaceRightButton(['paytype' => ['>', 1]], '', ['custom1'])
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
     }
+    /**
+     * [calendar description]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function calendar($id=null)
+    {
+        if ($id === null) $this->error('缺少参数');
 
+        cookie('__forward__', $_SERVER['REQUEST_URI']);
+
+        // 获取查询条件
+        $map = $this->getMap();
+
+        $map['tid'] = $id;
+        // 数据列表
+        $data_list = CalendarModel::where($map)->order('id desc')->paginate();
+
+        // 分页数据
+        $page = $data_list->render();
+
+
+        // 使用ZBuilder快速创建数据表格
+        return ZBuilder::make('table')
+            ->setPageTitle('预约列表') // 设置页面标题
+            ->setTableName('calendar') // 设置数据表名
+            ->setSearch(['title' => '标题']) // 设置搜索参数
+            ->hideCheckbox()
+            ->addColumns([ // 批量添加列
+                ['id', 'ID'],
+                ['title', '标题'],
+                ['counsollor', '咨询师'],
+                ['start_time', '开始时间', 'datetime'],
+                ['end_time', '结束时间', 'datetime'],
+            ])
+            ->raw('counsollor')
+            ->addTopButton('back', [
+                'title' => '返回订单列表',
+                'icon'  => 'fa fa-reply',
+                'href'  => url('trade/index')
+            ])
+            // ->addTopButtons('delete') // 批量添加顶部按钮
+            // ->addRightButtons('delete') // 批量添加右侧按钮
+            ->setRowList($data_list) // 设置表格数据
+            ->setPages($page) // 设置分页数据
+            ->fetch(); // 渲染页面
+
+    }
     /**
      * 新增
      * @author zg

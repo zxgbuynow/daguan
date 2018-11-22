@@ -1,17 +1,12 @@
 <?php
 
 
-namespace app\cms\admin;
+namespace app\admin\controller;
 
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
-use app\cms\model\Counsellor as CounsellorModel;
-use app\cms\model\Counsellorot as CounsellorotModel;
-use app\cms\model\Agency as AgencyModel;
-use app\cms\model\Point as PointModel;
-use app\cms\model\Category as CategoryModel;
-use app\cms\model\CateAccess as CateAccessModel;
-use app\cms\model\Trade as TradeModel;
+use app\admin\model\Counsellor as CounsellorModel;
+use app\admin\model\Agency as AgencyModel;
 use util\Tree;
 use think\Db;
 use think\Hook;
@@ -20,7 +15,7 @@ use think\Hook;
  * 咨询师默认控制器
  * @package app\member\admin
  */
-class Counsellor extends Admin
+class Counsellor extends shop
 {
     /**
      * 咨询师首页
@@ -33,12 +28,7 @@ class Counsellor extends Admin
 
         // 获取查询条件
         $map = $this->getMap();
-        if (isset($map['status'])&&$map['status'][1]=='%待审核%') {
-            $map['status']=0;
-        }
-        if (isset($map['status'])&&$map['status'][1]=='%上线%') {
-            $map['status']=1;
-        }
+
         $map['type'] = 1;
         // 数据列表
         $data_list = CounsellorModel::where($map)->order('id desc')->paginate();
@@ -48,37 +38,21 @@ class Counsellor extends Admin
 
         $list_type = AgencyModel::where('status', 1)->column('id,title');
 
-        $btnAdd = ['icon' => 'fa fa-plus', 'title' => '积分列表', 'href' => url('point', ['id' => '__id__'])];
-        $incomeBtn = ['icon' => 'fa fa-fw fa-cny', 'title' => '收列表', 'href' => url('income', ['id' => '__id__'])];
-       
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setPageTitle('咨询师管理') // 设置页面标题
             ->setTableName('member') // 设置数据表名
-            ->setSearch(['mobile' => '手机号','nickname'=>'姓名','status'=>'审核状态']) // 设置搜索参数
-            // ->addFilter('status', $statuslist)
+            ->setSearch(['mobile' => '手机号']) // 设置搜索参数
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
                 ['mobile', '手机号'],
-                ['nickname', '姓名'],
-                ['sex', '性别', 'select',['0' =>'女','1' => '男']],
-                ['qq', 'QQ'],
-                ['weixin', '微信'],
-                ['alipay', '支付宝'],
-                ['shopid', '机构', 'select', $list_type],
+                ['typeid', '机构', 'select', $list_type],
                 ['create_time', '创建时间', 'datetime'],
-                ['verifystatus', '审核状态', '', '', ['待审核', '上线']],
                 ['status', '状态', 'switch'],
-                ['recommond', '推荐', 'switch'],
-                ['sort', '排序', 'text.edit'],
                 ['right_button', '操作', 'btn']
             ])
-            // ->addColumn('sex', '性别', 'status', '', ['女', '男'])
-            ->raw('verifystatus')
             ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
             ->addRightButtons('delete,edit') // 批量添加右侧按钮
-            ->addRightButton('custom', $btnAdd)
-            // ->addRightButton('custom', $incomeBtn)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
@@ -94,55 +68,19 @@ class Counsellor extends Admin
         // 保存数据
         if ($this->request->isPost()) {
             $data = $this->request->post();
-
-            $save['username'] = $data['username'];
-            $save['nickname'] = $data['nickname'];
-            $save['truename'] = $data['truename'];
-            $save['password'] = $data['password'];
-
-            $save['qq'] = $data['qq'];
-            $save['weixin'] = $data['weixin'];
-            $save['alipay'] = $data['alipay'];
-            $save['mobile'] = $data['mobile'];
-            $save['status'] = $data['status'];
-            $save['recommond'] = $data['recommond'];
-
-            if ($crid = CounsellorModel::create($save)) {
-                $user = CounsellorModel::get($save['id']);
-                
-                //添加
-                $save1['status'] = $data['status'];
-                $save1['memberid'] = $crid;
-                $save1['per'] = $data['per'];
-                $save1['wordchart'] = $data['wordchart'];
-                $save1['speechchart'] = $data['speechchart'];
-                $save1['videochart'] = $data['videochart'];
-                $save1['facechart'] = $data['facechart'];
-                $save1['intro'] = $data['intro'];
-                $save1['employment'] = strtotime($data['employment']);
-                
-                $save1['remark'] = $data['remark'];
-
-                $save1['intro'] = $data['intro'];
-
-                $save1['identifi'] = $data['identifi'];
-                $save1['diploma'] = $data['diploma'];
-
-                $save1['tearch'] = $data['tearch'];
-                $save1['leader'] = $data['leader'];
-                $save1['cerfornt'] = $data['cerfornt'];
-                $save1['cerback'] = $data['cerback'];
-
-                //业务类弄
-                $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
-                CounsellorotModel::create($save1);
-                
-                
+            // 验证
+            $result = $this->validate($data, 'Counsellor');
+            // 验证失败 输出错误信息
+            if(true !== $result) $this->error($result);
+            $data['create_time']= time();
+            $data['type'] = 1;
+            if ($user = CounsellorModel::create($data)) {
+                // Hook::listen('counsellor_add', $user);
                 // 记录行为
-                action_log('user_add', 'admin_counsellor', $user['id'], UID, get_nickname($user['id']));
-                $this->success('编辑成功', cookie('__forward__'));
+                action_log('counsellor_add', 'admin_counsellor', $user['id'], UID);
+                $this->success('新增成功', url('index'));
             } else {
-                $this->error('编辑失败');
+                $this->error('新增失败');
             }
         }
 
@@ -150,44 +88,12 @@ class Counsellor extends Admin
         return ZBuilder::make('form')
             ->setPageTitle('新增') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['hidden', 'aid'],
-                ['hidden', 'bid'],
-                ['hidden', 'shopid'],
                 ['text', 'username', '用户名', '必填，可由英文字母、数字组成'],
                 ['text', 'nickname', '昵称', '可以是中文'],
-                ['image', 'avar', '头像'],
-                ['text', 'truename', '真实姓名', '中文'],
-                ['text', 'identifi', '身份证'],
-                ['image', 'diploma', '咨询师证书'],
-                ['radio', 'tearch', '是否是讲师', '', ['否', '是']],
-                ['radio', 'leader', '是否是团队Leader', '', ['否', '是']],
-
                 ['password', 'password', '密码', '必填，6-20位'],
                 ['text', 'mobile', '手机号'],
-                ['text', 'qq', 'QQ'],
-                ['text', 'weixin', '微信'],
-                ['text', 'alipay', '支付宝'],
-                ['image', 'cerfornt', '身份证正面'],
-                ['image', 'cerback', '身份证反面'],
-
-                ['radio', 'status', '状态', '', ['停牌', '上线']],
-                ['radio', 'recommond', '推荐', '', ['不推荐', '推荐']],
-                ['text', 'sort', '排序'],
-                // ['date', 'employment', '从业时间'],
-                ['number', 'per', '单次时长'],
-                ['text', 'wordchart', '文字咨询'],
-                ['text', 'wordchartlv', '文字咨询会员价'],
-                ['text', 'speechchart', '语音咨询'],
-                ['text', 'speechchartlv', '语音咨询会员价'],
-                ['text', 'videochart', '视频咨询'],
-                ['text', 'videochartlv', '视频咨询会员价'],
-                ['text', 'facechart', '面对面咨询'],
-                ['text', 'facechartlv', '面对面咨询会员价'],
-                ['textarea', 'intro', '简介'],
+                ['radio', 'status', '状态', '', ['禁用', '启用'], 1]
             ])
-            ->addDatetime('employment', '从业时间', '', '', 'YYYY-MM-DD')
-            // ->addSelect('tags', '业务分类', '', $list_type)
-            ->addUeditor('remark', '祥细说明')
             ->fetch();
     }
 
@@ -205,86 +111,11 @@ class Counsellor extends Admin
         if ($this->request->isPost()) {
             $data = $this->request->post();
 
-            $save['id'] = $data['aid'];
-            $save['username'] = $data['username'];
-            $save['nickname'] = $data['nickname'];
-            $save['password'] = $data['password'];
 
-            $save['qq'] = $data['qq'];
-            $save['avar'] = $data['avar'];
-            $save['weixin'] = $data['weixin'];
-            $save['alipay'] = $data['alipay'];
-            $save['truename'] = $data['truename'];
-            $save['cerfornt'] = $data['cerfornt'];
-            $save['cerback'] = $data['cerback'];
-            $save['identifi'] = $data['identifi'];
-
-            $save['mobile'] = $data['mobile'];
-            $save['status'] = $data['status'];
-            $save['recommond'] = $data['recommond'];
-
-            if (CounsellorModel::update($save)) {
-                $user = CounsellorModel::get($save['id']);
-                if ($data['bid']) {
-                    //更新属表
-                    $save1['id'] = $data['bid'];
-                    $save1['per'] = $data['per'];
-                    $save1['wordchart'] = $data['wordchart'];
-                    $save1['speechchart'] = $data['speechchart'];
-                    $save1['videochart'] = $data['videochart'];
-                    $save1['facechart'] = $data['facechart'];
-
-                    $save1['wordchartlv'] = $data['wordchartlv'];
-                    $save1['speechchartlv'] = $data['speechchartlv'];
-                    $save1['videochartlv'] = $data['videochartlv'];
-                    $save1['facechartlv'] = $data['facechartlv'];
-
-                    $save1['intro'] = $data['intro'];
-                    $save1['employment'] = strtotime($data['employment']);
-                    $save1['remark'] = $data['remark'];
-
-                    $save1['diploma'] = $data['diploma'];
-
-                    $save1['tearch'] = $data['tearch'];
-                    $save1['leader'] = $data['leader'];
-                    
-                    //业务类弄
-                    // $save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
-                    $save1['tags'] = implode(',', $data['tags']);
-                    CounsellorotModel::update($save1);
-
-                }else{
-                    //添加
-                    $save1['status'] = $data['status'];
-                    $save1['memberid'] = $data['aid'];
-                    $save1['per'] = $data['per'];
-                    $save1['wordchart'] = $data['wordchart'];
-                    $save1['speechchart'] = $data['speechchart'];
-                    $save1['videochart'] = $data['videochart'];
-                    $save1['facechart'] = $data['facechart'];
-                    $save1['wordchartlv'] = $data['wordchartlv'];
-                    $save1['speechchartlv'] = $data['speechchartlv'];
-                    $save1['videochartlv'] = $data['videochartlv'];
-                    $save1['facechartlv'] = $data['facechartlv'];
-                    $save1['intro'] = $data['intro'];
-                    $save1['employment'] = strtotime($data['employment']);
-                    
-                    $save1['remark'] = $data['remark'];
-
-                    
-                    $save1['diploma'] = $data['diploma'];
-
-                    $save1['tearch'] = $data['tearch'];
-                    $save1['leader'] = $data['leader'];
-                    //业务类弄
-                    // @$save1['tags'] = CateAccessModel::where('shopid', $data['shopid'])->column('cids')[0];
-                    $save1['tags'] = implode(',', $data['tags']);
-                    CounsellorotModel::create($save1);
-                }
-                
-                
+            if (CounsellorModel::update($data)) {
+                $user = CounsellorModel::get($data['id']);
                 // 记录行为
-                action_log('user_edit', 'admin_counsellor', $user['id'], UID, get_nickname($user['id']));
+                action_shop_log('user_edit', 'admin_counsellor', $user['id'], UID, get_nickname($user['id']));
                 $this->success('编辑成功', cookie('__forward__'));
             } else {
                 $this->error('编辑失败');
@@ -294,66 +125,30 @@ class Counsellor extends Admin
         // 获取数据
         // $info = CounsellorModel::where('id', $id)->find();
         $info = CounsellorModel::getCounsellorList($id);
-        if (!$info['status']) {
-            $info['status'] = 0;
-        }
-        // print_r($info);exit;
-        $list_type = [];
-        if ($info['shopid']) {
-            $cids = CateAccessModel::where('shopid', $info['shopid'])->value('cids');
-            $emap['status'] = 1;
-            $emap['id'] = array('in',$cids);
-            $list_type = CategoryModel::where($emap)->column('id,title');
-        }
-        
+        print_r($info);exit;
 
-        // 使用ZBuilder快速创建表单 
+        // 使用ZBuilder快速创建表单
         return ZBuilder::make('form')
             ->setPageTitle('编辑') // 设置页面标题
             ->addFormItems([ // 批量添加表单项
-                ['hidden', 'aid'],
-                ['hidden', 'bid'],
-                ['hidden', 'shopid'],
+                ['hidden', 'id'],
                 ['text', 'username', '用户名', '必填，可由英文字母、数字组成'],
                 ['text', 'nickname', '昵称', '可以是中文'],
-                ['image', 'avar', '头像'],
-                ['text', 'truename', '真实姓名', '中文'],
-                ['text', 'identifi', '身份证'],
-                ['image', 'diploma', '咨询师证书'],
-                ['radio', 'tearch', '是否是讲师', '', ['否', '是'],1],
-                ['radio', 'leader', '是否是团队Leader', '', ['否', '是'],1],
-
                 ['password', 'password', '密码', '必填，6-20位'],
                 ['text', 'mobile', '手机号'],
-                ['text', 'qq', 'QQ'],
-                ['text', 'weixin', '微信'],
-                ['text', 'alipay', '支付宝'],
-                ['image', 'cerfornt', '身份证正面'],
-                ['image', 'cerback', '身份证反面'],
-
-                ['radio', 'status', '状态', '', ['停牌', '上线']],
-                ['radio', 'recommond', '推荐', '', ['不推荐', '推荐']],
-                // ['date', 'employment', '从业时间'],
-                ['number', 'per', '单次时长'],
-                ['text', 'wordchart', '文字咨询'],
-                ['text', 'wordchartlv', '文字咨询会员价'],
-                ['text', 'speechchart', '语音咨询'],
-                ['text', 'speechchartlv', '语音咨询会员价'],
-                ['text', 'videochart', '视频咨询'],
-                ['text', 'videochartlv', '视频咨询会员价'],
-                ['text', 'facechart', '面对面咨询'],
-                ['text', 'facechartlv', '面对面咨询会员价'],
-                ['textarea', 'intro', '简介'],
+                ['radio', 'status', '状态', '', ['禁用', '启用']],
+                ['radio', 'recommond', '推荐', '', ['不推荐', '推荐']]
             ])
-            ->addDatetime('employment', '从业时间', '', '', 'YYYY-MM-DD')
-            ->addSelect('tags', '业务分类', '', $list_type,'','multiple')
-            ->addUeditor('remark', '祥细说明')
             ->setFormData($info) // 设置表单数据
             ->fetch();
     }
 
-   public function point($id = null)
-   {
+    /**
+     * 积分处理
+     * @return mixed
+     */
+    public function point($id = null)
+    {
        if ($id === null) $this->error('缺少参数');
 
         cookie('__forward__', $_SERVER['REQUEST_URI']);
@@ -376,7 +171,6 @@ class Counsellor extends Admin
             ->setPageTitle('会员管理') // 设置页面标题
             ->setTableName('member_point') // 设置数据表名
             ->setSearch(['mobile' => '手机号']) // 设置搜索参数
-            ->hideCheckbox()
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
                 ['behavior_type', '行为类型',['获得','消费']],
@@ -384,66 +178,20 @@ class Counsellor extends Admin
                 ['memberid', '会员', 'select', $list_type],
                 ['point', '积分值'],
                 ['create_time', '创建时间', 'datetime'],
-                // ['right_button', '操作', 'btn']
+                ['right_button', '操作', 'btn']
             ])
             ->addTopButton('back', [
                 'title' => '返回咨询师列表',
                 'icon'  => 'fa fa-reply',
                 'href'  => url('counsellor/index')
             ])
-            // ->addTopButtons('delete') // 批量添加顶部按钮
-            // ->addRightButtons('delete') // 批量添加右侧按钮
+            ->addTopButtons('delete') // 批量添加顶部按钮
+            ->addRightButtons('delete') // 批量添加右侧按钮
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
    }
-   /**
-    * [income 收入列表]
-    * @param  [type] $id [description]
-    * @return [type]     [description]
-    */
-   public function income($id = null)
-   {
-       if ($id === null) $this->error('缺少参数');
-
-        cookie('__forward__', $_SERVER['REQUEST_URI']);
-
-        // 获取查询条件
-        $map = $this->getMap();
-
-        $map['memberid'] = $id;
-        // 数据列表
-        $data_list = PointModel::where($map)->order('id desc')->paginate();
-
-        // 分页数据
-        $page = $data_list->render();
-
-
-        $list_type = CounsellorModel::where('status', 1)->column('id,username');
-
-        // 使用ZBuilder快速创建数据表格
-        return ZBuilder::make('table')
-            ->setPageTitle('收入管理') // 设置页面标题
-            ->setTableName('member_point') // 设置数据表名
-            ->setSearch(['mobile' => '手机号']) // 设置搜索参数
-            ->hideCheckbox()
-            ->addColumns([ // 批量添加列
-                ['id', 'ID'],
-                ['behavior_type', '行为类型',['获得','消费']],
-                ['behavior', '行为描述'],
-                ['memberid', '会员', 'select', $list_type],
-                ['point', '积分值'],
-                ['create_time', '创建时间', 'datetime'],
-            ])
-            ->addTopButton('back', [
-                'title' => '返回咨询师列表',
-                'icon'  => 'fa fa-reply',
-                'href'  => url('counsellor/index')
-            ])
-            ->setRowList($data_list) // 设置表格数据
-            ->setPages($page) // 设置分页数据
-            ->fetch(); // 渲染页面
-   }
+   
     /**
      * 删除用户
      * @param array $ids 用户id
@@ -506,8 +254,8 @@ class Counsellor extends Admin
         $id      == UID && $this->error('禁止操作当前账号');
         $field   = input('post.name', '');
         $value   = input('post.value', '');
-        $config  = CounsellorModel::where('id', $id)->value($field);
+        $config  = UserModel::where('id', $id)->value($field);
         $details = '字段(' . $field . ')，原值(' . $config . ')，新值：(' . $value . ')';
-        return parent::quickEdit(['member_edit', 'admin_member', $id, UID, $details]);
+        return parent::quickEdit(['user_edit', 'shop_user', $id, UID, $details]);
     }
 }

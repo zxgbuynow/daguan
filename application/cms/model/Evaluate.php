@@ -16,4 +16,10 @@ class Evaluate extends ThinkModel
 
     // 自动写入时间戳
     protected $autoWriteTimestamp = true;
+
+    public  function getUsernameAttr($v,$data)
+    {
+       return db('member')->where(['id'=>$data['memberid']])->value('nickname');
+
+    }
 }

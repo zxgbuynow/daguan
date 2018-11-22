@@ -35,11 +35,21 @@ class Calendar extends Model
 
     public  function getCounsollorAttr($v,$data)
     {
-        $mid = db('trade')->where(['id'=>$data['tid']])->value('mid');
-
-        return db('member')->where(['id'=>$mid])->value('nickname');
+        return db('member')->where(['id'=>$data['memberid']])->value('nickname');
 
     }
+
+    public  function getTidsAttr($v,$data)
+    {
+       return db('trade')->where(['id'=>$data['tid']])->value('tid');
+
+    }
+    public  function getPlaceAttr($v,$data)
+    {
+       return db('trade')->where(['id'=>$data['tid']])->value('place');
+
+    }
+
 
     public  function getAddressAttr($v,$data)
     {
@@ -47,6 +57,26 @@ class Calendar extends Model
 
         return db('shop_agency')->where(['id'=>$shopid])->value('city');
 
+    }
+
+    public  function getChartAttr($v,$data)
+    {
+      $data = db('trade')->where(['id'=>$data['tid']])->value('chart');
+      switch ($data) {
+        case 'wordchart':
+          return '文字咨询';
+          break;
+        case 'speechchart':
+          return '语音咨询';
+          break;
+        case 'facechart':
+          return '面对面咨询';
+          break;
+        
+        default:
+          return '视频咨询';
+          break;
+      }
     }
 
 

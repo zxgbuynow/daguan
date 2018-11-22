@@ -67,8 +67,8 @@ class Counsellor extends Shop
                 ['status', '状态', 'switch'],
                 ['right_button', '操作', 'btn']
             ])
-            ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
-            ->addRightButtons('delete,edit') // 批量添加右侧按钮
+            // ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
+            ->addRightButtons('edit') // 批量添加右侧按钮
             ->addRightButton('custom', $btnAdd)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
@@ -200,6 +200,7 @@ class Counsellor extends Shop
             ->addDatetime('employment', '从业时间', '', '', 'YYYY-MM-DD')
             ->addSelect('tags', '业务分类', '', $list_type,'','multiple')
             ->addUeditor('remark', '祥细说明')
+            ->hideBtn('submit')
             ->setFormData($info) // 设置表单数据
             ->fetch();
     }
