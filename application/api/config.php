@@ -98,7 +98,8 @@ return [
         'sendhxmsg'=>'send.hxmsg',
         'hxmsgls'=>'hxmsg.ls',
         'hxmsgtwo'=>'hxmsg.two',
-        'hxmsgup'=>'hxmsg.up'
+        'hxmsgup'=>'hxmsg.up',
+        'counsellorst'=>'counsellor.st',//咨询师
 
 
 

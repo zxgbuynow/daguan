@@ -3140,6 +3140,7 @@ class Index
         $data['nickname'] = trim($params['account']);
         $data['email'] = trim($params['email']);
         $data['mobile'] = trim($params['mobile']);
+        $data['shopid'] = trim($params['agency']);
         $data['create_time'] = time();
 
         if (db('member')->where(['mobile'=>$data['mobile']])->find()) {
