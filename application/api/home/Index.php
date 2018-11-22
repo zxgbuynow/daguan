@@ -3384,6 +3384,27 @@ class Index
         ];
         return json($data);
     }
+
+    /**
+     * [claccate_shop 文章分类]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function claccate_shop($params)
+    {
+        $ret = array();
+
+        $cates = db('cms_clacategory')->where('status',1)->order('sort DESC,id DESC')->limit(4)->select();
+
+        $rs['data'] = array_values($cates);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rs
+        ];
+        return json($data);
+    }
     /**
      * [recommend_shop 推荐咨询师]
      * @param  [type] $params [description]
