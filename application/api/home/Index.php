@@ -4044,6 +4044,61 @@ class Index
         
 
         if ($status == 'all') {
+
+            $startpg = ($page_no-1)*$page_size;
+            $allmap['paytype'] = 0;
+            $allmap['mid'] = $account;
+            $allmap['status'] = 1;
+            $tids = db('calendar')->where(['memberid'=>$account])->column('tid');
+            if ($tids) {
+                // $allmap['id'] = array('not in',array_unique($tids));
+            }
+            // $data = db('calendar')->alias('a')->field('a.*,b.chart')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->limit($startpg, $page_size)->select();
+            $data = db('trade')->where($allmap)->order('id DESC')->limit($startpg, $page_size)->select();
+            
+            foreach ($data as $key => $value) {
+                switch ($value['chart']) {
+                    case 'speechchart':
+                        $str = '语音咨询';
+                        break;
+                    case 'videochart':
+                        $str = '视频咨询';
+                        break;
+                    case 'facechart':
+                        $str = '面对面咨询';
+                        break;
+                    
+                    default:
+                        $str = '文字咨询';
+                        break;
+                }
+                $data[$key]['chartkey'] = $value['chart'];
+                $data[$key]['chart'] = $str;
+
+
+                $counsellor =  db('member')->where(array('id'=>$value['memberid']))->find();
+                $data[$key]['member'] =  $counsellor['nickname'];
+                $data[$key]['mid'] =  $counsellor['id'];
+                $data[$key]['mobile'] =  $counsellor['mobile'];
+                
+                $data[$key]['avar'] = is_numeric($counsellor['avar'])?get_file_path($counsellor['avar']):$counsellor['avar'];
+
+                $data[$key]['st'] = date('Y-m-d H:i',$value['created_time']);
+            }
+            $pages = array(
+                    'total'=>db('trade')->where($allmap)->count()
+                );
+            $trade['data']['pagers'] = $pages;
+            $trade['data']['list'] = array_values($data);
+            $trade['data']['sorce'] = 'trade';
+            //返回信息
+            $data = [
+                'code'=>'1',
+                'msg'=>'',
+                'data'=>$trade
+            ];
+            return json($data);
+
             // $map['status'] = array('gt',0);
         }else{
             $map['a.status'] = $status;
@@ -4082,10 +4137,11 @@ class Index
             $data[$key]['st'] = date('Y-m-d H:i',$value['start_time']);
         }
         $pages = array(
-                'total'=>db('calendar')->alias('a')->field('a.*')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->limit($startpg, $page_size)->count()
+                'total'=>db('calendar')->alias('a')->field('a.*')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->count()
             );
         $trade['data']['pagers'] = $pages;
         $trade['data']['list'] = array_values($data);
+        $trade['data']['sorce'] = 'calendar';
         //返回信息
         $data = [
             'code'=>'1',
