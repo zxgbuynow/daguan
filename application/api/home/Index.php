@@ -4028,6 +4028,74 @@ class Index
     }
 
     /**
+     * [recordlist_shop 咨询记录列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function recordlist_shop($params)
+    {
+        $account = trim($params['account']);
+
+        $status = trim($params['status']);
+        $page_no = trim($params['page_no']);
+        $page_size = trim($params['page_size']);
+
+        $map['b.memberid'] = $account;
+        
+
+        if ($status == 'all') {
+            // $map['status'] = array('gt',0);
+        }else{
+            $map['a.status'] = $status;
+        }
+        $startpg = ($page_no-1)*$page_size;
+
+        $data = db('calendar')->alias('a')->field('a.*,b.chart')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->limit($startpg, $page_size)->select();
+        foreach ($data as $key => $value) {
+            switch ($value['chart']) {
+                case 'speechchart':
+                    $str = '语音咨询';
+                    break;
+                case 'videochart':
+                    $str = '视频咨询';
+                    break;
+                case 'facechart':
+                    $str = '面对面咨询';
+                    break;
+                
+                default:
+                    $str = '文字咨询';
+                    break;
+            }
+            $data[$key]['chartkey'] = $value['chart'];
+            $data[$key]['chart'] = $str;
+
+
+            $member =  db('member')->alias('a')->field('a.*,b.mid')->join(' trade b',' b.memberid = a.id','LEFT')->where(array('b.id'=>$value['tid']))->find();
+            $data[$key]['member'] =  $member['nickname'];
+            $data[$key]['mid'] =  $member['mid'];
+            $data[$key]['mobile'] =  db('member')->where(['id'=>$member['mid']])->value('mobile');
+
+            $data[$key]['avar'] =  db('member')->where(['id'=>$member['mid']])->value('avar');
+            $data[$key]['counsellor'] =  db('member')->where(['id'=>$member['mid']])->value('nickname');
+
+            $data[$key]['st'] = date('Y-m-d H:i',$value['start_time']);
+        }
+        $pages = array(
+                'total'=>db('calendar')->alias('a')->field('a.*')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->limit($startpg, $page_size)->count()
+            );
+        $trade['data']['pagers'] = $pages;
+        $trade['data']['list'] = array_values($data);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$trade
+        ];
+        return json($data);
+    }
+
+    /**
      * [upavar_shop 头像]
      * @param  [type] $params [description]
      * @return [type]         [description]
@@ -4759,6 +4827,7 @@ class Index
      */
     public function getCurrentCander_shop($params)
     {
+
         //参数
         $account = trim($params['account']);
 
