@@ -4040,7 +4040,7 @@ class Index
         $page_no = trim($params['page_no']);
         $page_size = trim($params['page_size']);
 
-        $map['b.mid'] = $account;
+        
         
 
         if ($status == 'all') {
@@ -4103,6 +4103,7 @@ class Index
         }else{
             $map['a.status'] = $status;
         }
+        $map['a.memberid'] = $account;
         $startpg = ($page_no-1)*$page_size;
 
         $data = db('calendar')->alias('a')->field('a.*,b.chart,b.memberid')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->limit($startpg, $page_size)->select();
@@ -4135,7 +4136,7 @@ class Index
             $data[$key]['mobile'] =  $counsellor['mobile'];
             
             $data[$key]['cavar'] = is_numeric($counsellor['avar'])?get_file_path($counsellor['avar']):$counsellor['avar'];
-                
+
             // $data[$key]['member'] =  $member['nickname'];
             // $data[$key]['mid'] =  $member['mid'];
             // $data[$key]['mobile'] =  db('member')->where(['id'=>$member['mid']])->value('mobile');
