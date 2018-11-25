@@ -4674,9 +4674,14 @@ class Index
         }
         $pst = array_merge($rs,$params);
 
-        if (db('case')->insert($pst)) {
-            db('calendar')->where(['id'=>$cid])->update(['status'=>2]);
+        if (isset($params['caid'])) {
+            db('case')->where(['id'=>$params['caid']])->update($pst);
+        }else{
+            if (db('case')->insert($pst)) {
+                db('calendar')->where(['id'=>$cid])->update(['status'=>2]);
+            }
         }
+        
         // error_log(json_encode($pst),3,'/home/wwwroot/daguan/case.log');
         
         //返回信息
