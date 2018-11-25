@@ -4488,6 +4488,89 @@ class Index
         //返回案例信息 
         if (isset($params['caid'])) {
             $rs['case'] = db('case')->where(['id'=>$params['caid']])->find();
+            //th
+            $th = ['A','B','C','D','E','F','Total','avg'];
+            //A
+            $aarr = explode(',', $rs['case']['Avl']);
+            $atotal = 0;
+            foreach ($aarr as $key => $value) {
+                $atr['A'.$th[$key].'vl_Avl'] = $value;
+                $atotal += $value;
+            }
+            $rs['case']['atr'] = $atr;
+            $rs['case']['atr']['Total'] = $atotal;
+            $rs['case']['atr']['avg'] = round($atotal/6,2);
+            //A2
+            $_2arr = explode(',', $rs['case']['A2vl']);
+            $_2atotal = 0;
+            foreach ($_2arr as $key => $value) {
+                $_2atr['_2A'.$th[$key].'vl_2Avl'] = $value;
+                $_2atotal += $value;
+            }
+            $rs['case']['_2atr'] = $_2atr;
+            $rs['case']['_2atr']['Total'] = $_2atotal;
+            $rs['case']['_2atr']['avg'] = round($_2atotal/6,2);
+            //B
+            $_Barr = explode(',', $rs['case']['Bvl']);
+            $btotal = 0;
+            foreach ($_Barr as $key => $value) {
+                $_btr['B'.$th[$key].'vl_Bvl'] = $value;
+                $btotal += $value;
+            }
+            $rs['case']['_btr'] = $_btr;
+            $rs['case']['_btr']['Total'] = $btotal;
+            $rs['case']['_btr']['avg'] = round($btotal/6,2);
+            //1m
+            $_1marr = explode(',', $rs['case']['M1vl']);
+            $_1mtotal = 0;
+            foreach ($_1marr as $key => $value) {
+                $_1matr['_1M'.$th[$key].'vl_M1vl'] = $value;
+                $atotal += $value;
+            }
+            $rs['case']['_1matr'] = $_1matr;
+            $rs['case']['_1matr']['Total'] = $_1mtotal;
+            $rs['case']['_1matr']['avg'] = round($_1mtotal/6,2);
+            //AM
+            $_amarr = explode(',', $rs['case']['AMvl']);
+            $_amtotal = 0;
+            foreach ($_amarr as $key => $value) {
+                $_amtr['A_M'.$th[$key].'vl_AMvl'] = $value;
+                $_amtotal += $value;
+            }
+            $rs['case']['_amtr'] = $_amtr;
+            $rs['case']['_amtr']['Total'] = $_amtotal;
+            $rs['case']['_amtr']['avg'] = round($_amtotal/6,2);
+
+            //2m
+            $_2marr = explode(',', $rs['case']['M2vl']);
+            $_2mtotal = 0;
+            foreach ($_2marr as $key => $value) {
+                $_2mtr['_2M'.$th[$key].'vl_M2vl'] = $value;
+                $_2mtotal += $value;
+            }
+            $rs['case']['_2mtr'] = $_2mtr;
+            $rs['case']['_2mtr']['Total'] = $_2mtotal;
+            $rs['case']['_2mtr']['avg'] = round($_2mtotal/6,2);
+            //plan
+            $_parr = explode(',', $rs['case']['PLAN']);
+            $ptotal = 0;
+            foreach ($_parr as $key => $value) {
+                $_ptr['p'.$th[$key].'vl_PLAN'] = $value;
+                $ptotal += $value;
+            }
+            $rs['case']['_ptr'] = $_ptr;
+            $rs['case']['_ptr']['Total'] = $ptotal;
+            $rs['case']['_ptr']['avg'] = round($ptotal/6,2);
+
+            //caseS
+            $rs['case']['caseS'] = explode(',', $rs['case']['caseS']);
+            //caseR9
+            $rs['case']['caseR9'] = explode(',', $rs['case']['caseR9']);
+            //caseSOR
+            $rs['case']['caseSOR'] = explode(',', $rs['case']['caseSOR']);
+            //caseS
+            $rs['case']['casePNF'] = explode(',', $rs['case']['casePNF']);
+
         }
         
         //返回信息
