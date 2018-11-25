@@ -4485,6 +4485,10 @@ class Index
             
             $rs['trade']['chart'] = $str;
         }
+        //返回案例信息 
+        if (isset($params['caid'])) {
+            $rs['case'] = db('case')->where(['id'=>$params['caid']])->find();
+        }
         
         //返回信息
         $data = [
