@@ -4102,6 +4102,9 @@ class Index
             // $map['status'] = array('gt',0);
         }else{
             $map['a.status'] = $status;
+            if ($status==1||$status==2) {
+                $map['a.status'] = array('in','1,2');
+            }
         }
         $map['a.memberid'] = $account;
         $startpg = ($page_no-1)*$page_size;
@@ -4143,6 +4146,8 @@ class Index
 
             // $data[$key]['avar'] =  db('member')->where(['id'=>$member['mid']])->value('avar');
             // $data[$key]['counsellor'] =  db('member')->where(['id'=>$member['mid']])->value('nickname');
+
+            $data[$key]['caid'] =  db('case')->where(['cid'=>$value['id']])->value('id');
 
             $data[$key]['st'] = date('Y-m-d H:i',$value['start_time']);
         }
