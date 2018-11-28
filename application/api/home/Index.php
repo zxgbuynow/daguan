@@ -887,7 +887,7 @@ class Index
             
         }
         //评价
-        $evmap['a.id'] = 503;
+        // $evmap['a.id'] = 503;
         $evmap['e.id'] = array('neq','null');
         $counsellor['evalist'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where($evmap)->limit(5)->select();
 
@@ -4975,16 +4975,10 @@ class Index
                 if (!$u) {
                     continue;
                 }
-                $co = db('member_counsellor')->where(['memberid'=>$u['id']])->find();
                 $user[$value]['nickname'] = $u['nickname'];
                 $user[$value]['mobile'] = $value;
                 $user[$value]['avar'] = $u['avar'];
-                $smap['id'] = array('in',$co['tags']);
-                @$user[$value]['signarr'] =  db('cms_category')->where($smap)->column('title') ;
-                if (is_numeric($u['avar'])) {
-                    $user[$value]['avar'] = get_file_path($u['avar']);
-                }
-                
+                $user[$value]['mid'] = $u['id'];
             }
             array_multisort(array_column($user,'nickname'),SORT_ASC,$user);
         }
