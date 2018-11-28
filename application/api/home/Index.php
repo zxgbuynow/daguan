@@ -3021,7 +3021,7 @@ class Index
         // $map['sendid'] = $sendid;
         // $map['reciveid'] = $reciveid;
         $map['tag'] = 'u'.$sendid.'c'.$reciveid;
-        $info =  db('hx_msg')->where($map)->limit(10)->select();
+        $info =  db('hx_msg')->where($map)->limit(10)->order('id ASC')->select();
 
         //获得头像处理
         $now = date('Y-m-d',time());
@@ -5675,7 +5675,7 @@ class Index
         // $map['sendid'] = $sendid;
         // $map['reciveid'] = $reciveid;
         $map['tag'] = 'u'.$reciveid.'c'.$sendid;
-        $info =  db('hx_msg')->where($map)->limit(10)->select();
+        $info =  db('hx_msg')->where($map)->limit(10)->order('id ASC')->select();
 
         //获得头像处理
         $now = date('Y-m-d',time());
