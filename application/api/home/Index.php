@@ -5674,7 +5674,7 @@ class Index
 
         // $map['sendid'] = $sendid;
         // $map['reciveid'] = $reciveid;
-        $map['tag'] = 'u'.$sendid.'c'.$reciveid;
+        $map['tag'] = 'u'.$reciveid.'c'.$sendid;
         $info =  db('hx_msg')->where($map)->limit(10)->select();
 
         //获得头像处理
@@ -5752,7 +5752,7 @@ class Index
         $data['status'] = $status;
         $data['create_time'] = time();
         //二人会话标识
-        $data['tag'] = 'u'.$sendid.'c'.$reciveid;
+        $data['tag'] = 'u'.$reciveid.'c'.$sendid;
 
         db('hx_msg')->insert($data);
         //返回信息
