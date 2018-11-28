@@ -166,11 +166,18 @@ class Hx
      * @param
      *          $friend_username
      */
-    public function addFriend($owner_username, $friend_username) {
-        $url = $this->url . "users/" . $owner_username . "/contacts/users/" . $friend_username;
-        $access_token = $this->getToken ();
+    static function addFriend($owner_username, $friend_username) {
+        $url = self::URL . "users/" . $owner_username . "/contacts/users/" . $friend_username;
+        $access_token = self::getToken ();
         $header [] = 'Authorization: Bearer ' . $access_token;
-        $result = $this->postCurl ( $url, '', $header );
+        $result = self::postCurl ( $url, '', $header );
+        $result = json_decode($result,true);
+        return $result;
+        if (isset($result['error'])) {
+            return 0;
+        }else{
+            return $result['data'];
+        }
     }
 
     /**
@@ -371,13 +378,23 @@ class Hx
      * @param $limit 条数
      *          默认20
      */
-    public function chatRecord($ql = '', $cursor = '', $limit = 20) {
+    static function chatRecord($ql = '', $cursor = '', $limit = 20) {
+       
         $ql = ! empty ( $ql ) ? "ql=" . $ql : "order+by+timestamp+desc";
         $cursor = ! empty ( $cursor ) ? "&cursor=" . $cursor : '';
-        $url = $this->url . "chatmessages?" . $ql . "&limit=" . $limit . $cursor;
-        $access_token = $this->getToken ();
+        $url = self::URL . "chatmessages?" . $ql . "&limit=" . $limit . $cursor;
+        return $url;
+        $access_token = self::getToken ();
         $header [] = 'Authorization: Bearer ' . $access_token;
-        $result = $this->postCurl ( $url, '', $header, $type = "GET " );
+        $result = self::postCurl ( $url, '', $header, $type = "GET " );
+
+        $result = json_decode($result,true);
+        return $result;
+        if (isset($result['error'])) {
+            return 0;
+        }else{
+            return $result['data'];
+        }
         return $result;
     } 
 

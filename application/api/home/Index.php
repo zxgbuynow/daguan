@@ -928,6 +928,14 @@ class Index
         $counsellor['shopidsnm'] = array_filter(db('shop_agency')->where($agmap)->column('city'));
         $counsellor['shopidsmap'] = array_filter(db('shop_agency')->where($agmap)->column('map_address'));
         
+        //是否好友 下过单就是
+        if ($account) {
+            $counsellor['isfrends'] = db('trade')->where(['memberid'=>$account,'mid'=>$params['id'],'paytype'=>0,'created_time'>time()])->count();
+        }else{
+            $counsellor['isfrends'] = 0;
+        }
+        
+        
         //返回信息
         $data = [
             'code'=>'1',
@@ -1518,6 +1526,13 @@ class Index
         if (!$trade) {
             return $this->error('生成订单失败');
         }
+        //添加好友
+        $hxaccount  = $userinfo['username'];
+        $hxcounsellor  = db('member')->where('id',$counsellor_id)->value('username');
+        if ($hxaccount&&$hxcounsellor) {
+            Hx::addFriend($account,$counsellor);
+        }
+        
         //生成消息
         $msg['type'] = 1;
         $msg['subtitle'] = '预约'.$counsellor[0].$str;
@@ -3301,9 +3316,11 @@ class Index
 
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
-            $article['list'][$key]['author'] = $value['userid']==0?'ADMIN':db('member')->where('status',1)->column('nickname');
+            $value['author'] = $value['author']?$value['author']:'大观心理咨询中心';
+            $article['list'][$key]['author'] = $value['userid']==0?$value['author']:db('member')->where('status',1)->value('nickname');
             $article['list'][$key]['cover'] = get_file_path($value['cover']);
         }
+        
         //返回信息
         $data = [
             'code'=>'1',
@@ -5592,7 +5609,11 @@ class Index
     }
     public function test_shop($params)
     {
-        $a = Hx::test();
+        $account  = $params['account'];
+        $counsellor  = $params['counsellor'];
+
+        $a = Hx::addFriend($account,$counsellor);
+        // $a = Hx::test();
         print_r($a);exit;
     }
 
