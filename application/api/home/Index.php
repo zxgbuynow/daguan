@@ -712,7 +712,7 @@ class Index
         $map['b.online'] = 1;
         // $recommend['list'] = db('member')->alias('a')->field('a.*,b.online,b.memberid,b.tags')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC')->limit($startpg, $page_size)->select();
         $recommend['list'] = db('member')->where(['status'=>1,'type'=>1,'online'=>1])->limit($startpg, $page_size)->select();
-        // error_log(db('member')->getlastsql(),3,'/home/wwwroot/daguan/rec.log');
+        error_log(db('member')->getlastsql(),3,'/home/wwwroot/daguan/rec.log');
         foreach ($recommend['list'] as $key => $value) {
             $co = db('member_counsellor')->where(['memberid'=>$value['id']])->find();
             
