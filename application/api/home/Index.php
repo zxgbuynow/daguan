@@ -711,15 +711,11 @@ class Index
 
         $map['b.online'] = 1;
         // $recommend['list'] = db('member')->alias('a')->field('a.*,b.online,b.memberid,b.tags')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC')->limit($startpg, $page_size)->select();
-        $recommend['list'] = db('member')->where(['status'=>1,'type'=>1])->limit($startpg, $page_size)->select();
+        $recommend['list'] = db('member')->where(['status'=>1,'type'=>1,'online'=>1])->limit($startpg, $page_size)->select();
         // error_log(db('member')->getlastsql(),3,'/home/wwwroot/daguan/rec.log');
         foreach ($recommend['list'] as $key => $value) {
-            $co = db('member_counsellor')->where(['online'=>1,'memberid'=>$value['id']])->find();
-            if (!$co) {
-                unset($recommend['list'][$key]);
-                continue;
-            }
-            $recommend['list'][$key]['online'] = 1;
+            $co = db('member_counsellor')->where(['memberid'=>$value['id']])->find();
+            
             $recommend['list'][$key]['tearch'] = $co['tearch'];
             $recommend['list'][$key]['leader'] = $co['leader'];
 
@@ -3565,6 +3561,7 @@ class Index
 
         $sa['openshop'] = $shopids;
         $sa['openchart'] = $openchart;
+        $sa['online'] = $online;
         db('member')->where('id',$id)->update($sa);
 
         $cs['online'] = $online;
@@ -4374,7 +4371,8 @@ class Index
             return $this->error('参数必填');
         }
         
-
+        //
+        db('member')->where(['id'=>$account])->update(['online'=>$isActive]);
         //更新状态
         $data['online'] = $isActive;
         $map['memberid'] = $account;
