@@ -710,9 +710,15 @@ class Index
         $startpg = ($page_no-1)*$page_size;
 
         $map['b.online'] = 1;
-        $recommend['list'] = db('member')->alias('a')->field('a.*,b.online,b.memberid,b.tags')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC')->limit($startpg, $page_size)->select();
-        error_log(db('member')->getlastsql(),3,'/home/wwwroot/daguan/rec.log');
+        // $recommend['list'] = db('member')->alias('a')->field('a.*,b.online,b.memberid,b.tags')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC')->limit($startpg, $page_size)->select();
+        $recommend['list'] = db('member')->where(['status'=>1,'type'=>1])->limit($startpg, $page_size)->select();
+        // error_log(db('member')->getlastsql(),3,'/home/wwwroot/daguan/rec.log');
         foreach ($recommend['list'] as $key => $value) {
+            $co = db('member_counsellor')->where(['online'=>1])->find();
+            if (!$co) {
+                unset($recommend['list'][$key]);
+                continue;
+            }
             // unset($recommend['list'][$key]['intro']);
             // unset($recommend['list'][$key]['remark']);
             // if (!$value['memberid']) {
@@ -735,13 +741,13 @@ class Index
                 $recommend['list'][$key]['avar'] = get_file_path($recommend['list'][$key]['avar']);
             }
             //订单数
-            $recommend['list'][$key]['trade'] = db('trade')->where(array('status'=>1,'mid'=>$value['memberid']))->count();
+            $recommend['list'][$key]['trade'] = db('trade')->where(array('status'=>1,'mid'=>$value['id']))->count();
             //标识
-            $smap['id'] = array('in',$value['tags']);
+            $smap['id'] = array('in',$co['tags']);
             // $recommend['list'][$key]['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
             $recommend['list'][$key]['signarr'] =  db('cms_category')->where($smap)->column('title') ;
             //星级
-            $recommend['list'][$key]['start'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where(array('a.id'=>$value['memberid']))->avg('sorce');
+            $recommend['list'][$key]['start'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where(array('a.id'=>$value['id']))->avg('sorce');
             //少于4星默认 4星
             if ($recommend['list'][$key]['start']<8) {
                 $recommend['list'][$key]['start'] = (round(8 / 10, 2)*100).'%';
