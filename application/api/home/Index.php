@@ -704,8 +704,8 @@ class Index
             
         }
 
-        $page_no = isset(trim($params['page_no']))?trim($params['page_no']):0 ;
-        $page_size = isset(trim($params['page_size']))?trim($params['page_size']):10;
+        $page_no = $params['page_no'];
+        $page_size = $params['page_size'];
 
         $startpg = ($page_no-1)*$page_size;
 
