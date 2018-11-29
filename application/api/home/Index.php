@@ -704,14 +704,14 @@ class Index
             
         }
 
-        $page_no = $params['page_no'];
-        $page_size = $params['page_size'];
+        $page_no = intval($params['page_no']);
+        $page_size = intval($params['page_size']);
 
         $startpg = ($page_no-1)*$page_size;
 
         $map['b.online'] = 1;
         $recommend['list'] = db('member')->alias('a')->field('a.*,b.online,b.memberid,b.tags')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC,a.id DESC')->limit($startpg, $page_size)->select();
-
+        error_log(db('member')->getlastsql(),3,'/home/wwwroot/daguan/rec.log');
         foreach ($recommend['list'] as $key => $value) {
             // unset($recommend['list'][$key]['intro']);
             // unset($recommend['list'][$key]['remark']);
