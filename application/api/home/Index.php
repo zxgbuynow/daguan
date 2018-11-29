@@ -710,7 +710,7 @@ class Index
         $startpg = ($page_no-1)*$page_size;
 
         $map['b.online'] = 1;
-        $recommend['list'] = db('member')->alias('a')->field('a.*,b.online,b.memberid,b.tags,b.city')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC')->limit($startpg, $page_size)->select();
+        $recommend['list'] = db('member')->alias('a')->field('a.*,b.online,b.memberid,b.tags')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC')->limit($startpg, $page_size)->select();
 
         foreach ($recommend['list'] as $key => $value) {
             // unset($recommend['list'][$key]['intro']);
