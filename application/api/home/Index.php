@@ -714,11 +714,15 @@ class Index
         $recommend['list'] = db('member')->where(['status'=>1,'type'=>1])->limit($startpg, $page_size)->select();
         // error_log(db('member')->getlastsql(),3,'/home/wwwroot/daguan/rec.log');
         foreach ($recommend['list'] as $key => $value) {
-            $co = db('member_counsellor')->where(['online'=>1])->find();
+            $co = db('member_counsellor')->where(['online'=>1,'memberid'=>$value['id']])->find();
             if (!$co) {
                 unset($recommend['list'][$key]);
                 continue;
             }
+            $recommend['list'][$key]['online'] = 1;
+            $recommend['list'][$key]['tearch'] = $co['tearch'];
+            $recommend['list'][$key]['leader'] = $co['leader'];
+
             // unset($recommend['list'][$key]['intro']);
             // unset($recommend['list'][$key]['remark']);
             // if (!$value['memberid']) {
