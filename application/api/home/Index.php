@@ -1544,7 +1544,7 @@ class Index
         $hxaccount  = $userinfo['username'];
         $hxcounsellor  = db('member')->where('id',$counsellor_id)->value('username');
         if ($hxaccount&&$hxcounsellor) {
-            Hx::addFriend($account,$counsellor);
+            Hx::addFriend($hxaccount,$hxcounsellor);
         }
         
         //生成消息
