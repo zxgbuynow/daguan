@@ -2306,37 +2306,32 @@ class Index
     {
         //参数
         //关键字
-        if (isset($params['search_keywords'])&&$params['search_keywords']!='') {
+        if (isset($params['search_keywords'])&&$params['search_keywords']!=''&&$params['search_keywords']!='undefined') {
             $keyword = trim($params['search_keywords']);
             $map['a.nickname|s.title'] = array('like','%'.$keyword.'%');
         }
         //性别
-        // if (isset($params['sex'])&&$params['sex']!='') {
-        //     $sex = trim($params['sex']);
-        //     $map['a.sex'] = array('in',$sex);
-        // }
-        if ($params['sex']) {
+        if (isset($params['sex'])&&$params['sex']!=''&&$params['sex']!='undefined') {
             $sex = trim($params['sex']);
             $map['a.sex'] = array('in',$sex);
         }
         //分中心
-        if (isset($params['shopid'])&&$params['shopid']!='') {
+        if (isset($params['shopid'])&&$params['shopid']!=''&&$params['ondate']!='undefined') {
             $shopid = trim($params['shopid']);
             $map['a.shopid'] = array('in',$shopid);
         }
         //是否在线
-        if (isset($params['online'])&&$params['online']!='') {
+        if (isset($params['online'])&&$params['online']!=''&&$params['ondate']!='undefined') {
             $online = trim($params['online']);
             $map['b.online'] = array('in',$online);
         }
         //今日是否有空
-        if (isset($params['ondate'])&&$params['ondate']!='') {
+        if (isset($params['ondate'])&&$params['ondate']!=''&&$params['ondate']!='undefined') {
             $ondate = explode(',', $params['ondate']);
         }
         
         $map['a.status'] = 1;
         $map['a.type'] = 1;
-
         $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.shopid = s.id','LEFT')->where($map)->limit(20)->order('recommond DESC')->select();
         error_log( db('member')->getlastsql(),3,'/home/wwwroot/daguan/search.log');
         error_log( json_encode($params),3,'/home/wwwroot/daguan/search1.log');
