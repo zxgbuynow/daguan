@@ -809,7 +809,6 @@ class Index
      */
     public function counsellor_custom($params)
     {
-
         if (!trim($params['id'])) {
             return $this->error('参数缺失！');
         }
@@ -817,13 +816,13 @@ class Index
         //会员
         //is_diamonds
         $is_diamonds = 0;
+
         if ($account) {
             $is_diamonds = db('member')->where(['username'=>$account])->value('is_diamonds');
         }
         
         
         $counsellor =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where(array('a.id'=>$params['id']))->find();
-
         if (!$counsellor) {
             return $this->error('咨询师不存在或是已注销');
         }
@@ -938,10 +937,14 @@ class Index
         $agmap['id'] = array('in',$counsellor['openshop']);
         $counsellor['shopidsnm'] = array_filter(db('shop_agency')->where($agmap)->column('city'));
         $counsellor['shopidsmap'] = array_filter(db('shop_agency')->where($agmap)->column('map_address'));
-        
         //是否好友 下过单就是
         if ($account) {
-            $counsellor['isfrends'] = db('trade')->where(['memberid'=>$account,'mid'=>$params['id'],'paytype'=>0,'created_time'>time()])->count();
+            $ismap['memberid'] = $account;
+            $ismap['mid'] = $params['id'];
+            $ismap['paytype'] = 0;
+            $ismap['created_time'] = array('gt',strtotime('2018-11-28'));
+            $counsellor['isfrends'] = db('trade')->where($ismap)->count();
+
         }else{
             $counsellor['isfrends'] = 0;
         }
@@ -2333,8 +2336,6 @@ class Index
         $map['a.status'] = 1;
         $map['a.type'] = 1;
         $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.shopid = s.id','LEFT')->where($map)->limit(20)->order('recommond DESC')->select();
-        error_log( db('member')->getlastsql(),3,'/home/wwwroot/daguan/search.log');
-        error_log( json_encode($params),3,'/home/wwwroot/daguan/search1.log');
         foreach ($counsellor['list'] as $key => $value) {
             //今日是否有空
             if (isset($ondate)&&count($ondate)==1) {
@@ -3491,7 +3492,6 @@ class Index
             return $this->error('参数缺失！');
         }
         $counsellor =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where(array('a.id'=>$params['id']))->find();
-
         if (!$counsellor) {
             return $this->error('咨询师不存在或是已注销');
         }
