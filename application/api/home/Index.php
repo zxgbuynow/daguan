@@ -2311,7 +2311,11 @@ class Index
             $map['a.nickname|s.title'] = array('like','%'.$keyword.'%');
         }
         //性别
-        if (isset($params['sex'])&&$params['sex']!='') {
+        // if (isset($params['sex'])&&$params['sex']!='') {
+        //     $sex = trim($params['sex']);
+        //     $map['a.sex'] = array('in',$sex);
+        // }
+        if ($params['sex']) {
             $sex = trim($params['sex']);
             $map['a.sex'] = array('in',$sex);
         }
