@@ -145,7 +145,7 @@ class Wxpay
         $this->add_field("timestamp",       strval(time()));
         $this->add_field("sign",         $this->getSign($this->fields,$key));
 
-        echo $this->get_html($payment['payment_id']);exit;
+        echo $this->get_html($params['payment_id']);exit;
     }
 
     /**
@@ -385,6 +385,21 @@ class Wxpay
         return $result;
     }
 
+    /**
+     * 设置属性
+     * @params string key
+     * @params string value
+     * @return null
+     */
+    protected function add_field($key, $value='')
+    {
+        if (!$key)
+        {
+            return '';
+        }
+
+        $this->fields[$key] = $value;
+    }
 //↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑公共函数部分↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
 
 
