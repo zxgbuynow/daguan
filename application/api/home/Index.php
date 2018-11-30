@@ -2334,7 +2334,7 @@ class Index
         $map['a.type'] = 1;
 
         $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.shopid = s.id','LEFT')->where($map)->limit(20)->order('recommond DESC')->select();
-        
+        error_log( db('member')->getlastsql(),3,'/home/wwwroot/daguan/search.log');
         foreach ($counsellor['list'] as $key => $value) {
             //今日是否有空
             if (isset($ondate)&&count($ondate)==1) {
