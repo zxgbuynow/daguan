@@ -9,6 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <link rel="stylesheet" href="__C_CSS__/style.css">
+    <link rel="stylesheet" href="__C_CSS__/counsellor.css">
     <style type="text/css">
         
       .mui-table-view> .mui-table-view-cell {
@@ -44,8 +45,32 @@
     <script src="__C_JS__/template.min.js"></script>
     <script src="__C_JS__/config.js"></script>
     <script src="__C_JS__/app.js"></script>
-
     <script type="text/html" id="calendar_list">
+      <% for(var i in list ) { %>
+          <li class="mui-table-view-cell">
+        <div class="box-display">
+          <div class="box-item-flex1">
+            <h3 class="title"><%= list[i].title%></h3>
+            <span class="fontS font-60 fonts datetime" ><%= $timestamp_To_Time(list[i].start_time)%></span>
+          </div>
+          <% if($getDateDiff(list[i].end_time)){%>
+            <p class="time flex-g1"><span><%= $getDateDiff(list[i].start_time)%></span></p>
+            <div class="mui-media-object flex-g1 connect-options">
+              <span class="btn-connect-pink">与他沟通</span>
+            </div>
+          <%}else{%>
+                  <p class="time flex-g1"><span>完成</span></p>
+            <div class="mui-media-object flex-g1 connect-options">
+              <span class="btn-connect-pink">与他沟通</span>
+            </div>
+                <%}%> 
+        </div>
+      </li>
+      <% } %>
+      
+    </script>
+
+    <script type="text/html" id="calendar_list1">
       <% for(var i=0; i<list.length; i++) { %>
           <li class="mui-table-view-cell">
             <div class="box-display">

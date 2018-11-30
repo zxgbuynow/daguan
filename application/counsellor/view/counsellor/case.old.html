@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__C_CSS__/mui.picker.min.css" />
+    <style>
+    		.check-box {
+    			border-bottom: solid 1px #e4e5e6;
+    			padding: 2px 2px;
+    		}
+    		.check-box td{
+    			color: #66656b;
+    			font-size: 12px;
+    			
+    		}
+    		.select-box {
+    			border-bottom: solid 1px #e4e5e6;
+    			padding: 1px 2px;
+    			margin-right: 2px;
+    		}
+    		.select-box tr {
+    			/*display: inline-table;*/
+    		}
+    		.select-box td{
+    			color: #66656b;
+    			font-size: 12px;
+    			
+    		}
+    		.select-box td select{
+    			padding: 8px 10px!important;
+    			margin-bottom:0px;
+    		}
+    		
+    </style>
+  </head>
+
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">咨询记录</div>
+    </header>
+    <section class="container">
+      <form class="form-container" style="margin-top: -20px;" id="casepost">
+        <section class="mui-input-group">
+        	<div class="mui-input-row ">
+            <label>姓名：</label>
+      		<input id="truename" name="truename"  type="text" class="mui-input-clear" placeholder="姓名" value="" disabled="disabled">
+          </div>
+          <div class="mui-input-row">
+            <label>性别：</label>
+            <select id="sex" name="sex" class="mui-input-clear mui-input " disabled="disabled" >
+            		<option value="" selected="selected"></option>
+				<option value="1" >男</option>
+				<option value="0" >女</option>
+			</select>
+          </div>
+           <div class="mui-input-row ">
+            <label>年龄：</label>
+      		<input id="birthday" type="text" class="mui-input-clear" disabled="disabled">
+          </div>
+          <div class="mui-input-row ">
+            <label>学历：</label>
+      		<input id="edu" type="text" class="mui-input-clear" disabled="disabled">
+          </div>
+          <div class="mui-input-row ">
+            <label>年级：</label>
+      		<input id="grade" type="text" class="mui-input-clear" disabled="disabled">
+          </div>
+          <div class="mui-input-row ">
+            <label>婚姻：</label>
+            <select id="marital" name="marital" class="mui-input-clear mui-input " disabled="disabled">
+            		<option value="" selected="selected"></option>
+				<option value="1" >是</option>
+				<option value="0" >否</option>
+			</select>
+      		<!--<input id="marital" type="text" class="mui-input-clear" disabled="disabled">-->
+          </div>
+          <div class="mui-input-row ">
+            <label>职业：</label>
+      		<input id="profession" type="text" class="mui-input-clear" disabled="disabled">
+          </div>
+          <div class="mui-input-row ">
+            <label>手机号：</label>
+      		<input id="mobile" type="tel" class="mui-input-clear" disabled="disabled">
+          </div>
+          <div class="mui-input-row ">
+            <label>咨询方式：</label>
+      		<input id="chat" type="tel" class="mui-input-clear" disabled="disabled">
+          </div>
+          <div class="mui-input-row ">
+            <label>预约时间：</label>
+      		<input id="timerange" type="text" class="mui-input-clear" disabled="disabled">
+          </div>
+          
+          <!--//填写-->
+          <div class="mui-input-row ">
+            <label>开始时间：</label>
+      		<input id="caseStarttime" name="caseStarttime"type="datetime" data-options='{"beginYear":2018,"endYear":2025}' class="mui-input-clear pickTime" placeholder="开始时间">
+          </div>
+          <div class="mui-input-row ">
+            <label>结束时间：</label>
+      		<input id="caseEndtime" name="caseEndtime" type="datetime" data-options='{"beginYear":2018,"endYear":2025}' type="text" class="mui-input-clear pickTime" placeholder="结束时间">
+          </div>
+          <div class="check-box" style="margin-top: 5px;margin-bottom: 5px;">
+          	<table  border="1" width="100%" style="padding: 5px 10px;text-align: center;" >
+				<tr class='title'>
+					<td style="padding: 1px 2px;font-size: 15px;width: 42px;">S:</td>
+					<td><input name="caseS" type="checkbox" value="R1">R1</td>
+					<td><input name="caseS" type="checkbox" value="R2">R2</td>
+					<td><input name="caseS" type="checkbox" value="R3">R3</td>
+					<td><input name="caseS" type="checkbox" value="R4">R4</td>
+					<td><input name="caseS" type="checkbox" value="R5">R5</td>
+				</tr>
+				<tr class='title'>
+					<td></td>
+					<td><input name="caseS" type="checkbox" value="R6">R6</td>
+					<td><input name="caseS" type="checkbox" value="R7">R7</td>
+					<td><input name="caseS" type="checkbox" value="R8">R8</td>
+					<td><input name="caseS" type="checkbox" value="R9">R9</td>
+					<td><input name="caseS" type="checkbox" value="R10">R10</td>
+				</tr>
+			</table>
+          </div>
+          <div class="check-box" style="margin-top: 5px;margin-bottom: 5px;">
+          	<table id="list" border="1" width="100%" style="padding: 5px 10px;text-align: center;" >
+				<tr class='title'>
+					<td style="padding: 1px 2px;font-size: 15px;width: 42px;">R9:</td>
+					<td><input name="caseR9" type="checkbox" value="A">A</td>
+					<td><input name="caseR9" type="checkbox" value="B">B</td>
+					<td><input name="caseR9" type="checkbox" value="C">C</td>
+					<td><input name="caseR9" type="checkbox" value="D">D</td>
+					<td><input name="caseR9" type="checkbox" value="E">E</td>
+					<td><input name="caseR9" type="checkbox" value="F">F</td>
+					<td><input name="caseR9" type="checkbox" value="G">G</td>
+					
+				</tr>
+				<tr class='title'>
+					<td></td>
+					<td><input name="caseR9" type="checkbox" value="H">H</td>
+					<td><input name="caseR9" type="checkbox" value="I">I</td>
+					<td><input name="caseR9" type="checkbox" value="J">J</td>
+					<td><input name="caseR9" type="checkbox" value="K">K</td>
+					<td><input name="caseR9" type="checkbox" value="L">L</td>
+					<td><input name="caseR9" type="checkbox" value="M">M</td>
+					<td><input name="caseR9" type="checkbox" value="N">N</td>
+					
+				</tr>
+				<tr class='title'>
+					<td></td>
+					<td><input name="caseR9" type="checkbox" value="O">O</td>
+					<td><input name="caseR9" type="checkbox" value="P">P</td>
+					<td><input name="caseR9" type="checkbox" value="Q">Q</td>
+					<td><input name="caseR9" type="checkbox" value="R">R</td>
+					<td><input name="caseR9" type="checkbox" value="S">S</td>
+					<td><input name="caseR9" type="checkbox" value="T">T</td>
+				</tr>
+				<tr class='title'>
+					<td></td>
+					<td><input name="caseR9" type="checkbox" value="U">U</td>
+					<td><input name="caseR9" type="checkbox" value="V">V</td>
+					<td><input name="caseR9" type="checkbox" value="W">W</td>
+					<td><input name="caseR9" type="checkbox" value="X">X</td>
+					<td><input name="caseR9" type="checkbox" value="Y">Y</td>
+					<td><input name="caseR9" type="checkbox" value="Z">Z</td>
+				</tr>
+			</table>
+          </div>
+          <div class="check-box" style="margin-top: 5px;margin-bottom: 5px;">
+          	<table id="list" border="1" width="100%" style="padding: 5px 10px;text-align: center;" >
+				<tr class='title'>
+					<td style="padding: 1px 2px;font-size: 15px;width: 42px;">SOR:</td>
+					<td><input name="caseSOR" type="checkbox" value="S">S</td>
+					<td><input name="caseSOR" type="checkbox" value="SOR">SO</td>
+					<td><input name="caseSOR" type="checkbox" value="SR">SR</td>
+					<td><input name="caseSOR" type="checkbox" value="SOR">SOR</td>
+					<td><input name="caseSOR" type="checkbox" value="SRO">SRO</td>
+				</tr>
+				<tr class='title'>
+					<td></td>
+					<td><input name="caseSOR" type="checkbox" value="O">O</td>
+					<td><input name="caseSOR" type="checkbox" value="OS">OS</td>
+					<td><input name="caseSOR" type="checkbox" value="RS">RS</td>
+					<td><input name="caseSOR" type="checkbox" value="ROS">ROS</td>
+					<td><input name="caseSOR" type="checkbox" value="RSO">RSO</td>
+				</tr>
+				<tr class='title'>
+					<td></td>
+					<td><input name="caseSOR" type="checkbox" value="R">R</td>
+					<td><input name="caseSOR" type="checkbox" value="RO">RO</td>
+					<td><input name="caseSOR" type="checkbox" value="RS">RS</td>
+					<td><input name="caseSOR" type="checkbox" value="ROS">ROS</td>
+					<td><input name="caseSOR" type="checkbox" value="RSO">RSO</td>
+				</tr>
+			</table>
+          </div>
+          <div class="check-box" style="margin-top: 5px;margin-bottom: 5px;">
+          	<table id="list" border="1" width="100%" style="padding: 5px 10px;text-align: center;" >
+				<tr class='title'>
+					<td style="padding: 1px 2px;font-size: 15px;width: 42px;">PNF:</td>
+					<td><input name="casePNF" type="checkbox" value="P">P</td>
+					<td><input name="casePNF" type="checkbox" value="PN">PN</td>
+					<td><input name="casePNF" type="checkbox" value="PF">PF</td>
+					<td><input name="casePNF" type="checkbox" value="PNF">PNF</td>
+					<td><input name="casePNF" type="checkbox" value="PFN">PFN</td>
+				</tr>
+				<tr class='title'>
+					<td></td>
+					<td><input name="casePNF" type="checkbox" value="N">N</td>
+					<td><input name="casePNF" type="checkbox" value="NP">NP</td>
+					<td><input name="casePNF" type="checkbox" value="NF">NF</td>
+					<td><input name="casePNF" type="checkbox" value="NPF">NPF</td>
+					<td><input name="casePNF" type="checkbox" value="NFP">NFP</td>
+				</tr>
+				<tr class='title'>
+					<td></td>
+					<td><input name="casePNF" type="checkbox" value="F">F</td>
+					<td><input name="casePNF" type="checkbox" value="FN">FN</td>
+					<td><input name="casePNF" type="checkbox" value="FP">FP</td>
+					<td><input name="casePNF" type="checkbox" value="FNP">FNP</td>
+					<td><input name="casePNF" type="checkbox" value="FPN">FPN</td>
+				</tr>
+			</table>
+          </div>
+          
+          <div class="select-box" style="margin-top: 2px;">
+          	<label style="padding: 1px 1px;"></label>
+          	<table border="1" width="100%" style="padding: 5px 10px;text-align: center;" >
+          		<tr class='title'>
+					<td style="padding: 1px 2px;font-size: 15px;width: 42px;"></td>
+					<td>A</td>
+					<td>B</td>
+					<td>C</td>
+					<td>D</td>
+					<td>E</td>
+					<td>F</td>
+					<td>总分</td>
+					<td>平均分</td>
+				</tr>
+				<tr class='title' ab="2112">
+					<td style="padding: 1px 2px;font-size: 15px;width: 42px;">A</td>
+					<td>
+						<select name="AAvl_Avl" id="AAvl_Avl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0" selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="ABvl_Avl" id="ABvl_Avl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="ACvl_Avl" id="ACvl_Avl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="ADvl_Avl" id="ADvl_Avl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="AEvl_Avl" id="AEvl_Avl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="AFvl_Avl" id="AFvl_Avl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td id="ATotal">0</td>
+					<td id="AAverage">0</td>
+				</tr>
+				<tr class='title'>
+					<td style="padding: 1px 2px;font-size: 15px;width: 42px;">2A</td>
+					<td>
+						<select name="_2AAvl_A2vl" id="_2AAvl_A2vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0" selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_2ABvl_A2vl" id="_2ABvl_A2vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_2ACvl_A2vl" id="_2ACvl_A2vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_2ADvl_A2vl" id="_2ADvl_A2vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_2AEvl_A2vl" id="_2AEvl_A2vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_2AFvl_A2vl" id="_2AFvl_A2vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td id="_2ATotal">0</td>
+					<td id="_2AAverage">0</td>
+				</tr>
+				<tr class='title'>
+					<td style="padding: 1px 2px;font-size: 15px;width: 42px;">B</td>
+					<td>
+						<select name="BAvl_Bvl" id="BAvl_Bvl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0" selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="BBvl_Bvl" id="BBvl_Bvl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="BCvl_Bvl" id="BCvl_Bvl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="BDvl_Bvl" id="BDvl_Bvl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="BEvl_Bvl" id="BEvl_Bvl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="BFvl_Bvl" id="BFvl_Bvl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td id="BTotal">0</td>
+					<td id="BAverage">0</td>
+				</tr>
+				<tr class='title'>
+					<td style="padding: 1px 2px;font-size: 15px;width: 42px;">1M</td>
+					<td>
+						<select name="_1MAvl_M1vl" id="_1MAvl_M1vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_1MBvl_M1vl" id="_1MBvl_M1vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_1MCvl_M1vl" id="_1MCvl_M1vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_1MDvl_M1vl" id="_1MDvl_M1vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_1MEvl_M1vl" id="_1MEvl_M1vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_1MFvl_M1vl" id="_1MFvl_M1vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td id="_1MTotal">0</td>
+					<td id="_1MAverage">0</td>
+				</tr>
+				<tr class='title'>
+					<td style="padding: 1px 2px;font-size: 15px;width: 42px;">A-M</td>
+					<td>
+						<select name="A_MAvl_AMvl" id="A_MAvl_AMvl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="A_MBvl_AMvl" id="A_MBvl_AMvl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="A_MCvl_AMvl" id="A_MCvl_AMvl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="A_MDvl_AMvl" id="A_MDvl_AMvl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="A_MEvl_AMvl" id="A_MEvl_AMvl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="A_MFvl_AMvl" id="A_MFvl_AMvl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td id="A_MTotal">0</td>
+					<td id="A_MAverage">0</td>
+				</tr>
+				<tr class='title'>
+					<td style="padding: 1px 2px;font-size: 15px;width: 42px;">2M</td>
+					<td>
+						<select name="_2MAvl_M2vl" id="_2MAvl_M2vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_2MBvl_M2vl" id="_2MBvl_M2vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_2MCvl_M2vl" id="_2MCvl_M2vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_2MDvl_M2vl" id="_2MDvl_M2vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_2MEvl_M2vl" id="_2MEvl_M2vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="_2MFvl_M2vl" id="_2MFvl_M2vl">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td id="_2MTotal">0</td>
+					<td id="_2MAverage">0</td>
+				</tr>
+				<tr class='title'>
+					<td style="padding: 1px 2px;font-size: 15px;width: 42px;">计划</td>
+					<td>
+						<select name="pAvl_PLAN" id="pAvl_PLAN">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="pBvl_PLAN" id="pBvl_PLAN">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="pCvl_PLAN" id="pCvl_PLAN">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="pDvl_PLAN" id="pDvl_PLAN">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="pEvl_PLAN" id="pEvl_PLAN">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td>
+						<select name="pFvl_PLAN" id="pFvl_PLAN">
+							<option value="-5">-5</option>
+							<option value="-4">-4</option>
+							<option value="-3">-3</option>
+							<option value="-2">-2</option>
+							<option value="-1">-1</option>
+							<option value="0"selected="selected">0</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+						</select>
+					</td>
+					<td id="pTotal">0</td>
+					<td id="pAverage">0</td>
+				</tr>
+			</table>
+          </div>
+          
+          <div class="row mui-input-row">
+          		 <label>案件主诉：</label>
+				<textarea id='caseMasterQs' name="caseMasterQs" class="mui-input-clear" placeholder="案件主诉..."></textarea>
+		  </div>
+		  <div class="row mui-input-row">
+          		 <label>家属主诉：</label>
+				<textarea id='casefamilyQs' name="casefamilyQs" class="mui-input-clear" placeholder="家属主诉..."></textarea>
+		  </div>
+		  <div class="row mui-input-row">
+          		 <label>应用技术：</label>
+				<textarea id='caseSkill' name="caseSkill" class="mui-input-clear" placeholder="应用技术..."></textarea>
+		  </div>
+		  <div class="row mui-input-row">
+          		 <label>作业：</label>
+				<textarea id='caseWork' name="caseWork" class="mui-input-clear" placeholder="作业..."></textarea>
+		  </div>
+		  <div class="row mui-input-row">
+          		 <label>效果评估：</label> 
+				<textarea id='caseResult' name="caseResult" class="mui-input-clear" placeholder="效果评估..."></textarea>
+		  </div>
+		  <div class="row mui-input-row">
+          		 <label>加强项目：</label>
+				<textarea id='caseStreng' name="caseStreng" class="mui-input-clear" placeholder="加强项目..."></textarea>
+		  </div>
+		  <div class="row mui-input-row">
+          		 <label>备注：</label>
+				<textarea id='caseMark' name="caseMark" class="mui-input-clear" placeholder="备注..."></textarea>
+		  </div>
+         
+        </section>
+        <!--<div class="content-padded font-gray-20 fontS">选择需关联的订单，添加相应日程，时间间距参考订单购买时长</div>-->
+        <section class="mui-content-padded form-op-section">
+          <button id="save" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">提交</button>
+        </section>
+      </form>
+    </section>
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/mui.picker.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+	<script type="text/html" id="trade_list">
+    		<% for(var i in list) { %>	
+      		<option value="<%= list[i].id %>"><%= list[i].title %></option>
+      	<% } %>
+    </script>
+
+    <script>
+	var state = app.getState();
+    var result = window.location.href;
+    var tid = $.getUrlParam(result,'tid');
+    var cid = $.getUrlParam(result,'cid');
+
+       // var tid = plus.webview.currentWebview().tid;
+       // var cid = plus.webview.currentWebview().cid;
+    var userdata = null;
+
+    //获取用户信息
+    var param = {
+          'method': config.apimethod.getMemberInfoByTid,
+          'source':config.source,
+          'tid': tid,
+          'cid':cid
+    }
+    $.dataRequest(param, function(rs) { 
+      	userdata = rs;
+      	document.getElementById("truename").value = rs.user.truename;
+      	document.getElementById("sex").value = rs.user.sex;
+      	 
+      	document.getElementById("birthday").value = rs.user.birthday;
+      	document.getElementById("edu").value = rs.user.edu;
+      	document.getElementById("grade").value = rs.user.grade;
+      	document.getElementById("marital").value = rs.user.marital;
+      	document.getElementById("profession").value = rs.user.profession;
+      	document.getElementById("mobile").value = rs.user.mobile;
+      	document.getElementById("chat").value = rs.trade.chart;
+      	document.getElementById("timerange").value = rs.ondate.timerange;
+
+    })
+    var btns = mui('.pickTime');
+        btns.each(function(i, btn) {
+          btn.addEventListener('tap', function() {
+            var optionsJson = this.getAttribute('data-options') || '{}';
+            var options = JSON.parse(optionsJson);
+            var that = this;
+            var picker = new mui.DtPicker(options);
+            picker.show(function(rs) {
+              that.value = rs.text
+              // result.innerText = '选择结果: ' + rs.text;
+              
+              picker.dispose();
+            });
+          }, false);
+        });
+
+ //  	document.getElementById("caseStarttime").addEventListener('tap', function() {
+	// 	var dTime = new Date();
+	// 	dTime.setHours(6, 0);
+	// 	plus.nativeUI.pickTime(function(e) {
+	// 		var d = e.date;
+	// 		$('#caseStarttime').val( d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()+' '+d.getHours() + ":" + d.getMinutes());
+	// 	}, function(e) {
+	// 		mui.toast('请选择时间')
+	// 	}, {
+	// 		title: "请选择时间",
+	// 		is24Hour: true,
+	// 		time: dTime
+	// 	});
+	// });
+		
+	// document.getElementById("caseEndtime").addEventListener('tap', function() {
+	// 	var dTime = new Date();
+	// 	dTime.setHours(6, 0);
+	// 	plus.nativeUI.pickTime(function(e) {
+	// 		var d = e.date;
+	// 		$('#caseEndtime').val( d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()+' '+d.getHours() + ":" + d.getMinutes());
+	// 	}, function(e) {
+	// 		mui.toast('请选择时间')
+	// 	}, {
+	// 		title: "请选择时间",
+	// 		is24Hour: true,
+	// 		time: dTime
+	// 	});
+	// });
+		
+    document.getElementById("save").addEventListener('tap',function(){
+      	//组数据 
+      	 var param = {
+	          'method': config.apimethod.caseAdd,
+	          'source':config.source,
+	          'cid': cid,
+	          'truename': userdata.user.truename,
+	          'sex': userdata.user.sex,
+	          'birthday': userdata.user.birthday,
+	          'edu': userdata.user.edu,
+	          'grade': userdata.user.grade,
+	          'marital': userdata.user.marital,
+	          'profession': userdata.user.profession,
+	          'mobile': userdata.user.mobile,
+	          'chat': userdata.trade.chart,
+	          'timerange': userdata.ondate.timerange,
+	          'memberid':state.token,
+	          'data':$("#casepost").serialize()
+	      }
+	      $.dataRequest(param, function(rs) {
+	      	mui.toast('添加成功');
+            window.location.href = "{:url('Counsellor/index')}"
+            // var parentview = plus.webview.currentWebview().opener();
+            // parentview.reload(true);
+            // var ws = plus.webview.currentWebview();
+            // plus.webview.close(ws,'slide-out-bottom');
+	      })
+      	
+    })
+      
+    $(document).on('change', 'select', function (e) {
+		var total = 0;
+		var avrange = 0;
+      	$(this).closest('tr').find('select').forEach(function(el, i){
+      		total += parseFloat(el.value);
+      	})
+      	avrange = (total/6).toFixed(2);
+      	$(this).closest('tr').find('td')[7].innerHTML = total;
+      	$(this).closest('tr').find('td')[8].innerHTML = avrange;
+    })
+        
+    
+    </script>
+  </body>
+
+</html>

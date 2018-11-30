@@ -48,7 +48,7 @@
               <ul class="mui-table-view mui-table-view-chevron">
                 <% for(var i=0; i<list.length; i++) { %>
           <li class="mui-table-view-cell mui-media action-webview" data-webview="_www/view/artical/adetail.html" data-webparam = '{"article_id":<%= list[i].id %>}'>
-            <a class="mui-navigate-right" href="{:url('Artical/adetail')}?article_id=<%= list[i].id %">
+            <a class="mui-navigate-right" href="{:url('Artical/adetail')}?article_id=<%= list[i].id %>">
               <img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].cover) %>">
               <div class="mui-media-body">
                 <%= list[i].title %>

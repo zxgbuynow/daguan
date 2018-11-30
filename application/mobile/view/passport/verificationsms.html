@@ -13,9 +13,15 @@
   </head>
 
   <body>
-    <header class="page-header">
+    <!-- <header class="page-header">
       <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
       <div class="header-title">验证手机</div>
+    </header> -->
+    <header class="page-header nobd">
+      <div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+      <i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+      <h1 class="mui-center mui-title">验证手机</h1>
+      </div>
     </header>
     <section class="container">
       <form class="form-container">
@@ -46,7 +52,7 @@
         var mobile = $.getUrlParam(result,'mobile');
         var vcode = $.getUrlParam(result,'vcode');
         document.getElementById('txt_mobile').innerHTML = mobile.substring(0, 3) + '****' + mobile.substring(7);
-		    document.getElementById('vcode').value = vcode;
+		    // document.getElementById('vcode').value = vcode;
         
         var btnVCode = $('#action_get_vcode');
         btnVCode.html('<i>0<i>');

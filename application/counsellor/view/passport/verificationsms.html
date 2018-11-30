@@ -46,7 +46,7 @@
         var mobile = $.getUrlParam(result,'mobile');
         var vcode = $.getUrlParam(result,'vcode');
         document.getElementById('txt_mobile').innerHTML = mobile.substring(0, 3) + '****' + mobile.substring(7);
-        document.getElementById('vcode').value = vcode;
+        // document.getElementById('vcode').value = vcode;
         
         var btnVCode = $('#action_get_vcode');
         btnVCode.html('<i>0<i>');

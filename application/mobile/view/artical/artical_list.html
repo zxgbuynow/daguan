@@ -72,14 +72,17 @@
       mui.plusReady(function() {
         var fw = plus.webview.currentWebview().parent();
         var keyword = fw.keyword || '';
+        var cat_id = fw.cat_id || '';
 		var state = app.getState();
 		getclist();
 		function getclist(){
 			var param = {
 	            'method': config.apimethod.articallist,
 	            'source':config.source,
-	            'search_keywords': keyword
-	       }
+	            'search_keywords': keyword,
+	            'cate_id':cat_id
+	     }
+			log(param)
 	        $.dataRequest(param, function(rs) {
 	        		var widgets = template('artical_list', rs);
 	            $('.artical-list').append(widgets);
@@ -94,8 +97,9 @@
         window.addEventListener('getlist', function(event) {
           if(event.detail.search_keywords!=''){
             keyword = event.detail.search_keywords;
+            cate_id = event.detail.cate_id;
           }
-          $('.goods-list').empty();
+          $('.artical-list').empty();
           //获取数据
           getclist();
         });

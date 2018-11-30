@@ -7,460 +7,198 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-    <link rel="stylesheet" href="__M_CSS__/style.css">
+    <link rel="stylesheet" href="__M_FONT__/iconfont.css" />
+    <link rel="stylesheet" href="__M_CSS__/style.css" />
     <link rel="stylesheet" href="__M_CSS__/widgets.css" />
-    <!-- <link rel="stylesheet" href="../../css/icons-extra.css"> -->
-    <style>
-      .mui-bar~.mui-content .mui-fullscreen {
-        top: 44px;
-        height: auto;
-      }
-
-      .mui-pull-top-tips {
-        position: absolute;
-        top: -1.8rem;
-        left: 50%;
-        margin-left: -0.8rem;
-        width: 1.6rem;
-        height: 1.6rem;
-        border-radius: 100%;
-        z-index: 1;
-      }
-
-      .mui-bar~.mui-pull-top-tips {
-        top: 2rem;
-      }
-
-      .mui-pull-top-wrapper {
-        width: 42px;
-        height: 42px;
-        display: block;
-        text-align: center;
-        background-color: #efeff4;
-        border: 1px solid #ddd;
-        border-radius: 25px;
-        background-clip: padding-box;
-        box-shadow: 0 4px 10px #bbb;
-        overflow: hidden;
-      }
-
-      .mui-pull-top-tips.mui-transitioning {
-        -webkit-transition-duration: 200ms;
-        transition-duration: 200ms;
-      }
-
-      .mui-pull-top-tips .mui-pull-loading {
-        /*-webkit-backface-visibility: hidden;
-      -webkit-transition-duration: 400ms;
-      transition-duration: 400ms;*/
-        margin: 0;
-      }
-
-      .mui-pull-top-wrapper .mui-icon,
-      .mui-pull-top-wrapper .mui-spinner {
-        margin-top: 7px;
-      }
-
-      .mui-pull-top-wrapper .mui-icon.mui-reverse {
-        /*-webkit-transform: rotate(180deg) translateZ(0);*/
-      }
-
-      .mui-pull-bottom-tips {
-        text-align: center;
-        background-color: #efeff4;
-        font-size: .9rem;
-        line-height: 2.2rem;
-        color: #777;
-      }
-
-      .mui-pull-top-canvas {
-        overflow: hidden;
-        background-color: #fafafa;
-        border-radius: 40px;
-        box-shadow: 0 4px 10px #bbb;
-        width: 40px;
-        height: 40px;
-        margin: 0 auto;
-      }
-
-      .mui-pull-top-canvas canvas {
-        width: 40px;
-      }
-
-      .mui-slider-indicator.mui-segmented-control {
-        background-color: #efeff4;
-      }
-
-      .mui-scroll> .mui-table-view> .mui-table-view-cell {
-        padding: 0;
-        background: #fff;
-        margin-bottom: 10px;
-      }
-
-      .mui-preview-image.mui-fullscreen {
-        position: fixed;
-        z-index: 20;
-        background-color: #000;
-      }
-
-      .mui-preview-header,
-      .mui-preview-footer {
-        position: absolute;
-        width: 100%;
-        left: 0;
-        z-index: 10;
-      }
-
-      .mui-preview-header {
-        height: 44px;
-        top: 0;
-      }
-
-      .mui-preview-footer {
-        height: 50px;
-        bottom: 0px;
-      }
-
-      .mui-preview-header .mui-preview-indicator {
-        display: block;
-        line-height: 25px;
-        color: #fff;
-        text-align: center;
-        margin: 15px auto 4px;
-        width: 70px;
-        background-color: rgba(0, 0, 0, 0.4);
-        border-radius: 12px;
-        font-size: 16px;
-      }
-
-      .mui-preview-image {
-        display: none;
-        -webkit-animation-duration: 0.5s;
-        animation-duration: 0.5s;
-        -webkit-animation-fill-mode: both;
-        animation-fill-mode: both;
-      }
-
-      .mui-preview-image.mui-preview-in {
-        -webkit-animation-name: fadeIn;
-        animation-name: fadeIn;
-      }
-
-      .mui-preview-image.mui-preview-out {
-        background: none;
-        -webkit-animation-name: fadeOut;
-        animation-name: fadeOut;
-      }
-
-      .mui-preview-image.mui-preview-out .mui-preview-header,
-      .mui-preview-image.mui-preview-out .mui-preview-footer {
-        display: none;
-      }
-
-      .mui-zoom-scroller {
-        position: absolute;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-align: center;
-        -webkit-align-items: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        -webkit-backface-visibility: hidden;
-      }
-
-      .mui-zoom {
-        -webkit-transform-style: preserve-3d;
-        transform-style: preserve-3d;
-      }
-
-      .mui-slider .mui-slider-group .mui-slider-item img {
-        width: auto;
-        height: auto;
-        /*max-width: 113px;*/
-        /*max-height: 100%;*/
-      }
-
-      .mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
-        width: 100%;
-      }
-
-      .mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
-        display: inline-table;
-      }
-
-      .mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
-        display: table-cell;
-        vertical-align: middle;
-      }
-
-      .mui-preview-loading {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        display: none;
-      }
-
-      .mui-preview-loading.mui-active {
-        display: block;
-      }
-
-      .mui-preview-loading .mui-spinner-white {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-left: -25px;
-        margin-top: -25px;
-        height: 50px;
-        width: 50px;
-      }
-
-      .mui-preview-image img.mui-transitioning {
-        -webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
-        transition: transform 0.5s ease, opacity 0.5s ease;
-      }
-
-      @-webkit-keyframes fadeIn {
-        0% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
-
-      @keyframes fadeIn {
-        0% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
-
-      @-webkit-keyframes fadeOut {
-        0% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 0;
-        }
-      }
-
-      @keyframes fadeOut {
-        0% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 0;
-        }
-      }
-
-      p img {
-        max-width: 100%;
-        height: auto;
-      }
-     .mui-table-view .mui-media-object{
-                max-width: 100px; 
-            height: 100px;
-        }
-        .mui-media-text {
-            color: #646464;
-            font-size: 13px;
-        }
-        .mui-media-author { 
-            font-size: 11px;
-            margin-top: 5px;
-        } 
-        .mui-media-action{
-            font-size: 11px;
-        }
-      
+	<link rel="stylesheet" href="__M_CSS__/counsellor.css" />
+    <style> 
+    		
+    		.mui-table-view .mui-media-object{
+		    max-width: 72px; 
+    			height: 72px;
+    		}
+    		.mui-media-text {
+    			color: #646464;
+    			font-size: 15px;
+    		}
+    		.mui-media-author { 
+    			font-size: 13px;
+    			margin-top: 5px;
+    		} 
+    		.mui-media-action{
+    			font-size: 13px;
+    		}
+    		.float-right{
+    			float: right;
+    		}
+    		.mui-badge{
+    			left: 15px;
+    			top: 25px!important;
+    			right: 0px!important;
+    			width: 35px;
+    		}
+    		.mui-table-view-chevron .mui-table-view-cell{
+    			padding-right:25px;
+    		}
+    		
+		
+		.bbc-pullrefresh-top{
+			top: 45px;
+		}
+		input[type="search"]{
+			text-align:left
+		}
+		.main {
+				margin-right: 10px;
+				position: relative;
+			}
+			.mui-bar .mui-title {
+				width: auto;
+				left: 40px;
+				right: 52px;
+				top: 7px;
+				margin: 0;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: inline-block;
+			}
     </style>
   </head>
 
   <body>
-    <div id="slider" class="mui-slider mui-fullscreen bbc-tab-bar">
-      <div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-        <div class="mui-scroll sliderSegmentedControl">
-                <a class="mui-control-item mui-active" href="#item1mobile">全部</a>
-                
+    <header class="home-header">
+		<div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+		 	<i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+		<div class="mui-center mui-title">
+			<form onsubmit="return false;">
+			<div class="mui-input-row header-search-form">
+				<input type="search"  class="header-search mui-input-clear" placeholder="寻找感兴趣的课程活动">
+			</div>
+			<a href="#" class="right-icon-search"><i class="iconfont icon-search icon-home-search"></i></a>
+		</form>
+		</div>
+	    	<a class="mui-right  mui-btn  mui-btn-link mui-btn-nav mui-pull-right service">
+	    		<img src="__M_IMG__/tel.png">
+	    		<i class="search-hide icon-func bbc-icon callmm">客服</i>
+	    	</a>
+		</div>
+    </header>
+	
+    <div class="container">
+      <div class="mui-scroll-wrapper bbc-pullrefresh-top" >
+        <div class="mui-scroll">
+         <div class="mui-content content-bottom-padded-nav">
+          	  <section class="widgets-category-nav section-white ">
+              </section>
+		      <!--情感标签 end-->
+		      <section class="widgets-category-list section-white">
+		        
+		        
+		      </section>
+		      
+          </div>
         </div>
       </div>
-      <!--<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4" style="transform: translate3d(0px, 0px, 0px) translateZ(0px);"></div>-->
-      <div class="mui-slider-group">
-        <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
-          <div id="scroll1" class="mui-scroll-wrapper">
-            <div class="mui-scroll" data-count="1" data-total="">
-              <ul class="mui-table-view coupons-list rate-list" data-type="all">
-                <!-- <div class="mui-loading">
-                  <div class="mui-spinner">
-                  </div>
-                </div> -->
-                
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!--<div id="item2mobile" class="mui-slider-item mui-control-content">
-          <div id="scroll2" class="mui-scroll-wrapper">
-            <div class="mui-scroll" data-count="1" data-total="">
-              <ul class="mui-table-view coupons-list rate-list" data-type="9">
-                <div class="mui-loading">
-                  <div class="mui-spinner">
-                  </div>
-                </div>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div id="item3mobile" class="mui-slider-item mui-control-content">
-          <div id="scroll3" class="mui-scroll-wrapper">
-            <div class="mui-scroll" data-count="1" data-total="">
-              <ul class="mui-table-view coupons-list rate-list" data-type="10">
-                <div class="mui-loading">
-                  <div class="mui-spinner">
-                  </div>
-                </div>
-              </ul>
-            </div>
-          </div>
-        </div>-->
-        
-      </div>
-    
     </div>
-    <nav class="mui-bar bbc-bar-tab" href="{:url('Index/index')}">
-      <a class="bbc-tab-item ">
-        <span class="mui-icon bbc-icon bbc-icon-home"></span>
-        <span class="mui-tab-label">首页</span>
-      </a>
-      <a class="bbc-tab-item" href="{:url('Counsellor/index')}">
-        <span class="mui-icon bbc-icon bbc-icon-list"></span>
-        <span class="mui-tab-label">咨询</span>
-      </a>
-
-      <a class="bbc-tab-item bbc-active" >
-        <span class="mui-icon bbc-icon bbc-icon-moments"></span>
-        <span class="mui-tab-label">课程/活动</span>
-      </a>
-      <!-- <a class="bbc-tab-item " data-webview="_www/view/msg/index.html">
-        <span class="mui-icon bbc-icon bbc-icon-message"><span class="mui-badge mui-badge-danger mui-hidden" id="msg-count"></span></span>
-        <span class="mui-tab-label">消息</span>
-      </a> -->
-      <a class="bbc-tab-item" href="{:url('Member/member')}">
-        <span class="mui-icon bbc-icon bbc-icon-user-empty"></span>
-        <span class="mui-tab-label">我的</span>
-      </a>
-   </nav>
     <script src="__M_JS__/zepto.js"></script>
     <script src="__M_JS__/mui.min.js"></script>
-    <script src="__M_JS__/mui.pullToRefresh.js"></script>
-    <script src="__M_JS__/mui.pullToRefresh.material.js"></script>
     <script src="__M_JS__/template.min.js"></script>
     <script src="__M_JS__/config.js"></script>
     <script src="__M_JS__/app.js"></script>
-    <script type="text/html" id="cate_list">
-            <% for(var i in list) { %>  
-                <a class="mui-control-item" href="#item<%= list[i].index%>mobile"><%= list[i].title %></a>
-        <% } %>
-    </script>
-    
-    <script type="text/html" id="catebox_list">
-            <% for(var i in list) { %>  
-                <div id="item<%= list[i].index%>mobile" class="mui-slider-item mui-control-content">
-              <div id="scroll<%= list[i].index%>" class="mui-scroll-wrapper">
-                <div class="mui-scroll" data-count="1" data-total="">
-                  <ul class="mui-table-view coupons-list rate-list" data-type="<%= list[i].id %>">
-                    <div class="mui-loading">
-                      <div class="mui-spinner">
-                      </div>
-                    </div>
-                  </ul>
-                </div>
-              </div>
-           </div>
-        <% } %>
-    </script> 
-    <script type="text/html" id="coupon_list">
+    <script src="__M_JS__/mui.lazyload.js"></script>
+	<script src="__M_JS__/mui.lazyload.img.js"></script>
+	<script type="text/html" id="nav_list">
+		<ul class="widgets-icons-nav">
+		<% for(var i in data) { %>
+          <li class="" ><i><a ><img src="<%= $add_server(data[i].cover) %>"></a></i><span><%= data[i].title %></li>
+        <%}%>
+        </ul>
+	</script>
+	
+	<script type="text/html" id="clac_list">
+		<div class="section-title">
+	      <div class="title-txt">为您推荐</div>
+	    </div>
+	    <div class="mui-table-view">
+	      <ul class="mui-table-view mui-table-view-chevron">
+	      	<% for(var i in list) { %>
+			<a href="{:url('Clac/detail')}?acid=<%= list[i].classid %>&actype=<%= list[i].type %>"><li class="mui-table-view-cell mui-media  " >
+				
+				<div class="mui-table">
+					<div class="mui-table-cell mui-col-xs-12">
+						<img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].pic) %>">
+						<div class="mui-media-body">
+							<p>
+								<span class="mui-text-left mui-ellipsis-2"><%= list[i].title %></span>
+							</p>
+							<p class='mui-ellipsis mui-media-text mui-media-author'><%= list[i].intro %></p>
+							<p class="mui-ellipsis mui-media-text mui-media-author">地点：<%= list[i].address %>
+								<span class="mui-pull-right">时间：<%= $timestamp_To_Date(list[i].start_time) %></span>
+							</p>
+						</div>
+					</div>
+					
+				</div>
+			</li></a>
+			<%}%>
+		  </ul>		
+	    </div>
+	</script>	
+    <script type="text/javascript">
       
-        <section class="widgets-category-counsellor section-white">
-            <% if(list){%>
-            <div class="mui-table-view">
-              <ul class="mui-table-view mui-table-view-chevron">
-                <% for(var i=0; i<list.length; i++) { %>
-                <li class="mui-table-view-cell mui-media action-clickview" data-webview="{:url('Clac/detail')}" data-classid="<%= list[i].classid %>" data-actype="<%= list[i].type %>">
-                    <a class="mui-navigate-right">
-                        <img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].pic) %>" >
-                        <div class="mui-media-body">
-                            <p>
-                                <span class="mui-text-left"><%= list[i].title %></span>
-                            </p>
-                            <p class="mui-ellipsis mui-media-text ">地点：<%= list[i].address %></p>
-                            <p class='mui-ellipsis mui-media-text mui-media-author'>时间：<%= $timestamp_To_Time(list[i].start_time) %></p>
-                        </div>
-                    </a>
-                </li>
-                <% } %>
-              </ul>     
-            </div>
-            <% } %>
-        </section>
-    </script>
+        var keyword = '';
+        var cat_id = '';
+	    var state = app.getState();
+        var result = window.location.href;
+        var cat_id = $.getUrlParam(result,'cat_id');
+        var keyword = $.getUrlParam(result,'keyword');
+        if(keyword) {
+          $('input[type="search"]').val(keyword);
+        }
 
-    <script type="text/javascript" charset="utf-8">
-        //分类 
-        var cparam = {
-            'method': config.apimethod.category,
+        var form = $('input[type="search"]').parents('form');
+        var sinput = $('input[type="search"]');
+        $(form).submit(function() {
+            keyword = $('input[type="search"]').val();
+            sinput.blur();
+            getclist();
+         })
+
+        
+      	//分类 
+	  	var param = {
+            'method': config.apimethod.claccate,
             'source':config.source
-       }
-       $.dataRequest(cparam, function(rs) {
-            var s = 2;
-            for (var i in rs.list) {
-                rs.list[i]['index'] = s;
-                s++;
-            }
-            var widgets = template('cate_list', rs);
-            $('.sliderSegmentedControl').append(widgets);
-            
-            var widgetsbox = template('catebox_list', rs);
-            $('.mui-slider-group').append(widgetsbox);
-            
-            
-            var state = app.getState();
-            var param = {
-                'method': config.apimethod.clca,
-                'cateid': 'all',
-                'source':config.source,
-                'page_no': 0,
-                'page_size': config.pagesize
-            } 
-    
-            $.tabWithPageRequest(param, 'coupon_list', 'scroll1', 'cateid');
+	   }
+	  	$.dataRequest(param, function(rs) {
+            console.log(rs)
+       		var widgets = template('nav_list', rs);
+            $('.widgets-category-nav').html(widgets);
+	    })
+	  	
+	  	getclist();
+		function getclist(){
+			var param = {
+	            'method': config.apimethod.clca,
+	            'cateid': 'all',
+	            'source':config.source,
+	            'page_no': 1,
+	            'page_size': config.pagesize
+	        } 
+			
+	        $.dataRequest(param, function(rs) {
 
-            $(window).on('tap', '.action-clickview', function() {
-              var webview = $(this).data('webview');
-              var classid = $(this).data('classid');
-              var actype = $(this).data('actype');
-              window.location.href = webview+'?acid='+classid+'&actype='+actype;
-              
-            })
-      })
-        
-        
-          
+        		var widgets = template('clac_list', rs.data);
+	            $('.widgets-category-list').append(widgets);
+	            	 // 
+	             mui('.mui-scroll-wrapper').scroll({
+		          indicators: false
+		        });
+	        })
+		}
+	  	
+	  	
+      
     </script>
   </body>
 

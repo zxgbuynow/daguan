@@ -771,7 +771,7 @@ function preateClear() {
     //上拉加载更多业务逻辑
     function appendList(options) {
       count ++
-      options.queryData.page_no = count;
+      options.page_no = count;
       $.dataRequest(options, function(response) {
         if(!isEmptyObject(response.data) && response.data.pagers.total){
           var total = Math.ceil(response.data.pagers.total / config.pagesize);
@@ -796,7 +796,6 @@ function preateClear() {
   $.tabWithPageRequest = function(data, renderFor, renderEle, renderType, renderCallback) {
     var count = 0;
     var defaultSlider = document.getElementById(renderEle).querySelector('.mui-scroll');
-    
     //遍历各tab内容dom，逐一初始化分页
     mui.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
       mui(pullRefreshEl).pullToRefresh({
@@ -805,7 +804,7 @@ function preateClear() {
             $(pullRefreshEl).data('count', config.cpage);
             var self = this;
             setTimeout(function() {
-              data.queryData.page_no = config.cpage;
+              data.page_no = config.cpage;
               count = 0
               $.dataRequest(data, function(response) {
                 var result = template(renderFor, response.data);
@@ -820,7 +819,7 @@ function preateClear() {
           callback: function() {
             var self = this;
             count++
-            data.queryData.page_no = count;
+            data.page_no = count;
             $.dataRequest(data, function(response) {
               if(!isEmptyObject(response.data) && response.data.pagers.total){
                 var total = Math.ceil(response.data.pagers.total / config.pagesize);
@@ -851,7 +850,7 @@ function preateClear() {
 
     document.getElementById('slider').addEventListener('slide', function(e) {
       var el = document.getElementById('scroll' + (e.detail.slideNumber + 1));
-      data.queryData[renderType] = el.querySelector('.mui-table-view').dataset.type;
+      data[renderType] = el.querySelector('.mui-table-view').dataset.type;
       count = el.querySelector('.mui-scroll').dataset.count;
       if(document.getElementById('scroll' + (e.detail.slideNumber + 1)).querySelector('.mui-loading')) {
         count = 0

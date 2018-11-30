@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <style type="text/css">
+    		.clac-list{
+    			margin-top: 50px;
+    		}
+		p img {
+			max-width: 100%;
+			height: auto;
+		}
+		.mui-table-view .mui-media-object{
+			max-width: 80px; 
+			height: 80px;
+		}
+		.mui-text-title{
+			color: #000000;
+		}
+		.mui-media-text {
+			color: #646464;
+			font-size: 13px;
+		}
+		.mui-media-author { 
+			font-size: 13px;
+			margin-top: 10px;
+		} 
+		.mui-text-num{
+			color: #666;
+		}
+    </style>
+  </head>
+
+  <body class="body-padding-xs">
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">课程/活动列表</div>
+    </header>
+    
+	<section class="section-white">
+      <div class=" user-assetses font-gray-20 clac-list">
+        <ul class="mui-table-view" id="flist">
+	        
+	       </ul>
+      </div>
+    </section>
+    
+    
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script type="text/html" id="f_list">
+      	<% for(var i=0; i<flist.length; i++) { %>
+		<li class="mui-table-view-cell mui-media click-webview" data-webview="{:url('Clac/detail')}" data-webparam='<%= flist[i].classid %>' data-actype='<%= flist[i].type %>'>
+			<a class="mui-navigate-right">
+				<img class="mui-media-object mui-pull-left" src="<%= $add_server(flist[i].pic) %>" >
+				<div class="mui-media-body">
+					<p>
+						<span class="mui-text-title"><%= flist[i].title %></span>
+					</p>
+					<p class="mui-ellipsis  ">地点：<%= flist[i].address %></p>
+					<p class='mui-ellipsis mui-media-author'>时间：<%= $timestamp_To_Time(flist[i].start_time) %></p>
+				</div>
+			</a>
+		</li>
+		<% } %>
+    </script>
+    <script type="text/javascript" charset="utf-8">
+      	var state = app.getState();
+      	var param = {
+          'method': config.apimethod.clcamy,
+          'source':config.source,
+          'account': state.token
+      	}
+      	$.dataRequest(param, function(rs) {
+      		if(rs){
+      			rt = {
+      				'flist':rs
+      			}
+      		}
+      		var fwidget = template('f_list', rt);
+            $('#flist').append(fwidget); 
+            $(window).on('tap', '.click-clickview', function() {
+            var state = app.getState();
+            var _this = $(this).data('webview');
+            var acid = $(this).data('webparam');
+            var actype = $(this).data('actype');
+            window.location.href = _this+'?acid='+acid+'&actype='+actype;
+
+          });
+
+      	})
+      	
+      	
+    </script>
+  </body>
+
+</html>

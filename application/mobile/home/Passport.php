@@ -26,6 +26,11 @@ class Passport extends Common
         return $this->fetch(); // 渲染模板
     }
 
+    public function signup()
+    {
+        return $this->fetch(); // 渲染模板
+    }
+
     public function verificationsms()
     {
         return $this->fetch(); // 渲染模板

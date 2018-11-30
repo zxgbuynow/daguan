@@ -21,6 +21,10 @@ class Counsellor extends Common
     {
         return $this->fetch(); // 渲染模板
     }
+    public function evaluate()
+    {
+        return $this->fetch('eve_form'); // 渲染模板
+    }
 
     public function detail()
     {

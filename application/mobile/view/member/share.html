@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>成为心窝会员</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="__M_CSS__/style.css">
+    <link rel="stylesheet" href="__M_CSS__/member.css">
+    <style type="text/css">
+      .section-white{
+        background: #fff;
+        padding: 2rem 1rem;
+		margin-bottom: 2rem;
+      }
+      
+      .counsellor-head-content{
+        height: 10.5rem;
+        width: 100%;
+      }
+      .counsellor-head-content img.top-img{
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+	<header class="page-header nobd">
+		<div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+			<i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+			<h1 class="mui-center mui-title">成为心窝会员</h1>
+			<i class="header-right icon-func bbc-icon bbc-icon-share share" style="color: #fff;"></i>
+		</div>
+	</header>
+    <section class="container member-apply-body">
+      <!--<form class="" id="login_form">-->
+        <div class="counsellor-head-content">
+			<img class="top-img" src="__M_IMG__/xinwo_02.png">
+			<div class="mui-member-group section-white">
+				<h4>让您的朋友拥有心灵密友</h4>
+				<p class="title">TA将拥有</p>
+				<div class="content-list">
+					<p> 1、线上200+咨询师贴心服务</p>
+					<p> 2、不限次数、不限时数，任选咨询师，想选谁就选谁。</p>
+					<p> 3、丰富心理内容知识库，心理美文、文理课程等一应俱全。</p>
+					<p> 3、会员价格的地面咨询、视频咨询</p>
+				</div>
+			  
+				<div class="apply-form mui-hidden">
+					<div class="pay-body">
+						<div class="pay-options">
+							<p>周付费</p>
+							<span><i>￥</i>7</span>
+						</div>
+						<div class="pay-options year on">
+							<p>年付费</p>
+							<span><i>￥</i>36.5</span>
+						</div>
+					</div>
+					<div class="mui-input-group apply mui-hidden">
+						<div class="mui-input-row">
+							<label>朋友昵称：</label>
+							<input type="text" id="nickname" class="mui-input-clear" placeholder="请输入文字">
+						</div>
+						<div class="mui-input-row">
+							<label>升级账号：</label>
+							<input type="text" id="account" class="mui-input-clear" placeholder="请输入手机号">
+						</div>
+						
+					</div>
+					<div class="mui-button-row btn-options">
+						<button class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning" id="createTrade">立即支付</button>
+					</div>
+				</div>
+			</div>
+			 <div class="mui-member-group section-white member-give">
+				<h4>您收到<span class="violet">【】</span>赠送的心窝会员</h4>
+				<p class="sub-title">您的电话号码注册即可成为心窝会员</p>
+				<p class="title">您将拥有</p>
+				<div class="content-list">
+					<p> 1、线上<span class="red">200+</span>咨询师贴心服务</p>
+					<p> 2、不限次数、不限时数，任选咨询师，想选谁就选谁。</p>
+					<p> 3、丰富心理内容知识库，心理美文、文理课程等一应俱全。</p>
+					<p> 3、会员价格的地面咨询、视频咨询</p>
+				</div>
+			
+				<div class="apply-form">
+					<div class="pay-body">
+						<div class="qr-code-img">
+							<img class="mui-media-object" src="__M_IMG__/60x60.gif">
+							<span class="qr-code-txt mui-hidden">长按保存二维码</span>
+						</div>
+					</div>
+					<div class="qr-code-content">
+						<p>扫描二维码下载大观心理APP</p>
+						<p>即刻拥有心灵密友</p>
+					</div>
+				</div>
+			</div> 
+		</div>
+        
+      <!--</form>-->
+      
+    <div id="share_sheet" class="mui-popover mui-popover-bottom mui-popover-action">
+        <div class="section-white">
+            <div class="section-title theme-border-bottom">分享到</div>
+            <div class="section-container">
+              <div class="section-init action-share" data-platform="weixin"><i class="bbc-icon bbc-icon-weixin-member"></i></div>
+              <div class="section-init action-share" data-platform="timeline"><i class="bbc-icon bbc-icon-moments"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="datasetconfig" data-title="ceshi" data-url="" data-pic="" data-sites="weixin"></div>
+    </section>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script src="__M_JS__/share.js"></script>
+    <script src="http://www.calledt.com/sosh/javascripts/sosh.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+ 
+    var result = window.location.href;
+    var tid = $.getUrlParam(result,'tid');
+  	//获得
+  	var state = app.getState();
+  	$('.violet').html('【'+state.nickname+'】');
+  	$('.share').on('tap',function(e){
+  		var state = app.getState();
+		var shareData = {
+            title: '您收到'+'【'+state.nickname+'】'+'赠送的心窝会员', 
+            href: 'http://www.pgyer.com/kl4C', 
+            desc: '您收到'+'【'+state.nickname+'】'+'赠送的心窝会员',
+            content:'您收到'+'【'+state.nickname+'】'+'赠送的心窝会员',
+            pic: 'http://39.105.4.51:88/uploads/images/logo.png'
+        };
+        
+
+		setTimeout(function(){
+            sosh('.datasetconfig', {
+              sites: ['weixin'],
+              title:'您收到'+'【'+state.nickname+'】'+'赠送的心窝会员',
+              href: 'http://www.pgyer.com/kl4C', 
+              pic: 'http://39.105.4.51:88/uploads/images/logo.png'
+            })
+		},1000)
+		})
+    </script>
+  </body>
+
+</html>

@@ -9,70 +9,126 @@
     <link rel="stylesheet" href="__M_CSS__/counsellor.css" />
     <link rel="stylesheet" href="__M_CSS__/style.css" />
     <style>
-            
-            .counsellor-info{
-                margin-bottom: 0.6rem;
-            }
-            .counsellor-info img{
-                width: 100%;
-                max-height: 200px;
-            }
-        
-        .op-group .op-group-item{
-                color: #fff;
-                height: 100%;
-                line-height: 3.25rem;
-        }
-        .op-group .trade-talk{
-                background: #FFFFFF;
-                color: #000;
-        }
-        .op-group .trade-confirm{
-            background: #41B7D9;
-            box-shadow: 4px 4px 10px #d84f34;
-        }
-        .op-group .trade-date{
-            background: #41C5D9; 
-        }
-        .op-group .op-group-item.col-half:after{
-            display: none;
-        }
-        .qualification-block.desc{
-            margin-bottom: 0;
-        }
-        .col-8x{
-            width: 60%;
-        }
-        .col-2x{
-            width: 20%;
-        }
-        .font-red{
-            color: #D84F34!important;
-        }
-        .join-user {
-            height: 35px;
-            font-size: 10px;
-            color: #666;
-            line-height: 23px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            word-break: break-all;
-            -webkit-box-orient: vertical;
-        }
-        .certification{
-            margin-bottom: 5px!important;
-            height: auto!important;
-        }
-        .mui-control-item{
-            width: 47%!important;
-        }
-        .listen{
-            font-size: 18px;
-                margin-right: 2px;
-        }
-        .bbc-tab-bar .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
-            color: #00C7C9;
-        }
+    		
+    		.counsellor-info{
+    			margin-bottom: 0.6rem;
+    		}
+    		.counsellor-info img{
+    			width: 100%;
+    			max-height: 200px;
+    		}
+		
+	    .op-group .op-group-item{
+		    	color: #fff;
+		    	height: 100%;
+		    	line-height: 3.25rem;
+	    }
+	    .op-group .trade-talk{
+	    		background: #FFFFFF;
+	    		color: #000;
+	    }
+	    .op-group .trade-confirm{
+	    	background: #41B7D9;
+	    	box-shadow: 4px 4px 10px #d84f34;
+	    }
+	    .op-group .trade-date{
+	    	background: #41C5D9; 
+	    }
+	    .op-group .op-group-item.col-half:after{
+	    	display: none;
+	    }
+	    .qualification-block.desc{
+	    	margin-bottom: 0;
+	    }
+		.col-8x{
+			width: 60%;
+		}
+		.col-2x{
+			width: 20%;
+		}
+		.font-red{
+			color: #D84F34!important;
+		}
+		.join-user {
+		    height: 35px;
+		    font-size: 10px;
+		    color: #666;
+		    line-height: 23px;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    word-break: break-all;
+		    -webkit-box-orient: vertical;
+		}
+		.certification{
+		    margin-bottom: 5px!important;
+		    height: auto!important;
+		}
+		.mui-control-item{
+			width: 47%!important;
+		}
+		.listen{
+			font-size: 18px;
+    			margin-right: 2px;
+		}
+		.bbc-tab-bar .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+		    color: #00C7C9;
+		}
+		.mui-toast-message{
+			position: relative;
+			width: 100%;
+			height: 264px;
+		}
+		#audio{ width: 100%;}
+		#control{ 
+		width: 90px;
+    height: 90px;
+    line-height: 90px;
+    text-align: center;
+    border-radius: 200px;
+    border: none;
+    color: #fff;
+    margin-left: -45px;
+    left: 50%;
+    top: 12%;
+    position: absolute;
+    box-shadow: #888 0 0 8px;
+	}
+
+
+		.color_gray{ background: #e4e4e4}
+		.hide{ display: none;}
+		.show{ display: block;}
+		.play{ background:  #f06060;}
+		.pause{ background:skyblue}
+		/*进度条样式*/
+		.progressBar{ width: 100%; height: 10px;margin: 30px auto 30px auto; position: absolute; left: 0; bottom: 35px;}
+		.progressBar div{ position: absolute;}
+		.progressBar .progressBac{ width: 100%; height: 10px;  left: 0; top:0; background: #e4e4e4;}
+		.progressBar .speed{width: 100%; height: 10px; left: -100%; background: #f06060; }
+		.progressBar .drag{ width: 30px; height: 30px; left: 0; top:-10px;  background: skyblue; opacity: 0.8; border-radius: 50px; box-shadow: #fff 0 0 5px;}
+		/*时间样式*/
+		#time{ width: 100%; height: 20px;position: absolute; left: 0; bottom:30px; color:#888;}
+		.tiemDetail{ position: absolute; right:10px; top:0;}
+		#songInfo{
+			overflow: hidden;
+			width: 200px;
+			height: 50px;
+			line-height: 50px;
+			text-align: center;
+			color: #fff;
+			margin-left: -100px;
+			left: 50%;
+			top: 48%;
+			 position: absolute;
+		 }
+		 .audio_closed{
+			 position: absolute;
+			 top: 2px;
+			 right: 15px;
+			 width: 40px;
+			 height: 40px;
+			 color: #fff;
+		 }
     </style>
     
   </head>
@@ -83,86 +139,50 @@
       <i class="header-right icon-func bbc-icon bbc-icon-share share" style="color: #00C7C9;"></i>
     </header>
     <div class="counsellor-homepage-content">
-        <!--<section class=" section-white counsellor-info">
-             <img src="https://ossimg.xinli001.com/20170823/c91ab41f014b8df7bb2e8d4df9b594ca.png!120x120" class="avatar">
-             
-        </section>
-         <section class="qualification-block">
-            <div class="section">
-                <h3 class="title">我是标题是标题是标题是标题是标题</h3>
-                <p class="certification font-red">129元</p>
-                <p class="join-user">
-                    129人参与
-                </p>
-                
-            </div>
-        </section>
-        
-        <section class="qualification-block" style="margin-bottom: 50px;">
-            <div class="section">
-                <div id="slider" class="mui-slider  bbc-tab-bar">
-                  <div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-                    <div class="mui-scroll sliderSegmentedControl">
-                            <a class="mui-control-item mui-active" href="#item1mobile">祥情</a>
-                            <a class="mui-control-item " href="#item2mobile">目录</a>
-                            <a class="mui-control-item " href="#item3mobile">评论</a>
-                            
-                    </div>
-                  </div>
-                  <div class="mui-slider-group">
-                    <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
-                            <ul class="mui-table-view coupons-list rate-list" >
-                            祥情
-                            
-                        </ul>
-                    </div>
-                    <div id="item2mobile" class="mui-slider-item mui-control-content ">
-                      <ul class="mui-table-view coupons-list rate-list" >
-                            目录
-                            
-                      </ul>
-                    </div>
-                    <div id="item3mobile" class="mui-slider-item mui-control-content ">
-                      <ul class="mui-table-view coupons-list rate-list " >
-                        <li class="mui-table-view-cell">
-                            <div class="content-padded">
-                              <div class="mui-table">
-                                <div class="mui-table-cell mui-col-xs-6" style="color: #00C7C9;">
-                                    周工 <i style="color: #666;">回复</i> buynow
-                                </div>
-                              </div>
-                            </div>
-                            <div class="content-padded function-list bg-gray-0">
-                                写教程看不太懂，我在百度sdk下面随便输入几个字母，打包后为什么还能定位
-                            </div>
-                            <div class="content-padded">
-                              <div class="box-display">
-                                <span class="box-item-flex1">
-                                  2018-08-16
-                                </span>
-                                <div class="box-item-flex1 mui-text-right">
-                                  <button class="canceled-detail font-blue action-webview mui-btn mui-btn-outlined mui-btn-warning bbc-btn-sm bbc-btn-outlined" data-webview="_www/view/member/trade/canceleddetail.html" data-webparam='{"cancel_id": <%= list[i].cancel_id %>}'>回复</button>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                            
-                      </ul>
-                    </div>
-                    </div>    
-                </div>
-            </div>
-        </section>-->
-        
-    </div>
+	   
+		
+	</div>
     <nav class="action-bar-mini op-group mui-bar bbc-bar-tab">
-        <div class="op-group-item  trade-talk col-2x" id="listen" style="display: none;">
-                    <i class="mui-icon mui-icon-mic listen" style="line-height: initial;"></i>试听
-                </div>
+        <div class="op-group-item  trade-talk col-2x " style="display: none;" id="listen" >
+					<i class="mui-icon mui-icon-mic listen" style="line-height: initial;"></i>试听
+				</div>
         <div class="op-group-item  trade-talk col-2x" id="fav"><i class="mui-icon mui-icon-star " style="line-height: initial;"></i>收藏</div>
         <div class="op-group-item  trade-date col-8x">立即参与：<i class="total">0</i>元</div>
     </nav>
-    <div id="share_sheet" class="mui-popover mui-popover-bottom mui-popover-action">
+	<div id="share_sheet" class="mui-popover mui-popover-bottom mui-popover-action">
+      <div class="section-white">
+        <div class="section-title theme-border-bottom">分享到</div>
+        <div class="section-container">
+          <div class="section-init action-share" data-platform="weixin"><i class="bbc-icon bbc-icon-weixin-member"></i></div>
+          <div class="section-init action-share" data-platform="timeline"><i class="bbc-icon bbc-icon-moments"></i></div>
+        </div>
+      </div>
+    </div>
+		<div class="mui-toast-container mui-active" style="display: none;">
+			<div class="mui-toast-message">
+				<span class="audio_closed">X</span>
+				<!--audiostart-->
+				<audio id="audio" src=""  loop="loop" ></audio>
+				<!--audio End-->
+				<!--播放控制按钮start-->
+				<button id="control" class="">loading</button>
+				<!--播放控制按钮end-->
+				<!--时间进度条块儿start-->
+				<section class="progressBar">
+				    <div class="progressBac"></div>
+				    <div class="speed" id="speed"></div>
+				    <div class="drag" id="drag"></div>
+				</section>
+				<!--时间进度条块儿end-->
+				<!--播放时间start-->
+				<div id="time"><div class="tiemDetail"><span class="currentTime" id="currentTime">00:00</span>/<span class="allTime" id="allTime">00:00</span></div></div>
+				<!--播放时间end-->
+				<!--歌曲信息start-->
+				<div id="songInfo"></div>
+				<!--歌曲信息end-->
+			</div>
+		</div>
+        <div id="share_sheet" class="mui-popover mui-popover-bottom mui-popover-action">
       <div class="section-white">
         <div class="section-title theme-border-bottom">分享到</div>
         <div class="section-container">
@@ -174,116 +194,116 @@
   </body>
   <div class="datasetconfig" data-title="ceshi" data-url="" data-pic="" data-sites="weixin"></div>
   <script src="__M_JS__/zepto.js"></script>
+  <script src="__M_JS__/audio.js"></script>
   <script src="__M_JS__/mui.min.js"></script>
   <script src="__M_JS__/template.min.js"></script>
   <script src="__M_JS__/config.js"></script>
   <script src="__M_JS__/app.js"></script>
   <script src="__M_JS__/share.js"></script>
-  <script src="http://www.calledt.com/sosh/javascripts/sosh.min.js"></script>
-
+    <script src="http://www.calledt.com/sosh/javascripts/sosh.min.js"></script>
   <script type="text/html" id="counsellor_info">
-        <section class=" section-white counsellor-info">
-             <img src="<%= $add_server(pic) %>" class="avatar"> 
-        </section>
-         <section class="qualification-block">
-            <div class="section">
-                <h3 class="title"><%= title %></h3>
-                <p class="certification font-red"><%= price %>元</p>
-                <p class="join-user">
-                    <%= num %>人参与
-                </p>
-            </div>
-        </section>
-        
-        <section class="qualification-block" style="margin-bottom: 50px;">
-            <div class="section">
-                <div id="slider" class="mui-slider  bbc-tab-bar">
-                  <div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-                    <div class="mui-scroll sliderSegmentedControl">
-                            <a class="mui-control-item mui-active" href="#item1mobile">详情</a>
-                            <a class="mui-control-item " href="#item2mobile">目录</a>
-                            <a class="mui-control-item " href="#item3mobile">评论</a>
-                            
-                    </div>
-                  </div>
-                  <div class="mui-slider-group">
-                    <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
-                            <ul class="mui-table-view coupons-list rate-list describe" >
-                            <%= describe %>
-                        </ul>
-                    </div>
-                    <div id="item2mobile" class="mui-slider-item mui-control-content ">
-                      <ul class="mui-table-view coupons-list rate-list intro" >
-                            <%= intro %>
-                            
-                      </ul>
-                    </div>
-                    <div id="item3mobile" class="mui-slider-item mui-control-content ">
-                      <ul class="mui-table-view coupons-list rate-list reply-list" >
-                          <% for(var i in reply) { %>
-                           <li class="mui-table-view-cell">
-                            <div class="content-padded">
-                              <div class="mui-table">
-                                <div class="mui-table-cell mui-col-xs-6" style="color: #00C7C9;">
-                                    <%= reply[i].suname %>
-                                    <% if(reply[i].ruid){ %>
-                                        <i style="color: #666;">回复</i> <%= reply[i].runame %>
-                                    <% } %>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="content-padded function-list bg-gray-0">
-                                <%= reply[i].msg %>
-                            </div>
-                            <div class="content-padded">
-                              <div class="box-display">
-                                <span class="box-item-flex1">
-                                  <%= $timestamp_To_Time(reply[i].created_time)%> 
-                                </span>
-                                <% if(reply[i].isreply&&ispay){ %>
-                                            <% if(replyed==0){ %>
-                                <div class="box-item-flex1 mui-text-right">
-                                  <button class="replytocl font-blue action-webview mui-btn mui-btn-outlined mui-btn-warning bbc-btn-sm bbc-btn-outlined" data-sname='<%= reply[i].suname %>' data-suid='<%= reply[i].suid %>'>回复</button>
-                                </div>
-                                            <% } %>
-                                <% } %>
-                              </div>
-                            </div>
-                          </li>
-                         <% } %>
-                        
-                      </ul>
-                      <% if(ispay){ %>
-                                <% if(replyed==0){ %>
-                      <ul class="mui-table-view" >
-                         <li class="mui-table-view-cell">
-                            <div class="box-item-flex1 mui-text-center">
-                              <button class="replytocl font-blue action-webview mui-btn mui-btn-outlined mui-btn-warning bbc-btn-sm bbc-btn-outlined" data-suid='0'>评价</button>
-                            </div>
-                         </li>
-                      </ul>
-                                <% } %>
-                      <% } %>
-                    </div>
-                    </div>    
-                </div>
-            </div>
-        </section>
-  </script> 
+  		<section class=" section-white counsellor-info">
+			 <img src="<%= $add_server(pic) %>" class="avatar">	
+	    </section>
+	     <section class="qualification-block">
+			<div class="section">
+				<h3 class="title"><%= title %></h3>
+				<p class="certification font-red"><%= price %>元</p>
+				<p class="join-user">
+					<%= num %>人参与
+				</p>
+			</div>
+		</section>
+		
+		<section class="qualification-block" style="margin-bottom: 50px;">
+			<div class="section">
+				<div id="slider" class="mui-slider  bbc-tab-bar">
+			      <div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+			      	<div class="mui-scroll sliderSegmentedControl">
+			        		<a class="mui-control-item mui-active" href="#item1mobile">详情</a>
+			        		<a class="mui-control-item " href="#item2mobile">目录</a>
+			        		<a class="mui-control-item " href="#item3mobile">评论</a>
+			        		
+			        </div>
+			      </div>
+			      <div class="mui-slider-group">
+			        <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+			        		<ul class="mui-table-view coupons-list rate-list describe" >
+			              	<%= describe %>
+			            </ul>
+			        </div>
+			        <div id="item2mobile" class="mui-slider-item mui-control-content ">
+			          <ul class="mui-table-view coupons-list rate-list intro" >
+			              	<%= intro %>
+			                
+			          </ul>
+			        </div>
+			        <div id="item3mobile" class="mui-slider-item mui-control-content ">
+			          <ul class="mui-table-view coupons-list rate-list reply-list" >
+			              <% for(var i in reply) { %>
+			               <li class="mui-table-view-cell">
+					        <div class="content-padded">
+					          <div class="mui-table">
+					            <div class="mui-table-cell mui-col-xs-6" style="color: #00C7C9;">
+					                <%= reply[i].suname %>
+					                <% if(reply[i].ruid){ %>
+					                	<i style="color: #666;">回复</i> <%= reply[i].runame %>
+					                <% } %>
+					            </div>
+					          </div>
+					        </div>
+					        <div class="content-padded function-list bg-gray-0">
+					           	<%= reply[i].msg %>
+					        </div>
+					        <div class="content-padded">
+					          <div class="box-display">
+					            <span class="box-item-flex1">
+					              <%= $timestamp_To_Time(reply[i].created_time)%> 
+					            </span>
+					            <% if(reply[i].isreply&&ispay){ %>
+											<% if(replyed==0){ %>
+					            <div class="box-item-flex1 mui-text-right">
+					              <button class="replytocl font-blue action-webview mui-btn mui-btn-outlined mui-btn-warning bbc-btn-sm bbc-btn-outlined" data-sname='<%= reply[i].suname %>' data-suid='<%= reply[i].suid %>'>回复</button>
+					            </div>
+											<% } %>
+					            <% } %>
+					          </div>
+					        </div>
+					      </li>
+					     <% } %>
+					    
+			          </ul>
+			          <% if(ispay){ %>
+								<% if(replyed==0){ %>
+			          <ul class="mui-table-view" >
+			          	 <li class="mui-table-view-cell">
+					     	<div class="box-item-flex1 mui-text-center">
+				              <button class="replytocl font-blue action-webview mui-btn mui-btn-outlined mui-btn-warning bbc-btn-sm bbc-btn-outlined" data-suid='0'>评价</button>
+				            </div>
+					     </li>
+			          </ul>
+								<% } %>
+			          <% } %>
+			        </div>
+			    	</div>    
+				</div>
+			</div>
+		</section>
+  </script>	
   <script type="text/html" id="append_reply">
-    <li class="mui-table-view-cell">
+  	<li class="mui-table-view-cell">
         <div class="content-padded">
           <div class="mui-table">
             <div class="mui-table-cell mui-col-xs-6" style="color: #00C7C9;">
                 <%= suname %>
                 <% if(ruid>0){ %>
-                        <i style="color: #666;">回复</i> <%= runame %>
+                		<i style="color: #666;">回复</i> <%= runame %>
                 <% } %>
             </div>
           </div>
         </div>
         <div class="content-padded function-list bg-gray-0">
-            <%= msg %>
+           	<%= msg %>
         </div>
         <div class="content-padded">
           <div class="box-display">
@@ -295,239 +315,245 @@
       </li>
   </script>
   <script>
+
+	var audio = '';
     var result = window.location.href;
     var acid = $.getUrlParam(result,'acid');
     var actype = $.getUrlParam(result,'actype');
-    var ispayed = 0;
-    //登录状态
-    var state = app.getState();
-    var param = {
-        'method': config.apimethod.clcadetail,
-        'source':config.source,
-        'typeid': actype,
-        'acid': acid
-    }
-    if(state.token){
-      var param = {
-        'method': config.apimethod.clcadetail,
-        'source':config.source,
-        'typeid': actype,
-        'acid': acid,
-        'account': state.token
-        
+
+	var ispayed = 0;
+	  //登录状态
+	  var state = app.getState();
+	  var param = {
+          'method': config.apimethod.clcadetail,
+          'source':config.source,
+          'typeid': actype,
+          'acid': acid
       }
-    }
-    console.log(param);
-    $.dataRequest(param, function(rs) {
-        if(isEmptyObject(rs)){
-            return false;
-        }
-        if(rs.isfav==1){
-            $('#fav').addClass('isfaved')
-            $('#fav').text('已收藏')
-//          $('#fav').next('i').removeClass('mui-icon-star').addClass('mui-icon-star-filled')
-        }
-        rs.replyed = 0;
-        if(rs.reply){
-            for(var i in rs.reply){
-                if(rs.reply[i]['suid']==state.token){
-                    rs.reply[i]['isreply'] = 0;
-                            rs.replyed = 1
-                }else{
-                    rs.reply[i]['isreply'] = 1;
-                }
-            }
-        }
-        $('.header-title').text(rs.title)
-        $('.total').text(rs.price)
-        
-        if(rs.ispay==1){
-            ispayed = rs.ispay;
-            $('.trade-date').addClass('ispayed')
-            $('.trade-date').text('已报名')
-        }
-        
-        var widgets = template('counsellor_info', rs);
+	  if(state.token){
+	  	var param = {
+          'method': config.apimethod.clcadetail,
+          'source':config.source,
+          'typeid': actype,
+          'acid': acid,
+          'account': state.token
+          
+      	}
+	  }
+      log(param)
+      $.dataRequest(param, function(rs) {
+      	if(isEmptyObject(rs)){
+      		return false;
+      	}
+      	if(rs.isfav==1){
+      		$('#fav').addClass('isfaved')
+      		$('#fav').text('已收藏')
+      	}
+      	if(!rs.audio){
+      		// $('#listen').hide()
+      	}else{
+            $('#listen').show()
+      		getSong(config.imgser+rs.audio);
+      		audio = document.getElementById("audio");
+			//点击关闭试听
+			$('.audio_closed').on('click',function(){
+				$('.mui-toast-container').removeClass('mui-active').hide();
+				$("#control").addClass("play").removeClass("pause");
+				audio.pause();
+			})
+			$('#listen').on('click',function(){
+				$('.mui-toast-container').addClass('mui-active').show();
+				$("#control").addClass("pause").removeClass("play");
+				audio.play();//开始播放
+				dragMove();//并且滚动条开始滑动
+			})
+      	}
+      	rs.replyed = 0;
+      	if(rs.reply){
+      		for(var i in rs.reply){
+      			if(rs.reply[i]['suid']==state.token){
+      				rs.reply[i]['isreply'] = 0;
+							rs.replyed = 1
+      			}else{
+      				rs.reply[i]['isreply'] = 1;
+      			}
+      		}
+      	}
+      	$('.header-title').text(rs.title)
+      	$('.total').text(rs.price)
+      	
+      	if(rs.ispay==1){
+      		ispayed = rs.ispay;
+      		$('.trade-date').addClass('ispayed')
+      		$('.trade-date').text('已报名')
+      	}
+      	
+      	var widgets = template('counsellor_info', rs);
         $('.counsellor-homepage-content').append(widgets);
         
         var desc = rs.describe
         $('.describe').html(desc); 
         var intro = rs.intro
         $('.intro').html(intro); 
-        mui(".mui-slider").slider();
-        
-        $(window).on('tap','.replytocl',function(){
-            if(!state.token){
-                mui.toast('请先登录！');return false;
-            }
-            if(ispayed==0){
-                mui.toast('未报名不能评论！');return false;
-            }
-            var data = rs;
-            var ruid = $(this).attr('data-suid');
-            var sname = $(this).attr('data-sname');
-            mui.prompt( "", "说点什么……","大观",["确认","取消"], function(e){
-                
-                
-                if(e.index==0){ 
-                    //处理
-                    var rparam = {
-                      'method': config.apimethod.clcareply,
-                      'source':config.source,
-                      'typeid': actype,
-                      'acid': acid,
-                      'account': state.token,
-                      'msg':e.value
-                      
-                    }
-                    $.dataRequest(rparam, function(rs) {
-                        mui.toast('提交成功');
-                        var rt = {
-                            suname:state.nickname,
-                            msg:e.value,
-                            ruid:0,
-                            created_time:parseInt(new Date().getTime()/1000)
-                            
-                        };
-                        if(ruid){
-                            rt = {
-                                suname:state.nickname,
-                                msg:e.value,
-                                ruid:ruid,
-                                runame:sname,
-                                created_time:parseInt(new Date().getTime()/1000)
-                                
-                            };
-                        }
-                        appendreply(rt);
-                    })
-                    console.log(e.value)
-                    
-                }
-            });
-        })
-        
+		mui(".mui-slider").slider();
+		
+		$(window).on('tap','.replytocl',function(){
+			if(!state.token){
+				mui.toast('请先登录！');return false;
+			}
+			if(ispayed==0){
+				mui.toast('未报名不能评论！');return false;
+			}
+			var data = rs;
+			var ruid = $(this).attr('data-suid');
+			var sname = $(this).attr('data-sname');
+			mui.prompt( "大观","说点什么……", " ", ["确认","取消"], function(e){
+				
+				if(e.index==0){ 
+					//处理
+					var rparam = {
+			          'method': config.apimethod.clcareply,
+			          'source':config.source,
+			          'typeid': actype,
+			          'acid': acid,
+			          'account': state.token,
+			          'msg':e.value
+			          
+			      	}
+					$.dataRequest(rparam, function(rs) {
+						mui.toast('提交成功');
+						var rt = {
+							suname:state.nickname,
+							msg:e.value,
+							ruid:0,
+							created_time:parseInt(new Date().getTime()/1000)
+							
+						};
+						if(ruid){
+							rt = {
+								suname:state.nickname,
+								msg:e.value,
+								ruid:ruid,
+								runame:sname,
+								created_time:parseInt(new Date().getTime()/1000)
+								
+							};
+						}
+						appendreply(rt);
+					})
+					console.log(e.value)
+					
+				}
+			});
+		})
+		
         $(window).on('tap', '.trade-date', function() {
-            var state = app.getState();
-            if(state.token){
-                if($(this).hasClass('ispayed')){
-                    return;
-                }
-                if(actype==0){
-                    actype = 2;
-                }else{
-                    actype = 3;
-                }
-                //生成订单
-                var param1 = {
-                  'method': config.apimethod.createClacTrade,
-                  'source':config.source,
-                  'clacid': acid,
-                  'paytype': actype,
-                  'account': state.token 
-                }
+	      	var state = app.getState();
+	      	if(state.token){
+	      		if($(this).hasClass('ispayed')){
+					return;
+				}
+	      		if(actype==0){
+	      			actype = 2;
+	      		}else{
+	      			actype = 3;
+	      		}
+	      		//生成订单
+	      		var param1 = {
+				  'method': config.apimethod.createClacTrade,
+				  'source':config.source,
+				  'clacid': acid,
+				  'paytype': actype,
+				  'account': state.token 
+				}
 
+				w=plus.nativeUI.showWaiting();
 
-                $.dataRequest(param1, function(rs) {
-                    mui.toast('订单创建成功！');
-                  window.location.href = "{:url('Checkout/clacpay')}"+'?price='+rs.price+'&tid='+rs.tid;
-                    // clicked('_www/view/checkout/clacpay.html',{
-                    //     'tid':rs.tid,
-                    //     'price':rs.price,
-                    // })
+				$.dataRequest(param1, function(rs) {
+					w.close();w=null;
+//					log(rs);return false;
+					clicked('_www/view/checkout/clacpay.html',{
+			      		'tid':rs.tid,
+			      		'price':rs.price,
+			      	})
+				})
+	      		
+	      	}else{
+	      		//去登录 
+				var faid = plus.webview.currentWebview().id;
+		        clicked('_www/view/passport/login.html', {
+		          'faid': faid
+		        }, 'slide-in-bottom');
+	      	}
+	      	
+	      })
+        	//分享
+	        $(window).on('tap','.share',function(){
+	        		var state = app.getState();
+				var shareData = {
+		            title: rs.title, 
+		            href: 'http://www.pgyer.com/kl4C', 
+		            desc: rs.title,
+		            content:rs.title,
+		            pic: 'http://39.105.4.51:88/uploads/images/logo.png'
+		          };
+		          
+		          log(shareData)
+		          var param = {
+			          'method': config.apimethod.share,
+			          'source':config.source,
+			          'account': state.token
+			      	}
+					$.dataRequest(param, function(rs) {
+						mui.toast(rs)	
+					})
+					setTimeout(function(){
+                        sosh('.datasetconfig', {
+                            sites: ['weixin'],
+                            href: 'http://www.pgyer.com/kl4C', 
+                            title: rs.title,
+                            pic: 'http://39.105.4.51:88/uploads/images/logo.png'
+                        })
+						// appshare(shareData);
+					},1000)
+					
+		         
+			}) 
 
-                })
-                
-            }else{
-                //去登录 
-                var faid = plus.webview.currentWebview().id;
-                clicked('_www/view/passport/login.html', {
-                  'faid': faid
-                }, 'slide-in-bottom');
-            }
-            
-          })
-          //分享
-          $(window).on('tap','.share',function(){
-            
-
-              var state = app.getState();
-              var shareData = {
-                  title: rs.title, 
-                  href: 'http://www.pgyer.com/kl4C', 
-                  desc: rs.title,
-                  content:rs.title,
-                  pic: 'http://39.105.4.51:88/uploads/images/logo.png'
-                };
-                
-                var param = {
-                    'method': config.apimethod.share,
-                    'source':config.source,
-                    'account': state.token
-                  }
-                  $.dataRequest(param, function(rs) {
-                      mui.toast(rs)   
-                  })
-                  setTimeout(function(){
-                    sosh('.datasetconfig', {
-                      sites: ['weixin']
-                    })
-                      // appshare(shareData);
-                  },1000)
-                  
-               
-          })
-          // $(window).on('tap','#listen',function(){
-          //   if(plus.os.name=='Android'){
-          //       clicked('_www/view/clac/audio.html',{audio:rs.audio});return false;
-          //   }
-
-          //   var audio = document.createElement("audio");
-          //   audio.src = config.imgser+rs.audio;
-          //   if(audio.paused){ //如果当前是暂停状态
-          //           audio.play(); //播放
-          //           mui.toast('播放中')
-          //           return;
-          //   }else{//当前是播放状态
-          //       audio.pause(); //暂停
-          //   }
-          // })
-          //收藏
-          $(window).on('tap','#fav',function(){
-                  var state = app.getState();
-              if(state.token){
-                  if($(this).hasClass('isfaved')){
-                      return;
-                  }
-                  //
-                  if(actype==0){
-                      actype = 1;
-                  }else{
-                      actype = 2; 
-                  }
-                  var param = {
-                    'method': config.apimethod.addfav,
-                    'source':config.source,
-                    'typeid': actype,
-                    'fid': acid,
-                    'account': state.token
-                    
-                  }
-                  log(param) 
-                  $.dataRequest(param, function(rs) {
-                      $(this).addClass('isfaved');
-                      $('#fav').text('已收藏') 
-                  })
-                   
-              }else{
-                  mui.toast('请去登录')
-              }
-              
-          })
-      
-    })
-    function appendreply(data){
-        var widgets = template('append_reply', data);
+	        //收藏
+	        $(window).on('tap','#fav',function(){
+	        		var state = app.getState();
+	      		if(state.token){
+	      			if($(this).hasClass('isfaved')){
+						return;
+					}
+					//
+					if(actype==0){
+		      			actype = 1;
+		      		}else{
+		      			actype = 2; 
+		      		}
+					var param = {
+			          'method': config.apimethod.addfav,
+			          'source':config.source,
+			          'typeid': actype,
+			          'fid': acid,
+			          'account': state.token
+			          
+			      	}
+					$.dataRequest(param, function(rs) {
+						$(this).addClass('isfaved');
+						$('#fav').text('已收藏') 
+					})
+					 
+	      		}else{
+	      			mui.toast('请去登录')
+	      		}
+				
+			})
+      });
+      function appendreply(data){
+      	var widgets = template('append_reply', data);
         $('.reply-list').append(widgets);
       }
   </script>

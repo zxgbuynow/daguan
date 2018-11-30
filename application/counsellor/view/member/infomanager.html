@@ -55,6 +55,14 @@
               </div>
             </a>
           </li>
+           <li id="experience" class="mui-table-view-cell">
+            <a class="mui-navigate-right">
+              <div class="mui-table">
+                <div class="mui-table-cell mui-col-xs-4">个人简介</div>
+                <div id="experience_val" class="mui-table-cell mui-col-xs-8 mui-text-right"></div>
+              </div>
+            </a>
+          </li>
         </ul>
       </section>
     </section>
@@ -103,6 +111,10 @@
       });
       document.getElementById('social').addEventListener('tap', function() {
         window.location.href = "{:url('Member/social')}";
+        // clicked('_www/view/member/social.html')
+      });
+      document.getElementById('experience').addEventListener('tap', function() {
+        window.location.href = "{:url('Member/experience')}";
         // clicked('_www/view/member/social.html')
       });
       document.getElementById('bind').addEventListener('tap', function() {

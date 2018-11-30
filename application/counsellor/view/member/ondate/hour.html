@@ -64,6 +64,9 @@
 			  	height: 121.59px;
 			  	line-height: 121.59px;
 			  }
+			 
+			  
+			  
 		}
     </style>
   </head>
@@ -71,41 +74,11 @@
   <body>
     <header class="page-header">
     	  <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
-      <div class="header-title">当前工作按排情况</div>
+      <div class="header-title">当前工作安排情况</div>
+      <i id="all_clander" class="header-right txt-func mui-hidden" >批量设置</i>
     </header>
-    <div class="container" id="container"> 
-       <!--<section class="mui-keyboards">
-			<div class="mui-number-section">
-				<p class="mui-num-btn mui-u-1of4" data-val="7">19:00~20:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4 mui-btn-danger" data-val="7">9:00<span style="font-size: 15px;"><br />约满</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4 mui-btn-danger" data-val="7">9:00<span style="font-size: 15px;"><br />约满</span></p>
-				<p class="mui-num-btn mui-u-1of4 mui-btn-grey" data-val="7">9:00~10:00<span style="font-size: 15px;"><br />不预约</span></p>
-				
-			</div>
-			<div style="text-align: center; margin-top: 20px;">
-				<p>咨询师电话：1832127131</p> 
-			</div>
-		</section>-->
+    <div class="container ondate-time-main" id="container">
+			
     </div> 
    
     
@@ -115,10 +88,44 @@
     <script src="__C_JS__/config.js"></script>
     <script src="__C_JS__/app.js"></script>
     <script type="text/html" id="container_list">
+		<div class="set-box">
+			<p>批量设置</p>
+			<div class="time-slots flex-box">
+				<% for(var i in timebt) { %>
+					<a data-val="<%= i%>"  class="item <%if (timebt[i].s=='3'){%>on<%}%><%if (timebt[i].s=='0'){%>enble<%}%>"
+						><%= i%></a>
+				<% }%>
+				<!--<a class="item">0:00-6:00</a>
+				<a class="item on">6:00-18:00</a>
+				<a class="item">18:00-24:00</a>-->
+			</div>
+		</div>
+		<div class="time-items mui-clearfix">
+			<% for(var i=0; i<list.length; i++) { %>
+				<span 
+					<%if (list[i].s=='1'){%>
+					class="set-btn filled"
+					<%}else if(list[i].s=='2'){%>
+					class="set-btn disabled"
+					<%}else if(list[i].s=='3'){%>
+					class="set-btn"
+					<%}else{%>
+					class="set-btn unable"
+					<%}%>
+				 data-val="<%= list[i].t%>"><i><%= list[i].t%></i></span>
+			<%}%>
+		</div>
+		<div class="mc-remark-options">
+			<p class="on"><i></i><span>可预约</span></p>
+			<p class="unable"><i></i><span>可设置</span></p>
+			<p class="filled"><i></i><span>已约满</span></p>
+		</div>
+    	</script>
+    <script type="text/html" id="container_list1">
     		<section class="mui-keyboards">
 			<div class="mui-number-section">
 				<% for(var i=0; i<list.length; i++) { %>
-				<p class="mui-num-btn mui-u-1of4 <%if (list[i].s=='1'){%> mui-btn-danger <%}else if(list[i].s=='3'){%> mui-btn-green if(list[i].s=='2'){%> mui-btn-grey <%}%>" data-val="<%= list[i].t%>"><%= list[i].t%>
+				<p class="mui-num-btn mui-u-1of4 <%if (list[i].s=='1'){%> mui-btn-danger <%}else if(list[i].s=='3'){%> mui-btn-green <%}else if(list[i].s=='2'){%> mui-btn-grey <%}%>" data-val="<%= list[i].t%>"><%= list[i].t%>
 					<%if (list[i].s=='1'){%>
 						<span style="font-size: 15px;"><br />约滿</span>
 					<%}else if(list[i].s=='2'){%>
@@ -138,14 +145,30 @@
 		</section>
     	</script>
     <script type="text/javascript">
-    	//mui-btn-danger mui-btn-grey 
-	      // var curdate = plus.webview.currentWebview().curdate;
 	      var result = window.location.href;
-      		var curdate = $.getUrlParam(result,'curdate');
+      	  var curdate = $.getUrlParam(result,'curdate');
 	      var state = app.getState();
-
+	      
+	      document.getElementById("all_clander").addEventListener('tap',function(){
+	      	var dayn = new Date(curdate);
+  			var days = dayn.getFullYear()+'-'+(dayn.getMonth()+1)+'-'+dayn.getDate();
+  			var param = {
+		          'method': config.apimethod.setallcalenda,
+		          'account': state.token,
+		          'day': days,
+		          'source':config.source
+		      }
+		      $.dataRequest(param, function(rs) {
+		      	mui.toast('批量预约设置成功')
+	        		setTimeout(function(){
+		          	var ws = plus.webview.currentWebview();
+		          	plus.webview.close(ws,'slide-out-bottom');
+	        		},1000);
+		      })
+	      })
+	      
+		 
 	      //时间分段
-//	      var times = ['9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00'];
 	      var times = ['9:00~10:00','10:00~11:00','11:00~12:00','12:00~13:00','13:00~14:00','14:00~15:00','14:00~15:00','15:00~16:00','16:00~17:00','17:00~18:00','18:00~19:00','19:00~20:00','20:00~21:00'];
 	      var param = {
 	          'method': config.apimethod.calendaondate,
@@ -157,38 +180,95 @@
 	      $.dataRequest(param, function(rs) {
 	      	var widgets = template('container_list', rs);
         		$('.container').append(widgets);
-        	
-			mui('.container').on('tap','.mui-num-btn',function(){
-	      		if(!$(this).hasClass('mui-btn-grey')&&!$(this).hasClass('mui-btn-danger')&&!$(this).hasClass('mui-btn-green')){
-	      			var hour = $(this).data('val').split('~');
+        	mui('.container').on('tap','.set-btn',function(){
+	      		if($(this).hasClass('unable')){
+	      			var hour = $(this).data('val');
 	      			var dayn = new Date(curdate);
-	      			var days = dayn.getFullYear()+'-'+(dayn.getMonth()+1)+'-'+dayn.getDate()+' '+hour[0];
-	      			var btnArray = ['是', '否'];
-			        mui.confirm('确认可预约么?', '', btnArray, function(e) {
-			          	if (e.index == 1) {
-				          	var param = {
+	      			var days = dayn.getFullYear()+'-'+(dayn.getMonth()+1)+'-'+dayn.getDate()+' '+hour;
+
+	      			mui.confirm( "确认可预约么?",' ',['确认','取消'], function(e){
+						if(e.index==0){
+							var param = {
 					          'method': config.apimethod.setcalenda,
 					          'account': state.token,
 					          'hour': days,
 					          'source':config.source
-						    }
-							$.dataRequest(param, function(rs) {
-							 	mui.toast('预约成功')
+					      }
+						
+						 $.dataRequest(param, function(rs) {
+						 	mui.toast('设置成功')
 				        		setTimeout(function(){
-				        			window.location.href = "{:url('Member/member')}"
+					          	var ws = plus.webview.currentWebview();
+					          	plus.webview.close(ws,'slide-out-bottom');
 				        		},1000);
-							})
-			          	}
-
-
-			        })
-	      			
+						 })
+							
+						}
+					});
+	      		}else{
+	      			if(!$(this).hasClass('disabled')&&!$(this).hasClass('filled')&&!$(this).hasClass('unable')){
+	      				var hour = $(this).data('val');
+		      			var dayn = new Date(curdate);
+		      			var days = dayn.getFullYear()+'-'+(dayn.getMonth()+1)+'-'+dayn.getDate()+' '+hour;
+	
+		      			mui.confirm( "确认取消预约设置么?", " ",['确认','取消'],function(e){
+							if(e.index==0){
+								var param = {
+						          'method': config.apimethod.setcalenda,
+						          'account': state.token,
+						          'hour': days,
+						          'iscancle':1,
+						          'source':config.source
+						      }
+							 $.dataRequest(param, function(rs) {
+							 	mui.toast('取消成功')
+				        		setTimeout(function(){
+					          		mui.back();
+				        		},500);
+							 })
+								
+							}
+						});
+	      				
+	      			}
 	      		}
 	      		
 	      	})
 
-	      	
+    		//批量设置
+    		mui('.time-slots').on('tap','a',function(){
+	      	var dayn = new Date(curdate);
+  			var days = dayn.getFullYear()+'-'+(dayn.getMonth()+1)+'-'+dayn.getDate();
+  			var rangetm = $(this).data('val');
+  			if(!$(this).hasClass('unable')){
+  				var param = {
+			          'method': config.apimethod.setallcalenda,
+			          'account': state.token,
+			          'day': days,
+			          'range':rangetm,
+			          'source':config.source
+			      }
+			      $.dataRequest(param, function(rs) {
+			      	mui.toast('批量预约设置成功');
+	        		setTimeout(function(){
+	        			mui.back();
+	        		},500);
+			      })
+
+  			}
+  			// else{
+
+  			// 	if($(this).hasClass('on')){
+  					
+  			// 		console.log('暂不能取消')
+  			// 	}
+  			// }
+  			
 	      })
+        		
+
+	      	
+	    })
     </script>
   </body>
 

@@ -6,213 +6,249 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__M_FONT__/iconfont.css" />
     <link rel="stylesheet" href="__M_CSS__/counsellor.css" />
     <link rel="stylesheet" href="__M_CSS__/style.css" />
-    
-    <style type="text/css">
-        .mui-badge{
-                margin-left: 185px!important;
-                top: 5.5rem!important;
-                position: absolute;
-            }
-            .counsellor-info{
-                margin-bottom: 0.6rem;
-                padding-top: 1rem;
-            }
-            .counsellor-head-content{
-                text-align: center;
-                padding-top: 2rem;
-                padding-bottom: 1rem;
-                background: url(__M_IMG__/head-bg.png) no-repeat;
-                background-size: 100% 100%;
-                margin-bottom: 0.6rem;
-            }
-            .counsellor-head-content .avatar{
-                height: 9rem;
-                width: 9rem;
-                border-radius: 50%;
-                border: 5px solid #fff;
-            }
-            .counsellor-head-content .teacher-name{
-                font-size: 25px;
-                font-weight: 600;
-                margin-top: 0.8rem;
-            }
-            .counsellor-head-content .zixun-time-block{
-                padding-bottom: 0;
-                margin-bottom: 0;
-                background: transparent;
-            }
-            .counsellor-head-content .zixun-time-block .star{
-                width: 13px;
-                height: 14px;
-            }
-            .counsellor-homepage-content{
-                padding: 0;
-            }
-            .counsellor-homepage-content .qualification-block{
-                border-radius: 0;
-            }
-            .counsellor-homepage-content .qualification-block .section{
-                padding: 0 0.5rem;
-                margin: 0;
-            }
-            .counsellor-homepage-content .qualification-block .section .certification{
-                height: auto;
-            }
-            .counsellor-homepage-content .qualification-block .section .title{
-                padding-top: 10px;
-                margin-bottom: 5px;
-            }
-            .counsellor-homepage-content .tags .tag2{
-                position: relative;
-                padding: 0 0.2rem;
-                color: #666;
-                font-size: 13px;
-            }
-            .counsellor-homepage-content .tags .tag2:first-child{
-                padding-left: 0;
-            }
-            .counsellor-homepage-content .tags .tag2:after{
-                content: '|';
-                position: absolute;
-                right: -0.3rem;
-                color: #ff8888;
-                top: -0.2rem;
-            }
-            .counsellor-homepage-content .zixun-way-section .zixun-way .label{
-                margin-bottom: 0;
-            }
-            .price .num{
-                color: #5fd2ca;
-            }
-            .price .num .symbol{
-                font-size: 10px;
-            }
-            .price img{
-                width: 19px;
-                height: 12px;
-                vertical-align: text-bottom;
-            }
-            .zixun-desc{
-                color: #000;
-                font-size: 14px;
-                padding: 0 0.5rem;
-            }
-            #register_next {
-                background: url(__M_IMG__/icon-btnbg.png) no-repeat;
-                background-size: 100% 100%;
-                border-color: inherit;
-                border: 0;
-                width: 60%;
-                margin: 0 auto;
-            }
-            .mui-content-padded{
-                padding-top: 1rem;
-            }
-            .certifi{
-                color: #666;
-                font-size: 14px;
-            }
-            .comment-con{
-                margin: 0.8rem 0;
-            }
-            .comment-con img{
-                width: 24px;
-                height: 16px;
-            }
-            .op-group .op-group-item{
-                color: #fff;
-                height: 100%;
-                line-height: 3.25rem;
-            }
-            .op-group .trade-talk{
-                background: #41ACD9;
-            }
-            .op-group .trade-confirm{
-                background: #41B7D9;
-                box-shadow: 4px 4px 10px #d84f34;
-            }
-            .op-group .trade-date{
-                background: #41C5D9; 
-            }
-            .op-group .op-group-item.col-half:after{
-                display: none;
-            }
-            .qualification-block.desc{
-                margin-bottom: 0;
-            }
+    <style>
+			header{
+				height: 44px;
+			}
+			.mui-badge{
+				margin-left: 185px!important;
+				top: 5.5rem!important;
+				position: absolute;
+			}
+			.counsellor-info{
+				margin-bottom: 0.6rem;
+				padding-top: 1rem;
+			}
+			.counsellor-head-content{
+				text-align: center;
+				padding-top: 4rem;
+				padding-bottom: 0.4rem;
+				/*background: url(../../img/head-bg.png) no-repeat;*/
+				background-size: 100% 100%;
+				margin-bottom: 0.6rem;
+				color: #fff;
+			}
+			.counsellor-head-content .avatar{
+				height: 6rem;
+				width: 6rem;
+				border-radius: 50%;
+				border: 5px solid #fff;
+			}
+			.counsellor-head-content .teacher-name{
+				font-size: 25px;
+				font-weight: 600;
+				margin-bottom: 0.2rem;
+			}
+			.counsellor-head-content .zixun-time-block{
+				padding-bottom: 0;
+				margin-bottom: 0;
+				background: transparent;
+			}
+			.counsellor-head-content .zixun-time-block .star{
+				width: 13px;
+				height: 14px;
+			}
+			.counsellor-homepage-content{
+				padding: 0;
+			}
+			.counsellor-homepage-content .qualification-block{
+				border-radius: 0;
+			}
+			.counsellor-homepage-content .qualification-block .section{
+				padding: 0 0.5rem;
+				margin: 0;
+			}
+			.counsellor-homepage-content .qualification-block .section .certification{
+				height: auto;
+			}
+			.counsellor-homepage-content .qualification-block .section .title{
+				padding-top: 10px;
+				margin-bottom: 5px;
+			}
+			.counsellor-homepage-content .tags .tag2{
+				position: relative;
+				padding: 0 0.2rem;
+				color: #666;
+				font-size: 13px;
+			}
+			.counsellor-homepage-content .tags .tag2:first-child{
+				padding-left: 0;
+			}
+			.counsellor-homepage-content .tags .tag2:after{
+				content: '|';
+				position: absolute;
+				right: -0.3rem;
+				color: #ff8888;
+				top: -0.2rem;
+			}
+			.counsellor-homepage-content .zixun-way-section .zixun-way .label{
+				margin-bottom: 0;
+			}
+			.price .num{
+				color: #5fd2ca;
+			}
+			.price .num .symbol{
+				font-size: 10px;
+			}
+			.price img{
+				width: 19px;
+				height: 12px;
+				vertical-align: text-bottom;
+			}
+			.zixun-desc{
+				color: #000;
+				font-size: 14px;
+				padding: 0 0.5rem;
+			}
+			#register_next {
+		        background: url(__M_IMG__/icon-btnbg.png) no-repeat;
+		        background-size: 100% 100%;
+		        border-color: inherit;
+		        border: 0;
+		        width: 60%;
+		        margin: 0 auto;
+		    }
+		    .mui-content-padded{
+		    	padding-top: 1rem;
+		    }
+		    .certifi{
+		    	color: #666;
+		    	font-size: 14px;
+		    }
+		    .comment-con{
+		    	margin: 0.8rem 0;
+		    }
+		    .comment-con img{
+		    	width: 24px;
+		    	height: 16px;
+		    }
+		    .op-group{
+		    	 color: #FFFFFF;
+		    }
+		    .bbc-bar-tab{
+		    		height: 50px;
+		    }
+		    .bbc-bar-tab .bbc-tab-item{
+		    		width: 33.3%;
+		    		color:#333;
+		    		height: 50px;
+		    }
+		    .bbc-bar-tab .bbc-tab-item .mui-tab-label{
+		    		color: #333;
+		    }
+		    /*.op-group .op-group-item{
+		    	color: #fff;
+		    	height: 100%;
+		    	line-height: 3.25rem;
+		    }*/
+		    /*.op-group .trade-talk{
+		    	background: #41ACD9;
+		    }*/
+		    /*.op-group .trade-confirm{
+		    	background: #41B7D9;
+		    	box-shadow: 4px 4px 10px #d84f34;
+		    }
+		    .op-group .trade-date{
+		    	background: #41C5D9; 
+		    }*/
+		    /*.op-group .op-group-item.col-half:after{
+		    	display: none;
+		    }*/
+		    .qualification-block.desc{
+		    	margin-bottom: 0;
+		    }
+			.mui-table-view .mui-media-object{
+			    max-width: 72px; 
+	    			height: 72px;
+	    		}
+	    		.mui-media-text {
+	    			color: #646464;
+	    			font-size: 15px;
+	    		}
+	    		.mui-media-author {
+	    			font-size: 13px;
+	    			margin-top: 5px;
+	    		} 
+	    		.counsellor-homepage-content{
+	    			margin-bottom: 50px;
+	    		}
+				.btn-bg-pink {
+						display: inline-block;
+						border-radius: 10px;
+						background: #DC635F;
+						color: #fff;
+						padding: 2px 0;
+						margin-left: 4px;
+						font-size: 12px;
+				}
+				.btn-bg-pink.icon-king {
+						display: inline-block;
+						width: 72px;
+						padding-left: 18px;
+						background: #DC6361 url(__M_IMG__/king.png) no-repeat 3px 6px;
+						background-size: 12px 10px;
+				}
+				.sub-cell{
+					justify-content: normal;
+					align-items: normal;
+				}
+
+			.blue{
+				color: #4284DE;
+			}
+			.orange{
+				color: #F99607;
+			}
+			.pink{
+				color: #E95759;
+			}
     </style>
+    
   </head>
   <body>
     <header class="page-header">
       <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
       <div class="header-title">咨询师</div>
-
+      <!--<i id="addfriend" class="header-right txt-func ">与他交流</i>-->
+    </header>
+    <header class="page-header nobd">
+      <div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+      <i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+      <h1 class="mui-center mui-title">咨询师</h1>
+      </div>
     </header>
     <div class="counsellor-homepage-content">
-    <section class="container section-white counsellor-info">
-            <!--<div class="counsellor-homepage-content">
-            <div class="brief-info">
-                <div class="avatar-container">
-                    <img src="https://ossimg.xinli001.com/20170823/c91ab41f014b8df7bb2e8d4df9b594ca.png!120x120" class="avatar">            
-                </div>
-                <h2 class="teacher-name">朱志慧</h2>
-            </div>
-            <div class="zixun-time-block">
-                <p class="txt">我在大观心理温暖过<span class="times">95</span>人次</p>
-            </div>
-            <div class="qualification-block">
-                <div class="section">
-                    <h3 class="title">从业资质<span class="year">从业10年</span></h3>
-                    <p class="certification">国家二级咨询师 | 博士学位证书 | 博士毕业证书</p>
-                    <i class="icon-teacherpage-new ic-stamp"></i>
-                </div>
-                <div class="section">
-                    <h3 class="title">擅长领域</h3>
-                    <div class="tags">
-                        <span class="tag1">婚姻家庭</span>
-                        <span class="tag1">心理健康</span>
-                        <span class="tag1">亲子教育</span>
-                    </div>
-                </div>
-                <div class="section obj" style="margin-top: 1.5rem;">
-                    <div class="zixun-way-section">
-                        <div class="zixun-way">
-                            <img src="../../img/wenzi.png" />
-                            <span class="label">文字聊天</span>
-                            <span class="price"><span class="symbol">￥</span><span class="num">300</span>/次</span>
-                        </div>
-                        <div class="zixun-way">
-                            <img src="../../img/yuying.png" />
-                            <span class="label">语音通话</span>
-                            <span class="price"><span class="symbol">￥</span><span class="num">500</span>/次</span>
-                        </div>
-                        <div class="zixun-way">
-                            <img src="../../img/video.png" />
-                            <span class="label">视频聊天</span>
-                            <span class="price"><span class="symbol">￥</span><span class="num">600</span>/次</span>
-                        </div>
-                        <div class="zixun-way">
-                            <img src="../../img/face.png" />
-                            <span class="label">面对面</span>
-                            <span class="price"><span class="symbol">￥</span><span class="num">800</span>/次</span>
-                        </div>
-                    </div>
-                </div>  
-            </div>
-        </div>-->
-        
-    </section>
-    </div>
-    <!-- <section class="action-bar-mini op-group mui-hidden">
-        <div class="op-group-item col-half trade-confirm">立即预约</a></div>
-    </section> -->
-    <section class="action-bar-mini op-group mui-hidden">
-        <div class="op-group-item col-half trade-talk mui-hidden" id="addfriend">与他沟通</a></div>
+			
+			
+	</div>
+	<nav class="mui-bar bbc-bar-tab op-group " >
+      <a class="bbc-tab-item  trade-talk mui-hidden">
+        <span class="iconfont icon-xiaoxi bbc-tab-mui-icon"></span>
+        <span class="mui-tab-label">与他沟通</span>
+      </a>
+      <a class="bbc-tab-item trade-confirm" >
+        <span class="iconfont icon-shijian bbc-tab-mui-icon iconfw_normal"></span>
+        <span class="mui-tab-label">预约</span>
+      </a>
+      <a class="bbc-tab-item addfav" >
+        <span class="iconfont icon-collection bbc-tab-mui-icon iconfw_normal"></span>
+        <span class="mui-tab-label ">收藏</span>
+      </a>
+      
+      <a class="bbc-tab-item trade-date  " >
+        <span class="iconfont icon-calendar bbc-tab-mui-icon iconfw_normal"></span>
+        <span class="mui-tab-label">咨询师日程表</span>
+      </a>
+   </nav>
+    <!--<section class="action-bar-mini op-group mui-hidden">
+        <div class="op-group-item col-half trade-talk" id="addfriend">与他沟通</a></div>
         <div class="op-group-item col-half trade-confirm" >预约</a></div>
-        <div class="op-group-item col-half trade-date mui-hidden">咨询师日程表</a></div>
-    </section>
+        <div class="op-group-item col-half trade-date">咨询师日程表</a></div>
+    </section>-->
+
   </body>
   <script src="__M_JS__/zepto.js"></script>
   <script src="__M_JS__/mui.min.js"></script>
@@ -220,171 +256,257 @@
   <script src="__M_JS__/config.js"></script>
   <script src="__M_JS__/app.js"></script>
   <script type="text/html" id="counsellor_info">
-        <section class="container section-white counsellor-info">
-            <div class="counsellor-head-content">
-                <img src="<%= $add_server(avar) %>" class="avatar">         
-                <!-- <% if(online==1 ){%>
-                    <span class="mui-badge mui-badge-green ">在线</span>
-                <%}else{%>
-                    <span class="mui-badge mui-badge-danger ">下线</span>
-                <%}%> -->
-                <h2 class="teacher-name"><%= nickname %></h2>
-            <!-- </div> -->
-                <div class="zixun-time-block">
-                    <img class="star" src="__M_IMG__/star-y.png">
-                    <img class="star" src="__M_IMG__/star-y.png">
-                    <img class="star" src="__M_IMG__/star-y.png">
-                    <img class="star" src="__M_IMG__/star-y.png">
-                    <img class="star" src="__M_IMG__/star-g.png">
-                    <!-- <p class="txt">我在大观心理温暖过<span class="times"><%= trade %></span>人次</p> -->
-                </div>
-            </div>
-        </section>
-        <section class="qualification-block">
-            <div class="section tags">
-                <h3 class="title">
-                    <span class="year">
-                        大观咨询师 | <%if(tearch){%>大观讲师 |<%}%><%if(leader){%>大观Leader<%}%>
-                    </span>
-                </h3>
-                <!--<p class="certification"><span class="tag2"><%= intro %></span></p>-->
-                <i class="icon-teacherpage-new ic-stamp"></i>
-            </div>
-            <div class="section">
-                <h3 class="title">擅长领域</h3> 
-                <div class="tags">
-                    <% for(var i=0; i<sign.length; i++) { %>
-                    <span class="tag2"><%= sign[i] %></span>
-                    <% } %>
-                </div>
-            </div>
-        </section>
-        <section class="section obj  qualification-block">
-            <div class="zixun-way-section">
-                <% for(var i=0; i<chartArr.length; i++) { %>
-                    <% if(chartArr[i].status){ %>
-                        <div class="zixun-way">
-                            <% if(chartArr[i].chart == 'wordchart'){ %>
-                                <img src="__M_IMG__/wenzi-new.png" />
-                            <% }else if(chartArr[i].chart == 'speechchart'){ %>
-                                <img src="__M_IMG__/yuyin.png" />
-                            <% }else if(chartArr[i].chart == 'videochart'){ %>
-                                <img src="__M_IMG__/face-new.png" />
-                            <% }else{ %>
-                                <img src="__M_IMG__/video-new.png" />
-                            <% } %>
-                            <span class="label"><%= chartArr[i].show %></span>
-                            <p class="price">
-                                <span class="num"><em class="symbol">￥</em><%= chartArr[i].price %></span><span>/小时</span>
-                            </p>
-                            <p class="price">
-                                <span class="num"><em class="symbol">￥</em><%= chartArr[i].price1 %></span><span>/小时</span><img src="__M_IMG__/meb.png">
-                                
-                            </p>
-                        </div>
-                    <% } %>
-                <% } %> 
-                <div class="zixun-desc">
-                    <p>心窝会员： </p>
-                    <p>36.5元，365天，文字语音咨询不限次数，<i style="color: red;">视频咨询（7月8日开放）</i></p>
-                </div>
-                <div class="mui-content-padded">
-                    <a href="{:url('Member/updatelv')}"><button id="register_next" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning action-webview" data-webview="_www/view/member/updatelv.html">升级为心窝会员</button></a>
-                </div>
-                
-            </div>
-        </section>
-        <section class="qualification-block desc">
-            <div class="section">
-                <h3 class="title">咨询师介绍</h3>
-                <div class="certifi fontS font-gray-20">
-                    <%= intro%>
-                </div>
-                <p class="comment-con">
-                    <img src="__M_IMG__/comment.png">
-                </p>
-            </div>
-      </section>
-  </script> 
-  <script type="text/html" id="counsellor_info1">
-    <div class="counsellor-homepage-content">
-            <div class="brief-info">
-                <div class="avatar-container">
-                    <img src="<%= avar %>" class="avatar">          
-                </div>
-                <h2 class="teacher-name"><%= nickname %></h2>
-            </div>
-            <div class="zixun-time-block">
-                <p class="txt">我在大观心理温暖过<span class="times"><%= trade %></span>人次</p>
-            </div>
-            <div class="qualification-block">
-                <div class="section">
-                    <h3 class="title">从业资质<span class="year"><%= employment %></span></h3>
-                    <p class="certification"><%= intro %></p>
-                    <i class="icon-teacherpage-new ic-stamp"></i>
-                </div>
-                <div class="section">
-                    <h3 class="title">擅长领域</h3> 
-                    <div class="tags">
-                        <% for(var i=0; i<sign.length; i++) { %>
-                        <span class="tag1"><%= sign[i] %></span>
-                        <% } %>
-                        <!--<span class="tag1">心理健康</span>
-                        <span class="tag1">亲子教育</span>-->
-                    </div>
-                </div>
-                <div class="section obj" style="margin-top: 1.5rem;">
-                    <div class="zixun-way-section">
-                        <% for(var i=0; i<chartArr.length; i++) { %>
-                            <% if(chartArr[i].status){ %>
-                                <div class="zixun-way">
-                                    <% if(chartArr[i].chart == 'wordchart'){ %>
-                                        <img src="__M_IMG__/wenzi.png" />
-                                    <% }else if(chartArr[i].chart == 'speechchart'){ %>
-                                        <img src="__M_IMG__/yuying.png" />
-                                    <% }else if(chartArr[i].chart == 'videochart'){ %>
-                                        <img src="__M_IMG__/video.png" />
-                                    <% }else{ %>
-                                        <img src="__M_IMG__/face.png" />
-                                    <% } %>
-                                    
-                                    <span class="label"><%= chartArr[i].show %></span>
-                                    <span class="price"><span class="symbol">￥</span><span class="num"><%= chartArr[i].price %></span>/次</span>
+  	<!--咨询师详情 start-->
+		<section class="container section-white counsellor-info">
+			<div class="counsellor-head-content">
+				<img src="<%= $add_server(avar) %>" class="avatar">			
+				<h2 class="teacher-name"><%= nickname %></h2>
+				<p class="card-addrs card-ellispse"><%= slogan %></p>
+				<p class="doctor-honor card-ellispse">
+					<span>住进 <%= trade %> 个人的心窝</span>
+					<span class="star">好评率： <%= percent %></span>
+				</p>
+				<p class="doctor-address card-ellispse">
+					<i class="iconfont icon-dizhi- iconfont-icon-doctype small gray rt1"></i>
+					<span><%= shopidsnm %></span>
+				</p>
+				<div class="zixun-time-block">
+					<img class="star" src="__M_IMG__/star-y.png">
+					<img class="star" src="__M_IMG__/star-y.png">
+					<img class="star" src="__M_IMG__/star-y.png">
+					<img class="star" src="__M_IMG__/star-y.png">
+					<% if(start>8 ){%>
+						<img class="star" src="__M_IMG__/star-y.png">
+					<%}else{%>
+						<img class="star" src="__M_IMG__/star-g.png">
+					<%}%>
+				</div>
+			</div>
+			<div class="doctor-sign-sublist">
+				<p class="doctor-sign-item card-ellispse">
+					<i class="iconfont icon-renzhengzixunshi- iconfont-icon-doctype small blue"></i>
+					<span>大观心理咨询师</span>
+				</p>
+				
+				<%if(tearch){%> 
+				<p class="doctor-sign-item card-ellispse">
+					<i class="iconfont icon-renzhengjiangshi- iconfont-icon-doctype small orange"></i>
+					<span>大观心理认证讲师</span>
+				</p>
+				<%}%>
+				<%if(leader){%>
+				<p class="doctor-sign-item card-ellispse">
+					<i class="iconfont icon-xiaotuantiLeader- iconfont-icon-doctype small pink"></i>
+					<span>大观心理认证小团体Leader</span>
+				</p>
+				<%}%>
+			</div>
+			<div class="section">
+				<h3 class="title">擅长</h3>
+				<div class="doctor-sign-list">
+					<% for(var m in signarr) { %>
+						<span><%= signarr[m] %></span>
+					<% }%>
+					
+				</div>
+			</div>
+			<div class="section">
+				<div class="consult-way-section mui-clearfix">
+					<% for(var i=0; i<chartArr.length; i++) { %>
+  						<% if(chartArr[i].status){ %>
+							<div class="consult-way flex-box">
+								<div class="flex-g1 con-img">
+									<% if(chartArr[i].chart == 'wordchart'){ %>
+										<img src="__M_IMG__/consult_txt.png" />
+									<% }else if(chartArr[i].chart == 'speechchart'){ %>
+										<img src="__M_IMG__/consult_tel.png" />
+									<% }else if(chartArr[i].chart == 'videochart'){ %>
+										<img src="__M_IMG__/consult_offline.png" />
+									<% }else{ %>
+										<img src="__M_IMG__/consult_video.png" />
+									<% } %>
+								</div>
+								<div class="con-way-content">
+									<span class="label"><%= chartArr[i].show %></span>
+									<p class="price">
+										<span class="num"><em class="symbol">￥</em><%= chartArr[i].price %></span><span>/小时</span>
+									</p>
+									<p class="price">
+										<span class="num"><em class="symbol">￥</em><%= chartArr[i].price1 %></span><span>/小时</span>
+										<span class="bd-vip-text">会员</span>
+									</p>
+								</div>	
+							</div>
+						<% } %>
+					<% } %>	
+				</div>
+				<div class="cons-submit-options">
+					<% if(is_diamonds==0){ %>
+						<a class="cons-btn icon-heart action-webview" data-webview="_www/view/member/updatelv.html">
+							成为心窝会员
+						</a>
+					<% } %>
+					<a class="cons-btn icon-free-heart action-webview" data-webview="_www/view/member/updatelv.html">
+						赠送心窝会员
+					</a>
+				</div>
+			</div>
+			
+		  <div class="doct-estimate-section">
+				<div class="section-title cons-detail-sub-header">
+					<div class="title-txt bg-blue-txt">评价</div>
+					<div class="more-link action-webview wd2" data-webview="_www/view/counsellor/eve.html" data-webparam = '{"counsellor_id":<%= counsellor_id %>}'>更多&gt
+					</div>
+				</div>
+				<div class="doct-estimate-body">
+					<ul class="mui-table-view">
+						<% for(var i in evalist) { %>
+						<li class="list-cell mui-media " >
+                            <a class="sub-cell flex-box">
+                                <div class="header-img42">
+                                    <img  src="<%= $add_server(evalist[i].avar) %>" onerror="Javascript:this.src='__M_IMG__/widgets_02_19.png' ">
                                 </div>
-                            <% } %>
-                        <% } %> 
-                    </div>
-                </div>  
-            </div>
-        </div>
-  </script> 
+                                <div class="mui-media-body content-list w1">
+                                    <div class="clearfix content-sub">
+                                        <p class="mui-pull-left uname"><%= evalist[i].nickname %>
+                                            <%if(evalist[i].is_diamonds){ %>
+                                            <span class="btn-bg-pink icon-king">心窝会员</span><%}%>
+                                        </p>
+                                        <p class="mui-pull-right utime">时间： <%= $timestamp_To_Date(evalist[i].create_time) %></p>
+                                    </div>
+                                    <p class="star-item">
+                                        <img class="star" src="__M_IMG__/star-y.png">
+                                        <img class="star" src="__M_IMG__/star-y.png">
+                                        <img class="star" src="__M_IMG__/star-y.png">
+                                        <img class="star" src="__M_IMG__/star-y.png">
+                                        <% if(evalist[i].sorce>8 ){%>
+                                            <img class="star" src="__M_IMG__/star-y.png">
+                                        <%}else{%>
+                                            <img class="star" src="__M_IMG__/star-g.png">
+                                        <%}%>
+                                    </p>
+                                    
+                                </div>
+                            </a>
+                            <p class='item-desc'><%= evalist[i].cotent %></p>
+                        </li>
+						<% } %>
+					</ul>	
+				</div>
+			</div>
+			<div class="doct-article-section">
+				<div class="section-title art-header">
+					<div class="title-txt">相关文章</div>
+					<a href="{:url('Artical/index')}"><div class="more-link  wd2 " data-webview="_www/view/artical/list.html">更多&gt</a>
+					</div>
+				</div>
+				<div class="doct-article-body">
+					<ul class="mui-table-view">
+						<% for(var i in article) { %>
+						<li class="list-cell mui-media " data-webview="_www/view/member/article/detail.html"  data-webparam = '{"article_id":<%= article[i].id %>}'>
+							<a href="{:url('Artical/detail')}?article_id=<%= article[i].id %>"  class="sub-cell">
+								<img class="mui-media-object mui-pull-left" src="<%= $add_server(article[i].cover) %>">
+								<div class="mui-media-body">
+									<h3><%= article[i].title %></h3>
+									<p class='mui-ellipsis-2 cell-desc'><%= article[i].description %></p>
+									<p class="mui-ellipsis cell-desc cell-author">作者：本人</p>
+								</div>
+							</a>
+						</li>
+						<% } %>
+					</ul>	
+				</div>	
+			</div>
+		</section>
+				
+	<!--咨询师详情 end-->
+  </script>
   <script>
+      var counsellor_mobile = 0;
       var result = window.location.href;
       var counsellor_id = $.getUrlParam(result,'counsellor_id');
-
+      var state = app.getState();
       var param = {
           'method': config.apimethod.counsellor,
           'source':config.source,
           'id': counsellor_id
       }
-      $.dataRequest(param, function(rs) {
-        if(!rs.avar){
-            rs.avar = '__M_IMG__/widgets_02_19.png';
+      if(state.token){
+	  	var param = {
+          'method': config.apimethod.counsellor,
+          'source':config.source,
+          'id': counsellor_id,
+          'account': state.token
+          
+      	}
+	  }
+      $.dataRequest(param, function(rs) { 
+      	counsellor_mobile = rs.mobile;
+      	rs.counsellor_id = counsellor_id;
+      	if(rs.isfav==1){
+      		$('.addfav').addClass('isfaved')
+      		$('.addfav').next('span').text('已收藏')
+      	}
+      	
+      	console.log(rs)
+      	var widgets = template('counsellor_info', rs);
+        $('.counsellor-homepage-content').append(widgets);
+        var text = $('.intro').text()
+        console.log(text);
+        if(text){
+        		var des = text.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ');
+	        $('.intro').empty()
+	        $('.intro').append(des)
         }
-        var widgets = template('counsellor_info', rs);
-        $('.counsellor-info').append(widgets);
+        
         $('.op-group').removeClass('mui-hidden')
+        	 // 
          mui('.mui-scroll-wrapper').scroll({
           indicators: false
         });
       });
+      
+      //查看咨询日程
+      $('.trade-date').on('tap',function(){
+      	window.location.href = "{:url('Member/ondate')}?counsellor_id="+counsellor_id;
+      })
+      
+      $('.addfav').on('tap',function(){
+      	
+		var state = app.getState();
+  		if(state.token){
+  			if($(this).hasClass('isfaved')){
+				return;
+			}
+			
+			var param = {
+	          'method': config.apimethod.addfav,
+	          'source':config.source,
+	          'typeid': 0,
+	          'fid': counsellor_id,
+	          'account': state.token
+	          
+	      }
+			$.dataRequest(param, function(rs) {
+				$(this).addClass('isfaved');
+				$('.addfav').next('span').text('已收藏')
+			})
+			 
+  		}else{
+  			mui.toast('请去登录')
+  		}
+      })
       //
       $(window).on('tap', '.trade-confirm', function() {
-        var state = app.getState();
-        if(!state.token){
-            window.location.href = "{:url('Passport/login')}"
-        }
-        window.location.href = "{:url('Checkout/index')}"+'?counsellor_id='+counsellor_id;
+      	var state = app.getState();
+      	if(state.token){
+      		window.location.href = "{:url('Checkout/index')}"+'?counsellor_id='+counsellor_id+'&counsellor_mobile='+counsellor_mobile;
+      		
+      	}else{
+      		window.location.href = "{:url('Passport/login')}"
+      		
+      	}
+      	
       })
   </script>
 </html>

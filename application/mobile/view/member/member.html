@@ -7,11 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
+		<link rel="stylesheet" href="__M_FONT__/iconfont.css" />
     <link rel="stylesheet" href="__M_CSS__/style.css">
+		    <link rel="stylesheet" href="__M_CSS__/member.css">
     <style type="text/css">
     .box {
-      height: 13rem;
+      height: 10rem;
       position: relative;
       overflow: hidden;
       background: #FFF;
@@ -28,7 +29,7 @@
       z-index: 5;
       transform: translate3d(0, 0, 0); }
 
-       .wave {
+    	 .wave {
       opacity: .4;
       position: absolute;
       top: 3%;
@@ -57,36 +58,62 @@
         transform: rotate(360deg); } }
 
       .user-header {
-        min-height: 11rem;
+        min-height: 9.2rem;
       }
       .user-accout{
-        color: #555555;
+      	color: #555555;
       }
       .box:after{
-        background:linear-gradient(to bottom, #00C7C9, rgba(221, 238, 255, 0) 80%, rgba(255, 255, 255, 0.5))
+				background: linear-gradient(to bottom right, #5A8FDF, rgba(90, 143, 223, 0.8) 50%, #5A8FDF 50%);
+      	/* background:linear-gradient(to bottom, #00C7C9, rgba(221, 238, 255, 0) 80%, rgba(255, 255, 255, 0.5)); */
+      	/*background:#4979DB;*/
+      	/*background: radial-gradient(shape size at position, start-color, #4979DB, color [stop] #4979DB, last-color);*/
       }
       .login-avatar{
-        border:0.2rem solid #00C7C9
+      	border:0.2rem solid #00C7C9
       }
     </style>
   </head>
 
   <body class="body-padding-xs">
     <div class="user-header box">
-      <a id="setting" data-view="{:url('Member/setting')}" class="user-setting bbc-icon bbc-icon-setting action-clickview" style="right: 4rem;"></a>
-      <a id="msg" data-view="{:url('Member/msg')}" class="user-setting bbc-icon bbc-icon-message-gap " ></a>
+      <a id="setting" data-view="{:url('Member/setting')}" class="user-setting bbc-icon bbc-icon-setting action-clickview" ></a>
+      <!-- <a id="msg" data-view="_www/view/member/msg.html" class="user-setting bbc-icon bbc-icon-message-gap mui-hidden" ></a> -->
       
       <div id="user_info" class="user-logined " data-view="_www/view/member/userinfo/userinfo.html">
-
+      	
+        <!-- <img class="mui-hidden start-icon" src="../../img/wdj.png" width="30px" style="z-index: 11;position: absolute;margin: 42px 42px;"/>
+        
         <div class="login-avatar">
-          <!-- <i class="bbc-icon bbc-icon-member fontB"></i> -->
-        <img class="userinfo-avatar" id="head-img" src="" />
+        		<img class="userinfo-avatar" id="head-img" src="" onerror="Javascript:this.src='../../img/newlogo.png' "/>
         </div>
         <div  class="user-accout">您好，<span id="account"></span></div>
-        <div><span id="grade_name" class="fontS font-yellow"></span></div>
+        <div><span id="grade_name" class="fontS font-yellow"></span></div> -->
+				<div class="flex-box member-header">
+					<div class="user-header-img">
+						<img class="userinfo-avatar" id="head-img" src="" onerror="Javascript:this.src='__M_IMG__/newlogo.png'"/>
+					</div>
+					<div class="user-info-body">
+						<h2 class="nicknm"></h2>
+						<p class="info">
+							<i class="iconfont icon-nanxing- mem-icon24"></i>
+							<span class="btn-bg-pink icon-king mui-hidden">心窝会员</span>
+						</p>
+						<p class="iconfont icon-shouji- mem-icon24 username"></p>
+						<!-- <h2 class="nicknm"></h2>
+						<p class="info">
+							<i class="iconfont icon-nanxing- mem-icon24 sex-i"></i>
+							<span class="btn-bg-pink mui-hidden">心窝会员</span>
+						</p>
+						<p class="iconfont icon-shouji- mem-icon24 username"></p> -->
+					</div>
+				</div>
       </div>
     </div>
-   
+		<div class="btn-user-options">
+			<a href="{:url('Member/updatelv')}?type=2"><span class="iconfont icon-zengsongxinwohuiyuan- btn-vip blue sendvip "  data-webparam='{"type":2}' data-webview="_www/view/member/apply.html"></span></a>
+			<a href="{:url('Member/updatelv')}?type=1"><span class="iconfont icon-chengweixinwohuiyuan- btn-vip pink tobevip  "  data-webparam='{"type":1}' data-webview="_www/view/member/apply.html"></span></a>
+		</div>
     <section class="section-white">
       <ul class="mui-table-view">
         <li data-needlog="true" data-view="{:url('Member/trade')}" class="mui-table-view-cell action-clickview">
@@ -95,10 +122,10 @@
         <li data-needlog="true" data-view="{:url('Member/record')}" class="mui-table-view-cell action-clickview">
           <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-password user-safe"></i> 我的咨询</a>
         </li>
-        <li data-needlog="true" data-view="" class="mui-table-view-cell mui-hidden">
+        <li data-needlog="true" data-view="_www/view/member/safe/safe.html" class="mui-table-view-cell mui-hidden">
           <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-password user-safe"></i> 测试管理</a>
         </li>
-        <li data-needlog="true" data-view="_www/view/member/favorite/favorite.html" class="mui-table-view-cell ">
+        <li data-needlog="true" data-view="{:url('Member/clac')}" class="mui-table-view-cell action-clickview">
           <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-history-gap user-favorite"></i> 我的课程/活动</a>
         </li>
       </ul>
@@ -106,78 +133,102 @@
 	
 	<section class="section-white">
       <ul class="mui-table-view">
+				<li data-needlog="true" data-view="_www/view/member/safe/safe.html" class="mui-table-view-cell action-clickview mui-hidden">
+					<a class="mui-navigate-right"><i class="iconfont icon-wodeqiabao- icon-user-card"></i> 我的卡包</a>
+				</li>
         <li data-needlog="true" data-view="{:url('Member/safe')}" class="mui-table-view-cell action-clickview">
           <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-rate-empty user-rate"></i> 账户管理</a>
         </li>
-        <li data-needlog="true" data-view="{:url('Member/point')}" class="mui-table-view-cell action-clickview">
-          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-communication user-complain"></i> 积分/优惠券</a>
+        <li data-needlog="true" data-view="{:url('Member/coupon')}" class="mui-table-view-cell action-clickview">
+          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-assets user-assets"></i> 优惠券</a>
         </li>
-        <li data-needlog="true" data-view="_www/view/member/favorite/favorite.html" class="mui-table-view-cell mui-hidden">
+        <li data-needlog="true" data-view="{:url('Member/fav')}" class="mui-table-view-cell action-clickview">
           <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-star-empty user-favorite"></i> 我的收藏</a>
         </li>
+        <li data-needlog="true" data-view="{:url('Member/complaint')}" class="mui-table-view-cell action-clickview">
+          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-communication user-complain"></i> 我的投诉</a>
+        </li>
+				<li data-needlog="true" data-view="_www/view/member/complaint/complaint.html" class="mui-table-view-cell action-clickview mui-hidden">
+					<a class="mui-navigate-right"><i class="iconfont icon-checkboxoutline icon-user-refund"></i> 我的退款</a>
+				</li>
       </ul>
     </section>
     
-    <nav class="mui-bar bbc-bar-tab">
+    <nav class="mui-bar bbc-bar-tab" >
       <a class="bbc-tab-item " href="{:url('Index/index')}">
-        <span class="mui-icon bbc-icon bbc-icon-home"></span>
+        <span class="iconfont icon-shouye bbc-tab-mui-icon"></span>
         <span class="mui-tab-label">首页</span>
       </a>
       <a class="bbc-tab-item " href="{:url('Counsellor/index')}">
-        <span class="mui-icon bbc-icon bbc-icon-list"></span>
+        <span class="iconfont icon-zixun bbc-tab-mui-icon"></span>
         <span class="mui-tab-label">咨询</span>
       </a>
       <a class="bbc-tab-item" href="{:url('Clac/index')}">
-        <span class="mui-icon bbc-icon bbc-icon-moments"></span>
+        <span class="iconfont icon-kechenghuodong- bbc-tab-mui-icon"></span>
         <span class="mui-tab-label">课程/活动</span>
       </a>
-      <!-- <a class="bbc-tab-item" href="{:url('Counsellor/index')}">
-        <span class="mui-icon bbc-icon bbc-icon-message"></span>
-        <span class="mui-tab-label">消息</span>
-      </a> -->
       <a class="bbc-tab-item bbc-active" >
-        <span class="mui-icon bbc-icon bbc-icon-user-empty"></span>
+        <span class="iconfont icon-wode bbc-tab-mui-icon"></span>
         <span class="mui-tab-label">我的</span>
       </a>
-    </nav> 
+   </nav>
+   
     
-    <script src="__M_JS__/zepto.js"></script>
+   
     <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/zepto.js"></script>
     <script src="__M_JS__/template.min.js"></script>
     <script src="__M_JS__/config.js"></script>
     <script src="__M_JS__/app.js"></script>
     <script type="text/javascript" charset="utf-8">
-		  //用户名
-		  $('#account').html(app.getState().account);
-      if(app.getState().account){
-        var param = {
-            'method': config.apimethod.userinfo,
-            'account': app.getState().account,
-            'source':config.source
-        }
-        $.dataRequest(param, function(rs) {
-          var data = rs;
-          if(data.avar){
-              console.log(data.avar)
-              document.getElementById("head-img").src = config.imgser+'/'+data.avar;
-          }else{
-              document.getElementById("head-img").src = '__M_IMG__/newlogo.png';
-          }
-        });
-      }else{
-        window.location.href = "{:url('Passport/login')}";
-      }
-      $(window).on('tap', '.action-clickview', function() {
-        var state = app.getState();
-        var _this = $(this).data('view');
-        if(_this && _this != '') {
-        	// clicked(_this);
-          window.location.href = _this
+    var state = app.getState();
+  	window.addEventListener('refresh', fetchMemberData);
+  	fetchMemberData();
+    function fetchMemberData(){
+      		//用户名
+			if(state.account){
+				
+				$('#account').html(state.account);
+				var param = {
+			          'method': config.apimethod.userinfo,
+			          'account': state.account,
+			          'source':config.source
+			      }
+			      $.dataRequest(param, function(rs) {
+			        var data = rs; 
+			        $('.username').html(data.username);
+			        $('.nicknm').html(data.nickname);
+			        if(data.sex==0){
+			        		$('.sex-i').removeClass('icon-nanxing-')
+			        		$('.sex-i').addClass('icon-nvxing-')
+			        }
+			        if(data.is_diamonds){
+			        		$('.btn-bg-pink').removeClass('mui-hidden')
+			        		$('.tobevip').addClass('mui-hidden')
+			        }
+			        if(data.avar){
+			            document.getElementById("head-img").src = config.imgser+data.avar;
+			        }
+			      });
+			}else{
+				//去登录 
+				var faid = plus.webview.currentWebview().id;
+            clicked('_www/view/passport/login.html', {
+              'faid': faid
+            }, 'slide-in-bottom');
+			}
+  }
+		
+  $(window).on('tap', '.action-clickview', function() {
+    var state = app.getState();
+    var _this = $(this).data('view');
+    if(_this && _this != '') {
+      // clicked(_this);
+      window.location.href = _this
 
-        }
-      });
-
-    </script>
+    }
+  });
+  </script>
   </body>
 
 </html>

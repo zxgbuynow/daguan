@@ -7,51 +7,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-    <link rel="stylesheet" href="__M_CSS__/style.css">
-    <style>
-     .main{
-          margin-right: 10px;
-        }
-        .mui-table-view .mui-media-object{
-        max-width: 72px; 
-          height: 72px;
-        }
-        .mui-media-text {
-          color: #646464;
-          font-size: 15px;
-        }
-        .mui-media-author {
-          font-size: 13px;
-          margin-top: 5px;
-        } 
-      .mui-scroll-wrapper{
-          margin-top: 45px;
-        }
+    <link rel="stylesheet" href="__M_CSS__/style.css" />
+    <link rel="stylesheet" href="__M_CSS__/widgets.css" />
+		<link rel="stylesheet" href="__M_CSS__/counsellor.css" />
+    <style> 
+    		.main{
+    			margin-right: 10px;
+    		}
+    		.mui-table-view .mui-media-object{
+		    max-width: 72px; 
+    			height: 72px;
+    		}
+    		.mui-media-text {
+    			color: #646464;
+    			font-size: 15px;
+    		}
+    		.mui-media-author { 
+    			font-size: 13px;
+    			margin-top: 5px;
+    		} 
+    		.mui-media-action{
+    			font-size: 13px;
+    		}
+    		.float-right{
+    			float: right;
+    		}
+    		.mui-badge{
+    			left: 15px;
+    			top: 25px!important;
+    			right: 0px!important;
+    			width: 35px;
+    		}
+    		.mui-table-view-chevron .mui-table-view-cell{
+    			padding-right:25px;
+    		}
+    		.page-header{
+				heigt: 44px;
+			}
+			.main {
+				margin-right: 10px;
+				position: relative;
+			}
+			.mui-bar .mui-title {
+				width: auto;
+				left: 40px;
+				right: 52px;
+				top: 7px;
+				margin: 0;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: inline-block;
+			}
+      header.home-header .header-search-form input{
+        color: #666;
+      }
+      header.home-header .mui-input-clear ~ .mui-icon-clear{
+        top: -.4rem;
+      }
     </style>
   </head>
 
   <body>
-
-
-      <header class="home-header">
-        <i class="icon-func bbc-icon bbc-icon-back mui-action-back"></i>
-        <div class="main">
-          <form onsubmit="return false;">
-            <div class="mui-input-row header-search-form ">
-              <input type="search" class="header-search mui-input-clear " placeholder="寻找感兴趣的文章">
-            </div>
-          </form>
-        </div>
-      </header>
-      
+  	<header class="home-header">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+   		 	<i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+			<div class="mui-center mui-title">
+				<form onsubmit="return false;">
+				<div class="mui-input-row header-search-form">
+					<input type="search"  class="header-search mui-input-clear" placeholder="寻找感兴趣的文章">
+				</div>
+				<a href="#" class="right-icon-search"><i class="iconfont icon-search icon-home-search"></i></a>
+			</form>
+			</div>
+		    	<a class="mui-right  mui-btn  mui-btn-link mui-btn-nav mui-pull-right service">
+		    		<img src="__M_IMG__/tel.png">
+		    		<i class="search-hide icon-func bbc-icon callmm">客服</i>
+		    	</a>
+			</div>
+    </header>
     
-    <div class="mui-content">
-        <div id="pullrefresh" class="mui-scroll-wrapper">
+     
+    <div class="container">
+      <div class="mui-scroll-wrapper bbc-pullrefresh-top" >
         <div class="mui-scroll">
-          <ul class="mui-table-view artical-list">
-            
-          </ul>
+         <div class="mui-content content-bottom-padded-nav">
+            <!--情感标签 start-->
+  		      <section class="widgets-category-nav section-white ">
+  		        
+  		      </section>
+  		      <!--情感标签 end-->
+  		      <section class="widgets-category-list section-white">
+  		        
+  		      </section>
+		      
+          </div>
         </div>
       </div>
     </div>
@@ -60,113 +109,107 @@
     <script src="__M_JS__/template.min.js"></script>
     <script src="__M_JS__/config.js"></script>
     <script src="__M_JS__/app.js"></script>
-    <script type="text/html" id="artical_list">
-         <section>  
-            <!--文章 start-->
-          <section class="widgets-category-nav section-white">
-            <div class="mui-table-view">
-              <ul class="mui-table-view mui-table-view-chevron">
-                <% for(var i=0; i<list.length; i++) { %>
-          <li class="mui-table-view-cell mui-media action-clickview" data-webview="{:url('Artical/detail')}" data-webparam = '<%= list[i].id %>'>
-            <a class="mui-navigate-right">
-              <img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].cover) %>">
-              <div class="mui-media-body">
-                <%= list[i].title %>
-                <p class='mui-ellipsis mui-media-text'><%= list[i].description %></p>
-                <p class="mui-ellipsis mui-media-text mui-media-author">作者：<%= list[i].author %></p>
-              </div>
-            </a>
-          </li>
-           <% } %>
-          </ul>   
-            </div>
-          </section>
-    </script>
-    <script>
-        var result = window.location.href;
-        var keyword = $.getUrlParam(result,'keyword');
-        var cat_id = $.getUrlParam(result,'cat_id');
+    <script src="__M_JS__/mui.lazyload.js"></script>
+	<script src="__M_JS__/mui.lazyload.img.js"></script>
+	<script type="text/html" id="nav_list">
+		<ul class="widgets-icons-nav">
+		<% for(var i in data) { %>
+          <li class=""><i><a href="{:url('Artical/volist')}?cat_id=<%= data[i].id %>"><img src="<%= $add_server(data[i].cover) %>"></a></i><span><%= data[i].title %></li>
+        <%}%>
+        </ul>
+	</script>
+	
+	<script type="text/html" id="artical_list">
+		<div class="section-title">
+	      <div class="title-txt">为您推荐</div>
+	    </div>
+	    <div class="mui-table-view">
+	      <ul class="mui-table-view mui-table-view-chevron">
+	      	<% for(var i in list) { %>
+			<li class="mui-table-view-cell mui-media  click-webview" data-webview="{:url('Artical/detail')}" data-article_id = '<%= list[i].id %>'>
+				
+				<div class="mui-table">
+					<div class="mui-table-cell mui-col-xs-12">
+						<img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].cover) %>">
+						<div class="mui-media-body">
+							<p>
+								<span class="mui-text-left"><%= list[i].title %></span>
+							</p>
+							<p class='mui-ellipsis-2 mui-media-text mui-media-author'><%= list[i].description %></p>
+							<p class="mui-ellipsis mui-media-text mui-media-author">作者：<%= list[i].author %></p>
+						</div>
+					</div>
+					
+				</div>
+			</li>
+			<%}%>
+		  </ul>		
+	    </div>
+	</script>	
+    <script type="text/javascript">
+      var result = window.location.href;
+      var keyword = $.getUrlParam(result,'keyword');
+      var cat_id = $.getUrlParam(result,'cat_id');
+
         if(keyword) {
-          console.log(keyword);
           $('input[type="search"]').val(keyword);
         }
 
-        var state = app.getState();
-        getclist();
-        function getclist(){
-          var param = {
-                  'method': config.apimethod.articallist,
-                  'source':config.source,
-                  'search_keywords': keyword
-             }
-              $.dataRequest(param, function(rs) {
-                  var widgets = template('artical_list', rs);
-                  $('.artical-list').append(widgets);
-                     // 
-                   mui('.mui-scroll-wrapper').scroll({
-                  indicators: false
-                });
-              })
-        }
-        
-        $(window).on('tap', '.action-clickview', function() {
-            var webview = $(this).data('webview');
-            var webparam = $(this).data('webparam');
-            if (webparam) {
-              window.location.href = webview+'?article_id='+webparam;
-             
-            }
-            
-          })
-
-        
-        window.addEventListener('getlist', function(event) {
-          if(event.detail.search_keywords!=''){
-            keyword = event.detail.search_keywords;
-          }
-          cat_id = event.detail.cat_id;
-          $('.goods-list').empty();
-          //获取数据
-          getclist();
-        });
-
-
-        var hlist = localStorage.getItem('_history');
         var form = $('input[type="search"]').parents('form');
         var sinput = $('input[type="search"]');
         $(form).submit(function() {
-          var search_val = $('input[type="search"]').val();
-          if(hlist != null) {
-            var list = hlist.split(",");
-          }
-          var flag = true;
-          if(search_val != '') {
-            if(hlist != null) {
-              for(var i = 0; i < list.length; i++) {
-                if(list[i] == search_val) {
-                  flag = false;
-                }
-              }
-            }
-            if(flag == true) {
-              if(hlist != null) {
-                hlist += (search_val + ',');
-                localStorage.setItem('_history', hlist);
-              } else {
-                localStorage.setItem('_history', search_val + ',');
-              }
-            }
-            keyword = search_val;
-            $('.goods-list').empty();
-            //获取数据
-            getclist();
-
+            keyword = $('input[type="search"]').val();
             sinput.blur();
-          }
-        });
-        
+            getclist();
+         })
 
         
+      	//分类 
+	  	var param = {
+            'method': config.apimethod.articalcate,
+            'source':config.source
+	     }
+	  	$.dataRequest(param, function(rs) {
+       		var widgets = template('nav_list', rs);
+            $('.widgets-category-nav').html(widgets);
+	    })
+	  	
+	  	getclist();
+
+		  function getclist(){
+    			var param = {
+                'method': config.apimethod.articallist,
+                'source':config.source,
+                'search_keywords': keyword, 
+                'cate_id':cat_id 
+    		     }
+    			if(!param.search_keywords){
+    				delete param.search_keywords
+    			}
+    			if(!param.cate_id){
+    				delete param.cate_id
+    			}
+  			
+	        $.dataRequest(param, function(rs) {
+	        		var widgets = template('artical_list', rs);
+	            $('.widgets-category-list').append(widgets);
+	             // 
+	             mui('.mui-scroll-wrapper').scroll({
+  		          indicators: false
+  		          });
+
+               $(window).on('tap','.click-webview', function(e) {
+                  var webview = $(this).data('webview');
+                  var article_id = $(this).data('article_id');
+                  window.location.href = webview+'?article_id='+article_id;
+                
+               })
+
+	        })
+  		}
+	  	
+	  	
+      
     </script>
   </body>
 

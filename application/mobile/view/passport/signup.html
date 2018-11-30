@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>用户注册</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="__M_CSS__/style.css">
+    <link rel="stylesheet" href="__M_CSS__/member.css">
+	<link href="__M_CSS__/mui.picker.css" rel="stylesheet">
+	<link href="__M_CSS__/mui.poppicker.css" rel="stylesheet">
+	<link href="__M_CSS__/mui.dtpicker.css" rel="stylesheet">
+    <style type="text/css">
+      .section-white{
+        background: #fff;
+      }
+		.container {
+			margin-top: -1px;
+		}
+      
+      .counsellor-head-content{
+        height: 10.5rem;
+        width: 100%;
+      }
+      .counsellor-head-content img.top-img{
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body class="section-white">
+	<header class="page-header nobd">
+		<div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center clearfix">
+			<i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+			<h1 class="mui-center mui-title">用户注册</h1>
+			<a class="mui-right  mui-btn  mui-btn-link mui-btn-nav mui-pull-right service">
+				<img src="__M_IMG__/tel.png">
+				<i class="search-hide icon-func bbc-icon callmm">客服</i>
+			</a>
+		</div>
+	</header>
+    <section class="container member-signup-body">
+      <!--<form class="" id="login_form">-->
+        <div class="member-content">
+			<div class="user-form">
+				
+				<div class="mui-input-group signup signup-step1">
+					<!--signup-step1 start-->
+					<div class="mui-input-row">
+						<label>姓名：<i class="icon-required">*</i></label>
+						<input id="account" type="text" class="mui-input-clear" placeholder="请输入姓名">
+					</div>
+					<div class="mui-input-row">
+						<label>邮箱：<i class="icon-required">*</i></label>
+						<input type="text" id="email" class="mui-input-clear" placeholder="请输入邮箱">
+					</div>
+					<div class="mui-input-row">
+						<label>手机：<i class="icon-required">*</i></label>
+						<input type="text" id="mobile"  class="mui-input-clear" placeholder="请输入手机">
+					</div>
+					<div class="mui-input-row">
+						<label>密码：<i class="icon-required">*</i></label>
+						<input id="password" type="password" class="mui-input-password" placeholder="请输入密码">
+					</div>
+					<div class="mui-button-row btn-options">
+						<button class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning signup-sub">下一步</button>
+					</div>
+					<!--signup-step1 end-->
+					
+					
+				</div>
+				
+				<!--signup-concern start-->
+				<div class="concern-body signup-step2" style="display: none;">
+					<h4>您的关注点：</h4>
+					<ul class="widgets-icons-nav clearfix preference-list">
+						<!--<li class="action-webview" data-webview="" data-webparam=''>
+							<a href="#">
+								<div class="sub-nav"><img src="../../img/widgets_02_05.png"></div><span>婚姻家庭</span>
+							</a>
+						</li>
+						<li class="action-webview" data-webview="" data-webparam=''>
+							<a href="#">
+								<div class="sub-nav"><img src="../../img/widgets_02_07.png"></div><span>情绪管理</span>
+							</a>
+						</li>
+						<li class="action-webview" data-webview="" data-webparam=''>
+							<a href="#">
+								<div class="sub-nav"><img src="../../img/widgets_02_09.png"></div><span>恋爱心理</span>
+							</a>
+						</li>
+						<li class="action-webview" data-webview="" data-webparam=''>
+							<a href="#">
+								<div class="sub-nav"><img src="../../img/widgets_02_11.png"></div><span>职场心理</span>
+							</a>
+						</li>
+							
+						<li class="action-webview" data-webview="" data-webparam=''>
+							<a href="#">
+								<div class="sub-nav"><img src="../../img/widgets_02_17.png"></div><span>人际关系</span>
+							</a>
+						</li>
+						<li class="action-webview" data-webview="" data-webparam=''>
+							<a href="#">
+								<div class="sub-nav"><img src="../../img/widgets_02_18.png"></div><span>亲子教育</span>
+							</a>
+						</li>
+						<li class="action-webview" data-webview="" data-webparam=''>
+							<a href="#">
+								<div class="sub-nav"><img src="../../img/widgets_02_19.png"></div><span>个人成长</span>
+							</a>
+						</li>
+						<li class="action-webview" data-webview="" data-webparam=''>
+							<a href="#">
+								<div class="sub-nav"><img src="../../img/widgets_02_20.png"></div><span>心理健康</span>
+							</a>
+						</li>	-->
+					</ul>
+					<div class="mui-button-row btn-options">
+						<button class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning signup-sub2">下一步</button>
+					</div>
+				</div>
+				
+				<!--signup-concern end-->
+				
+				<div class="mui-input-group signup signup-step3" style="display: none;">
+					<!--submit-step2 start-->
+					<!--<div class="mui-input-row">
+						<label>姓名：</label>
+						<input type="text" class="mui-input-clear" placeholder="请输入姓名">
+					</div>
+					<div class="mui-input-row">
+						<label>邮箱：</label>
+						<input type="text" class="mui-input-clear" placeholder="请输入邮箱">
+					</div>
+					<div class="mui-input-row">
+						<label>手机：</label>
+						<input type="text" class="mui-input-clear" placeholder="请输入手机">
+					</div>
+					<div class="mui-input-row">
+						<label>密码：</label>
+						<input type="password" class="mui-input-password" placeholder="请输入密码">
+					</div>-->
+					<p class="signup-tip-msg">
+						为了更好的为您服务，请填写以下消息，放心，您的所有消息我们都将为您保密，您可参看下方的咨询协议。
+					</p>
+					<div class="mui-input-row">
+						<label>性别：</label>
+						<input type="text" id="sex" class="mui-input-clear" placeholder="请选择性别">
+					</div>
+					<div class="mui-input-row">
+						<label>出生日期：</label>
+						<input type="text" id="birthday" data-options='{"type":"date"}' class="mui-input-clear pickTime" placeholder="请选择出生日期">
+					</div>
+					<div class="mui-input-row">
+						<label>学历：</label>
+						<input type="text" id="edu" class="mui-input-clear" placeholder="请选择学历">
+					</div>
+					<div class="mui-input-row">
+						<label>年级：</label>
+						<input type="text" id="grade" class="mui-input-clear" placeholder="请选择年级">
+					</div>
+					<div class="mui-input-row">
+						<label>职业：</label>
+						<input type="text" id="profession" class="mui-input-clear" placeholder="请选择职业">
+					</div>
+					<div class="mui-input-row">
+						<label>婚姻：</label>
+						<input type="text" id="marital" class="mui-input-clear" placeholder="请选择婚姻">
+					</div>
+					<div class="mui-input-row">
+						<label>省：</label>
+						<input type="text" id="province" class="mui-input-clear" placeholder="输入省">
+					</div>
+					<div class="mui-input-row">
+						<label>市：</label>
+						<input type="text" id="city" class="mui-input-clear" placeholder="输入市">
+					</div>
+					<div class="mui-input-row">
+						<label>联系人电话：</label>
+						<input type="text" id="tel" class="mui-input-clear" placeholder="请输入联系人电话">
+					</div>
+					<div class="mui-input-row">
+						<label>是否接收过心理咨询：</label>
+						<input type="text" id="isconsolle" class="mui-input-clear" placeholder="请选择是否">
+					</div>
+					<div class="mui-input-row">
+						<label>时间：</label>
+						<input type="date" id="consolletime" class="mui-input-clear pickTime" placeholder="请选择时间">
+					</div>
+					<div class="mui-button-row btn-options clearfix">
+						<div class="mui-input-row mui-radio mui-left lb-tip">
+							<div class="label">我已阅读且同意<a id="agreement">《咨询协议》</a></div>
+							<input name="license" type="radio">
+						</div>
+						<button class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning register_next">提交</button>
+					</div>
+					<!--submit-step2 end-->
+				</div>
+				
+			</div>
+			
+			<div class="mui-message-container clearfix" style="display: none;">
+				<span class="mui-message-closed">X</span>
+				<div class="mui-message-cont appointment">
+					<p class="title">大观心理用户注册协议</p>
+					<div class="options">
+					<p>欢迎您注册由大观心身医学研究院（北京）开发与运营的大观心理专家 咨询服务平台。本协议是您与本公司之间就您使用本公司服务所订立的协议。请您在点击“注册”按钮前仔细阅读本注册协议,一旦您点击“注册”按钮,您即成为本公 司的用户,本协议即构成对本公司和您之间有约束力的法律文件。</p>
+					<p>一、总则</p>
+					<p>1、为维护网上公共秩序和社会稳定,在使用本公司提供的任何服务时,请您自觉遵守中华人民 </p>共和国相关法律、法规、部门规章及其他立法机关、行政机关根据法律授权制定的具有强制约束 力的法律文件(以下简称“法律法规”),包括但不限于《全国人大常委会关于维护互联网安全 的决定》、《互联网电子公告服务管理规定》、《互联网新闻信息服务管理规定》、《即时通信 工具公众信息服务发展管理暂行规定》等现行法律法规、有关部门不时出台的新法律法规以及对 现行法律法规作出的调整、更新、修订。若用户违反任何法律法规的要求,本公司有权暂停、中 断或终止用户使用本公司的部份或全部服务,并配合有关机关可能做出的任何调查、侦查或审查。 在此情况下,本公司不承担任何责任,并且用户同意承担因此所产生的直接或间接的任何支出或 损失。
+					在现行法律法规框架下,用户应至少做到:</p>
+					<p>(1)不利用本平台危害国家安全、泄露国家秘密,不侵犯国家社会集体的和公民的合法权益, 不利用本公司服务制作、复制和传播下列信息:</p>
+					<p>(a) 煽动抗拒、破坏宪法和法律、行政法规实施的;</p>
+					<p>(b) 煽动颠覆国家政权,推翻社会主义制度的;</p>
+					<p>(c) 煽动分裂国家、破坏国家统一的;</p>
+					<p>(d) 煽动民族仇恨、民族歧视,破坏民族团结的;</p>
+					<p>(e) 捏造或者歪曲事实,散布谣言,扰乱社会秩序的;</p>
+					<p>(f) 宣扬封建迷信、淫秽、色情、赌博、暴力、凶杀、恐怖、教唆犯罪的;</p>
+					<p>(g) 公然侮辱他人或者捏造事实诽谤他人的,或者进行其他恶意攻击的;</p>
+					<p>(h) 损害国家机关信誉的;</p>
+					<p>(i) 其他违反宪法和法律行政法规的。</p>
+					<p>(2) 互相尊重,对自己的言论和行为负责。</p>
+					<p>2、根据国家法律法规变化及网络运营需要,本公司有权对本协议条款不时地进行修改,如本协 议有任何变更或修订,本公司将提前【30】天通过大观心理平台以公告形式通知注册用户。用户可 随时登陆查阅最新协议;用户应不时关注并阅读最新版的协议及平台公告。本公司的制定/修订 的相关服务规则是本协议不可分割的一部分。如用户不同意修改或更新后的协议,应在变更/修 订后的协议生效前停止接受或使用本公司服务;如用户在变更/修订后的协议生效后继续使用本 平台提供的服务,即视为同意变更/修订后的协议。若您违反本协议,本公司有权暂停、中断或 终止用户使用本公司的部份或全部服务。故本公司建议您在每一次使用本公司服务之前均阅读本 协议及本平台的公告。</p>
+					<p>3、用户明确并同意自开始使用本公司服务时起,其就相同或类似服务将不与本平台签约专家在 本平台外达成任何形式的协议。如果用户与本平台签约的专家在本平台外进行咨询或者相关交易, 本平台概不负责。如果用户与本平台签约的专家未通过本平台进行的咨询或者相关交易产生的纠 纷,本公司不予受理。</p>
+					<p>二、用户</p>
+					<p>1、用户资格</p>
+					<p>用户应是年满 18 岁、具有完全民事行为能力的中国公民。如果您未满足前述条件,请在您的监 护人的陪伴及监督下进行注册。</p>
+					<p>2、用户注册</p>
+					<p>1)用户应当同意本协议的条款并按照页面上的提示完成全部的注册程序。用户在进行注册程序 过程中点击“同意”按钮即表示用户确认其具有签订本协议的资格,并与本站达成协议,完全接 受本协议项下的全部条款。</p>
+					<p>2)用户注册成功后,将在本平台拥有自己的账户及密码,用户有权使用自己的账户及密码随时
+					登录本平台。用户不得以任何形式擅自转让或授权他人使用自己在本平台的账户,如果用户未保
+					管好自己的账户和密码而对用户本人、本公司或第三方造成的损害,将由用户承担全部责任。用户应对其账户所进行的一切行为承担全部责任。用户若发现其账户存在被非法使用或安全漏洞的 情况,应立即通过电话或者邮件通知本公司。</p>
+					<p>3)用户应依本公司的提示要求提供本人真实、有效、及完整的个人身份信息,包括但不限于真 实姓名、身份证号、联系电话、地址、电子信箱等。用户在此明确授权,本公司有权通过其他第 三方机构对用户所提供的个人身份信息进行查验。</p>
+					<p>4) 当用户向本公司提供的信息和资料发生变更,用户有义务及时更新个人会员的资料,确保始 终真实、有效、及时及完整。若用户提供任何错误、虚假、过时或不完整的信息或资料,或者本 公司有理由怀疑用户的信息或资料为错误、虚假、过时或不完整的,本公司有权暂停、中断或终 止用户使用本公司的部份或全部服务。在此情况下,本公司不承担任何责任,并且用户同意承担 因此所产生的直接或间接的任何支出或损失。</p>
+					<p>5)如因用户向本公司提供的信息或资料不符合前述约定导致的一切法律后果和赔偿责任均由用 户本人承担,本公司对此不承担任何责任。如因此给本公司造成损失的,用户应当承担相应的赔 偿责任。
+					<p>6)用户可以根据本协议或是本平台的规则注销其账户,本公司亦有权根据本协议约定在暂停、 中断或终止用户使用本平台的部份或全部服务后注销该用户的账户。</p>
+					<p>3、用户的权利和义务</p>
+					<p>1) 用户在成功注册本平台后,有权根据本协议及相关规则的规定使用本公司提供的各项服务, 包括但不限于本公司提供的居间服务,用户同意并确认本公司有权随时新增、调整或终止其提供 的居间服务类型、种类及数量。</p>
+					<p>2)用户在使用本公司服务的过程中,应根据实际情况和本平台签约专家就具体服务内容签订专 门的电子服务协议,使用其账户通过本平台签署的电子合同即视为用户本人真实意思表示并以用 户本人名义签署的合同,具有法律效力。用户不得以其账户密码等账户信息被盗用、本人没有签 署或其他理由否认已订立的电子合同的效力或不按照合同履行相关义务。因服务协议或在服务协 议履行过程中产生的一切争议、纠纷,用户明确并同意根据服务协议的约定进行处理。</p>
+					<p>3)用户与本平台签约专家签署服务协议后,用户应根据本平台的相关规则及服务协议中的约定, 以本平台指定的方式履行服务协议,向本平台签约专家进行咨询。</p>
+					<p>4)用户根据本协议以及本平台相关规则签署电子服务协议后,不得擅自修改该协议。本公司向 用户提供电子合同的备案、查看、核对服务,如对电子合同真伪或电子合同的内容有任何疑问, 应以本公司留存的合同为准。</p>
+					<p>5)用户承诺不对本平台任何资料作商业性利用,并承诺不利用本公司各项服务进行转销售或类 似的其它商业用途,亦不得滥用本公司服务或以任何方式干扰本公司正常运营。一旦本公司发现 用户违反本条款的约定,本公司有权暂停、中断或终止用户使用本平台的部份或全部服务。在此 情况下,本公司不承担任何责任,并且用户同意承担因此所产生的直接或间接的任何支出或损失。
+					<p>6)本公司有权根据本平台签约专家的反馈并基于对于用户身体、精神状况及其他方面的考虑、 评估不时设定用户使用服务的相关事项,包括但不限于居间服务每天的使用次数等,用户明确前 述设定可能会对其使用本平台服务造成一定不便,对此没有异议。</p>
+					<p>7)本公司将对用户在本平台上的所有操作进行记录,用户可以通过账户实时查询其账户名下的 所有交易及服务记录。</p>
+					<p>8)用户明确并同意,在用户使用本公司服务过程中,本公司不承担由于用户自身过错、技术或 其它第三方原因而给用户造成的损失。</p>
+					<p>9)用户同意接收本公司通过各种渠道(包括但不限于短信、网站信息、电话等)向其发送的信 息。用户亦有权通过下列渠道就在使用本公司服务过程中出现任何问题与本公司进行联系。
+					<p>客服热线:400-100-1355</p>
+					<p>邮件反馈:daguanxinli@163.com</p>
+					<p>三、本公司的权利义务</p>
+					<p>1、本公司承诺确保大观心理平台的正常运行,并努力提升和改进技术,保证用户使用本公司服务 的顺利进行。本公司有权基于自身的判断随时对相关的技术进行升级、维护、调试,但本公司承 诺在进行相关的操作前以公告方式通知所有用户。</p>
+					<p>2、用户通过本协议约定的渠道向本公司提出的、反映在使用本公司服务中所遇到有关问题及相 关反映的情况,本公司承诺及时作出回复。</p>
+					<p>3、本公司有权对用户的注册资料及操作行为进行查阅,有权通过其他第三方核实用户向本公司 提交的各项信息。若本公司发现或有合理理由怀疑用户提交的信息中存在任何错误、虚假、过时 或不完整之处的,本平台有权暂停、中断或终止用户使用本平台的部份或全部服务。
+					<p>四、隐私</p>
+					<p>1、用户在本平台注册时或使用本公司服务过程中向本公司提供的一切身份信息,包括个人识别 资料:如姓名、性别、年龄、生日、身份信息、电话、通信地址、住址、电子邮件地址等情况; 个人背景:职业、教育程度、收入状况、婚姻、家庭状况,除本条第 2 款约定的情况外,本公司 不会将用户的资料向任何第三方泄露。</p>
+					<p>2、 双方明确并同意,在下列情况下,任何一方可向第三方披露保密信息:
+					<p>1)当国家机构依照法定程序要求本公司披露个人资料时;</p>
+					<p>2)事先获得用户的明确授权;或已取得用户的书面同意;</p>
+					<p>3)遵守有关法律规定及按照国家有关机关要求,向有关国家机关或行政部门提供用户的注册信 息;
+					<p>4)为完成用户提出的咨询要求,而将相关信息透露给本平台签约专家;</p>
+					<p>5)公众已能够通过其他合法途径知晓该等信息;</p>
+					<p>6)为完成用户提出的咨询要求,向本公司员工或与本公司存在合同关系的第三方披露保密信息。</p> 本公司保证工作人员、委托的第三方,无论劳动关系、委托关系是否存续,均承担与本公司相同 的保密义务。
+					<p>五、服务终止</p>
+					<p>1、用户明确并同意,本平台有权依据本协议的约定暂停、中断或终止用户使用本平台的部份或 全部服务,并在之后注销用户的账户。</p>
+					<p>2、用户向本平台提出注销本平台注册用户身份,经本公司审核同意,由本公司注销注册用户,</p> 本协议终止。但用户账户注销后(不论是用户主动注销或是本公司依约注销),本公司仍保留下 列权利:</p>
+					<p>1) 用户注销后,本公司有权保留用户的注册资料及以前的操作行为记录;</p>
+					<p>2) 用户注销后,如用户注销前在使用本平台服务时存在违法行为或违反协议的行为,
+					本公司仍可向其进行索赔或是追偿。</p>
+					<p>3、除本条第 1 款的约定外,在下列情况下,本公司亦可以通过注销用户的方式终止服务:</p>
+					<p>1) 本服务协议修改或更新时,用户未确认新的服务协议的;</p>
+					<p>2) 用户超过一年未使用其在本平台的注册账户的。</p> 
+					<p>六、免责声明</p>
+					<p>1、如因不可抗力或其他本公司无法预见、无法避免、无法克服的原因使本平台系统崩溃或无法 正常使用导致网上交易无法完成或丢失有关的信息、记录等,本公司不承担责任。但是本公司将 尽可能合理地协助处理善后事宜,并努力使客户免受经济损失。</p>
+					<p>2、 本公司可能因合作关系等原因为其他网站或网页提供链接,用户在点击该链接后将直接进入 被链接网站或网页。对于被链接网站或网页与用户之间发生的交易本公司不负保证责任,用户因 该交易所产生的纠纷应直接向被链接网站或网页要求解决,并向其主张权利,本公司对该交易不 承担任何责任。本公司对任何直接、间接、偶然、特殊及继起的损害不负责任,这些损害可能来 自:不正当使用网络服务,在网上购买商品或进行同类型服务,在网上进行交易,非法使用网络 服务或用户传送的信息有所变动。这些行为都有可能会导致本站的形象受损,所以本站事先提出 这种损害的可能性。</p>
+					<p>3、本公司承担赔偿责任的上限,不论是因为合同、保证、侵权(包括过失)项下的还是其它的 责任所引起的,均不超过您累计向本公司支付的服务费总额。</p>
+					<p>4、用户在使用本公司服务前,需仔细阅读相关服务的各项规则以及相应的免责说明。如您不同 意相关免责说明,请不要注册为本公司用户。</p>
+					<p>七、争议的解决与法律适用</p>
+					<p>1、本协议的签署、履行和解释及争议的解决均应适用中国法律,并依其解释。
+					<p>2、就本协议或在本协议履行过程中发生的任何争议,双方应尽力友好协商解决;协商不成时, 任何一方均可向本公司住所地有管辖权的人民法院提起诉讼。</p>
+					<p>十、其他</p>
+					<p>1、本公司不行使、未能及时行使或者未充分行使本条款或者按照法律规定所享有的权利,不应 被视为放弃该权利,也不影响本公司在将来行使该权利。</p>
+					<p>2、如本条款中的任何条款无论因何种原因完全或部分无效或不具有执行力,本服务条款的其余 条款仍应有效且具有约束力,本公司及用户均应尽力使该条款设定的本意得到实现。</p>
+					<p>3、您勾选用户注册界面中的“我同意注册协议中所有内容”方框并提交注册即视为您完全接受 本协议,在点击之前请您再次确认已知悉并完全理解本协议的全部内容。</p>
+					<p>本协议最终解释权归大观心身医学研究院（北京）有限公司所有。</p>
+
+
+					</div>
+				</div>
+				<div class="mui-input-row mui-radio mui-left mui-hidden">
+					<label>我已阅读</label>
+					<input name="radio1" type="radio">
+				</div>
+			</div>
+			<div class="mui-backdrop" style="opacity: 1;display: none;"></div>
+		</div>
+        
+      <!--</form>-->
+      
+      
+      
+    </section>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+	<script src="__M_JS__/mui.picker.js"></script>
+	<script src="__M_JS__/mui.poppicker.js"></script>
+	<script src="__M_JS__/mui.dtpicker.js"></script>
+	<script src="__M_JS__/city.data.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    	<!--config-->
+    <script src="__M_JS__/im/webim.config.js"></script>
+    <script src="__M_JS__/im/strophe-1.2.8.js"></script>
+    <script src="__M_JS__/im/websdk-1.4.13.js"></script>
+	<script src="__M_JS__/im/im.js"></script>
+	<script type="text/html" id="preference_list">
+		<% for(var i=0; i<list.length; i++) { %>
+			<li class="action-webview" data-webview="" data-webparam='' >
+				<a class="preference-tag" fid="<%= list[i].id%>">
+					<div class="sub-nav"><img src="<%= $add_server(list[i].cover) %>" ></div><span><%= list[i].title%></span>
+				</a>
+			</li>
+		<%}%>
+	</script>
+    <script type="text/javascript" charset="utf-8">
+	$(function() {
+		var preference = '';
+		var param = {
+	          'method': config.apimethod.category,
+	          'source':config.source
+	      }
+	      $.dataRequest(param, function(rs) {
+	        var data = rs;
+	         
+	        var widgets = template('preference_list', data);
+	    		$('.preference-list').append(widgets);
+	    		$('.preference-list').on('tap','a',function(){
+				if($(this).hasClass('on')){
+					$(this).removeClass('on');
+				}else{
+					$(this).addClass('on');
+				}
+		      		
+	      	})
+	    	})
+		//性别
+		var userPicker = new mui.PopPicker();
+		userPicker.setData([{
+			value: '0',
+			text: '不明'
+		}, {
+			value: '1',
+			text: '男'
+		}, {
+			value: '2',
+			text: '女'
+		}]);
+		var showSexPickerButton = document.getElementById('sex');
+		showSexPickerButton.addEventListener('tap', function(event) {
+			userPicker.show(function(items) {
+				console.log(items[0].text);
+				document.getElementById('sex').value=items[0].text;
+			});
+		}, false);
+		//edu
+		var eduuserPicker = new mui.PopPicker();
+		eduuserPicker.setData([{
+			value: '初中',
+			text: '初中'
+		}, {
+			value: '高中',
+			text: '高中'
+		}, {
+			value: '大专',
+			text: '大专'
+		},{
+			value: '本科',
+			text: '本科'
+		}, {
+			value: '硕士',
+			text: '硕士'
+		}, {
+			value: '博士',
+			text: '博士'
+		}]);
+		var edushowSexPickerButton = document.getElementById('edu');
+		edushowSexPickerButton.addEventListener('tap', function(event) {
+			eduuserPicker.show(function(items) {
+				document.getElementById('edu').value=items[0].text;
+			});
+		}, false);
+		
+		//grade
+		var gradeuserPicker = new mui.PopPicker();
+		gradeuserPicker.setData([{
+			value: '一年级',
+			text: '一年级'
+		}, {
+			value: '二年级',
+			text: '二年级'
+		}, {
+			value: '三年级',
+			text: '三年级'
+		},{
+			value: '四年级',
+			text: '四年级'
+		}, {
+			value: '五年级',
+			text: '五年级'
+		}, {
+			value: '六年级',
+			text: '六年级'
+		}]);
+		var gradeshowSexPickerButton = document.getElementById('grade');
+		gradeshowSexPickerButton.addEventListener('tap', function(event) {
+			gradeuserPicker.show(function(items) {
+				document.getElementById('grade').value=items[0].text;
+			});
+		}, false);
+		
+		//profession
+		var professionuserPicker = new mui.PopPicker();
+		professionuserPicker.setData([{
+			value: '军人',
+			text: '军人'
+		}, {
+			value: '警察',
+			text: '警察'
+		}, {
+			value: '教师',
+			text: '教师'
+		},{
+			value: '公务员',
+			text: '公务员'
+		}, {
+			value: '白领',
+			text: '白领'
+		}, {
+			value: '蓝领',
+			text: '蓝领'
+		},{
+			value: '无业',
+			text: '无业'
+		}, {
+			value: '教师',
+			text: '教师'
+		},{
+			value: '退休',
+			text: '退休'
+		}, {
+			value: '家庭主妇（夫）',
+			text: '家庭主妇（夫）'
+		}, {
+			value: '学生',
+			text: '学生'
+		}, {
+			value: '其他',
+			text: '其他'
+		}]);
+		var professionshowSexPickerButton = document.getElementById('profession');
+		professionshowSexPickerButton.addEventListener('tap', function(event) {
+			professionuserPicker.show(function(items) {
+				document.getElementById('profession').value=items[0].text;
+			});
+		}, false);
+		
+		//marital
+		var maritaluserPicker = new mui.PopPicker();
+		maritaluserPicker.setData([{
+			value: '0',
+			text: '未婚'
+		}, {
+			value: '1',
+			text: '已婚'
+		}]);
+		var maritalshowSexPickerButton = document.getElementById('marital');
+		maritalshowSexPickerButton.addEventListener('tap', function(event) {
+			maritaluserPicker.show(function(items) {
+				document.getElementById('marital').value=items[0].text;
+			});
+		}, false);
+		
+		//isconsolle
+		var isconsolleuserPicker = new mui.PopPicker();
+		isconsolleuserPicker.setData([{
+			value: '0',
+			text: '否'
+		}, {
+			value: '1',
+			text: '是'
+		}]);
+		var isconsolleshowSexPickerButton = document.getElementById('isconsolle');
+		isconsolleshowSexPickerButton.addEventListener('tap', function(event) {
+			isconsolleuserPicker.show(function(items) {
+				document.getElementById('isconsolle').value=items[0].text;
+			});
+		}, false);
+		
+		
+		//省市
+//		var cityPicker = new mui.PopPicker({
+//			layer: 2
+//		}); 
+//		cityPicker.setData(cityData);
+//		var showCityPickerButton = document.getElementById('showCityPicker');
+//		showCityPickerButton.addEventListener('tap', function(event) {
+//			cityPicker.show(function(items) {
+//				console.log("你选择的城市是:" + items[0].text + "/" + items[1].text);
+//				document.getElementById('showCityPicker').value=items[0].text + "/" + items[1].text;
+//			});
+//		}, false);
+		
+//		var showBirthdayPickerButton = document.getElementById('birthday');
+//		showBirthdayPickerButton.addEventListener('tap', function() {
+//			var optionsJson = this.getAttribute('data-options') || '{}';
+//			var options = JSON.parse(optionsJson);
+//			var id = this.getAttribute('id');
+//			var picker = new mui.DtPicker(options);
+//			picker.show(function(rs) {
+//				document.getElementById('birthday').value=rs.text;
+//				picker.dispose();
+//			});
+//		}, false);
+		
+		$('#agreement').on('click',function(e){
+			e.stopPropagation();
+			
+			$('.mui-message-container,.mui-backdrop').show();
+		})
+		
+		$('.mui-message-closed').on('click',function(){
+			$('.mui-message-container,.mui-backdrop').hide();
+		});
+	});
+		
+      
+      var btns = mui('.pickTime');
+        btns.each(function(i, btn) {
+          btn.addEventListener('tap', function() {
+            var optionsJson = this.getAttribute('data-options') || '{}';
+            var options = JSON.parse(optionsJson);
+            var that = this;
+            var picker = new mui.DtPicker(options);
+            picker.show(function(rs) {
+            	console.log(rs);
+              that.value = rs.text
+              // result.innerText = '选择结果: ' + rs.text;
+              
+              picker.dispose();
+            });
+          }, false);
+        });
+
+//       	document.getElementById("consolletime").addEventListener('tap', function() {
+// 			var dTime = new Date();
+// 			plus.nativeUI.pickDate(function(e) {
+// 				var d = e.date;
+// 				$('#consolletime').val( d.getFullYear() + "-" + (d.getMonth() + 1));
+// 			}, function(e) {
+// 				mui.toast('请选择日期')
+// 			}, {
+// 				title: "请选择日期",
+// 				date: dTime
+// 			});
+// 		});
+// 		document.getElementById("birthday").addEventListener('tap', function() {
+// 			var dTime = new Date();
+// //			dTime.setHours(6, 0);
+// 			plus.nativeUI.pickDate(function(e) {
+// 				var d = e.date;
+// 				$('#birthday').val( d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate());
+// 			}, function(e) {
+// 				mui.toast('请选择日期')
+// 			}, {
+// 				title: "请选择日期",
+// 				time: dTime
+// 			});
+// 		});
+
+      	$('.signup-step2').hide()
+      	$('.signup-step3').hide()
+      	
+      	$('.signup-sub').on('click',function(){
+      		//
+      		
+      		
+	  		var nickname = $('#account').val();
+			var email = $('#email').val();
+			var mobile = $('#mobile').val();
+			var password = $('#password').val();
+			if(!nickname) {
+	            mui.alert('姓名不能为空');
+	            return false;
+	        }
+			if(!email) {
+	            mui.alert('邮箱不能为空');
+	            return false;
+	        }
+			if(!mobile) {
+	            mui.alert('手机号不能为空');
+	            return false;
+	        }
+	        if(!password) {
+	            mui.alert('密码不能为空');
+	            return false;
+	        }
+	          
+      		$('.signup-step1').hide()
+      		$('.signup-step2').show()
+      	})
+      	
+      	$('.signup-sub2').on('click',function(){
+      		var i = 0;
+      		var pf = [];
+      		mui('.preference-list .preference-tag').each(function() {
+      			if($(this).hasClass('on')){
+      				i++;
+      				pf.push($(this).attr('fid'));
+      			}
+      		})
+      		if(i==0){
+      			mui.toast('请选中关注点')
+      		}
+      		preference = pf.join(','); 
+      		$('.signup-step2').hide()
+      		$('.signup-step3').show()
+      	})
+      	
+      	$('#register_next').on('tap', function() {
+      		
+	         var account = $('#account').val();
+			 var email = $('#email').val();
+			 var mobile = $('#mobile').val();
+			 var password = $('#password').val();
+
+			 
+			 //新加
+			 var birthday = $('#birthday').val();
+			 var sex = $('#sex').val();
+			 var edu = $('#edu').val();
+			 var grade = $('#grade').val();
+			 var marital = $('#marital').val();
+			 var profession = $('#profession').val();
+			 var province = $('#province').val();
+			 var city = $('#city').val();
+			 var tel = $('#tel').val();
+			 var isconsolle = $('#isconsolle').val();
+			 var consolletime = $('#consolletime').val();
+			 
+	          if(!account) {
+	            mui.alert('手机号不能为空');
+	            return
+	          }
+	          if(!password) {
+	            mui.alert('密码不能为空');
+	            return
+	          }
+	         
+	          if(!$('input[name="license"]').prop('checked')) {
+	            mui.alert('请阅读并接受会员注册协议');
+	            return;
+	          }
+	           var param = {
+	              'method': config.apimethod.register,
+	              'source':config.source,
+	              'account': account,
+	              'email': email,
+	              'mobile': mobile,
+	              'password': password,
+	              'agency': agency,
+	              'birthday': birthday,
+	              'sex': sex,
+	              'edu': edu,
+	              'grade': grade,
+	              'profession': profession,
+	              'marital': marital,
+	              'province': province,
+	              'city': city,
+	              'tel': tel,
+	              'isconsolle': isconsolle,
+	              'consolletime': consolletime,
+	              'preference':preference
+	           }
+	          // 环信SDK注册
+	            var options = {
+	                username : mobile,
+	                password : '123456',
+	                nickname : account,
+	                appKey : WebIM.config.appkey,
+	                apiUrl: WebIM.config.apiURL,
+	                success : function(result) {
+	                    //注册成功;
+	                    console.log(JSON.stringify(result))
+	                    mui.toast('同步成功');
+	                    $.dataRequest(param, function(rs) {
+				            var data = rs.data;
+				              sendSms(mobile);
+								
+				        });
+	                },
+	                error : function(e) {
+	                    //注册失败;
+	                    console.log(JSON.stringify(e));
+	                    mui.toast('稍后重试,同步失败：'+e.error);
+	                }
+	            };
+	            conn.registerUser(options); 
+	         
+	          
+	        });
+	        function sendSms(account){
+	        		var param = {
+	              'method': config.apimethod.vcode,
+	              'source':config.source,
+	              'mobile': account
+	           }
+	          $.dataRequest(param, function(rs) {
+	          	window.location.href = "{:url('Passport/verificationsms')}?mobile="+account;
+	//           	clicked('_www/view/passport/verificationsms.html', {
+	//                 'mobile': account
+	// //              'vcode': rs
+	//               });
+	          })
+	        }
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__C_CSS__/style.css" />
+    <link rel="stylesheet" href="__C_CSS__/widgets.css" />
+    <style>
+    		.mui-keyboards{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 45px;
+		}
+		.mui-keyboards .mui-number-section{
+		    display: flex;
+		    flex-flow: row wrap;
+		    background: #fff;
+		}
+		.mui-keyboards .mui-number-section .mui-num-btn{
+			margin-bottom: 0;
+		    flex: 0 0 25%;
+		    text-align: center;
+		    vertical-align:middle;
+		    height: 5rem;
+		    line-height: 2rem;
+		    border: 1px solid #f5f5f5;
+	        font-size: 13px;
+		}
+		.mui-keyboards .mui-number-section .mui-num-btn.mui-u-1of3{
+		    flex: 0 0 33.338%;
+		}
+		.mui-keyboards .mui-number-section .mui-num-btn.mui-u-1of4{
+		    flex: 0 0 33.3%;
+		}
+		.mui-keyboards .mui-number-section-left{
+			display: flex;
+		    flex-flow: row wrap;
+		    flex: 0 0 75%;
+		}
+		.mui-keyboards .mui-number-section-right{
+		    flex: 0 0 25%;
+		    margin-bottom: 0;
+		    line-height: 160px;
+		    text-align: center;
+		    color: #fff;
+		    background: #ea2329;
+		}
+		@media screen and (max-width: 320px){
+			.mui-total-money{
+			  	height: 8.8rem;
+			    line-height: 10rem;
+
+			  }
+			  .mui-keyboards .mui-number-section .mui-num-btn{
+			  	height: 3.8rem;
+			    line-height: 3.8rem;
+			  }
+			  .mui-keyboards .mui-number-section-right{
+			  	height: 121.59px;
+			  	line-height: 121.59px;
+			  }
+		}
+    </style>
+  </head>
+
+  <body>
+    <header class="page-header">
+    	  <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">当前工作按排情况</div>
+      <i id="all_clander" class="header-right txt-func" >批量设置</i>
+    </header>
+    <div class="container" id="container"> 
+       <!--<section class="mui-keyboards">
+			<div class="mui-number-section">
+				<p class="mui-num-btn mui-u-1of4" data-val="7">19:00~20:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4 mui-btn-danger" data-val="7">9:00<span style="font-size: 15px;"><br />约满</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
+				<p class="mui-num-btn mui-u-1of4 mui-btn-danger" data-val="7">9:00<span style="font-size: 15px;"><br />约满</span></p>
+				<p class="mui-num-btn mui-u-1of4 mui-btn-grey" data-val="7">9:00~10:00<span style="font-size: 15px;"><br />不预约</span></p>
+				
+			</div>
+			<div style="text-align: center; margin-top: 20px;">
+				<p>咨询师电话：1832127131</p> 
+			</div>
+		</section>-->
+    </div> 
+   
+    
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script type="text/html" id="container_list">
+    		<section class="mui-keyboards">
+			<div class="mui-number-section">
+				<% for(var i=0; i<list.length; i++) { %>
+				<p class="mui-num-btn mui-u-1of4 <%if (list[i].s=='1'){%> mui-btn-danger <%}else if(list[i].s=='3'){%> mui-btn-green if(list[i].s=='2'){%> mui-btn-grey <%}%>" data-val="<%= list[i].t%>"><%= list[i].t%>
+					<%if (list[i].s=='1'){%>
+						<span style="font-size: 15px;"><br />约滿</span>
+					<%}else if(list[i].s=='2'){%>
+						<span style="font-size: 15px;"><br />不可设置</span>
+					<%}else if(list[i].s=='0'){%>	
+						<span style="font-size: 15px;"><br />设置</span>
+					<%}else{%>
+						<span style="font-size: 15px;"><br />可预约</span>
+					<%}%>
+					
+				</p>
+				<%}%>
+			</div>
+			<div style="text-align: center; margin-top: 20px;display: none;">
+				<p>咨询师电话：<%= user[0]%></p> 
+			</div>
+		</section>
+    	</script>
+    <script type="text/javascript">
+    	//mui-btn-danger mui-btn-grey 
+	      // var curdate = plus.webview.currentWebview().curdate;
+	      var result = window.location.href;
+      		var curdate = $.getUrlParam(result,'curdate');
+	      var state = app.getState();
+
+	      document.getElementById("all_clander").addEventListener('tap',function(){
+	      	curdate = parseInt(curdate);
+	      	var dayn = new Date(curdate);
+  			var days = dayn.getFullYear()+'-'+(dayn.getMonth()+1)+'-'+dayn.getDate();
+  			var param = {
+		          'method': config.apimethod.setallcalenda,
+		          'account': state.token,
+		          'day': days,
+		          'source':config.source
+		      }
+		      $.dataRequest(param, function(rs) {
+		      	mui.toast('批量预约设置成功')
+	        		setTimeout(function(){
+		          		window.location.href = "{:url('Member/ondate')}";  
+	        		},1000);
+		      })
+	      })
+
+	      //时间分段
+//	      var times = ['9:00','9:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00'];
+	      var times = ['9:00~10:00','10:00~11:00','11:00~12:00','12:00~13:00','13:00~14:00','14:00~15:00','14:00~15:00','15:00~16:00','16:00~17:00','17:00~18:00','18:00~19:00','19:00~20:00','20:00~21:00'];
+	      var param = {
+	          'method': config.apimethod.calendaondate,
+	          'account': state.token,
+	          'day': Math.floor(curdate/1000),
+	          'source':config.source
+	      }
+	      
+	      $.dataRequest(param, function(rs) {
+	      	var widgets = template('container_list', rs);
+        		$('.container').append(widgets);
+        	
+			mui('.container').on('tap','.mui-num-btn',function(){
+	      		if(!$(this).hasClass('mui-btn-grey')&&!$(this).hasClass('mui-btn-danger')&&!$(this).hasClass('mui-btn-green')){
+	      			var hour = $(this).data('val').split('~');
+	      			var dayn = new Date(curdate);
+	      			var days = dayn.getFullYear()+'-'+(dayn.getMonth()+1)+'-'+dayn.getDate()+' '+hour[0];
+	      			var btnArray = ['是', '否'];
+			        mui.confirm('确认可预约么?', '', btnArray, function(e) {
+			          	if (e.index == 1) {
+				          	var param = {
+					          'method': config.apimethod.setcalenda,
+					          'account': state.token,
+					          'hour': days,
+					          'source':config.source
+						    }
+							$.dataRequest(param, function(rs) {
+							 	mui.toast('预约成功')
+				        		setTimeout(function(){
+				        			window.location.href = "{:url('Member/member')}"
+				        		},1000);
+							})
+			          	}
+
+
+			        })
+	      			
+	      		}
+	      		
+	      	})
+
+	      	
+	      })
+    </script>
+  </body>
+
+</html>

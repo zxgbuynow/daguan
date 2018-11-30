@@ -36,6 +36,10 @@ class Member extends Home
     {
         return $this->fetch('member/point/integral'); // 渲染模板
     }
+    public function coupon()
+    {
+        return $this->fetch('member/point/coupon'); // 渲染模板
+    }
     public function nickname()
     {
         return $this->fetch('member/userinfo/nickname'); // 渲染模板
@@ -56,7 +60,36 @@ class Member extends Home
     {
         return $this->fetch('member/safe/logpassword'); // 渲染模板
     }
+    public function clac()
+    {
+        return $this->fetch('member/clac/index'); // 渲染模板
+    }
+    public function claceval()
+    {
+        return $this->fetch('member/clac/claceval'); // 渲染模板
+    }
+    
+    public function fav()
+    {
+        return $this->fetch('member/fav/index'); // 渲染模板
+    }
+    public function favarticle()
+    {
+        return $this->fetch('member/fav/article'); // 渲染模板
+    }
+    public function favclac()
+    {
+        return $this->fetch('member/fav/clac'); // 渲染模板
+    }
+    public function complaint()
+    {
+        return $this->fetch('member/complaint/complaint'); // 渲染模板
+    }
     public function updatelv()
+    {
+        return $this->fetch('apply'); // 渲染模板
+    }
+    public function share()
     {
         return $this->fetch(); // 渲染模板
     }

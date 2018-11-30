@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__M_CSS__/counsellor.css" />
+    <link rel="stylesheet" href="__M_CSS__/style.css" />
+    <style>
+    		.mui-badge{
+    			margin-left: 185px!important;
+			    top: 5.5rem!important;
+			    position: absolute;
+    		}
+    		.counsellor-article-info{
+    			margin-bottom: 0.6rem;
+    			padding-top: 0;
+    		}
+			.counsellor-article-info .list{
+				padding-top: 44px;
+				background: #4883DD;
+				color: #fff;
+				padding-bottom: 2.8rem;
+			}
+			.counsellor-article-info .eve-form{
+				text-align: center;
+				margin-top: 10px;
+			}
+			.counsellor-article-info .mui-media-body h3 {
+				margin: 0 auto 4px auto;
+				font-weight: normal;
+				font-size: 16px;
+			}
+			.counsellor-article-info .mui-media-body .address {
+				font-size: 14px;
+			}
+			.counsellor-article-info .mui-media-body .time {
+				font-size: 12px;
+			}
+			.counsellor-article-info .mui-table-view:after{
+				height: 0;
+			}
+    		.counsellor-head-content .avatar{
+			    height: 6rem;
+			    width: 6rem;
+			    border-radius: 50%;
+			    border: 5px solid #fff;
+    		}
+    		.counsellor-head-content .teacher-name{
+    			font-size: 25px;
+    			font-weight: 600;
+    			margin-bottom: 0.2rem;
+    		}
+    		.counsellor-head-content .zixun-time-block{
+    			padding-bottom: 0;
+    			margin-bottom: 0;
+    			background: transparent;
+    		}
+    		.counsellor-head-content .zixun-time-block .star{
+    			width: 13px;
+    			height: 14px;
+    		}
+			.counsellor-homepage-content{
+				padding: 0;
+			}
+			.counsellor-homepage-content .qualification-block{
+				border-radius: 0;
+			}
+			.counsellor-homepage-content .qualification-block .section{
+				padding: 0 0.5rem;
+				margin: 0;
+			}
+			.counsellor-homepage-content .qualification-block .section .certification{
+				height: auto;
+			}
+			.counsellor-homepage-content .qualification-block .section .title{
+				padding-top: 10px;
+				margin-bottom: 5px;
+			}
+			.counsellor-homepage-content .tags .tag2{
+				position: relative;
+				padding: 0 0.2rem;
+				color: #666;
+				font-size: 13px;
+			}
+			
+			.mui-table-view .mui-media-object{
+			    max-width: 72px; 
+	    			height: 72px;
+	    		}
+	    		.mui-media-text {
+	    			color: #646464;
+	    			font-size: 15px;
+	    		}
+	    		.mui-media-author {
+	    			font-size: 13px;
+	    			margin-top: 5px;
+	    		} 
+	    		.counsellor-homepage-content{
+	    			margin-bottom: 50px;
+	    		}
+			.mui-icon.mui-icon-star{
+		    		font-size:20px !important;
+		    }
+		    .mui-icon.mui-icon-star-filled{
+		    		font-size:20px !important;
+		    }
+    </style>
+    
+  </head>
+  <body class="section-white">
+    <header class="page-header nobd">
+      <div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+      <i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+      <h1 class="mui-center mui-title">评价</h1>
+      <a class="mui-right  mui-btn  mui-btn-link mui-btn-nav mui-pull-right service">
+      	<img src="__M_IMG__/tel.png">
+      	<i class="search-hide icon-func bbc-icon callmm">客服</i>
+      </a>
+      </div>
+    </header>
+    <div class="counsellor-homepage-content">
+			<!--文章评价 start-->
+				<section class="container section-white counsellor-article-info">
+					<div class="list clac-info">
+						
+					</div>
+					
+					<div class="section eve-form">
+						<h3 class="title">课程活动评价</h3>
+						<div class="icons mui-inline " >
+							<i data-index="1" class="mui-icon mui-icon-star mui-icon-star-filled"></i>
+							<i data-index="2" class="mui-icon mui-icon-star"></i>
+							<i data-index="3" class="mui-icon mui-icon-star"></i>
+							<i data-index="4" class="mui-icon mui-icon-star"></i>
+							<i data-index="5" class="mui-icon mui-icon-star"></i>
+						</div>
+						
+						<div class="desc-body">
+							<textarea placeholder="说说哪里好,鼓励一下我吧~"></textarea>
+							<div class="btn-options">
+								<button class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">提价评价</button>
+							</div>
+						</div>
+					</div>
+				</section>
+			<!--文章评价 end-->
+	    
+	</div>
+	
+
+  </body>
+  <script src="__M_JS__/zepto.js"></script>
+  <script src="__M_JS__/mui.min.js"></script>
+  <script src="__M_JS__/template.min.js"></script>
+  <script src="__M_JS__/config.js"></script>
+  <script src="__M_JS__/app.js"></script>
+  <script type="text/html" id="clac_info">
+  	<ul class="mui-table-view">
+		<li class="mui-table-view-cell mui-media">
+			<a href="javascript:;" class="cell-flex">
+				<img class="mui-media-object mui-pull-left" src="<%= $add_server(pic) %>">
+				<div class="mui-media-body">
+					<h3 class="mui-ellipsis-2"><%= title %></h3>
+					<p class="address mui-ellipsis">地点: <%= address %></p>
+					<p class="time">时间: <%= $timestamp_To_Time(start_time) %></p>
+				</div>
+			</a>
+		</li>
+	</ul>
+  </script>
+  
+  
+  <script>
+      var result = window.location.href;
+      var acid = $.getUrlParam(result,'acid');
+      var actype = $.getUrlParam(result,'actype');
+
+	  var state = app.getState();
+      var param = {
+          'method': config.apimethod.clcadetail,
+          'source':config.source,
+          'typeid': actype,
+          'acid': acid
+      }
+      $.dataRequest(param, function(rs) { 
+      	var widgets = template('clac_info', rs);
+        $('.clac-info').append(widgets);
+        
+      });
+      
+      //获得咨询师头像和用户名
+		mui('.icons').on('tap','i',function(){
+		  	var index = parseInt(this.getAttribute("data-index"));
+		  	var parent = this.parentNode;
+		  	var children = parent.children;
+		  	if(this.classList.contains("mui-icon-star")){
+		  		for(var i=0;i<index;i++){
+	  				children[i].classList.remove('mui-icon-star');
+	  				children[i].classList.add('mui-icon-star-filled');
+		  		}
+		  	}else{
+		  		for (var i = index; i < 5; i++) {
+		  			children[i].classList.add('mui-icon-star')
+		  			children[i].classList.remove('mui-icon-star-filled')
+		  		}
+		  	}
+		  	starIndex = index*2;
+	  });
+	  
+	  //
+	  document.getElementById("evaluate").addEventListener('tap',function(){
+	  
+	  	var param = {
+	  		'method': config.apimethod.clacevaluate,
+	        'account': state.token,
+	        'c_id': acid,
+	        'actype': actype,
+	        'source':config.source,
+	  		'sorce' :starIndex,
+	  		'cotent':document.getElementById("evaluateCotent").value
+	  	}
+		if(!document.getElementById("evaluateCotent").value){
+			mui.toast('内容必填');return false;
+		}
+    	$.dataRequest(param, function(c) {
+    		mui.toast('评分成功')
+    		setTimeout(function(){
+    			window.location.href = "{:url('Clac/index')}";
+    		},1000);
+        })
+	  	
+	  })
+  </script>
+</html>

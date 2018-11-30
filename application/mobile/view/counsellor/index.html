@@ -1,245 +1,355 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="__M_FONT__/iconfont.css" />
+    <link rel="stylesheet" href="__M_CSS__/style.css" />
+    <link rel="stylesheet" href="__M_CSS__/widgets.css" />
+		<link rel="stylesheet" href="__M_CSS__/counsellor.css" />
+    <!--<link rel="stylesheet" href="../../css/moon-style.css" />-->
+    <style> 
+    		.main{
+    			margin-right: 10px;
+					position: relative;
+    		}
+    		.mui-table-view .mui-media-object{
+		    max-width: 72px; 
+    			height: 72px;
+    		}
+    		.mui-media-text {
+    			color: #646464;
+    			font-size: 15px;
+    		}
+    		.mui-media-author { 
+    			font-size: 13px;
+    			margin-top: 5px;
+    		} 
+    		.mui-media-action{
+    			font-size: 13px;
+    		}
+    		.float-right{
+    			float: right;
+    		}
+    		.mui-badge{
+    			left: 15px;
+    			top: 25px!important;
+    			right: 0px!important;
+    			width: 35px;
+    		}
+    		/*#topPopover {
+			position: fixed;
+			top: 33px!important;
+			right: 1px;
+		}
+		#topPopover .mui-popover-arrow {
+			left: auto;
+			right: 1px;
+		}
+		.mui-popover {
+			height: 180px;
+			width: 200px;
+		}
+		#agency{
+			font-size: 15px;
+		}*/
+		header{
+			height: 44px;
+		}
+		.bbc-pullrefresh-top{
+			top: 45px;
+		}
+		.main {
+				margin-right: 10px;
+				position: relative;
+			}
+			.mui-bar .mui-title {
+				width: auto;
+				left: 40px;
+				right: 52px;
+				top: 7px;
+				margin: 0;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: inline-block;
+			}
+            .mui-off-canvas-left, .mui-off-canvas-right{
+                background: #efeff4;
+            }
+            .filters-options span.checked{
+                background:#4883DD;
+            }
+            .header.home-header .header-search-form input{
+                color: #666;
+            }
+            header.home-header .mui-input-clear ~ .mui-icon-clear{
+            top: -.4rem;
+          }
+    </style>
+  </head>
 
-        <!-- <link rel="stylesheet" href="__M_CSS__/mui.min.css"> -->
-        <link rel="stylesheet" href="__M_CSS__/style.css" />
-        <link rel="stylesheet" href="__M_CSS__/widgets.css" />
-        <style>
-            html,
-            body {
-                background-color: #efeff4;
-            }
-            .mui-off-canvas-right {
-                background: #efeff4!important;
-                left: 30%;
-            }
-            .main{
-                margin-right: 10px;
-            }
-            .mui-table-view .mui-media-object{
-            max-width: 72px; 
-                height: 72px;
-            }
-            .mui-media-text {
-                color: #646464;
-                font-size: 15px;
-            }
-            .mui-media-author { 
-                font-size: 13px;
-                margin-top: 5px;
-            } 
-            .mui-media-action{
-                font-size: 13px;
-            }
-            .float-right{
-                float: right;
-            }
-        </style>
-    </head>
-
-    <body>
-        <div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable">
-            <!--侧滑菜单部分-->
-            <aside id="offCanvasSide" class="mui-off-canvas-right">
-                <div id="offCanvasSideScroll" class="mui-scroll-wrapper">
-                    <div class="mui-content filters">
-                      <div class="section-white section-container filters-header">
-                        <div class="filters-op reset-filters-options">重置</div>
-                        <div class="section-init">筛选</div>
-                        <div id="close-btn" class="filters-op">确定</div>
-                      </div>
-                      <div id="filters_box" class="mui-scroll">
-                        <!-- <div class="filters-options mui-content-padded clearfix" style="height: auto;">
-                            <div class="clearfix"><div class="mui-pull-left options-name">状态:&nbsp;</div></div>
-                            <span data-name="online" data-value="1" >在线</span>
-                            <span data-name="online" data-value="0" >下线</span>
-                        </div>
-                        
-                        <div class="filters-options mui-content-padded clearfix" style="height: auto;">
-                            <div class="clearfix"><div class="mui-pull-left options-name">性别:&nbsp;</div></div>
-                            <span data-name="sex" data-value="1" >男</span>
-                            <span data-name="sex" data-value="0" >女</span>
-                        </div>
-                        
-                        <div class="filters-options mui-content-padded clearfix" style="height: auto;">
-                            <div class="clearfix"><div class="mui-pull-left options-name">今日空闲:&nbsp;</div></div>
-                            <span data-name="ondate" data-value="1" >是</span>
-                            <span data-name="ondate" data-value="0" >否</span>
-                        </div>
-                        <div class="filters-options mui-content-padded clearfix">
-                          <div class="clearfix"><div class="mui-pull-left options-name">地区:&nbsp;</div> <label class="font-red fontS mui-pull-left options-choose"></label><i class="mui-pull-right mui-icon mui-icon-arrowdown action-all"></i></div>
-
-                          <span data-name="cat_id" data-value="1" class="checked" >111 </span>
-                          <span data-name="cat_id" data-value="2" class="checked" >222</span>
-                          <span data-name="cat_id" data-value="3" class="checked" >333</span>
-                          <span data-name="cat_id" data-value="4" class="checked" >444</span>
-
-                        </div> -->
-                        
-                      </div>
-                    </div>
-                </div>
-            </aside>
-            <!--主界面部分-->
-            <div class="mui-inner-wrap">
-                <header class="home-header">
-                  <div class="header-logo"><img src="__M_IMG__/newlogo.png"></div>
-                  <div class="main">
-                    <form onsubmit="return false;">
-                      <div class="mui-input-row header-search-form"><input type="search"  class="header-search mui-input-clear" placeholder="寻找咨询师"></div>
-                    </form>
+  <body>
+    <header class="home-header">
+		<div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+	 		<i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+			<div class="mui-center mui-title">
+				<form onsubmit="return false;">
+				<div class="mui-input-row header-search-form">
+					<input type="search"  class="header-search mui-input-clear" placeholder="寻找咨询师">
+				</div>
+				<a href="#" class="right-icon-search"><i class="iconfont icon-search icon-home-search"></i></a>
+			</form>
+			</div>
+	    		 <a href="#offCanvasSide" ><i class="search-hide header-right icon-func bbc-icon bbc-icon-submenu mui-action-menu " style=""></i></a>
+		</div>
+	</header>
+    
+    <div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable">
+        <!--侧滑菜单部分-->
+        <aside id="offCanvasSide" class="mui-off-canvas-right">
+            <div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+                <div class="mui-content filters">
+                  <div class="section-white section-container filters-header">
+                    <div class="filters-op reset-filters-options">重置</div>
+                    <div class="section-init">筛选</div>
+                    <div id="close-btn" class="filters-op">确定</div>
                   </div>
-                  <a href="#offCanvasSide" ><i class="search-hide icon-func bbc-icon bbc-icon-submenu mui-action-menu"></i></a>
-                  <a href="#" class="txt-func search-cancel" style="display:none;">取消</a>
-                </header>
-
-                <header class="mui-bar mui-bar-nav">
-                    <a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
-                    <a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>
-                    <h1 class="mui-title">div模式右滑菜单</h1>
-                </header>
-
-                <div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
-                    <div class="mui-scroll contentl">
-                        
-
-                         <!--情感标签 start-->
-                          <!-- <section class="widgets-category-nav section-white">
-                            <div class="section-title">
-                              <div class="title-txt">咨询分类</div>
-                              <div class="more-link action-webview" data-webview="_www/view/category/category.html"><i class="bbc-icon bbc-icon-forward"></i></div>
-                            </div>
-                            <ul class="widgets-icons-nav">
-                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_05.png"></a></i><span>婚姻家庭</li>
-                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_07.png"></a></i><span>情绪管理</li>
-                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_09.png"></a></i><span>恋爱心理</li>
-                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_11.png"></a></i><span>职场心理</li>
-                                
-                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_17.png"></a></i><span>人际关系</li>
-                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_18.png"></a></i><span>亲子教育</li>
-                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_19.png"></a></i><span>个人成长</li>
-                              <li class="action-webview" data-webview="" data-webparam=''><i><a href="#"><img src="../../img/widgets_02_20.png"></a></i><span>心理健康</li> 
-                            </ul>
-                          </section> -->
-                          <!--情感标签 end-->
-                          
-                          <!--咨询师 start-->
-                          <!-- <section class="widgets-category-nav section-white">
-                            <div class="section-title">
-                              <div class="title-txt">人气排行</div>
-                            </div>
-                            <div class="mui-table-view">
-                              <ul class="mui-table-view mui-table-view-chevron">
-                                <li class="mui-table-view-cell mui-media">
-                                    <a class="mui-navigate-right">
-                                        <img class="mui-media-object mui-pull-left" src="../../img/widgets_54.gif">
-                                        <div class="mui-media-body">
-                                            <p>
-                                                <span class="mui-text-left">张医生</span>
-                                                <span class="mui-text-right mui-media-action float-right mui-hidden">立即预约</span>
-                                            </p>
-                                            <p class='mui-ellipsis mui-media-text'>从业10年|中科院</p>
-                                            <p class="mui-ellipsis mui-media-text mui-media-author">我在大观心理温暖过1000人次</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                
-                              </ul>     
-                            </div>
-                          </section> -->
-                          <!--咨询师 end-->
-
-                    </div>
+                  <div id="filters_box" class="mui-scroll">
+                    
+                    
+                  </div>
                 </div>
-                <!-- off-canvas backdrop -->
-                <div class="mui-off-canvas-backdrop"></div>
             </div>
+        </aside>
+        <!--主界面部分-->
+        <div class="mui-inner-wrap">
+
+            <header class="mui-bar mui-bar-nav">
+                <a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
+                <a class="mui-action-back mui-btn mui-btn-link mui-pull-right">关闭</a>
+                <h1 class="mui-title">div模式右滑菜单</h1>
+            </header>
+
+            <div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
+                <div class="mui-scroll contentl">
+                    <div class="cag-box-list"></div>
+	         		<div class="deskrecom-box-list"></div>
+	         		<div class="recom-box-list"></div>	
+
+                     
+
+                </div>
+            </div>
+            <!-- off-canvas backdrop -->
+            <div class="mui-off-canvas-backdrop"></div>
         </div>
-        <nav class="mui-bar bbc-bar-tab">
-          <a class="bbc-tab-item " href="{:url('Index/index')}">
-            <span class="mui-icon bbc-icon bbc-icon-home"></span>
-            <span class="mui-tab-label">首页</span>
-          </a>
-          <a class="bbc-tab-item bbc-active" >
-            <span class="mui-icon bbc-icon bbc-icon-list"></span>
-            <span class="mui-tab-label">咨询</span>
-          </a>
-          <a class="bbc-tab-item" href="{:url('Clac/index')}">
-            <span class="mui-icon bbc-icon bbc-icon-moments"></span>
-            <span class="mui-tab-label">课程/活动</span>
-          </a>
-          <a class="bbc-tab-item" href="{:url('Member/member')}">
-            <span class="mui-icon bbc-icon bbc-icon-user-empty"></span>
-            <span class="mui-tab-label">我的</span>
-          </a>
-        </nav>
-        <script src="__M_JS__/zepto.js"></script>
-        <script src="__M_JS__/mui.min.js"></script>
-        <script src="__M_JS__/template.min.js"></script>
-        <script src="__M_JS__/config.js"></script>
-        <script src="__M_JS__/app.js"></script>
-        <script type="text/html" id="widget_category">
-        <section class="widgets-category-nav section-white">
-            <div class="section-title">
-              <div class="title-txt">咨询分类</div>
-              <div class="more-link action-clickview" data-webview="{:url('Category/category')}"><i class="bbc-icon bbc-icon-forward"></i></div>
-            </div>
-            <ul class="widgets-icons-nav">
-                <% for(var i=0; i<list.length; i++) { %>
-              <li class="action-clickview" data-webview="{:url('Counsellor/counsellor')}" data-webparam='<%= list[i].id %>'><i><a href="#"><img src="<%= $add_server(list[i].cover) %>"></a></i><span><%= list[i].title %></li>
-            <% } %>
-            </ul>
-          </section>
-        </script>   
-        
-        <script type="text/html" id="widget_recommend">
-            <section class="widgets-category-nav section-white">
-                <div class="section-title">
-                  <div class="title-txt">人气排行</div>
-                </div>
-                <div class="mui-table-view">
-                  <ul class="mui-table-view mui-table-view-chevron">
-                    <% for(var i=0; i<list.length; i++) { %>
-                    <li class="mui-table-view-cell mui-media action-clickview" data-webview="{:url('Counsellor/detail')}" data-webparam='<%= list[i].memberid %>'>
-                        <a class="mui-navigate-right"> 
-                            <img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].avar) %>">
-                            <div class="mui-media-body">
-                                <p>
-                                    <span class="mui-text-left"><%= list[i].nickname %></span>
-                                    <span class="mui-text-right mui-media-action float-right mui-hidden">立即预约</span>
-                                </p>
-                                <p class='mui-ellipsis mui-media-text'><%if(list[i].tearch){%>大观讲师 |<%}%><%if(list[i].leader){%>大观Leader<%}%>|<%= list[i].sign %></p>
-                                <p class="mui-ellipsis mui-media-text mui-media-author">我在大观心理温暖过<%= list[i].trade %>人次</p>
-                            </div>
-                        </a>
-                    </li>
-                    <% } %>
-                  </ul>     
-                </div>
-            </section>
-        </script>
-        <script type="text/html" id="filters_list">
+    </div>
+
+    <!-- <div class="container">
+      <div class="mui-scroll-wrapper bbc-pullrefresh-top" >
+        <div class="mui-scroll">
+         <div class="mui-content content-bottom-padded-nav">
+         		<div class="cag-box-list"></div>
+         		<div class="deskrecom-box-list"></div>
+         		<div class="recom-box-list"></div>
+          	  
+          </div>
+        </div>
+      </div>
+    </div> -->
+    
+	
+	<nav class="mui-bar bbc-bar-tab" >
+      <a class="bbc-tab-item " href="{:url('Index/index')}">
+        <span class="iconfont icon-shouye bbc-tab-mui-icon"></span>
+        <span class="mui-tab-label">首页</span>
+      </a>
+      <a class="bbc-tab-item bbc-active" >
+        <span class="iconfont icon-zixun bbc-tab-mui-icon"></span>
+        <span class="mui-tab-label">咨询</span>
+      </a>
+      <a class="bbc-tab-item" href="{:url('Clac/index')}">
+        <span class="iconfont icon-kechenghuodong- bbc-tab-mui-icon"></span>
+        <span class="mui-tab-label">课程/活动</span>
+      </a>
+      
+      <a class="bbc-tab-item" href="{:url('Member/member')}">
+        <span class="iconfont icon-wode bbc-tab-mui-icon"></span>
+        <span class="mui-tab-label">我的</span>
+      </a>
+   </nav>
+
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script src="__M_JS__/mui.lazyload.js"></script>
+	<script src="__M_JS__/mui.lazyload.img.js"></script>
+    
+	<script type="text/html" id="widget_category">
+		<section class="widgets-category-nav section-white">
+	      	<div class="section-title">
+	          <div class="title-txt">咨询分类</div>
+	          <div class="more-link action-clickview" data-webview="{:url('Category/category')}"><i class="bbc-icon bbc-icon-forward"></i></div>
+	        </div>
+	        <ul class="widgets-icons-nav">
+	        	<% for(var i=0; i<list.length; i++) { %>
+	        		<%if(i<8){%>
+	          <li class="action-clickview" data-webview="{:url('Counsellor/counsellor')}" data-webparam='<%= list[i].id %>'><i><a href="#"><img src="<%= $add_server(list[i].cover) %>"></a></i><span><%= list[i].title %></li>
+	       		<%}%>
+	       	<% } %>
+	        </ul>
+	      </section>
+	</script>	
+	<script type="text/html" id="widget_deskrecommend">
+    <!--平台推荐 start-->
+	<section class="widgets-category-nav section-white">
+		<div class="section-title mui-list-bd-headline">
+			<div class="title-txt">平台推荐</div>
+			<div class="refresh-link" >
+				<span class="mui-icon bbc-icon bbc-icon-home icon-refresh"></span>
+				<span class="mui-tab-label changetag">换一批</span>
+			</div>
+		</div>
+		<div class="mui-table-view">
+			<ul class="mui-table-view mui-table-view-chevron ">
+				<% for(var i=0; i<list.length; i++) { %>
+				<li class="mui-table-view-cell mui-media pad-rt">
+					<img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].avar) %>">
+					<div class="mui-media-body pad-rt">
+						<div class="flex flex-hb flex-dc info-detail">
+								<div class="card-new-info">
+									<div class="flex-box">
+										<p class="card-name flex-g2 card-ellispse"><%= list[i].nickname %>
+											<i class="iconfont icon-renzhengzixunshi- iconfont-icon-doctype small blue"></i>
+											<%if(list[i].tearch){%> 
+												<i class="iconfont icon-renzhengjiangshi- iconfont-icon-doctype small orange"></i>
+											<%}%>
+											<%if(list[i].leader){%>
+												<i class="iconfont icon-xiaotuantiLeader- iconfont-icon-doctype small pink"></i>
+											<%}%>
+										</p>
+										<p class="doctor-address flex-g1 card-ellispse">
+											<i class="iconfont icon-dizhi- iconfont-icon-doctype small gray rt1"></i>
+											<span><%= list[i].shopname %></span>
+										</p>
+										
+									</div>
+								</div>
+								<div class="doctor-sign-list">
+									<% for(var m in list[i].signarr) { %>
+										<span><%= list[i].signarr[m] %></span>
+									<%}%>
+								</div>
+								<p class="card-addrs card-ellispse"><%= list[i].slogan %></p>
+								<div class="card-new-content">
+										<div class="flex-box card-new-opre">
+											<% if(list[i].online==1 ){%>
+												<p class="mui-badge mui-badge-blue flex-g1">在线</p>
+											<%}else{%>
+												<p class="mui-badge mui-badge-gray flex-g1">离线</p>
+											<%}%>
+											
+											<p class="doctor-honor flex-g2 ">
+												<span>住进 <%= list[i].trade %> 个人的心窝</span>
+												<span class="star">好评率：<%= list[i].start %></span>
+											</p>
+											<p class="d-icon-detail action-clickview flex-g1" data-webview="{:url('Counsellor/detail')}"data-webparam='<%= list[i].memberid %>'>详情》</p>
+										</div>
+								</div>
+						</div>
+					</div>
+				</li>
+				<% } %>
+			</ul>		
+		</div>
+	</section>
+	<!--平台推荐 end-->
+	</script>
+	<script type="text/html" id="widget_recommend">
+	<!--人气排行 start-->
+	<section class="widgets-category-nav section-white ">
+		<div class="section-title mui-list-bd-headline">
+			<div class="title-txt">人气排行</div>
+		</div>
+		<div class="mui-table-view">
+			<ul class="mui-table-view mui-table-view-chevron">
+				<% for(var i in list) { %>
+				<li class="mui-table-view-cell mui-media pad-rt">
+					<img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].avar) %>">
+					<div class="mui-media-body pad-rt">
+						<div class="flex flex-hb flex-dc info-detail">
+								<div class="card-new-info">
+									<div class="flex-box">
+										<p class="card-name flex-g2 card-ellispse"><%= list[i].nickname %>
+											<i class="iconfont icon-renzhengzixunshi- iconfont-icon-doctype small blue"></i>
+											<%if(list[i].tearch){%> 
+												<i class="iconfont icon-renzhengjiangshi- iconfont-icon-doctype small orange"></i>
+											<%}%>
+											<%if(list[i].leader){%>
+												<i class="iconfont icon-xiaotuantiLeader- iconfont-icon-doctype small pink"></i>
+											<%}%>
+										</p>
+										<p class="doctor-address flex-g1 card-ellispse">
+											<i class="iconfont icon-dizhi- iconfont-icon-doctype small gray rt1"></i>
+											<span><%= list[i].shopname %></span>
+										</p>
+									</div>
+								</div>
+								<div class="doctor-sign-list">
+									<% for(var m in list[i].signarr) { %>
+										<span><%= list[i].signarr[m] %></span>
+									<%}%>
+								</div>
+								<p class="card-addrs card-ellispse"><%= list[i].slogan %></p>
+								<div class="card-new-content">
+									<div class="flex-box card-new-opre">
+										<% if(list[i].online==1 ){%>
+											<p class="mui-badge mui-badge-blue flex-g1">在线</p>
+										<%}else{%>
+											<p class="mui-badge mui-badge-gray flex-g1">离线</p>
+										<%}%>
+										
+										<p class="doctor-honor flex-g2 ">
+											<span>住进 <%= list[i].trade %> 个人的心窝</span>
+											<span class="star">好评率：<%= list[i].start %></span>
+										</p>
+										<p class="d-icon-detail action-clickview flex-g1" data-webview="{:url('Counsellor/detail')}"data-webparam='<%= list[i].memberid %>'>详情》</p>
+									</div>
+								</div>
+						</div>
+					</div>
+				</li>
+				<% } %>
+			</ul>		
+		</div>
+	</section>
+	<!--人气排行 end-->
+	</script>
+    
+     <script type="text/html" id="filters_list">
         <div class="filters-options mui-content-padded clearfix" style="height: auto;">
             <div class="clearfix"><div class="mui-pull-left options-name">状态:&nbsp;</div></div>
+            <span data-name="online" data-value="" class="checked">不限</span>
             <span data-name="online" data-value="1" >在线</span>
             <span data-name="online" data-value="0" >下线</span>
         </div>
         
         <div class="filters-options mui-content-padded clearfix" style="height: auto;">
             <div class="clearfix"><div class="mui-pull-left options-name">性别:&nbsp;</div></div>
+            <span data-name="sex" data-value="" class="checked">不限</span>
             <span data-name="sex" data-value="1" >男</span>
             <span data-name="sex" data-value="0" >女</span>
         </div>
         
         <div class="filters-options mui-content-padded clearfix" style="height: auto;">
             <div class="clearfix"><div class="mui-pull-left options-name">今日空闲:&nbsp;</div></div>
+            <span data-name="ondate" data-value="" class="checked">不限</span>
             <span data-name="ondate" data-value="1" >是</span>
             <span data-name="ondate" data-value="0" >否</span>
         </div>
@@ -254,8 +364,9 @@
         <% } %>
         
      </script>
-        <script>
-            mui.init();
+    <script type="text/javascript">
+     
+       mui.init();
              //侧滑容器父节点
             var offCanvasWrapper = mui('#offCanvasWrapper');
              //主界面容器
@@ -280,7 +391,61 @@
             }
             $.dataRequest(param, function(rs) {
                 var widgets = template('widget_category', rs);
-                $('.contentl').append(widgets);
+            	$('.cag-box-list').append(widgets);
+
+            	//deskrecommend
+		        var aparam = {
+		            'method': config.apimethod.deskrecommend,
+		            'source':config.source
+		        }
+				
+	//			log(aparam) 
+		        $.dataRequest(aparam, function(rt) {
+	        		for (var i in rt['list']) {
+	        			if(rt['list'][i].avar==''){
+	        				rt['list'][i].avar = 'static/admin/img/none.png';
+	        			}
+	        		}
+	        		var widgets = template('widget_deskrecommend', rt);
+		            $('.deskrecom-box-list').append(widgets);
+		            
+		            	$(window).on('tap','.changetag',function(){
+		            		var aparam = {
+				            'method': config.apimethod.deskrecommend,
+				            'source':config.source
+				        }
+						
+				        $.dataRequest(aparam, function(rt) {
+			        		for (var i in rt['list']) {
+			        			if(rt['list'][i].avar==''){
+			        				rt['list'][i].avar = 'static/admin/img/none.png';
+			        			}
+			        		}
+				        	var widgets = template('widget_deskrecommend', rt);
+				            $('.deskrecom-box-list').html(widgets);
+
+				        })
+		            
+		            })
+
+		            $(window).on('tap', '.action-clickview', function() {
+	                      var webview = $(this).data('webview');
+	                      var webparam = $(this).data('webparam');
+	                      if (webview.indexOf("counsellor") != -1) {
+	                        if (webview.indexOf("detail") != -1){
+	                            window.location.href = webview+'?counsellor_id='+webparam;
+	                        }else{
+	                            window.location.href = webview+'?cat_id='+webparam;
+	                        }
+
+	                      }else{
+	                        window.location.href = webview;
+	                      }
+	                      
+	                 })
+
+		        })
+
                 //recommond
                 var aparam = {
                     'method': config.apimethod.recommend,
@@ -288,7 +453,7 @@
                 }
                 $.dataRequest(aparam, function(rs) {
                     var widgets = template('widget_recommend', rs);
-                    $('.contentl').append(widgets);
+                    $('.recom-box-list').append(widgets);
                     mui('.mui-scroll-wrapper').scroll({
                         indicators: false
                     });
@@ -343,7 +508,7 @@
                             }
                         }
                         var widgets = template('widget_recommend', rt);
-                        $('.contentl').append(widgets);
+                        $('.recom-box-list').append(widgets);
                          mui('.mui-scroll-wrapper').scroll({
                           indicators: false
                         });
@@ -478,7 +643,7 @@
                             }
                         }
                         var widgets = template('widget_recommend', rt);
-                        $('.contentl').append(widgets);
+                        $('.recom-box-list').append(widgets);
                         mui('.mui-scroll-wrapper').scroll({
                           indicators: false
                         });
@@ -501,7 +666,7 @@
                    chk_filter.parent().find('.options-choose').html(chk_filter.html());
                 }
             }
-        </script>
-    </body>
+    </script>
+  </body>
 
 </html>

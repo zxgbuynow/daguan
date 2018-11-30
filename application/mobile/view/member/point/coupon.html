@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__M_CSS__/style.css">
+    <style type="text/css">
+      .scroll-top {
+        top: 45px;
+      }
+    </style>
+  </head>
+
+  <body>
+     <header class="page-header nobd">
+      <div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+      <i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+      <h1 class="mui-center mui-title">我的优惠券</h1>
+      </div>
+    </header>
+    <div class="mui-content">
+      <div>
+        <div id="pullrefresh" class="section-white mui-scroll-wrapper scroll-top">
+          <div class="mui-scroll">
+            <ul class="mui-table-view integral-details fontS">
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script type="text/html" id="point_detail">
+      <% if(list != null){ %>
+        <% for(var i=0; i<list.length; i++) { %>
+        <li class="mui-table-view-cell">
+          <div class="box-display">
+            <div class="box-item-flex1">
+              <%= list[i].title%><br>
+              <span class="fontS font-gray-60 fonts"><%= $timestamp_To_Date(list[i].created_time)%></span>
+            </div>
+            <div class="box-item-flex1 content-right deposit-detail-amount  <%if (list[i].status=='0'){%>font-red<% }else{ %>font-green<% } %>">
+              <%= list[i].stautstx%>
+            </div>
+          </div>
+        </li>
+        <% } %>
+      <% } %>
+    </script>
+    <script type="text/javascript" charset="utf-8">
+      var state = app.getState();
+      var param = {
+          'method': config.apimethod.couponlist,
+          'account': state.token,
+          'source':config.source
+      }
+      $.dataRequest(param, function(rs) {
+          $('.point').html(rs.points);
+          //明细
+          log(rs) 
+          var widgets = template('point_detail', rs);
+          $('.integral-details').append(widgets);
+      })
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+	<link rel="stylesheet" href="__C_FONT__/iconfont.css">
+	<style>
+		.mui-check-list .mui-input-row{
+			float: left;
+			clear: none; 
+			display: inline-block;
+			overflow: hidden;
+		}
+		.mui-check-list .mui-input-row label{
+			width: auto;
+			padding: .2rem .8rem;
+		}
+		.mui-radio.mui-left label, .mui-checkbox.mui-left label {
+			padding-left: 30px;
+			padding-right: 5px;
+			font-size: 12px;
+		}
+		.mui-radio.mui-left input[type="radio"], .mui-checkbox.mui-left input[type="checkbox"] {
+			left: 5px;
+		}
+		.mui-radio input[type="radio"], .mui-checkbox input[type="checkbox"] {
+			-webkit-appearance: none;
+			outline: 0 !important;
+			width: 1rem;
+			border: 0;
+			display: inline-block;
+			position: absolute;
+			line-height: 1rem;
+			right: 1rem;
+			height: 1rem;
+			top: 50%;
+			-webkit-transform: translateY(-50%);
+			transform: translateY(-50%);
+			background-color: transparent;
+		}
+		
+		.mui-input-row input[type="checkbox"]:before {
+			font-family: Muiicons;
+			font-weight: normal;
+			border-radius: 0;
+			font-size: 18px;
+			line-height: 1rem;
+			height: 1rem;
+			text-decoration: none;
+			-webkit-font-smoothing: antialiased;
+			color: #aaaaaa;
+			background: none;
+		}
+		.mui-navigate p{
+			min-width: 70px;
+		}
+		
+	</style>
+  </head>
+
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">我的咨询设置</div>
+    </header>
+    <section class="container">
+      <section class="section-white meset-box">
+			
+      </section>
+      <section class="mui-content-padded form-op-section">	
+	      <button id="save" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">提交</button>
+	    </section>
+    </section>
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    	<script type="text/html" id="meset_list">
+    		<ul class="mui-table-view">
+			<li id="chart" class="mui-table-view-cell">
+				<div class="mui-navigate flex-box">
+					<p>咨询方式</p>
+					<div class="mui-check-list flex-g3 mui-clearfix">
+						<% for(var i in chararr) { %>
+							<div class="mui-input-row mui-checkbox mui-left">
+								<label><%= chararr[i].show%></label>
+								<input name="chart" value="<%= chararr[i].chart%>" type="checkbox" <%if(chararr[i].ischecked==1){%>checked<%}%>  >
+							</div>
+						<%}%>
+					</div>
+				</div>
+			</li>
+			<li id="chart_addr" class="mui-table-view-cell">
+				<div class="mui-navigate flex-box">
+					<p>咨询地点</p>
+					<div class="mui-check-list flex-g3 mui-clearfix">
+						<% for(var i in shopnm) { %>
+							<div class="mui-input-row mui-checkbox mui-left">
+								<label><%= shopnm[i].city%></label>
+								<input name="shopids" value="<%= shopnm[i].id%>" type="checkbox" <%if(shopnm[i].ischecked==1){%>checked<%}%>>
+							</div>
+						<%}%>
+					</div>
+				</div>
+			</li>
+			<li class="mui-table-view-cell">
+				在线状态
+				<div class="mui-switch <% if( online){ %> mui-active <%}%> mui-switch-mini" >
+					<div class="mui-switch-handle"></div>
+				</div>
+			</li>
+		</ul>
+    	</script>
+    	
+    <script type="text/javascript" charset="utf-8">
+      
+      var mobile = "";
+      var isonline = 0;
+      var state = app.getState();
+      var param = {
+          'method': config.apimethod.counsellor,
+          'id': state.token,
+          'source':config.source
+      }
+      $.dataRequest(param, function(rs) {
+      	
+      	 var widgets = template('meset_list', rs);
+	        	$('.meset-box').append(widgets); 
+	    
+      	mui('.mui-table-view-cell .mui-switch').each(function() { //循环所有toggle
+			var _this = this;
+			mui(_this).switch();//手动初始化一下
+			_this.addEventListener('toggle', function(event) {
+				if(event.detail.isActive){
+					isonline = 1;
+				}else{
+					isonline = 0;
+				}
+			});
+		});
+		
+      })
+      
+	  document.getElementById('save').addEventListener('tap', function() {
+        	var chartarr =[]; 
+	    	$('input[name="chart"]:checked').each(function(){ 
+	        chartarr.push($(this).val()); 
+	    	});
+	    	
+	    	var shopidsarr =[]; 
+	    	$('input[name="shopids"]:checked').each(function(){ 
+	        shopidsarr.push($(this).val()); 
+	    	});
+	    	var param = {
+	          'method': config.apimethod.counsellorst,
+	          'id': state.token,
+	          'online': isonline,
+	          'shopids': shopidsarr.join(','),
+	          'openchart': chartarr.join(','),
+	          'source':config.source
+	      }
+	      $.dataRequest(param, function(rs) {
+	      	mui.toast('设置成功');
+            mui.back();
+	      })
+	    	
+	    	
+      }, false);
+    </script>
+  </body>
+
+</html>

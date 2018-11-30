@@ -8,15 +8,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="stylesheet" href="__C_CSS__/style.css" />
+		<link rel="stylesheet" href="__C_CSS__/counsellor.css">
     <link rel="stylesheet" href="__C_CSS__/widgets.css" />
     <link rel="stylesheet" href="__C_CSS__/MCalendar.css" />
     <style>
     		.main{
     			margin-right: 10px;
-    		}
-    		.mui-table-view .mui-media-object{
-		    max-width: 72px; 
-    			height: 72px;
     		}
     		.mui-media-text {
     			color: #646464;
@@ -32,7 +29,7 @@
     		.float-right{
     			float: right;
     		}
-    		.mui-icon .mui-badge{
+    		.mui-icon .mui-badge-point{
 			    height: 10px;
 			    margin-left: -8px;
     		}
@@ -44,33 +41,80 @@
 			    font-size: 21px;
 
     		}
+    		.mc-cell-catch{
+    			background-color: #3ab54a;
+    			border-radius: 30px;
+    		}
+				.mc-cell-selected{
+					background: #4585D5;
+					color: #fff;
+					border-radius: 100%;
+					padding: 0 5px;
+				}
+				.mc-table-cell-today a{
+					color: #fff;
+				}
+		.mc-cell-catch{
+		    			/*4585D5*/
+		    			/*background-color: #3ab54a !important;*/
+		    			background-color: #4585D5 !important;
+		    			border-radius: 30px;
+		    		}
+		    		.mc-cell-catch a{
+		    			color: #fff!important;
+		    		}
+		    		.mc-cell-filled{
+		    			background-color: #E45F62 !important;
+		    			border-radius: 30px;
+		    		}
+		    		.mc-cell-filled a{
+		    			color: #fff!important;
+		    		}
+		    		.mc-cell-disabled{
+		    			background-color: #CCCCCC !important;
+		    			border-radius: 30px;
+		    		}
+		    		.mc-cell-disabled a{
+		    			color: #fff!important;
+		    		}
+				.mc-cell-selected{
+					color: #fff;
+/*					background: #4585D5;*/
+					border-radius: 50%;
+				}
+				.mc-table-cell-today.mc-cell-selected a{
+					color: #fff;
+				}
     </style>
   </head>
 
   <body>
     <header class="page-header">
-    	  <i id="all_clander" class="header-left txt-func action-webview" data-webview="{:url('Counsellor/alist')}">所有日程</i>
+    	  <a href="{:url('Counsellor/alist')}"><i id="all_clander" class="header-left txt-func " data-webview="_www/view/counsellor/list.html">所有日程</i></a>
       <div class="header-title">工作台</div>
-      <i class=" mui-icon mui-icon-plus mui-pull-right cander-icon action-webview" data-webview="{:url('Counsellor/plus')}" style="display: none;"></i>
+	<a href="{:url('Counsellor/myondate')}"><i class="header-right txt-func " data-webview="_www/view/counsellor/myondate.html">我的咨询</i></a>
+      <i class=" mui-icon mui-icon-plus mui-pull-right cander-icon action-webview mui-hidden" data-webview="_www/view/counsellor/plus.html"></i>
     </header>
-    <div class="container" id="container" style="margin-bottom: 50px;">
+    <div class="container" id="container" > 
        
-    </div> 
+    </div>
+	
     <nav class="mui-bar bbc-bar-tab">
-      <a class="bbc-tab-item "  href="{:url('Index/index')}">
+      <a class="bbc-tab-item " href="{:url('Index/index')}">
         <span class="mui-icon bbc-icon bbc-icon-home"></span>
         <span class="mui-tab-label">首页</span>
       </a>
       <a class="bbc-tab-item bbc-active" >
-        <span class="mui-icon bbc-icon bbc-icon-package"><span class="cesllor-badge mui-badge mui-badge-danger"></span></span>
+        <span class="mui-icon bbc-icon bbc-icon-package"><span class="mui-badge mui-badge-danger mui-badge-point"></span></span>
         <span class="mui-tab-label">工作台</span>
       </a>
       <a class="bbc-tab-item" href="{:url('Clac/index')}">
         <span class="mui-icon bbc-icon bbc-icon-moments"></span>
         <span class="mui-tab-label">课程/活动</span>
       </a>
-      <a class="bbc-tab-item" href="{:url('Member/member')}">
-        <span class="mui-icon bbc-icon bbc-icon-user-empty"><i  class="msg-badge mui-badge mui-badge-danger mui-hidden"></i></span>
+      
+      <a class="bbc-tab-item" href="{:url('Clac/index')}">
+        <span class="mui-icon bbc-icon bbc-icon-user-empty"></span>
         <span class="mui-tab-label">我的</span>
       </a>
     </nav>
@@ -81,74 +125,126 @@
     <script src="__C_JS__/config.js"></script>
     <script src="__C_JS__/app.js"></script>
     <script src="__C_JS__/MCalendar.js"></script>
-  	<script type="text/html" id="calendar_list1">
-  		<% if(list != null){ %>
-  			<ul class="mui-table-view calendar-list" style="background-color: #FFFFFF;">
-  	        <% for(var i=0; i<list.length; i++) { %>
-  			<li data-view="_www/view/counsellor/detail.html" class="mui-table-view-cell ">
-  		        <span><%= list[i].title%></span>
-  	            <span style="float: right;color: #646464;font-size: 12px;"><%= $getDateDiff(list[i].start_time)%></span>
-  	        </li>
-  	        <%}%>
-  			</ul>
-          <%}%>
-  	</script>
     <script type="text/html" id="calendar_list">
-    <% if(list != null){ %>
-      <ul class="mui-table-view calendar-list" style="background-color: #FFFFFF;">
-          <% for(var i=0; i<list.length; i++) { %>
-      <li data-view="_www/view/counsellor/case.html" class="mui-table-view-cell go-case" data-status = "<%= list[i].status%>" data-cid = "<%= list[i].id%>" data-tid = "<%= list[i].tid%>" data-endtime = "<%= list[i].end_time%>">
-            <span><%= list[i].title%></span>
-            <% if(list[i].status==0){%>
-                <% if($getDateDiff(list[i].end_time)){%>
-                  <span style="float: right;color: #646464;font-size: 12px;"><%= $getDateDiff(list[i].start_time)%></span>
-                  <%}else{%>
-                  <span style="float: right;color: #646464;font-size: 12px;">完成</span>
-                <%}%> 
-              <%}else{%>
-                <span style="float: right;color: #646464;font-size: 12px;">已提交案例</span>
-              <%}%>
-             
-          </li>
-          <%}%>
-      </ul>
-        <%}%>
-  </script>
+    	<% if(list != null){ %>
+		<div class="counsellor-item-list">
+			<ul class="mui-table-view">
+				<% for(var i=0; i<list.length; i++) { %>
+				<li class="mui-table-view-cell mui-media">
+					<% if($getDateDiff(list[i].end_time)){%>
+						<a  class="cell-flex">
+							<h3 class="mui-ellipsis flex-g2"><%= list[i].title%></h3>
+							<p class="time flex-g1"><span><%= $getDateDiff(list[i].start_time)%></span></p>
+							<div class="mui-media-object flex-g1 connect-options">
+								<span class="btn-connect-pink">与他沟通</span>
+							</div>
+						</a>
+		        		<%}else{%>
+			        			<a  class="cell-flex">
+							<h3 class="mui-ellipsis flex-g2"><%= list[i].title%></h3>
+							<p class="time flex-g1"><span>完成</span></p>
+							<div class="mui-media-object flex-g1 connect-options">
+								<span class="btn-connect-pink">与他沟通</span>
+							</div>
+						</a>
+		        		<%}%> 
+
+				</li>
+				 <%}%>
+			</ul>
+		</div>
+		<%}%>
+	</script>
+	
 
     <script type="text/javascript">
      
       test();
-  	  function test(){
-  			var today = mui.DateUtil.addDate(mui.DateUtil.getToday(),0);
-  			var MC = mui("#container").MCalendar({date:today});
-  			
-  			var myDate = new Date();
+	  function test(){
+			var today = mui.DateUtil.addDate(mui.DateUtil.getToday(),0);
+			var MC = mui("#container").MCalendar({date:today});
+			
+			//
+			var tip = '<div class="mc-remark-options">';
+				tip += '<p class="filled"><i></i><span>有预约</span></p>';
+				tip += '<p class="disabled"><i></i><span>没预约</span></p></div>';
+				$("#container").append(tip);
+			
+			$(".mc-table-cell").each(function(el,m){
+				if(!$(m).attr('disabled')){
+					$(this).addClass('mc-cell-disabled')
+				}
+			});
+			
+			var state = app.getState();
+		  	var param = {
+	            'method': config.apimethod.getCurrentCander,
+	            'source':config.source,
+	            'account':state.token
+	       }
+				 
+	       $.dataRequest(param, function(rs) {
+				log(rs) 
+				if(rs&&rs.length>0){
+					var c = 0;
+					$(".mc-table-cell").each(function(el,m){
+						if(!$(m).attr('disabled')){
+							c++;
+						}
+						var i = el+1; 
+						if(rs.indexOf(c)>-1){
+							console.log(c)
+							$(this).removeClass('mc-cell-disabled')
+							$(this).addClass('mc-cell-filled')
+						}
+					});
+				}
+		       
+	       })
+			
+			var myDate = new Date();
+			$(window).on('tap','.go-case', function() {
+				var webview = $(this).data('view');
+				var etime = $(this).data('endtime');
+				var tid = $(this).data('tid');
+				var cid = $(this).data('cid');
+				var status = $(this).data('status');
+				//判断如果已过时间，即完成，可跳转
+				var nowtm = Math.floor(Date.parse(new Date())/1000);
+				
+//				if(etime<nowtm){
+					if(status>0){
+						mui.toast('已提交案例');return false;
+					}
+					//
+					plus.nativeUI.confirm( "请选择?", function(e){
+						log(e.index)
+						if(e.index==0){
+							clicked(webview,{tid:tid,cid:cid})
+						}else{
+							if(e.index==-1){
+								return false;
+							}
+							
+							//取消预约
+							var param = {
+                                  'method': config.apimethod.cancleDate,
+                                  'cid': cid,
+                                  'source':config.source
+                            }
+                            $.dataRequest(param, function(rs) {
+                                window.location.href = "{:url('Counsellor/index')}";
+                            }) 
+						}
+					},'操作',['去提交案例','取消预约']);
+					
+//				}
+			})
+			
 
-        $(window).on('tap','.go-case', function() {
-          var webview = $(this).data('view');
-          var etime = $(this).data('endtime');
-          var tid = $(this).data('tid');
-          var cid = $(this).data('cid');
-          var status = $(this).data('status');
-          //判断如果已过时间，即完成，可跳转
-          var nowtm = Math.floor(Date.parse(new Date())/1000);
-          if(etime<nowtm){
-            if(status>0){
-              mui.toast('已提交案例');return false;
-            }
-            window.location.href = "{:url('Counsellor/cases')}?tid="+tid+'&cid='+cid;
-            // clicked(webview,{tid:tid,cid:cid})
-          }
-        })
+		};
+		
 
-  		};
-	     $(window).on('tap', '.action-webview', function() {
-          var state = app.getState();
-          var _this = $(this).data('webview');
-          if(_this && _this != '') {
-             window.location.href = _this
-          }
-        });
     </script>
   </body>
 

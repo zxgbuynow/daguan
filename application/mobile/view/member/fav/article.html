@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__M_CSS__/style.css">
+    <link rel="stylesheet" href="__M_CSS__/widgets.css" />
+    <style>
+    		.bbc-tab-nav-sm{
+    			width:100%
+    		}
+    		.bbc-tab-nav.mui-segmented-control{
+    			border-color: #fff;
+    		}
+    		.bbc-tab-nav.mui-segmented-control .mui-control-item.mui-active {
+		    background: #fff;
+				color: #4B84DE;
+		}
+		.bbc-tab-nav.mui-segmented-control .mui-control-item {
+		    border-color: #fff;
+		    color: #fff;
+		}
+		.mui-table-view .mui-media-object{
+		    max-width: 72px; 
+    			height: 72px;
+    		}
+		.mui-media-text {
+			color: #646464;
+			font-size: 13px;
+		}
+		.mui-media-author { 
+			font-size: 11px;
+			margin-top: 5px;
+		} 
+		.mui-media-action{
+			font-size: 11px;
+		}
+		.mui-table-view-chevron .mui-table-view-cell{
+			padding-right: 15px;
+		}
+        .mui-bar .mui-segmented-control{
+                top: 0;
+            }
+    </style>
+  </head>
+
+  <body>
+    <header class="mui-bar-nav page-header nobd">
+		<div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center clearfix">
+			<i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+			<div class="header-title">
+				<div style="padding: 10px 10px;">
+					<div id="segmentedControl" class="mui-segmented-control bbc-tab-nav bbc-tab-nav-sm">
+						<a class="mui-control-item fonts" webview="{:url('Member/fav')}">咨询师</a>
+						<a class="mui-control-item fonts" webview="{:url('Member/favclac')}">课程/活动</a>
+						<a class="mui-control-item mui-active fonts">文章</a>
+					</div>
+				</div>
+			</div>
+			<a class="mui-right  mui-btn  mui-btn-link mui-btn-nav mui-pull-right service">
+				<img src="__M_IMG__/tel.png">
+				<i class="search-hide icon-func bbc-icon callmm">客服</i>
+			</a>
+		</div>
+    </header>
+    <div class="mui-content">
+    		
+    </div>
+	<script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script type="text/html" id="fav_list">
+        <section class="widgets-category-counsellor section-white">
+	        <% if(list){%>
+	        <div class="mui-table-view">
+	          <ul class="mui-table-view mui-table-view-chevron">
+	          	<% for(var i=0; i<list.length; i++) { %>
+				<li class="mui-table-view-cell mui-media " >
+					<div class="mui-table">
+		                <div class="mui-table-cell mui-col-xs-10 ">
+							<img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].pic) %>" >
+							<div class="mui-media-body">
+								<p>
+									<span class="mui-text-left mui-ellipsis"><%= list[i].title %></span>
+								</p>
+								<p class="mui-ellipsis-2 mui-media-text "><%= list[i].description %></p>
+								<p class='mui-ellipsis mui-media-text mui-media-author'>作者：<%= list[i].author %></p>
+							</div>
+						</div>
+						<div class="mui-table-cell mui-col-xs-2 mui-text-right" >
+                    			<p><span class="mui-media-text  mui-btn-yellow go-delete" data-fid="<%= list[i].id %>"  style="color: #FFFFFF;">删除</span></p>
+		                </div>
+					</div>
+					
+				</li>
+				<% } %>
+			  </ul>		
+	        </div>
+	        <% } %>
+		</section>
+    </script>
+    <script type="text/javascript" charset="utf-8">
+    
+		var state = app.getState();
+      	//分类 
+	  	var param = {
+            'method': config.apimethod.favlist,
+            'source':config.source,
+            'typeid': 3,  
+            'account': state.token
+      }
+       $.dataRequest(param, function(rs) {
+       		var rt = {};
+       		if(rs){
+       			rt = {
+       				'list':rs
+       			}
+       		}
+       		var widgets = template('fav_list', rt);
+            $('.mui-content').append(widgets);
+
+            $(window).on('tap','.go-delete',function(){
+            		mui.toast('delete')
+            		var fid = $(this).data('fid');
+            		var param = {
+		            'method': config.apimethod.delfav,
+		            'source':config.source,
+					'fid':fid,
+					'typeid':3,
+		            'account': state.token
+		      	}
+	       		$.dataRequest(param, function(rs) { 
+	       			mui.toast('删除成功！');
+	       			window.location.href = "{:url('Member/favarticle')}"
+	       		})
+	       		
+            })
+       })
+      //事件注册
+        $(window).on('tap', '.mui-control-item', function() {
+            var href = $(this).attr('webview')
+            console.log('---------')
+            console.log(href);
+            if(href){
+                 window.location.href = href;
+            }
+                
+        })
+    </script>
+  </body>
+
+</html>

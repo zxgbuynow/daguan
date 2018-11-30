@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__M_CSS__/style.css">
+    <link rel="stylesheet" href="__M_CSS__/widgets.css" />
+    <style>
+    		.bbc-tab-nav-sm{
+    			width:100%
+    		}
+    		.bbc-tab-nav.mui-segmented-control{
+    			border-color: #00C7C9;
+    		}
+    		.bbc-tab-nav.mui-segmented-control .mui-control-item.mui-active {
+		    background: #00C7C9;
+		}
+		.bbc-tab-nav.mui-segmented-control .mui-control-item {
+		    border-color: #00C7C9;
+		    color: #00C7C9;
+		}
+		.mui-table-view .mui-media-object{
+	    		max-width: 80px; 
+			height: 80px;
+		}
+		.mui-media-text {
+			color: #646464;
+			font-size: 13px;
+		}
+		.mui-media-author { 
+			font-size: 11px;
+			margin-top: 5px;
+		} 
+		.mui-media-action{
+			font-size: 11px;
+		}
+		.mui-table-view-chevron .mui-table-view-cell{
+			padding-right: 15px;
+		}
+        .mui-content{
+            margin-top: 45px;
+        }
+    </style>
+  </head>
+
+  <body>
+    <!--<header class="mui-bar-nav page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">课程/活动</div>
+    </header>-->
+    <header class="page-header nobd">
+	      <div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+	      <i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+	      <h1 class="mui-center mui-title">课程/活动</h1>
+	      </div>
+	    </header>
+    <div class="mui-content">
+    		<div class="mui-loading">
+          <div class="mui-spinner">
+          </div>
+        </div>
+    </div>
+	<script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script type="text/html" id="fav_list">
+        <section class="widgets-category-counsellor section-white">
+	        <% if(list){%>
+	        <div class="mui-table-view">
+	          <ul class="mui-table-view mui-table-view-chevron">
+	          	<% for(var i in list) { %>
+				<li class="mui-table-view-cell mui-media " >
+					<div class="mui-table">
+		                <div class="mui-table-cell mui-col-xs-10 click-webview" data-webview="{:url('Clac/detail')}" acid="<%= list[i].id %>"" actype="<%= list[i].typeid %>">
+							<img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].pic) %>" >
+							<div class="mui-media-body">
+								<p>
+									<span class="mui-text-left mui-ellipsis-2"><%= list[i].title %></span>
+								</p>
+								<p class="mui-ellipsis mui-media-text ">地点：<%= list[i].address %></p>
+								<p class='mui-ellipsis mui-media-text mui-media-author'>时间：<%= $timestamp_To_Time(list[i].start_time) %></p>
+							</div>
+						</div>
+						<div class="mui-table-cell mui-col-xs-2 mui-text-right">
+							<%if(!list[i].claceva){%>
+		                    		<a href="{:url('Member/claceval')}?acid=<%= list[i].id %>&actype=<%= list[i].typeid %>"><p><span class="mui-media-text  mui-btn-yellow "  style="color: #FFFFFF;">评价</span></p></a>
+		                    <%}%>
+		                    <span class="mui-media-text bbc-btn-outlined">退款</span> 
+		               </div> 
+					</div>
+				</li>
+				<% } %> 
+			  </ul>		
+	        </div>
+	        <% } %>
+		</section>
+    </script>
+    <script type="text/javascript" charset="utf-8">
+    
+		var state = app.getState();
+      	//分类 
+	  	var param = {
+	            'method': config.apimethod.clacorder,
+	            'source':config.source, 
+//	            'typeid': 1,
+	            'account': state.token
+	      }
+	       $.dataRequest(param, function(rs) {
+	       		var rt = {};
+	       		if(rs){
+	       			rt = {
+	       				'list':rs
+	       			}
+	       		}
+	       		console.log(rs)
+	       		var widgets = template('fav_list', rt);
+	            $('.mui-content').html(widgets);
+
+                $('.mui-content').on('tap','.click-webview', function(e) {
+                    var acid = $(this).attr('acid');
+                    var actype = $(this).attr('actype');
+                    var webview = $(this).data('webview');
+                    window.location.href = webview+'?acid='+acid+'&actype='+actype;
+                })
+	       })
+      
+    </script>
+  </body>
+
+</html>

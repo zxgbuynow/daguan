@@ -44,9 +44,11 @@
   </head>
 
   <body>
-    <header class="page-header">
-      <div class="header-title">会员登录</div>
-      <!--<i id="close_login" class="header-right txt-func">取消</i>-->
+    <header class="page-header nobd">
+      <div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+      <!-- <i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i> -->
+      <h1 class="mui-center mui-title">会员登录</h1>
+      </div>
     </header>
     <section class="container">
       <form class="form-container" id="login_form">
@@ -74,7 +76,7 @@
         <a id='forgetPassword' class="fontS font-orange">忘记密码</a>
       </section>
       <section class="content-horizontal-padded form-op-section">
-        <button id='login'  class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">登录</button>
+        <button id='login'  class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning" style="background: #4883DD;border: #4883DD;">登录</button>
       </section>
       <section class="content-horizontal-padded">
         <button id="reg" class="mui-btn mui-btn-block">快速注册</button>
@@ -116,7 +118,7 @@
 
           var regButton = document.getElementById('reg');
           regButton.addEventListener('tap', function(event) {
-            window.location.href = "{:url('Passport/register')}";
+            window.location.href = "{:url('Passport/signup')}";
           }, false);
           var forgetPassword = document.getElementById('forgetPassword');
           forgetPassword.addEventListener('tap', function(event) {

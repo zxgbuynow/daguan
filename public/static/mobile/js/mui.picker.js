@@ -127,29 +127,22 @@
 		var self = this;
 		var lastAngle = 0;
 		var startY = null;
-		var isPicking = false;
-		self.holder.addEventListener($.EVENT_START, function(event) {
-			isPicking = true;
+		self.holder.addEventListener('touchstart', function(event) {
 			event.preventDefault();
 			self.list.style.webkitTransition = '';
 			startY = (event.changedTouches ? event.changedTouches[0] : event).pageY;
 			lastAngle = self.list.angle;
 			self.updateInertiaParams(event, true);
 		}, false);
-		self.holder.addEventListener($.EVENT_END, function(event) {
-			isPicking = false;
+		self.holder.addEventListener('touchend', function(event) {
 			event.preventDefault();
 			self.startInertiaScroll(event);
 		}, false);
-		self.holder.addEventListener($.EVENT_CANCEL, function(event) {
-			isPicking = false;
+		self.holder.addEventListener('touchcancel', function(event) {
 			event.preventDefault();
 			self.startInertiaScroll(event);
 		}, false);
-		self.holder.addEventListener($.EVENT_MOVE, function(event) {
-			if (!isPicking) {
-				return;
-			}
+		self.holder.addEventListener('touchmove', function(event) {
 			event.preventDefault();
 			var endY = (event.changedTouches ? event.changedTouches[0] : event).pageY;
 			var dragRange = endY - startY;
@@ -275,7 +268,7 @@
 		setTimeout(function() {
 			var index = self.getSelectedIndex();
 			var item = self.items[index];
-			if ($.trigger && (index != self.lastIndex || force === true)) {
+			if ($.trigger && (index != self.lastIndex || force)) {
 				$.trigger(self.holder, 'change', {
 					"index": index,
 					"item": item
@@ -283,7 +276,6 @@
 				//console.log('change:' + index);
 			}
 			self.lastIndex = index;
-			typeof force === 'function' && force();
 		}, 0);
 	};
 
@@ -304,7 +296,7 @@
 		var buffer = [];
 		self.items.forEach(function(item) {
 			if (item !== null && item !== undefined) {
-				buffer.push('<li>' + (item.value || item) + '</li>');
+				buffer.push('<li>' + (item.text || item) + '</li>');
 			}
 		});
 		self.list.innerHTML = buffer.join('');
@@ -324,7 +316,7 @@
 		return parseInt((self.list.angle / self.itemAngle).toFixed(0));
 	};
 
-	Picker.prototype.setSelectedIndex = function(index, duration, callback) {
+	Picker.prototype.setSelectedIndex = function(index, duration) {
 		var self = this;
 		self.list.style.webkitTransition = '';
 		var angle = self.correctAngle(self.itemAngle * index);
@@ -334,7 +326,7 @@
 		} else {
 			self.setAngle(angle);
 		}
-		self.triggerChange(callback);
+		self.triggerChange();
 	};
 
 	Picker.prototype.getSelectedItem = function() {
@@ -352,12 +344,12 @@
 		return (self.items[self.getSelectedIndex()] || {}).text;
 	};
 
-	Picker.prototype.setSelectedValue = function(value, duration, callback) {
+	Picker.prototype.setSelectedValue = function(value, duration) {
 		var self = this;
 		for (var index in self.items) {
 			var item = self.items[index];
 			if (item.value == value) {
-				self.setSelectedIndex(index, duration, callback);
+				self.setSelectedIndex(index, duration);
 				return;
 			}
 		}

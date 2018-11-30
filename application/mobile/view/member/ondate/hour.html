@@ -10,102 +10,131 @@
     <link rel="stylesheet" href="__M_CSS__/style.css" />
     <link rel="stylesheet" href="__M_CSS__/widgets.css" />
     <style>
-    		.mui-keyboards{
-			position: absolute;
-			left: 0;
-			right: 0;
-			top: 45px;
-		}
-		.mui-keyboards .mui-number-section{
-		    display: flex;
-		    flex-flow: row wrap;
-		    background: #fff;
-		}
-		.mui-keyboards .mui-number-section .mui-num-btn{
-			margin-bottom: 0;
-		    flex: 0 0 25%;
-		    text-align: center;
-		    vertical-align:middle;
-		    height: 5rem;
-		    line-height: 2rem;
-		    border: 1px solid #f5f5f5;
-	        font-size: 13px;
-		}
-		.mui-keyboards .mui-number-section .mui-num-btn.mui-u-1of3{
-		    flex: 0 0 33.338%;
-		}
-		.mui-keyboards .mui-number-section .mui-num-btn.mui-u-1of4{
-		    flex: 0 0 33.3%;
-		}
-		.mui-keyboards .mui-number-section-left{
-			display: flex;
-		    flex-flow: row wrap;
-		    flex: 0 0 75%;
-		}
-		.mui-keyboards .mui-number-section-right{
-		    flex: 0 0 25%;
-		    margin-bottom: 0;
-		    line-height: 160px;
-		    text-align: center;
-		    color: #fff;
-		    background: #ea2329;
-		}
-		@media screen and (max-width: 320px){
-			.mui-total-money{
-			  	height: 8.8rem;
-			    line-height: 10rem;
-
-			  }
-			  .mui-keyboards .mui-number-section .mui-num-btn{
-			  	height: 3.8rem;
-			    line-height: 3.8rem;
-			  }
-			  .mui-keyboards .mui-number-section-right{
-			  	height: 121.59px;
-			  	line-height: 121.59px;
-			  }
-		}
+            .mui-keyboards{
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 45px;
+        }
+        .mui-keyboards .mui-number-section{
+            display: flex;
+            flex-flow: row wrap;
+            background: #fff;
+        }
+        .mui-keyboards .mui-number-section .mui-num-btn{
+            margin-bottom: 0;
+            flex: 0 0 25%;
+            text-align: center;
+            vertical-align:middle;
+            /*height: 5rem;*/
+            line-height: 2rem;
+            border: 1px solid #f5f5f5;
+            font-size: 13px;
+        }
+        .mui-keyboards .mui-number-section .mui-num-btn.mui-u-1of3{
+            /*flex: 0 0 33.338%;*/
+            flex: 0 0 25%;
+        }
+        .mui-keyboards .mui-number-section .mui-num-btn.mui-u-1of4{
+            flex: 0 0 33.3%;
+             flex: 0 0 25%;
+        }
+        .mui-keyboards .mui-number-section-left{
+            display: flex;
+            flex-flow: row wrap;
+            flex: 0 0 75%;
+        }
+        .mui-keyboards .mui-number-section-right{
+            flex: 0 0 25%;
+            margin-bottom: 0;
+            line-height: 160px;
+            text-align: center;
+            color: #fff;
+            background: #ea2329;
+        }
+        @media screen and (max-width: 320px){
+            .mui-total-money{
+                height: 8.8rem;
+                line-height: 10rem;
+              }
+              .mui-keyboards .mui-number-section .mui-num-btn{
+                height: 3.8rem;
+                line-height: 3.8rem;
+              }
+              .mui-keyboards .mui-number-section-right{
+                height: 121.59px;
+                line-height: 121.59px;
+              }
+        }
+        .mui-btn-grey{
+        		background: #FE9900!important;
+        }
+        .mui-btn-danger{
+        		background: #E45F62!important;
+        }
+        .mui-btn-nomarl{
+        		background: #4585D5!important;
+        }
+        .mui-btn-nomarl {
+        		color: #fff!important;
+        }
+        .ondate-time-main .time-items span{
+            min-width: 71px;
+        }
     </style>
   </head>
 
   <body>
     <header class="page-header">
-    	  <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
-      <div class="header-title">当前工作按排情况</div>
+			<div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+				<i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+				<h1 class="mui-center mui-title">当前工作安排情况</h1>
+				<a class="mui-right  mui-btn  mui-btn-link mui-btn-nav mui-pull-right service">
+					<img src="__M_IMG__/tel.png">
+					<i class="search-hide icon-func bbc-icon callmm">客服</i>
+				</a>
+			</div>
     </header>
-    <div class="container" id="container"> 
-       <!--<section class="mui-keyboards">
-			<div class="mui-number-section">
-				<p class="mui-num-btn mui-u-1of4" data-val="7">19:00~20:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4 mui-btn-danger" data-val="7">9:00<span style="font-size: 15px;"><br />约满</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4" data-val="7">9:00<span style="font-size: 15px;"><br />可预约</span></p>
-				<p class="mui-num-btn mui-u-1of4 mui-btn-danger" data-val="7">9:00<span style="font-size: 15px;"><br />约满</span></p>
-				<p class="mui-num-btn mui-u-1of4 mui-btn-grey" data-val="7">9:00~10:00<span style="font-size: 15px;"><br />不预约</span></p>
+    <div class="container ondate-time-main" id="container"> 
 				
-			</div>
-			<div style="text-align: center; margin-top: 20px;">
-				<p>咨询师电话：1832127131</p> 
-			</div>
-		</section>-->
+				<!--单独确认框-->
+				<div class="mui-message-container" id="ondate_confirm" style="display: none;">
+					<div class="mui-message-cont ondate-time">
+						<p class="title">确认预约该时段？</p>
+					</div>
+					<div class="mui-message-btn-box btn-options flex-box">
+						<button class="mui-btn flex-g1 bd-cancel">取消</button>
+						<button class="mui-btn flex-g1 confirm">确定</button>
+					</div>
+				</div>
+				<!--单独确认框end-->
+				<div class="mui-backdrop" style="opacity: 1;display: none;"></div><!--遮罩层-->
+				<!--选择地点确认框-->
+				<div class="mui-message-container" id="ondate_address_confirm" style="display: none;">
+					<span class="mui-message-closed">X</span>
+					<div class="mui-message-cont">
+						<p>选择地面咨询地点为：</p>
+						<div class="bd-sign-list">
+							<span>上海</span>
+							<span class="on">镇江</span>
+							<span>南京</span>
+						</div>
+					</div>
+					<div class="mui-message-cont ondate-address-time">
+						<p class="title">确认预约该时段？</p>
+					</div>
+					<div class="mui-message-btn-box btn-options flex-box address-time">
+						<button class="mui-btn flex-g1">取消</button>
+						<button class="mui-btn flex-g1 confirm">确定</button>
+					</div>
+					<div class="mui-message-cont-desc">
+						<p class="title">具体地址：</p>
+						<p>请注意咨询师的咨询的地点</p>
+						<p>请注意咨询师的咨询的地点</p>
+						<p>请注意咨询师的咨询的地点</p>
+					</div>
+				</div>
+				<!--选择地点确认框end-->
     </div> 
    
     
@@ -114,81 +143,96 @@
     <script src="__M_JS__/template.min.js"></script>
     <script src="__M_JS__/config.js"></script>
     <script src="__M_JS__/app.js"></script>
-    <script type="text/html" id="container_list">
-    		<section class="mui-keyboards">
-			<div class="mui-number-section">
-				<% for(var i=0; i<list.length; i++) { %>
-				<p class="mui-num-btn mui-u-1of4 <%if (list[i].s=='1'){%> mui-btn-danger <%}else if(list[i].s=='2'){%> mui-btn-grey <%}%>" data-val="<%= list[i].t%>"><%= list[i].t%>
-					<%if (list[i].s=='1'){%>
-						<span style="font-size: 15px;"><br />约滿</span>
-					<%}else if(list[i].s=='2'){%>
-						<span style="font-size: 15px;"><br />不预约</span>
-					<%}else{%>	
-						<span style="font-size: 15px;"><br />可预约</span>
-					<%}%>
-					
-				</p>
+       <script type="text/html" id="container_list">
+            <section class="mui-keyboards">
+            	<div class="time-items">
+            		<% for(var i=0; i<list.length; i++) { %>
+					<span class="disabled mui-num-btn <%if (list[i].s=='1'){%> mui-btn-danger <%}else if(list[i].s=='2'){%> mui-btn-grey <%}else{%>mui-btn-nomarl <%}%>" data-val="<%= list[i].t%>"><%= list[i].t%></span>
 				<%}%>
+				
 			</div>
-			<div style="text-align: center; margin-top: 20px;display: none;">
-				<p>咨询师电话：<%= user[0]%></p> 
+			<div class="mc-remark-options">
+				<p class="on"><i></i><span>可预约</span></p>
+				<p class="filled"><i></i><span>已约满</span></p>
+				<p class="disabled"><i></i><span>不可预约</span></p>
 			</div>
-		</section>
-    	</script>
+            <div class="mui-number-section mui-hidden">
+                <% for(var i=0; i<list.length; i++) { %>
+                <p class="mui-num-btn  mui-u-1of4 <%if (list[i].s=='1'){%> mui-btn-danger <%}else if(list[i].s=='2'){%> mui-btn-grey <%}else{%>mui-btn-nomarl <%}%>" data-val="<%= list[i].t%>"><%= list[i].t%></p>
+                <%}%>
+            </div>
+            
+        </section>
+        </script>
     <script type="text/javascript">
-    	  //mui-btn-danger mui-btn-grey 
-    	  var result = window.location.href;
-      	  var counsellor_id = $.getUrlParam(result,'counsellor_id');
-      	  var tid = $.getUrlParam(result,'tid')||0;
-      	  var curdate = $.getUrlParam(result,'curdate');
+        //mui-btn-danger mui-btn-grey
+			$('.mui-message-closed,.mui-btn').on('click',function(){
+				$('.mui-message-container,.mui-backdrop').hide();
+			});
+			$('#time_nine').on('click',function(){
+				$('#ondate_confirm,.mui-backdrop').show();
+			});
+			$('#time_fifteen').on('click',function(){
+				$('#ondate_address_confirm,.mui-backdrop').show();
+			});
+          var result = window.location.href;
+          var counsellor_id = $.getUrlParam(result,'counsellor_id');
+          var tid = $.getUrlParam(result,'tid')||0;
+          var curdate = $.getUrlParam(result,'curdate');
 
-	      var state = app.getState();
-	      //时间分段
-	      var times = ['9:00~10:00','10:00~11:00','11:00~12:00','12:00~13:00','13:00~14:00','14:00~15:00','14:00~15:00','15:00~16:00','16:00~17:00','17:00~18:00','18:00~19:00','19:00~20:00','20:00~21:00'];
-	      var param = {
-	          'method': config.apimethod.calendatoday,
-	          'account': counsellor_id,
-	          'day': Math.floor(curdate/1000),
-	          'source':config.source
-	      }
-	      
-	      $.dataRequest(param, function(rs) {
-	      	var widgets = template('container_list', rs);
-        		$('.container').append(widgets);
-				if(tid){
-					mui('.container').on('tap','.mui-num-btn',function(){
-		      		if(!$(this).hasClass('mui-btn-grey')&&!$(this).hasClass('mui-btn-danger')){
-		      			var hour = $(this).data('val').split('~');
-		      			var dayn = new Date(curdate);
-		      			var days = dayn.getFullYear()+'-'+(dayn.getMonth()+1)+'-'+dayn.getDate()+' '+hour[0];
-						var btnArray = ['是', '否'];
-				        mui.confirm('确认预约该时段', '', btnArray, function(e) {
-				          if (e.index == 1) {
-							var param = {
-					          'method': config.apimethod.oncalenda,
-					          'account': counsellor_id,
-					          'hour': days,
-					          'tid': tid,
-					          'source':config.source
-						    }
-							$.dataRequest(param, function(rs) {
-						 		mui.toast('预约成功')
-				        		setTimeout(function(){
-				        			window.location.href = "{:url('Member/trade')}"
-				        		},1000);
-							})
-								
+          var state = app.getState();
+          //时间分段
+          var times = ['0:00','1:00','2:00','3:00','4:00','5:00','6:00','7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'];
+          var param = {
+              'method': config.apimethod.calendatoday,
+              'account': counsellor_id,
+              'day': Math.floor(curdate/1000),
+              'source':config.source
+          }
+          log(param); 
+          
+          $.dataRequest(param, function(rs) {
+            var widgets = template('container_list', rs);
+                $('.container').append(widgets);
+            if(tid){
+                mui('.container').on('tap','.mui-num-btn',function(){
+                    if(!$(this).hasClass('mui-btn-grey')&&!$(this).hasClass('mui-btn-danger')){
+                        var hour = $(this).data('val');
+                        var dayn = new Date(curdate);
+                        var days = dayn.getFullYear()+'-'+(dayn.getMonth()+1)+'-'+dayn.getDate()+' '+hour;
+    
+                        plus.nativeUI.confirm( "确认预约该时段?", function(e){
+                            
+                            if(e.index==0){
+                                var param = {
+                                  'method': config.apimethod.oncalenda,
+                                  'account': counsellor_id,
+                                  'hour': days,
+                                  'tid': tid,
+                                  'source':config.source
+                              }
 
-				          } 
-				        })
-
-							
-		      		}
-		      		
-		      	})
-			}
-	      	
-	      })
+                             $.dataRequest(param, function(rs) { 
+                                mui.toast('预约成功')
+                                setTimeout(function(){
+                                    window.location.href = "{:url('Member/trade')}"
+                                },1000);
+                             })
+                                
+                            }
+                        });
+                    }
+                    
+                })
+            }else{
+            		mui('.container').on('tap','.mui-num-btn',function(){
+                    if(!$(this).hasClass('mui-btn-grey')&&!$(this).hasClass('mui-btn-danger')){
+                    		mui.toast('友情提示：请先支付金额，再预约')
+                    }
+                })
+            }
+            
+          })
     </script>
   </body>
 

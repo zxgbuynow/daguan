@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en" class="feedback">
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__M_CSS__/style.css">
+    <link rel="stylesheet" type="text/css" href="__M_CSS__/feedback.css" />
+    <style>
+	    .green_bg{ 
+			background: #fff;
+		}
+		.green_bg a{
+			color: #25c88a;
+		}
+		.green_bg h1{
+			top: 0;
+		    line-height: 3rem;
+		    text-align: center;
+		    color: #333;
+		    font-size: 1.1rem;
+		    z-index: 5;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    text-overflow: ellipsis;
+		    vertical-align: middle;
+		}
+		input[type=text]{
+		    line-height: 21px;
+		    width: 100%;
+		    height: 40px;
+		    margin-bottom: 15px;
+		    padding: 10px 15px;
+		    -webkit-user-select: text;
+		    border: 1px solid rgba(0,0,0,.2);
+		    border-radius: 3px;
+		    outline: 0;
+		    background-color: #fff;
+		    -webkit-appearance: none;
+		}
+    </style>
+  </head>
+
+  <body>
+  	
+	<header class="page-header nobd">
+      <div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+      <i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+      <h1 class="mui-center mui-title">我的投诉</h1>
+      </div>
+    </header>
+    <div class="mui-content" style="margin-top: 45px;">
+			<p style="color: #8f8f94;">联系方式</p>
+			<!--<div class="mui-input-row">-->
+				<input id='mobile' type="text" class="mui-input-clear contact" placeholder="QQ或是手机号" />
+			<!--</div>-->
+			<div class="mui-content-padded">
+				<div class="mui-inline">问题描述</div>
+				<a class="mui-pull-right mui-inline mui-hidden" href="#popover">
+					快捷输入
+					<span class="mui-icon mui-icon-arrowdown"></span>
+				</a>
+				<!--快捷输入具体内容，开发者可自己替换常用语-->
+				<div id="popover" class="mui-popover">
+					<div class="mui-popover-arrow"></div>
+					<div class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<ul class="mui-table-view">
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row mui-input-row">
+				<textarea id='feedback_question' class="mui-input-clear question" placeholder="请详细描述你的问题和意见..."></textarea>
+			</div>
+		<!--<div class="mui-content-padded">
+            <button id="feedback" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">提交</button>
+        </div>-->
+		<div class="mui-button-row">
+			<button type="button" id="feedback" class="mui-btn mui-btn-primary mui-btn-block" style="width: 80%; margin-left: 10%;margin-top: 10px;background: #4883DD;border: #4883DD;"  >提交</button>
+		</div>
+    </div>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    
+    <script type="text/javascript" charset="utf-8">
+		var state = app.getState();
+		document.getElementById('feedback').addEventListener('tap', function(event) {
+			var ph = document.getElementById('feedback').value;
+			var ct = document.getElementById('feedback_question').value;
+			var param = {
+		          'method': config.apimethod.feedbackup,
+		          'account': state.account,
+		          'source':config.source,
+		          'ph': ph,
+		          'ct':ct
+		      }
+		      $.dataRequest(param, function(rs) {
+		      	mui.toast('反馈成功'),
+		      	setTimeout(function(){
+		      		mui.back()
+		      	},1000)
+		      })
+		})
+
+      
+    </script>
+  </body>
+
+</html>

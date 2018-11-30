@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__M_CSS__/style.css" />
+    <link rel="stylesheet" href="__M_CSS__/widgets.css" />
+    <link rel="stylesheet" href="__M_CSS__/swiper.min.css" />
+    <style>
+      .main{
+          margin-right: 10px;
+        }
+        header.home-header{
+          background: -webkit-gradient(linear, 0% 0%, 0% 100%,from(transparent), to(transparent));
+          border-bottom: none;
+        }
+        header .header-left{
+          color: #fff;
+        }
+        header .icon-func{
+          font-size: 13px;
+          color: #fff;
+          display: block;
+          position: relative;
+          width: 2.8rem;
+          height: auto; 
+          text-align: center;
+          line-height: normal; 
+        }
+        .home-header .service{
+          text-align: center;
+        }
+        .home-header .service img{
+          width: 20px;
+          height: 19px;
+          vertical-align: bottom;
+        }
+        .mui-table-view .mui-media-object{
+        max-width: 72px; 
+          height: 72px; 
+        }
+        .mui-media-object-article{
+          max-width: 90px!important; 
+        }
+        .mui-media-text {
+          color: #646464;
+          font-size: 15px;
+        }
+        .mui-media-author {
+          font-size: 13px;
+          margin-top: 5px;
+        } 
+        .swiper-container {width: 100%;height: 100%;}
+      .swiper-slide {
+          text-align: left;
+          font-size: 12px;
+          background: #fff;
+            color: #5D5D5D;
+            white-space: nowrap;
+            width: 100%;
+      }
+        
+      .mui-table-view.mui-grid-view {display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;}
+    /*.swiper-pagination{display: none;}*/
+    .mui-bar .icon-xiaoxi {
+        font-size: 30px;
+        padding-top: 6px;
+        padding-bottom: 7px;
+    }
+    .business-news-wrap {display: inline-flex;}
+        .business-news-content .mui-flex{
+      height: 100%;
+    }
+    #swiper_news{
+      height: 26px;
+      line-height: 26px;
+    }
+    .business-news{padding:7px 0;border-bottom:1px solid #eee;position: relative;background: #fff;box-sizing: border-box;margin-bottom: 0.6rem;}
+    /*.business-news-title{width: 50px;height:20px;border-right:1px solid #d9d9d9;background-image: url(../images/faxian_icon2.png);background-repeat: no-repeat; background-size: 30px; background-position:center;}*/
+    /*.business-news-title img{width: 100%;}*/
+    /*.business-news-title{font-size:16px;font-weight:bold;color:#777;text-align: right;width: 48px;}*/
+    .business-news-title{width: 30px;margin-left: 10px;}
+    .business-news-title img{vertical-align: middle;}
+    .business-news-content{height:20px;overflow: hidden;}
+    .business-news-icon{width: 34px!important;height:20px;text-align: center;line-height: 20px;font-size: 16px;color:#ff974b;}
+    .business-news-box{position: absolute;top: 0;left: 0;width: 100%;}
+    .business-news-item{height:20px;line-height: 20px;padding: 0;font-size: 12px;color:#5D5D5D;}
+    .business-news-content .mui-table-view-cell:after{height:0;}
+    .business-news-list{margin:0 8px;}
+    .business-news-more{height:20px;line-height: 20px;font-size:12px;font-weight: bold;color:#989898;border-left: 1px solid #d9d9d9;position: relative;}
+    .business-news-more {padding:0 20px 0 5px;color: #ff974b;}
+    .business-news-more i{font-size:12px;color:#ff974b;position: absolute;top: 50%; right: 8px; -moz-transform: translate(0, -50%); -ms-transform: translate(0, -50%); -webkit-transform: translate(0, -50%); transform: translate(0, -50%);}
+    .swiper-slide-class{
+          /*padding: 10px 10px;*/
+          width: 80% !important;
+        }
+        .swiper-slide-class img{
+          height: 120px;
+        }
+        .swiper-container {
+        width: 100%;
+        -webkit-perspective: 1200px;
+        -moz-perspective: 1200px;
+        -ms-perspective: 1200px;
+        perspective: 1200px
+    }
+
+    .swiper-slide.swiper-slide-custom {
+        width: 80%;
+        background: transparent;
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        transform-style: preserve-3d
+    }
+
+    .swiper-slide .main-img {
+        width: 80%;
+        height: 100%;
+        border-radius: 12px;
+        margin: 0 auto;
+        display: block
+    }
+
+    .swiper-wrapper-new .swiper-wrapper{
+      height: 100%;
+      margin: 0;
+    }
+    .swiper-wrapper-new .swiper-pagination-custom{
+      top: 0;
+    }
+    
+    .container{
+      margin-bottom: 50px;
+      padding-top: 0;
+    }
+    .more-link{
+      color:#2B343A!important;
+    }
+    .swiper-container {
+        width: 100%;
+        -webkit-perspective: 1200px;
+        -moz-perspective: 1200px;
+        -ms-perspective: 1200px;
+        perspective: 1200px
+    }
+
+    .swiper-slide.swiper-slide-custom {
+        width: 80%;
+        background: transparent;
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        transform-style: preserve-3d
+    }
+
+    .swiper-slide .main-img {
+        width: 90%;
+        height: 100%;
+        border-radius: 12px;
+        margin: 0 auto;
+        display: block
+    }
+
+    .swiper-wrapper-new .swiper-container {
+        height: 12rem;
+        padding-top: 2rem;
+        padding-bottom: 1rem;
+    }
+
+    .swiper-wrapper-new .swiper-wrapper {
+        height: 100%;
+        margin: 0;
+    }
+
+    .swiper-wrapper-new .swiper-pagination-custom {
+        top: 0;
+    }
+
+    .swiper-wrapper-new .swiper-pagination-bullet-active {
+        background: #4ecfc6;
+    }
+    .swiper-pagination-bullet{
+      width: 6px;
+      height: 6px;
+    }
+
+    .swiper-wrapper-new .slide-text {
+        text-align: center;
+        font-size: 14px;
+        color: #FFFFFF;
+        background: #759791;
+        opacity: 0.8;
+        height: 2rem;
+        width: 90%;
+        margin: 0 auto;
+        line-height: 2rem;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 2;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        box-shadow: 0px -6px 15px #759791;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .swiper-pagination{
+        z-index:-1;
+    }
+    .mui-table-view-chevron .mui-badge{
+      color: #e60012;
+      border: 1px solid #e60012;
+      background: transparent;
+      border-radius: 20px;
+      padding: 2px 3px; 
+    }
+    .widgets-cate {
+      margin-bottom: 0rem;
+    }
+    #slider {
+      height: 11.9rem;
+      margin-bottom ：0.6rem
+    }
+    #slider .widgets-slider{
+      height: 100%;
+    }
+    #slider .mui-slider .mui-slider-group{
+      height: 100%;
+    }
+  .mui-slider .mui-slider-group .mui-slider-item > a:not(.mui-control-item) {
+      height: 100%;
+    }
+    .section-card {
+      margin: 0.6rem;
+      padding: 1rem 0.5rem;
+      border-radius: 10px;
+      background: #fff;
+    }
+    .card-wrapper {
+      display: flex;
+      justify-content: flex-start;
+    }
+  .card-wrapper .small-img {
+    width: 18px;
+      height: 18px;
+  }
+  .card-wrapper .addr-img {
+    width: 15px;
+    height: 18px;
+  }
+  .card-wrapper .card-item{
+      
+    }
+    .card-wrapper .card-info {
+      margin-right: 0.5rem;
+      margin-top: 0.5rem;
+      width: 18rem;
+      text-align: center;
+      flex: 20% 0 0;
+    }
+    .card-wrapper  .mui-badge {
+      border-radius: 5px;
+      padding: 3px;
+    }
+    .card-wrapper .mui-badge-danger{
+      color: #9dc8d3;
+    border: 1px solid #d3d3d3;
+    background: transparent;
+    }
+    .card-wrapper .mui-badge-green{
+      border: 0;
+    color: transparent;
+    width: 2rem;
+    height: 1.2rem;
+    background: url(__M_IMG__/online.png) no-repeat;
+    background-size: 100% 100%;
+    
+    }
+    .card-wrapper .card-content {
+      width: 80%;
+    }
+    .card-wrapper .card-info .card-name {
+      font-size: 16px;
+      color: #000;
+    }
+    .card-wrapper .card-addr{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: column;
+      margin: 0.7rem 0;
+    }
+
+    .card-wrapper .card-addr span{
+      color: #999;
+      font-size: 13px;
+    }
+    .card-wrapper .card-content .card-title{
+    font-size: 15px;
+    color: #585858;
+    }
+    .card-wrapper .card-ellispse {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .card-wrapper .card-content .card-img {
+      width: 14rem;
+      height: 8rem;
+      margin: 0.8rem 0;
+    }
+    .card-wrapper .card-content .card-img img{
+      width: 100%;
+      height: 100%;
+    }
+    .card-wrapper .card-content .card-desc {
+      color: #585858;
+      font-size: 12px;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-wrapper .card-content .card-desc span{
+      color: #385a8b;
+      font-size: 12px;
+    }
+    .card-wrapper .card-content .card-opre {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .card-wrapper .card-content .card-opre p{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .card-wrapper .card-content .card-opre p span{
+      color: #747474;
+      font-size: 12px;
+      margin-left: 0.2rem;
+    }
+    .card-wrapper  .more{
+      color: #ff5858;
+      font-size: 15px;
+    }
+    .widgets-column-section {
+    background: #fff;
+    padding: 0 0.5rem;
+    }
+    .widgets-column-section .column-wraper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    }
+    .widgets-column-section .expert-item{
+    margin-right: 0.5rem;
+    flex: 60% 0 0;
+    height: 8rem;
+      background: url(__M_IMG__/expert-bg.png) no-repeat;
+      background-size: 100% 100%;
+      position: relative;
+    }
+    .widgets-column-section .expert-title{
+      text-align: left;
+      position: absolute;
+      left: 0.2rem;
+      top: 0.3rem;
+      font-size: 17px;
+      color: #000;
+    }
+    .widgets-column-section .artical-wraper{
+      width: 38%;
+      height: 8rem;
+      background: url(__M_IMG__/article-bg.png) no-repeat;
+      background-size: 100% 100%;
+      position: relative;
+    }
+    .widgets-column-section .artical-title{
+      color: #000;
+      font-size: 17px;
+      position: absolute;
+      left: 0.2rem;
+      top: 0.3rem;
+    }
+    .widgets-column-section #swiper_artical{
+      height: 2rem;
+      line-height: 2rem;
+      box-sizing: border-box;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    .widgets-column-section #swiper_artical .swiper-slide {
+      background-color: rgba(255,255,255,0.4);
+    color: #000; 
+    font-size: 14px; 
+    text-align: center;
+    }
+    .flex {
+      display: flex;
+    }
+    .flex-hf {
+      justify-content: flex-start;
+    }
+    .flex-hb {
+      justify-content: space-between;
+    }
+    .flex-dc {
+      flex-direction: column;
+    }
+    .flex-dr {
+      flex-direction: row;
+    }
+    .card-wrapper-new {
+      margin-bottom: 0.6rem;
+      background: #fff;
+    }
+    .card-wrapper .avatar {
+      height: 9.8rem;
+      flex: 41.8% 0 0;
+      margin-right: 0.8rem;
+    }
+    .card-wrapper .info-detail {
+      width: 55%;
+      margin-right: 0.8rem;
+      padding: 0.5rem;
+    }
+    .card-wrapper .info-detail {
+      width: 55%;
+      margin-right: 0.8rem;
+    }
+    .card-wrapper .card-new-info {
+
+    }
+    .card-wrapper .card-new-info .card-name {
+      font-size: 20px;
+      color: #000;
+    }
+    .card-wrapper .card-new-info .card-addrs {
+      font-size: 12px;
+      color: #8c8c8c;
+    }
+    
+    .card-wrapper .card-new-content {
+    width: 100%;
+    }
+    .card-wrapper .card-new-content .card-title{
+    font-size: 12px;
+      color: #8c8c8c;
+    }
+    .card-wrapper .card-new-content .card-new-opre{
+    margin-top: 0.5rem;
+    }
+    .container{
+      margin-bottom: 52px;
+    }
+    </style>
+  </head>
+
+  <body>
+    <header class="home-header">
+      <div class="header-logo"><img src="__M_IMG__/newlogo.png"></div> 
+      <div class="main" >
+        <form onsubmit="return false;">
+          <div class="mui-input-row header-search-form"><input type="search" onfocus="toSearch(this,'/mobile.php/artical/index.html')" class="header-search mui-input-clear" placeholder="寻找感兴趣的文章"></div>
+        </form>
+      </div>
+      <a href="tel:4001001355"><p class="service"><img src="__M_IMG__/tel.png"><i class="search-hide icon-func bbc-icon callmm"  style="font-size: 15px;">客服</i></p></a>
+      <a href="#" class="txt-func search-cancel" style="display:none;">取消</a>
+    </header>
+    <div class="container">
+      <!-- <div class="mui-scroll-wrapper bbc-pullrefresh-top">
+        <div class="mui-scroll">
+          <div class="mui-content content-bottom-padded-nav"> -->
+            <!--轮播 start-->
+            <!--<div id="slider" class="mui-slider">
+                <div class="mui-slider-group mui-slider-loop widgets-slider">
+
+                  <div class="mui-slider-item mui-slider-item-duplicate">
+                    <a class="action-webview" data-webview="" data-webparam=''>
+                      <img src="../img/widgets_slider_01.jpg">
+                    </a>
+                  </div>
+
+                  <div class="mui-slider-item">
+                    <a class="action-webview" data-webview="" data-webparam=''>
+                      <img src="../img/widgets_slider_01.jpg">
+                    </a>
+                  </div>
+                 <div class="mui-slider-item">
+                    <a class="action-webview" data-webview="" data-webparam=''>
+                      <img src="../img/widgets_slider_02.jpg">
+                    </a>
+                  </div>
+
+
+                  <div class="mui-slider-item mui-slider-item-duplicate">
+                    <a class="action-webview" data-webview="" data-webparam=''>
+                      <img src="../img/widgets_slider_01.jpg">
+                    </a>
+                  </div>
+                </div>
+                <div class="mui-slider-indicator">
+                  <div class="mui-indicator mui-active "></div>
+                  <div class="mui-indicator "></div>
+                </div>
+              </div>-->
+              <!--轮播 end-->
+              
+              <!--文章 start-->
+              <!--<section class="widgets-category-nav section-white">
+                <div class="section-title">
+                  <div class="title-txt">好文推荐</div>
+                  <div class="more-link action-webview" data-webview="_www/view/category/category.html"><i class="bbc-icon bbc-icon-forward"></i></div>
+                </div>
+                <div class="mui-table-view">
+                  <ul class="mui-table-view mui-table-view-chevron">
+                    <li class="mui-table-view-cell mui-media">
+                        <a class="mui-navigate-right">
+                            <img class="mui-media-object mui-pull-left" src="../img/widgets_39.gif">
+                            <div class="mui-media-body">
+                                CBD
+                                <p class='mui-ellipsis mui-media-text'>烤炉模式的城，到黄昏，如同打翻的调色盘一般.</p>
+                                <p class="mui-ellipsis mui-media-text mui-media-author">作者：老王</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell mui-media">
+                        <a class='mui-navigate-right' href="javascript:;">
+                            <img class="mui-media-object mui-pull-left" src="../img/widgets_49.gif">
+                            <div class="mui-media-body">
+                                远眺
+                                <p class='mui-ellipsis mui-media-text'>静静的看这个世界，最后终于疯了</p>
+                                <p class='mui-ellipsis mui-media-text mui-media-author'>作者：老张</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell mui-media">
+                        <a class='mui-navigate-right' href="javascript:;">
+                            <img class="mui-media-object mui-pull-left" src="../img/widgets_49.gif">
+                            <div class="mui-media-body">
+                                远眺
+                                <p class='mui-ellipsis mui-media-text'>静静的看这个世界，最后终于疯了</p>
+                                <p class='mui-ellipsis mui-media-text mui-media-author'>作者：老张</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell mui-media">
+                        <a class='mui-navigate-right' href="javascript:;">
+                            <img class="mui-media-object mui-pull-left" src="../img/widgets_49.gif">
+                            <div class="mui-media-body">
+                                远眺
+                                <p class='mui-ellipsis mui-media-text'>静静的看这个世界，最后终于疯了</p>
+                                <p class='mui-ellipsis mui-media-text mui-media-author'>作者：老张</p>
+                            </div>
+                        </a>
+                    </li>
+                  </ul>     
+                </div>
+              </section>-->
+              <!--文章 end-->
+              
+          <!-- </div>
+        </div>
+      </div> -->
+
+    </div>
+    <nav class="mui-bar bbc-bar-tab">
+      <a class="bbc-tab-item bbc-active">
+        <span class="mui-icon bbc-icon bbc-icon-home"></span>
+        <span class="mui-tab-label">首页</span>
+      </a>
+      <a class="bbc-tab-item" href="{:url('Counsellor/index')}">
+        <span class="mui-icon bbc-icon bbc-icon-list"></span>
+        <span class="mui-tab-label">咨询</span>
+      </a>
+      <a class="bbc-tab-item" href="{:url('Clac/index')}">
+        <span class="mui-icon bbc-icon bbc-icon-moments"></span>
+        <span class="mui-tab-label">课程/活动</span>
+      </a>
+     <!--  <a class="bbc-tab-item" data-webview="_www/view/msg/index.html">
+        <span class="mui-icon bbc-icon bbc-icon-message"></span>
+        <span class="mui-tab-label">消息</span>
+      </a> -->
+      <a class="bbc-tab-item" href="{:url('Member/member')}">
+        <span class="mui-icon bbc-icon bbc-icon-user-empty"></span>
+        <span class="mui-tab-label">我的</span>
+      </a>
+    </nav>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script src="__M_JS__/mipush.js"></script>
+    <script src="__M_JS__/swiper.min.js"></script>
+    
+     <script type="text/html" id="widget_slider">
+        <div id="slider" class="mui-slider">
+            <div class="mui-slider-group mui-slider-loop widgets-slider">
+                <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+                <div class="mui-slider-item mui-slider-item-duplicate">
+                    <a class="action-clickview" data-webview="<%= pic[pic.length-1].webview %>" data-webparam='<%= pic[pic.length-1].webparam %>'>
+              <img src="<%= $add_server(pic[pic.length-1].cover) %>">
+            </a>
+                </div>
+                <% for(var i in pic) { %>
+                    <div class="mui-slider-item">
+                        <a class="action-clickview" data-webview="<%= pic[i].webview %>" data-webparam='<%= pic[i].webparam %>'>
+                          <img src="<%= $add_server(pic[i].cover) %>">
+                        </a>
+                    </div>
+                    <% } %>
+                        <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+                        <div class="mui-slider-item mui-slider-item-duplicate">
+                            <a class="action-clickview" data-webview="<%= pic[0].webview %>" data-webparam='<%= pic[0].webparam %>'>
+              <img src="<%= $add_server(pic[0].cover) %>">
+            </a>
+                        </div>
+            </div>
+            <div class="mui-slider-indicator">
+                <% for(var i=0; i<pic.length; i++) { %>
+                    <div class="mui-indicator <%= (i==0) ? 'mui-active' : ' ' %> "></div>
+                    <% } %>
+            </div>
+        </div>
+    </script>
+    <script type="text/html" id="widget_nav">
+      <section class="widgets-category-nav section-white">
+          <ul class="widgets-icons-nav">
+            <li class="action-webview mui-hidden"><i><a href="http://www.baidu.com"><img src="__M_IMG__/xiaolv.png"></a></i><span>高效课程</li>
+            <li class="action-webview mui-hidden" data-webview="_www/view/artical/list.html" ><i><a href="{:url('Artical/index')}"><img src="__M_IMG__/readroom.png"></a></i><span>心灵图书室</li>
+            <% for(var i=0; i<list.length; i++) { %>
+              <%if(i<8){%>
+                <li class="action-webview" data-webview="_www/view/counsellor/list.html" data-webparam='{"cat_id":<%= list[i].id %>}'><i><a href="{:url('Counsellor/index')}?cat_id=<%= list[i].id %>"><img src="<%= $add_server(list[i].cover) %>"></a></i><span><%= list[i].title %></li>
+              <%}%> 
+            <% } %>
+          <li class="action-webview mui-hidden" data-webview="_www/view/category/category.html" ><i><a href="{:url('Category/category')}"><img src="__M_IMG__/catemore.png"></a></i><span>更多分类</li>
+          </ul>
+      </section>
+  </script> 
+  <script type="text/html" id="widget_msg">
+    <div class="business-news index-content-item ">
+      <div class="business-news-wrap mui-flex ">
+        <div class="business-news-title" id="businessQurey1"><img width="25px" src="__M_IMG__/notice.png" style=""/></div>
+        <div class="business-news-content cell">
+          <div class="mui-flex">
+            <div class="cell business-news-list">
+              <div class="swiper-container" id="swiper_news">
+                <div class="swiper-wrapper">
+                  <% for(var i=0; i<list.length; i++) { %>
+                    <div class="swiper-slide "><%= list[i].display %></div>
+                   <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--<div class="business-news-more " id="businessQurey">
+          <div>更多<i class="mui-icon newageiconfont">&#xe62e;</i></div>
+        </div>-->
+      </div>
+      </div>
+      </script>
+    <script type="text/html" id="widget_msg1">
+      <div class="business-news index-content-item ">
+        <div class="business-news-wrap mui-flex ">
+          <div class="business-news-title" id="businessQurey1"><i class="mui-icon mui-icon-chat"></i></div>
+          <div class="business-news-content cell">
+            <div class="mui-flex">
+              <div class="cell business-news-list">
+                <div class="swiper-container" id="swiper_news">
+                  <div class="swiper-wrapper">
+                    <% for(var i=0; i<list.length; i++) { %>
+                      <div class="swiper-slide "><%= list[i].display %></div>
+                     <% } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+    <script type="text/html" id="class_list">
+        <% if(pic){%>
+        <section class="widgets-category-nav section-white swiper-wrapper-new">
+          <div class="section-title">
+            <div class="title-txt">课程</div>
+          <a href="{:url('Category/category')}?cat_id=18"><div class="more-link action-webview" data-webview="_www/view/artical/list.html" data-webparam='{"cat_id":18}'>更多</div></a>
+          </div>
+          <div class="swiper-container swiper-container1">
+            <div class="swiper-wrapper">
+                <% for(var m in pic) { %>
+
+                  <div class="swiper-slide swiper-slide-class ">
+                    <a href="<%= pic[m].webview%>" class="action-webview"  data-webview="_www/view/artical/ad.html" data-webparam='{"link":"<%= pic[m].webparam%>"}'><img src="<%= $add_server(pic[m]['cover'])%>" style="height: 150px;"/></a>
+                  </div>
+              <%}%>
+             </div> 
+              <div class="swiper-pagination swiper-pagination-custom"></div>
+          </div>
+        </section>
+    
+        <%}%>
+    </script>
+      <script type="text/html" id="class_list1">
+        <% if(pic){%>
+        <section class="widgets-category-nav section-white">
+          <div class="section-title">
+            <div class="title-txt">课程</div>
+            <a href="{:url('Category/category')}"><div class="more-link action-webview"  data-webview="_www/view/category/category.html">更多</div></a>
+          </div>
+          <div class="mui-table-view">
+              <div class="swiper-container1">
+          <div class="swiper-wrapper">
+            <% for(var m=0; m<pic.length; m++) { %>
+            <div class="swiper-slide swiper-slide-class ">
+                <a href="<%= pic[m].link%>" class="action-webview"  data-webview="_www/view/artical/ad.html" data-webparam='{"link":"<%= pic[m].link%>"}'><img src="<%= $add_server(pic[m]['cover'])%>" style="height: 150px;"/></a>
+            </div>
+            <%}%>
+          </div>
+        </div>
+          </div>
+        </section>
+        <%}%>
+      </script>
+      <script type="text/html" id="active_list">
+        <% if(pic){%>
+        <section class="widgets-category-nav section-white">
+          <div class="section-title">
+            <div class="title-txt">活动</div>
+            <a href="{:url('Category/category')}"><div class="more-link action-webview" data-webview="_www/view/category/category.html">更多</div></a>
+          </div>
+          <div class="mui-table-view">
+              <div class="swiper-container2">
+          <div class="swiper-wrapper">
+            <% for(var m=0; m<pic.length; m++) { %>
+            <div class="swiper-slide swiper-slide-class">
+                <a href="<%= pic[m].link%>" class="action-webview"  data-webview="_www/view/artical/ad.html" data-webparam='{"linkadr":<%= pic[m].link %>}'><img src="<%= $add_server(pic[m]['cover'])%>" style="height: 150px;"/></a>
+            </div>
+            <%}%>
+          </div>
+        </div>
+          </div>
+        </section>
+        <%}%>
+      </script>
+    <script type="text/html" id="widget_article">
+        <section>  
+            <!--文章 start-->
+              <section class="widgets-category-nav section-white">
+                <div class="section-title">
+                  <div class="title-txt">好文推荐</div>
+                  <a href="{:url('Artical/cate')}"><div class="more-link" ><i class="bbc-icon bbc-icon-forward"></i></div></a>
+                </div>
+                <div class="mui-table-view">
+                  <ul class="mui-table-view mui-table-view-chevron">
+                    <% for(var i=0; i<list.length; i++) { %>
+
+                        <li class="mui-table-view-cell mui-media action-clickview" data-webview="{:url('Artical/detail')}" data-webparam = '<%= list[i].id %>'>
+                            <a class="mui-navigate-right">
+                                <img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].cover) %>">
+                                <div class="mui-media-body">
+                                    <%= list[i].title %>
+                                    <p class='mui-ellipsis mui-media-text'><%= list[i].description %></p>
+                                    <p class="mui-ellipsis mui-media-text mui-media-author">作者：<%= list[i].author %></p>
+                                </div>
+                            </a>
+                        </li>
+                     <% } %>
+                  </ul>     
+                </div>
+              </section>
+              <!--文章 end-->
+        </section>  
+    </script>
+    
+    <script type="text/html" id="widget_recommend">
+        <section class="widgets-category-nav section-white">
+            <div class="section-title">
+              <div class="title-txt">专家推荐</div>
+              <div class="more-link action-webview" data-webview="_www/view/category/category.html">更多</div>
+            </div>
+            <div class="mui-table-view">
+              <ul class="mui-table-view mui-table-view-chevron">
+                <% for(var i=0; i<list.length; i++) { %>
+          <li class="mui-table-view-cell mui-badge-custom mui-media action-webview" data-webview="_www/view/counsellor/detail.html" data-webparam='{"counsellor_id":<%= list[i].memberid %>}'>
+            <a class="mui-navigate-right" href="{:url('Counsellor/detail')}?counsellor_id=<%= list[i].memberid %>">
+              <% if(list[i].online==1 ){%>
+                <span class="mui-badge mui-badge-green ">在线</span>
+              <%}else{%>
+                <span class="mui-badge mui-badge-danger ">下线</span>
+              <%}%> 
+              
+              <img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].avar) %>">
+              <div class="mui-media-body">
+                <p>
+                  <span class="mui-text-left"><%= list[i].nickname %></span>
+                  <span class="mui-text-right mui-media-action float-right mui-hidden">立即预约</span>
+                </p>
+                <p class='mui-ellipsis mui-media-text'><%= list[i].employment %>|<%= list[i].sign %></p>
+                <p class="mui-ellipsis mui-media-text mui-media-author">我在大观心理温暖过<%= list[i].trade %>人次</p>
+                <p class="mui-detail">详情</p>
+              </div>
+            </a>
+          </li>
+          <% } %>
+          </ul>   
+            </div>
+      </section>
+    </script>
+  <script type="text/html" id="widget_find">
+    <section class="widgets-column-section">
+      <div class="column-wraper">
+        <div  class="expert-item findprf" data-webview="_www/view/counsellor/index.html">
+          <a href="{:url('Counsellor/index')}"><p class="expert-title">找专家</p></a>
+        </div>
+        <div  class="artical-wraper">
+          <a href="{:url('Artical/index')}"><p class="artical-title action-webview" data-webview="_www/view/artical/index.html">文章推荐</p></a>
+          <div class="swiper-container" id="swiper_artical">
+            <div class="swiper-wrapper">
+              <% for(var i=0; i<list.length; i++) { %>
+                <a href="{:url('Artical/detail')}?article_id=<%= list[i].id %>"><div class="swiper-slide  action-webview" data-webview="_www/view/artical/detail.html" data-webparam = '{"article_id":<%= list[i].id %>}'><%= list[i].keywords %></div></a>
+               <% } %>
+            </div>
+          </div>        
+        </div>
+          </div>
+    </section>
+  </script>
+    <script type="text/html" id="widget_counsellors">
+    <section class="widgets-category-nav">
+      <div class="section-title">
+          <div class="title-txt">大观心师</div>
+          <a href="{:url('Category/category')}"><div class="more-link action-webview" data-webview="_www/view/category/category.html">更多</div></a>
+      </div>
+      <ul class="mui-table-view-chevron">
+          <% for(var i=0; i<list.length; i++) { %>
+          <li class="card-wrapper card-wrapper-new action-webview" data-webview="_www/view/counsellor/detail.html" data-webparam='{"counsellor_id":<%= list[i].memberid %>}'>
+              <div class="avatar">
+                  <img src="<%= $add_server(list[i].avar) %>">
+              </div>
+              <div class="flex flex-hb flex-dc info-detail">
+                  <div class="card-new-info">
+                      <p class="card-name"><%= list[i].nickname %></p>
+                      <p class="card-addrs"><%= list[i].shopname %> </p>
+                  </div>
+                  <div class="card-new-content">
+                      <p class="card-title"><%if(list[i].tearch){%>大观讲师 |<%}%><%if(list[i].leader){%>大观Leader|<%}%>大观注册心师</p>
+                      <p class="card-title card-ellispse">擅长领域：<%= list[i].sign %></p>
+                      <div class="flex flex-hb flex-dr card-new-opre">
+                          <% if(list[i].online==1 ){%>
+                            <p class="mui-badge mui-badge-green ">在线</p>
+                          <%}else{%>
+                            <p class="mui-badge mui-badge-green ">离线</p>
+                          <%}%>
+                          <a href="{:url('Counsellor/detail')}?counsellor_id=<%= list[i].memberid %>"><p class="more action-webview" data-webview="_www/view/counsellor/detail.html" data-webparam='{"counsellor_id":<%= list[i].memberid %>}'>了解我更多</p></a>
+                      </div>
+                  </div>
+              </div>
+          </li>
+          <% } %>
+      </ul>
+  </section>
+  </script>
+    <script type="text/javascript">
+      var i = localStorage.getItem("updatelv")?1:0;
+      if(!localStorage.getItem('updatelv')||!i){
+        i++;
+        var btnArray = ['以后再说', '现在去升级'];
+        mui.confirm('是否成为心窝会员？', '', btnArray, function(e) {
+          if (e.index == 1) {
+            window.location.href = "{:url('Member/updatelv')}"
+          } else {
+            localStorage.setItem("updatelv",'1')
+          }
+        })
+        
+      }
+
+      //获取数据 
+      //lunbo
+      var param = {
+            'method': config.apimethod.lunbo,
+            'ismobile': 1,
+            'source':config.source
+      }
+      $.dataRequest(param, function(rs) {
+        var widgets = template('widget_slider', rs);
+        $('.container').append(widgets);
+        var gallery = mui("#slider");
+        gallery.slider({
+          interval: 5000 //自动轮播周期，若为0则不自动播放，默认为0；
+        });
+
+        //nav
+        var aparam = {
+            'method': config.apimethod.category,
+            'source':config.source
+        }
+        $.dataRequest(aparam, function(rs) {
+          var widgets = template('widget_nav', rs);
+          $('.container').append(widgets);
+
+          //msg
+          var aparam = {
+              'method': config.apimethod.msg,
+              'source':config.source
+          }
+          $.dataRequest(aparam, function(rs) {
+            var widgets = template('widget_msg', rs);
+            $('.container').append(widgets);
+              var swiper = new Swiper('.swiper-container', {
+                  pagination: '.swiper-pagination',
+                  loop: true,
+                  direction: 'vertical',
+                  speed:3500,
+                  autoplay:true
+              });
+
+            //找专家
+            var aparam4 = {
+                'method': config.apimethod.article,
+                'source':config.source
+            }
+
+            if(app.getState().token!=undefined){
+                var aparam4 = {
+                  'method': config.apimethod.article,
+                  'account':app.getState().token,
+                  'source':config.source
+              }
+            }
+            $.dataRequest(aparam4, function(rs) {
+              var widgets = template('widget_find', rs);
+              $('.container').append(widgets);
+               var swiper = new Swiper('#swiper_artical', {
+                  loop: true,
+                  direction: 'vertical',
+                  speed:3500,
+                  autoplay:true
+                });
+              mui('.mui-scroll-wrapper').scroll({
+                indicators: false
+              });
+              $(window).on('tap', '.findprf', function() {
+                window.location.href = "{:url('Counsellor/index')}";
+              })
+              //课程
+              var aparam = {
+                'method': config.apimethod.classList,
+                'source':config.source,
+                'ismobile':1
+              }
+              $.dataRequest(aparam, function(rs) {
+                console.log(rs);
+                var widgets = template('class_list', rs);
+                $('.container').append(widgets);
+                var mySwiper = new Swiper('.swiper-container1', {
+                  slidesPerView: 1.5,
+                  spaceBetween: 1,
+                  centeredSlides: true,
+                  initialSlide: 1,
+                  speed:500,
+                  pagination: '.swiper-pagination-custom',
+                })
+
+                //专家
+                var aparam2 = {
+                    'method': config.apimethod.recommend,
+                    'source':config.source
+                }
+                if(app.getState().token!=undefined){
+                    var aparam2 = {
+                      'method': config.apimethod.recommend,
+                      'account':app.getState().token,
+                      'source':config.source
+                  }
+                }
+                $.dataRequest(aparam2, function(rt) {
+                    for (var i in rt['list']) {
+                      if(rt['list'][i].avar==''){
+                        rt['list'][i].avar = 'static/admin/img/none.png';
+                      }
+                    }
+                    var widgets = template('widget_counsellors', rt);
+                    $('.container').append(widgets);
+                       // 
+                     mui('.mui-scroll-wrapper').scroll({
+                    indicators: false
+                  });
+               })//end 专家
+
+              })//课程
+            })//找专家
+
+          })//msg
+                
+        })//nav
+          
+      })//lunbo
+    </script>
+  </body>
+
+</html>

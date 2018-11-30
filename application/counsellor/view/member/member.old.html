@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="__C_CSS__/style.css">
+    <style type="text/css">
+    .box {
+      height: 13rem;
+      position: relative;
+      overflow: hidden;
+      background: #FFF;
+      transform: translate3d(0, 0, 0); }
+
+     .box:after {
+      content: '';
+      display: block;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, #ee88aa, rgba(221, 238, 255, 0) 80%, rgba(255, 255, 255, 0.5));
+      z-index: 5;
+      transform: translate3d(0, 0, 0); }
+
+    	 .wave {
+      opacity: .4;
+      position: absolute;
+      top: 3%;
+      left: 50%;
+      background: #0af;
+      width: 800px;
+      height: 800px;
+      margin-left: -400px;
+      margin-top: -600px;
+      transform-origin: 50% 48%;
+      border-radius: 43%;
+      animation: drift 20000ms infinite linear; }
+
+    .wave.three {
+      animation: drift 19500ms infinite linear; }
+
+    .wave.two {
+      animation: drift 22000ms infinite linear;
+      opacity: .1;
+      background: yellow; }
+
+    @keyframes drift {
+      from {
+        transform: rotate(0deg); }
+      from {
+        transform: rotate(360deg); } }
+
+      .user-header {
+        min-height: 11rem;
+      }
+      .user-accout{
+      	color: #555555;
+      }
+      .mui-icon .mui-badge{
+			    height: 10px;
+			    margin-left: -8px;
+    		}
+    </style>
+  </head>
+
+  <body class="body-padding-xs">
+    <div class="user-header box">
+      <a id="setting" data-view="{:url('Member/setting')}" class="user-setting bbc-icon bbc-icon-setting action-clickview" style="right: 4rem;"></a>
+      <a id="msg" data-view="{:url('Member/msg')}" class="user-setting bbc-icon bbc-icon-message-gap action-clickview" ></a>
+      <div id="user_info" class="user-logined " data-view="_www/view/member/userinfo/userinfo.html">
+        <div class="login-avatar">
+          <img class="userinfo-avatar" id="head-img" src="" />
+          <!-- <i class="bbc-icon bbc-icon-member fontB"></i> -->
+        </div>
+        <div  class="user-accout"><span id="account"></span></div>
+        <div><span id="grade_name" class="fontS " style="color: #646464;" ><sm class="agency">浦东中心</sm>，中级心理咨询师</span></div>
+      </div>
+    </div>
+    <section class="section-white">
+      <div class="section-title user-title">
+        <div class="title-txt"><i class="user-icon bbc-icon bbc-icon-assets user-assets"></i> 我的资产</div>
+      </div>
+      <div class="box-display content-vertical-padded user-assetses font-gray-20">
+        <div data-needlog="true" data-view="{:url('Member/income')}" class="box-item-flex1 content-center action-clickview "><em class="assets-data" id="income">0</em><br><span class="font-gray-20 fontS">收入</span></div>
+        <div data-needlog="true" data-view="_www/view/member/coupon/coupon.html" class="box-item-flex1 content-center "><em class="assets-data" id="coupon">0</em><br><span class="font-gray-20 fontS">优惠券</span></div>
+        <div  class="box-item-flex1 content-center "><em class="assets-data" id="experience">0</em><br><span class="font-gray-20 fontS">卡包</span></div>
+        <div data-needlog="true" data-view="{:url('Member/point')}" class="box-item-flex1 content-center action-clickview"><em class="assets-data" id="integral">0</em><br><span class="font-gray-20 fontS">积分</span></div>
+      </div>
+    </section>
+    <section class="section-white">
+      <ul class="mui-table-view">
+        <!-- li data-needlog="true" data-view="_www/view/member/return/returns.html" class="mui-table-view-cell ">
+          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-history user-returns"></i> 我的资历</a>
+        </li> -->
+        <li data-needlog="true" data-view="_www/view/member/safe/safe.html" class="mui-table-view-cell ">
+          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-password user-safe"></i> 我的课程</a>
+        </li>
+        <li data-needlog="true" data-view="_www/view/member/favorite/favorite.html" class="mui-table-view-cell ">
+          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-history-gap user-favorite"></i> 我的活动</a>
+        </li>
+      </ul>
+    </section>
+	
+	<section class="section-white">
+      <ul class="mui-table-view">
+        <li data-needlog="true" data-view="_www/view/member/rate/rate.html" class="mui-table-view-cell action-clickview mui-hidden">
+          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-rate-empty user-rate"></i> 我的账户</a>
+        </li>
+        <li data-needlog="true" data-view="{:url('Member/ondate')}" class="mui-table-view-cell action-clickview">
+          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-communication user-complain"></i>预约时间 </a>
+        </li>
+        <li data-needlog="true" data-view="{:url('Member/articlein')}" class="mui-table-view-cell action-clickview">
+          <a class="mui-navigate-right"><i class="user-icon bbc-icon bbc-icon-star-empty user-favorite"></i> 我的文章</a>
+        </li>
+      </ul>
+    </section>
+    
+    <nav class="mui-bar bbc-bar-tab">
+      <a class="bbc-tab-item " href="{:url('Index/index')}">
+        <span class="mui-icon bbc-icon bbc-icon-home"></span>
+        <span class="mui-tab-label">首页</span>
+      </a>
+      <a class="bbc-tab-item" href="{:url('Counsellor/index')}">
+        <span class="mui-icon bbc-icon bbc-icon-package"><span class="cesllor-badge mui-badge mui-badge-danger"></span></span>
+        <span class="mui-tab-label">工作台</span>
+      </a>
+      <a class="bbc-tab-item" href="{:url('Clac/index')}">
+        <span class="mui-icon bbc-icon bbc-icon-moments"></span>
+        <span class="mui-tab-label">课程/活动</span>
+      </a>
+      <a class="bbc-tab-item bbc-active" >
+        <span class="mui-icon bbc-icon bbc-icon-user-empty"><i  class="msg-badge mui-badge mui-badge-danger mui-hidden"></i></span>
+        <span class="mui-tab-label">我的</span>
+      </a>
+    </nav>
+    
+    <script src="__C_JS__/zepto.js"></script>
+    <script src="__C_JS__/mui.min.js"></script>
+    <script src="__C_JS__/template.min.js"></script>
+    <script src="__C_JS__/config.js"></script>
+    <script src="__C_JS__/app.js"></script>
+    <script type="text/javascript" charset="utf-8">
+  		if(app.getState()){
+  			document.getElementById("account").innerHTML = app.getState().nickname;
+  			$('.agency').text(app.getState().agency)
+  			//msg
+  	  		var state = app.getState();
+  		  	var param = {
+  	            'method': config.apimethod.msg,
+  	            'source':config.source,
+  	            'account':state.token
+  	       }
+  	        $.dataRequest(param, function(rs) {
+  	        		//订单消息
+  	        		if (rs) {
+  	        			$('.msg-badge').removeClass('mui-hidden')
+  	        		}
+  	        })
+
+  	        var param = {
+  		          'method': config.apimethod.counsellorindex,
+  		          'account': state.token,
+  		          'source':config.source
+  		      } 
+  	        $.dataRequest(param, function(rs) { 
+  	        		$('#income').text(Currency.format(rs.income))
+  	        		$('#integral').text(rs.points)
+  	        })
+            var param = {
+                'method': config.apimethod.userinfo,
+                'account': state.account,
+                'source':config.source
+            }
+            $.dataRequest(param, function(rs) {
+              var data = rs;
+              ret = rs;
+              if(ret.avar){
+                  document.getElementById("head-img").src = config.imgser+'/'+ret.avar;
+              }else{
+                  document.getElementById("head-img").src = '../../shop_logo.gif';
+              }
+
+            });
+
+  		}
+        $(window).on('tap', '.action-clickview', function() {
+          var state = app.getState();
+          var _this = $(this).data('view');
+          if(_this && _this != '') {
+             window.location.href = _this
+          }
+        });
+
+        
+
+     
+    </script>
+  </body>
+
+</html>

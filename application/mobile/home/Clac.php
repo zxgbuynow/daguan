@@ -21,6 +21,7 @@ class Clac extends Home
     {
         return $this->fetch(); // 渲染模板
     }
+    
 
     
 }

@@ -9,7 +9,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <link rel="stylesheet" href="__C_CSS__/style.css">
-    <link rel="stylesheet" type="text/css" href="__C_CSS__/mui.picker.min.css" />
     <style>
     		.check-box {
     			border-bottom: solid 1px #e4e5e6;
@@ -102,11 +101,11 @@
           <!--//填写-->
           <div class="mui-input-row ">
             <label>开始时间：</label>
-      		<input id="caseStarttime" name="caseStarttime"type="datetime" data-options='{"beginYear":2018,"endYear":2025}' class="mui-input-clear pickTime" placeholder="开始时间">
+      		<input id="caseStarttime" name="caseStarttime" type="text" class="mui-input-clear pickTime" placeholder="开始时间">
           </div>
           <div class="mui-input-row ">
             <label>结束时间：</label>
-      		<input id="caseEndtime" name="caseEndtime" type="datetime" data-options='{"beginYear":2018,"endYear":2025}' type="text" class="mui-input-clear pickTime" placeholder="结束时间">
+      		<input id="caseEndtime" name="caseEndtime" type="text" class="mui-input-clear pickTime" placeholder="结束时间">
           </div>
           <div class="check-box" style="margin-top: 5px;margin-bottom: 5px;">
           	<table  border="1" width="100%" style="padding: 5px 10px;text-align: center;" >
@@ -912,7 +911,7 @@
           </div>
           
           <div class="row mui-input-row">
-          		 <label>案件主诉：</label>
+          		 <label>案主主诉：</label>
 				<textarea id='caseMasterQs' name="caseMasterQs" class="mui-input-clear" placeholder="案件主诉..."></textarea>
 		  </div>
 		  <div class="row mui-input-row">
@@ -950,7 +949,6 @@
     <script src="__C_JS__/zepto.js"></script>
     <script src="__C_JS__/mui.min.js"></script>
     <script src="__C_JS__/template.min.js"></script>
-    <script src="__C_JS__/mui.picker.min.js"></script>
     <script src="__C_JS__/config.js"></script>
     <script src="__C_JS__/app.js"></script>
 	<script type="text/html" id="trade_list">
@@ -960,25 +958,25 @@
     </script>
 
     <script>
-	var state = app.getState();
-    var result = window.location.href;
-    var tid = $.getUrlParam(result,'tid');
-    var cid = $.getUrlParam(result,'cid');
 
-       // var tid = plus.webview.currentWebview().tid;
-       // var cid = plus.webview.currentWebview().cid;
-    var userdata = null;
+	 var state = app.getState();
+       var result = window.location.href;
+       var tid = $.getUrlParam(result,'tid');
+       var cid = $.getUrlParam(result,'cid');
+       var caid = $.getUrlParam(result,'caid');
 
-    //获取用户信息
-    var param = {
+       var userdata = null;
+       //获取用户信息
+       var param = {
           'method': config.apimethod.getMemberInfoByTid,
           'source':config.source,
           'tid': tid,
-          'cid':cid
-    }
-    $.dataRequest(param, function(rs) { 
+          'cid':cid,
+		  'caid':caid
+      }
+      $.dataRequest(param, function(rs) { 
       	userdata = rs;
-      	document.getElementById("truename").value = rs.user.truename;
+      	document.getElementById("truename").value = rs.user.nickname;
       	document.getElementById("sex").value = rs.user.sex;
       	 
       	document.getElementById("birthday").value = rs.user.birthday;
@@ -989,9 +987,14 @@
       	document.getElementById("mobile").value = rs.user.mobile;
       	document.getElementById("chat").value = rs.trade.chart;
       	document.getElementById("timerange").value = rs.ondate.timerange;
+		//处理 案例
+		if(caid&&rs.case){
+			hanldecase(rs.case);
+		}
+				
 
-    })
-    var btns = mui('.pickTime');
+      })
+      var btns = mui('.pickTime');
         btns.each(function(i, btn) {
           btn.addEventListener('tap', function() {
             var optionsJson = this.getAttribute('data-options') || '{}';
@@ -1007,77 +1010,171 @@
           }, false);
         });
 
- //  	document.getElementById("caseStarttime").addEventListener('tap', function() {
-	// 	var dTime = new Date();
-	// 	dTime.setHours(6, 0);
-	// 	plus.nativeUI.pickTime(function(e) {
-	// 		var d = e.date;
-	// 		$('#caseStarttime').val( d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()+' '+d.getHours() + ":" + d.getMinutes());
-	// 	}, function(e) {
-	// 		mui.toast('请选择时间')
-	// 	}, {
-	// 		title: "请选择时间",
-	// 		is24Hour: true,
-	// 		time: dTime
-	// 	});
-	// });
 		
-	// document.getElementById("caseEndtime").addEventListener('tap', function() {
-	// 	var dTime = new Date();
-	// 	dTime.setHours(6, 0);
-	// 	plus.nativeUI.pickTime(function(e) {
-	// 		var d = e.date;
-	// 		$('#caseEndtime').val( d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()+' '+d.getHours() + ":" + d.getMinutes());
-	// 	}, function(e) {
-	// 		mui.toast('请选择时间')
-	// 	}, {
-	// 		title: "请选择时间",
-	// 		is24Hour: true,
-	// 		time: dTime
-	// 	});
-	// });
-		
-    document.getElementById("save").addEventListener('tap',function(){
-      	//组数据 
-      	 var param = {
-	          'method': config.apimethod.caseAdd,
-	          'source':config.source,
-	          'cid': cid,
-	          'truename': userdata.user.truename,
-	          'sex': userdata.user.sex,
-	          'birthday': userdata.user.birthday,
-	          'edu': userdata.user.edu,
-	          'grade': userdata.user.grade,
-	          'marital': userdata.user.marital,
-	          'profession': userdata.user.profession,
-	          'mobile': userdata.user.mobile,
-	          'chat': userdata.trade.chart,
-	          'timerange': userdata.ondate.timerange,
-	          'memberid':state.token,
-	          'data':$("#casepost").serialize()
-	      }
+      document.getElementById("save").addEventListener('tap',function(){
+					//组数据 
+					if(caid){
+						var param = {
+								'method': config.apimethod.caseAdd,
+								'source':config.source,
+								'cid': cid,
+								'caid': caid,
+								'truename': userdata.user.truename,
+								'sex': userdata.user.sex,
+								'birthday': userdata.user.birthday,
+								'edu': userdata.user.edu,
+								'grade': userdata.user.grade,
+								'marital': userdata.user.marital,
+								'profession': userdata.user.profession,
+								'mobile': userdata.user.mobile,
+								'chat': userdata.trade.chart,
+								'timerange': userdata.ondate.timerange,
+								'memberid':state.token,
+								'data':$("#casepost").serialize()
+						}
+					}else{
+						var param = {
+								'method': config.apimethod.caseAdd,
+								'source':config.source,
+								'cid': cid,
+								'truename': userdata.user.truename,
+								'sex': userdata.user.sex,
+								'birthday': userdata.user.birthday,
+								'edu': userdata.user.edu,
+								'grade': userdata.user.grade,
+								'marital': userdata.user.marital,
+								'profession': userdata.user.profession,
+								'mobile': userdata.user.mobile,
+								'chat': userdata.trade.chart,
+								'timerange': userdata.ondate.timerange,
+								'memberid':state.token,
+								'data':$("#casepost").serialize()
+						}
+					}
+      	 
 	      $.dataRequest(param, function(rs) {
 	      	mui.toast('添加成功');
             window.location.href = "{:url('Counsellor/index')}"
-            // var parentview = plus.webview.currentWebview().opener();
-            // parentview.reload(true);
-            // var ws = plus.webview.currentWebview();
-            // plus.webview.close(ws,'slide-out-bottom');
 	      })
       	
-    })
+      })
       
-    $(document).on('change', 'select', function (e) {
+      $(document).on('change', 'select', function (e) {
 		var total = 0;
 		var avrange = 0;
       	$(this).closest('tr').find('select').forEach(function(el, i){
-      		total += parseFloat(el.value);
+      		total += parseFloat(el.value); 
       	})
       	avrange = (total/6).toFixed(2);
       	$(this).closest('tr').find('td')[7].innerHTML = total;
       	$(this).closest('tr').find('td')[8].innerHTML = avrange;
-    })
+      })
         
+			//
+			function hanldecase(data){
+				$('#AAvl_Avl').val(data['atr']['AAvl_Avl']);
+				$('#ABvl_Avl').val(data['atr']['ABvl_Avl']);
+				$('#ACvl_Avl').val(data['atr']['ACvl_Avl']);
+				$('#ADvl_Avl').val(data['atr']['ADvl_Avl']);
+				$('#AEvl_Avl').val(data['atr']['AEvl_Avl']);
+				$('#AFvl_Avl').val(data['atr']['AFvl_Avl']);
+				$('#ATotal').text(data['atr']['Total']);
+				$('#AAverage').text(data['atr']['avg']);
+				
+				$('#_2AAvl_A2vl').val(data['_2atr']['_2AAvl_A2vl']);
+				$('#_2ABvl_A2vl').val(data['_2atr']['_2ABvl_A2vl']);
+				$('#_2ACvl_A2vl').val(data['_2atr']['_2ACvl_A2vl']);
+				$('#_2ADvl_A2vl').val(data['_2atr']['_2ADvl_A2vl']);
+				$('#_2AEvl_A2vl').val(data['_2atr']['_2AEvl_A2vl']);
+				$('#_2AFvl_A2vl').val(data['_2atr']['_2AFvl_A2vl']);
+				$('#_2ATotal').text(data['_2atr']['Total']);
+				$('#_2AAverage').text(data['_2atr']['avg']);
+				
+				$('#BAvl_Bvl').val(data['_btr']['BAvl_Bvl']);
+				$('#BBvl_Bvl').val(data['_btr']['BBvl_Bvl']);
+				$('#BCvl_Bvl').val(data['_btr']['BCvl_Bvl']);
+				$('#BDvl_Bvl').val(data['_btr']['BDvl_Bvl']);
+				$('#BEvl_Bvl').val(data['_btr']['BEvl_Bvl']);
+				$('#BFvl_Bvl').val(data['_btr']['BFvl_Bvl']);
+				$('#BTotal').text(data['_btr']['Total']);
+				$('#BAverage').text(data['_btr']['avg']);
+				
+				
+				$('#_1MAvl_M1vl').val(data['_1matr']['_1MAvl_M1vl']);
+				$('#_1MBvl_M1vl').val(data['_1matr']['_1MBvl_M1vl']);
+				$('#_1MCvl_M1vl').val(data['_1matr']['_1MCvl_M1vl']);
+				$('#_1MDvl_M1vl').val(data['_1matr']['_1MDvl_M1vl']);
+				$('#_1MEvl_M1vl').val(data['_1matr']['_1MEvl_M1vl']);
+				$('#_1MFvl_M1vl').val(data['_1matr']['_1MFvl_M1vl']);
+				$('#_1MTotal').text(data['_1matr']['Total']);
+				$('#_1MAverage').text(data['_1matr']['avg']);
+				
+				$('#pAvl_PLAN').val(data['_ptr']['pAvl_PLAN']);
+				$('#pBvl_PLAN').val(data['_ptr']['pBvl_PLAN']);
+				$('#pCvl_PLAN').val(data['_ptr']['pCvl_PLAN']);
+				$('#pDvl_PLAN').val(data['_ptr']['pDvl_PLAN']);
+				$('#pEvl_PLAN').val(data['_ptr']['pEvl_PLAN']);
+				$('#pFvl_PLAN').val(data['_ptr']['pFvl_PLAN']);
+				$('#pTotal').text(data['_ptr']['Total']);
+				$('#pAverage').text(data['_ptr']['avg']);
+				
+				$('#A_MAvl_AMvl').val(data['_amtr']['A_MAvl_AMvl']);
+				$('#A_MBvl_AMvl').val(data['_amtr']['A_MBvl_AMvl']);
+				$('#A_MCvl_AMvl').val(data['_amtr']['A_MCvl_AMvl']);
+				$('#A_MDvl_AMvl').val(data['_amtr']['A_MDvl_AMvl']);
+				$('#A_MEvl_AMvl').val(data['_amtr']['A_MEvl_AMvl']);
+				$('#A_MFvl_AMvl').val(data['_amtr']['A_MFvl_AMvl']);
+				$('#A_MTotal').text(data['_amtr']['Total']);
+				$('#A_MAverage').text(data['_amtr']['avg']);
+				
+				$('#_2MAvl_M2vl').val(data['_2mtr']['_2MAvl_M2vl']);
+				$('#_2MBvl_M2vl').val(data['_2mtr']['_2MBvl_M2vl']);
+				$('#_2MCvl_M2vl').val(data['_2mtr']['_2MCvl_M2vl']);
+				$('#_2MDvl_M2vl').val(data['_2mtr']['_2MDvl_M2vl']);
+				$('#_2MEvl_M2vl').val(data['_2mtr']['_2MEvl_M2vl']);
+				$('#_2MFvl_M2vl').val(data['_2mtr']['_2MFvl_M2vl']);
+				$('#_2MTotal').text(data['_2mtr']['Total']);
+				$('#_2MAverage').text(data['_2mtr']['avg']);
+				
+				
+				$('#caseMasterQs').val(data['caseMasterQs']);
+				$('#casefamilyQs').val(data['casefamilyQs']);
+				$('#caseSkill').val(data['caseSkill']);
+				$('#caseWork').val(data['caseWork']);
+				$('#caseResult').val(data['caseResult']);
+				$('#caseStreng').val(data['caseStreng']);
+				$('#caseMark').val(data['caseMark']);
+				
+				var caseS = data.caseS;				
+				for(var i=0;i<caseS.length;i++){
+						var tem = caseS[i];
+						$("input[name='caseS'][value='"+tem+"']").attr("checked", true);
+				}
+				
+				var caseR9 = data.caseR9;				
+				for(var i=0;i<caseR9.length;i++){
+						var tem = caseR9[i];
+						$("input[name='caseR9'][value='"+tem+"']").attr("checked", true);
+				}
+				
+				var caseSOR = data.caseSOR;				
+				for(var i=0;i<caseSOR.length;i++){
+						var tem = caseSOR[i];
+						$("input[name='caseSOR'][value='"+tem+"']").attr("checked", true);
+				}
+				
+				var casePNF = data.casePNF;				
+				for(var i=0;i<casePNF.length;i++){
+						var tem = casePNF[i];
+						$("input[name='casePNF'][value='"+tem+"']").attr("checked", true);
+				}
+				
+				$('#caseStarttime').val(data.caseStarttime);
+				$('#caseEndtime').val(data.caseEndtime);
+				
+			}
+			
+			
     
     </script>
   </body>

@@ -101,19 +101,43 @@
       width: 100%;
     }
     .mui-col-xs-24{
-        width: 20%;
+        /*width: 20%;*/
     }
     .mui-fullscreen{
-      margin-top: 45px;
+      margin-top: 57px;
     }
     * { touch-action: none; } 
+    .box-item-flex2{
+      font-size: 12px;
+    }
+    .bbc-tab-bar .mui-slider-indicator.mui-segmented-control{
+        background: #4883DD;
+        color: #fff;
+    }
+    .bbc-tab-bar .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+          color: #fff;
+          background: #41B8DA;
+      }
+    .bbc-tab-bar .mui-segmented-control.mui-segmented-control-inverted ~ .mui-slider-progress-bar{
+      background-color: #41B8DA;
+    }
     </style>
   </head>
 
   <body>
-    <header class="page-header">
+    <!-- <header class="page-header">
       <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
-      <div class="header-title">预约记录</div>
+      <div class="header-title">我的订单</div>
+    </header> -->
+    <header class="page-header nobd">
+      <div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+        <i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+        <h1 class="mui-center mui-title">我的订单</h1>
+        <a class="mui-right mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-right service">
+          <img src="__M_IMG__/tel.png">
+          <i class="search-hide icon-func bbc-icon callmm">客服</i>
+        </a>
+      </div>
     </header>
     <div class="mui-content">
       
@@ -123,13 +147,13 @@
         <a class="mui-control-item " href="#item2mobile">待支付</a>
         <a class="mui-control-item" href="#item3mobile">已支付</a>
         <a class="mui-control-item" href="#item4mobile">取消</a>
-        <a class="mui-control-item" href="#item5mobile">冻结</a>
+        <!-- <a class="mui-control-item" href="#item5mobile">冻结</a> -->
       </div>
       <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-24" ></div>
       <div class="mui-slider-group">
         <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
           <div id="scroll1" class="mui-scroll-wrapper">
-            <div class="mui-scroll" data-count="0" data-total="">
+            <div class="mui-scroll" data-count="1" data-total="">
               <ul class="mui-table-view redpackets-list" data-type="all">
                 <!-- <div class="mui-loading">
                   <div class="mui-spinner">
@@ -176,18 +200,15 @@
             </div>
           </div>
         </div>
-        <div id="item5mobile" class="mui-slider-item mui-control-content">
+        <!-- <div id="item5mobile" class="mui-slider-item mui-control-content">
           <div id="scroll5" class="mui-scroll-wrapper">
             <div class="mui-scroll" data-count="1" data-total="">
               <ul class="mui-table-view redpackets-list" data-type="3">
-                <!-- <div class="mui-loading">
-                  <div class="mui-spinner">
-                  </div>
-                </div> -->
+                
               </ul>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     </div>
@@ -203,7 +224,7 @@
           <li class="mui-table-view-cell
              <%if (list[i].status=='1'){%>
               <%if (list[i].record<list[i].num){%>
-                action-webview
+                
               <% } %>
                 <% } %>
                 <%if (list[i].status=='0'){%>
@@ -213,7 +234,21 @@
                 <%if (list[i].status=='3'){%>
                 <% } %>
             " data-webview="_www/view/member/ondate/index.html" data-webparam = '{"counsellor_id":<%= list[i].mid %>,"tid":<%= list[i].id %>}' >
-            <a href="javascript:;" class="godate" status="<%= list[i].status%>" counsellor_id="<%= list[i].mid %>" tid="<%= list[i].id %>">
+
+            <a href="javascript:;" 
+            <%if (list[i].status=='1'){%>
+              <%if (list[i].record<list[i].num){%>
+                class="godate"
+              <% } %>
+                <% } %>
+                <%if (list[i].status=='0'){%>
+                <% } %>
+                <%if (list[i].status=='2'){%>
+                <% } %>
+                <%if (list[i].status=='3'){%>
+                <% } %>
+            
+             status="<%= list[i].status%>" counsellor_id="<%= list[i].mid %>" tid="<%= list[i].id %>">
             <div class="box-display">
               <div class="box-item-flex1">
                 <%= list[i].title%><br>
@@ -257,44 +292,7 @@
           }
           
         })
-      // var param = {
-      //     'method': config.apimethod.trade,
-      //     'account': state.token,
-      //     'source':config.source
-      // }
-      //   $.dataRequest(param, function(rs) {
-      //       var widgets = template('trade_list', rs);
-      //       $('.integral-details').append(widgets);
-      //       mui('.mui-scroll-wrapper').scroll({
-      //         indicators: false
-      //       });
-      //   })
-      //   var oldBack = mui.back;
-      //     mui.back = function() {
-      //       window.location.href = "{:url('Member/member')}";
-      //     };
-      // mui.init({
-      //   swipeBack: true, //启用右滑关闭功能
-      //   gestureConfig: {
-      //     doubletap: true
-      //   },
-      //   subpages: [{
-      //     url: '_www/view/member/trade_list.html',
-      //     id: '_www/view/member/trade_list.html',
-      //     styles: {
-      //       top: '45px',
-      //       bottom: '0',
-      //     }
-      //   }]
-      // });
-
-      // var contentWebview = null;
-      // document.querySelector('header').addEventListener('doubletap', function() {
-      //   if(contentWebview == null) {
-      //     contentWebview = plus.webview.currentWebview().children()[0];
-      //   }
-      //   contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
-      // });
+     
     </script>
   </body>
 </html>

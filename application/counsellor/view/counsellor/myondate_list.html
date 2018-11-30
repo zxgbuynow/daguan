@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/counsellor.css">
+    <style>
+      .mui-bar~.mui-content .mui-fullscreen {
+        top: 44px;
+        height: auto;
+      }
+
+      .mui-pull-top-tips {
+        position: absolute;
+        top: -1.8rem;
+        left: 50%;
+        margin-left: -0.8rem;
+        width: 1.6rem;
+        height: 1.6rem;
+        border-radius: 100%;
+        z-index: 1;
+      }
+
+      .mui-bar~.mui-pull-top-tips {
+        top: 2rem;
+      }
+
+      .mui-pull-top-wrapper {
+        width: 42px;
+        height: 42px;
+        display: block;
+        text-align: center;
+        background-color: #efeff4;
+        border: 1px solid #ddd;
+        border-radius: 25px;
+        background-clip: padding-box;
+        box-shadow: 0 4px 10px #bbb;
+        overflow: hidden;
+      }
+
+      .mui-pull-top-tips.mui-transitioning {
+        -webkit-transition-duration: 200ms;
+        transition-duration: 200ms;
+      }
+
+      .mui-pull-top-tips .mui-pull-loading {
+        /*-webkit-backface-visibility: hidden;
+      -webkit-transition-duration: 400ms;
+      transition-duration: 400ms;*/
+        margin: 0;
+      }
+
+      .mui-pull-top-wrapper .mui-icon,
+      .mui-pull-top-wrapper .mui-spinner {
+        margin-top: 7px;
+      }
+
+      .mui-pull-top-wrapper .mui-icon.mui-reverse {
+        /*-webkit-transform: rotate(180deg) translateZ(0);*/
+      }
+
+      .mui-pull-bottom-tips {
+        text-align: center;
+        background-color: #efeff4;
+        font-size: .9rem;
+        line-height: 2.2rem;
+        color: #777;
+      }
+
+      .mui-pull-top-canvas {
+        overflow: hidden;
+        background-color: #fafafa;
+        border-radius: 40px;
+        box-shadow: 0 4px 10px #bbb;
+        width: 40px;
+        height: 40px;
+        margin: 0 auto;
+      }
+
+      .mui-pull-top-canvas canvas {
+        width: 40px;
+      }
+
+      .mui-slider-indicator.mui-segmented-control {
+        background-color: #efeff4;
+      }
+
+      .mui-scroll> .mui-table-view> .mui-table-view-cell {
+        padding: 10px, 10px;
+        background: #fff;
+        margin-bottom: 10px;
+        height: 80px;
+      }
+	  .box-item-flex1{
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: row;
+	  }
+    .box-item-flex1 p{
+      color: #666;
+      margin-top: 0.4rem;
+    }
+    
+	  .mui-col-xs-24{
+  	   width: 20%;
+	  }
+	  #slider .redpackets-list{
+      padding: 0;
+    }
+    #slider  .redpackets-list li{
+      margin-bottom: 0;
+    }
+    #slider .mui-table-view-cell{
+      padding: 0.5rem 0.8rem;
+    }
+    #slider .mui-table-view .mui-media-object{
+          max-width: 50px;
+    height: 50px;
+    line-height: 50px;
+    margin-right: 10px;
+    }
+    #slider .deposit-detail-amount{
+      width: auto;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column;
+    }
+    #slider .deposit-detail-amount .btn-options{
+      margin-bottom: 0.3rem;
+    }
+    #slider .deposit-detail-amount .btns{
+      font-size: 10px;
+      border-radius: 5px;
+      padding: 0.1rem 0.2rem;
+    }
+    #slider .deposit-detail-amount .voice{
+      color: #8c8c8c;
+      font-size: 12px;
+    }
+    #slider .deposit-detail-amount .font-red{
+      color: #ff5858;
+      border: 1px solid #ff5858;
+
+    }
+    #slider .deposit-detail-amount .font-gray{
+      color: #8c8c8c;
+      border: 1px solid #8c8c8c;
+    }
+    #slider .box-flex,
+    #slider .font-gray-60{
+      color: #666;
+    }
+    #slider .box-flex{
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+    }
+    #slider  .mui-table-view-cell:after{
+      left: 0.5rem;
+      right: 0.5rem;
+    }
+    #slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item{
+      background: #FF699C;
+      color: #fff;
+      position: relative;
+    }
+    #slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item:after{
+      content: '|';
+      position: absolute;
+      color: #fff;
+      width: 1px;
+      right: 0.1rem;
+    }
+    #slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item:last-child:after{
+      content: '';
+    }
+    #slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+      background: #DE376F;
+      color: #fff;
+    }
+    #slider .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active:after{
+      content: '';
+    }
+    .mui-segmented-control .mui-control-item{
+    		line-height:44px;
+    		vertical-align: middle;
+    }
+    .mui-segmented-control .mui-control-item:first-child{
+    		line-height: 17px;
+    		padding: 5px;
+    }
+    .advice-list{
+   	 	margin-top: 20px;
+    }
+    </style>
+  </head>
+
+  <body>
+    <div id="slider" class="mui-slider mui-fullscreen bbc-tab-bar">
+      <div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+        <a class="mui-control-item mui-active" href="#item1mobile">已下单<br/>未预约</a>
+        <a class="mui-control-item " href="#item2mobile">已预约</a>
+        <a class="mui-control-item" href="#item3mobile">已咨询</a>
+        <a class="mui-control-item" href="#item4mobile">已取消</a>
+      </div>
+      <!-- <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-24" style="transform: translate3d(0px, 0px, 0px) translateZ(0px);"></div> -->
+      <div class="mui-slider-group ">
+      	<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+          <div id="scroll1" class="mui-scroll-wrapper advice-list">
+            <div class="mui-scroll " data-count="0" data-total="">
+              <ul class="mui-table-view redpackets-list " data-type="all">
+              	
+                <!--<div class="mui-loading">
+                  <div class="mui-spinner">
+                  </div>
+                </div>-->
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div id="item2mobile" class="mui-slider-item mui-control-content ">
+          <div id="scroll2" class="mui-scroll-wrapper advice-list">
+            <div class="mui-scroll" data-count="1" data-total="">
+              <ul class="mui-table-view redpackets-list " data-type="0">
+                <div class="mui-loading">
+                  <div class="mui-spinner">
+                  </div>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="item3mobile" class="mui-slider-item mui-control-content">
+          <div id="scroll3" class="mui-scroll-wrapper advice-list">
+            <div class="mui-scroll" data-count="1" data-total="">
+              <ul class="mui-table-view redpackets-list " data-type="1">
+                <div class="mui-loading">
+                  <div class="mui-spinner">
+                  </div>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="item4mobile" class="mui-slider-item mui-control-content ">
+          <div id="scroll4" class="mui-scroll-wrapper advice-list">
+            <div class="mui-scroll " data-count="1" data-total="">
+              <ul class="mui-table-view redpackets-list " data-type="4">
+                <div class="mui-loading">
+                  <div class="mui-spinner">
+                  </div>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <script src="../../js/zepto.js"></script>
+    <script src="../../js/mui.min.js"></script>
+    <script src="../../js/mui.pullToRefresh.js"></script>
+    <script src="../../js/mui.pullToRefresh.material.js"></script>
+    <script src="../../js/template.min.js"></script>
+    <script src="../../config.js"></script>
+    <script src="../../js/app.js"></script>
+	<script type="text/html" id="trade_list">
+		<%if(sorce=='trade'){%>
+			<% for(var i in list) { %>
+			<li class="mui-table-view-cell mui-media no-bottom-bd action-webview " data-webview="_www/view/msg/chat.html" data-webparam = '{"jid":"3","reciveid":"<%= list[i].memberid %>", "account":"<%= list[i].mobile %>", "username":"<%= list[i].nickname %>","reciveavar":"<%= $add_server(list[i].cavar) %>" }'>
+				<a href="javascript:;" class="cell-flex">
+					<div class="mui-media-body flex-g2">
+						<h3 class='mui-ellipsis'><%= list[i].title%></h3>
+						<p class="current-progress-content">当前进度: 0/1 <span><i>￥</i><%= list[i].payment%></span></p>
+						<p class='mui-ellipsis time-txt'<%= list[i].st%></p>
+					</div>
+					<div class="mui-media-object">
+						<span class="bg">与他沟通</span>
+					</div>
+				</a>
+			</li>
+			<%}%>
+		<%}else{%>
+        <% for(var i in list) { %>
+        		<li class="mui-table-view-cell mui-media no-bottom-bd">
+				<a href="javascript:;" class="cell-flex">
+					<div class="mui-media-body flex-g2">
+						<h3 class='mui-ellipsis'><%= list[i].title%></h3>
+						<p class='mui-ellipsis time-txt'><%= list[i].st%></p>
+					</div>
+					<!--<div class="mui-media-object flex-g1">
+						<span class="mui-ellipsis address-txt">上海</span>
+					</div>-->
+					<div class="">
+						<%if (list[i].status=='0'){%>
+						<span class="bg action-webview " data-webview="_www/view/msg/chat.html" data-webparam = '{"jid":"3","reciveid":"<%= list[i].memberid %>", "account":"<%= list[i].mobile %>", "username":"<%= list[i].nickname %>","reciveavar":"<%= $add_server(list[i].cavar) %>" }'>与他沟通</span>
+						<span class="bd canceled" data-cid="<%= list[i].id %>"  data-ondate="<%= list[i].start_time %>">取消咨询</span>
+						<% } %>
+						<%if (list[i].status=='1'||list[i].status=='2'){%>
+							<%if (list[i].status=='2'){%>
+								<span class="bd etcase action-webview" data-webview="_www/view/counsellor/case.html" data-webparam = '{"caid":"<%= list[i].caid %>","cid":"<%= list[i].id %>", "tid":"<%= list[i].tid %>" }' >修改案例</span>
+							<%}else{%>
+							<span class="bd gocase action-webview" data-webview="_www/view/counsellor/case.html" data-webparam = '{"cid":"<%= list[i].id %>", "tid":"<%= list[i].tid %>" }'>填写案例</span>
+							<%}%>
+						<% } %>
+						
+						<%if (list[i].status=='4'){%>
+							<span class="bd ">已取消</span>
+						<% } %>
+					</div>
+				</a>
+			</li>
+      <% } %>
+       <% } %>
+    </script>
+    
+    <script type="text/html" id="trade_list1">
+        <% for(var i=0; i<list.length; i++) { %>
+      		<li class="mui-table-view-cell mui-media <%if (list[i].status=='2'){%>action-webview<% } %>  <%if (list[i].status=='0'){%>godate <% } %> " <%if (list[i].status=='0'){%>data-webview="_www/view/msg/chat.html" data-cid="<%= list[i].id %>" data-ondate="<%= list[i].start_time %>" data-chart="<%= list[i].chartkey %>" data-webparam = '{"jid":"3", "username":"<%= list[i].mobile %>" }' <%}else{%>data-webview="_www/view/member/ondate/evaluate-new.html" data-webparam = {"c_id":<%= list[i].mid %>,"avar":"<%= list[i].avar %>","counsellor":"<%= list[i].counsellor %>"} <%}%>
+	          <div class="box-flex">
+              <div class="box-item-flex1">
+  	          	<!--<img class="mui-media-object " src="../../img/activity_ads.jpg">-->
+                <div>
+  	              <p><%= list[i].counsellor%></p>
+  	              <p class="fontS font-gray-60 fonts" >咨询时间：<%= list[i].st%></p>
+                </div>
+	            </div>
+	            <div class="box-item-flex2 content-right deposit-detail-amount">
+                <p class="voice"><%= list[i].chart%></p>
+                <p class="btn-options">
+                  <%if (list[i].status=='1'){%><span class="btns font-red">已咨询</span>
+                  <% } %>
+                  <%if (list[i].status=='0'){%><span class="btns font-red">待咨询</span>
+                  <% } %>
+                  <%if (list[i].status=='2'){%><span class="btns font-red">待评价</span>
+                  <% } %>
+                  <%if (list[i].status=='3'){%><span class="btns font-gray">已完成</span>
+                  <% } %>
+                </p>
+	            </div>
+	          </div>
+	        </li>
+      <% } %>
+    </script>
+    <script type="text/javascript" charset="utf-8">
+      mui.plusReady(function() {
+        var state = app.getState();
+        var param = {
+          'method': config.apimethod.recordlist,  
+          'account': state.token,
+          'source':config.source,
+          'status': 'all',
+        	  'page_no': config.cpage,
+          'page_size': config.pagesize
+      } 
+//      log(param)
+        $.tabWithPageRequest(param, 'trade_list', 'scroll1', 'status');
+        
+        //canceled
+        mui('#slider').on('tap','.canceled',function(){
+        		var ondate = $(this).data('ondate');
+        		mui.confirm('取消预约', ['确认', '关闭'], function(f) {
+						if (f.index == 0) {
+							//是否已过时间
+							var timestamp = (new Date()).getTime();
+							if(timestamp>ondate*1000){
+								mui.toast('很抱歉，已过了预约，不能取消');return false;
+							}
+							//取消预约
+							var param = {
+															'method': config.apimethod.cancleDate,
+															'cid': cid,
+															'source':config.source
+												}
+												 $.dataRequest(param, function(rs) {
+													plus.webview.currentWebview().reload(true)
+												 })
+
+						}
+						
+					})
+        })
+        
+        
+        
+        
+        	
+        mui('#slider').on('tap','.godate',function(){
+        		var webview = $(this).data('webview');
+        		var webparam = $(this).data('webparam');
+        		var cid = $(this).data('cid');
+        		var ondate = $(this).data('ondate');
+        		var chart = $(this).data('chart');
+        		
+        		mui.confirm(' ','请选择? ', ['去咨询', '取消预约'], function(e) {
+				if(e.index==0){
+					if(chart=='facechart'){
+						mui.confirm('是否已经完成地面咨询', ['是', '否'], function(f) {
+							if (f.index == 0) {
+								//更新预约状态
+								var param = {
+			                          'method': config.apimethod.cancleUp,
+			                          'cid': cid,
+			                          'source':config.source
+			                    }
+			                     $.dataRequest(param, function(rs) {
+			                     	plus.webview.currentWebview().reload(true)
+			                     })
+
+							}else{
+								clicked(webview,webparam)
+							}
+						})
+					}else{
+						clicked(webview,webparam)
+					}
+					
+
+				}else{ 
+					if(e.index==-1){
+						return false;
+					}
+					//是否已过时间
+					var timestamp = (new Date()).getTime();
+					if(timestamp>ondate*1000){
+						mui.toast('很抱歉，已过了预约，不能取消');return false;
+					}
+					//取消预约
+					var param = {
+                          'method': config.apimethod.cancleDate,
+                          'cid': cid,
+                          'source':config.source
+                    }
+                     $.dataRequest(param, function(rs) {
+                     	plus.webview.currentWebview().reload(true)
+                     })
+				}
+			},'',['去咨询','取消预约']);
+        })
+      })
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>结算</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="__M_CSS__/style.css" rel="stylesheet" />
+		<link href="__M_CSS__/counsellor.css" rel="stylesheet" />
+		<style>
+			
+		</style>
+	</head>
+	<body>
+		<div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+	        <i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back" ></i>
+	        <h1 class="mui-center mui-title">结算订单</h1>
+		</div>
+		<div class="mui-content">
+			<div class="consult_form">
+    <div class="form">
+        <form action="" method="post" id="yuyue-form">
+                <div class="zxfs">
+                    <div class="hd">
+                        <h2>
+                            咨询方式<small>每次<i class="counsellor-per"></i>分钟</small>
+                        </h2>
+                    </div>
+                    <div class="body">
+                		<ul class="mui-table-view mui-table-view-radio">
+						</ul>
+
+                        <div class="">
+                            <div class="attr-txt" style="float: left;">
+                                <p>咨询次数</p>
+                            </div>
+                            <div class="spinner i_box">
+                                <div class="mui-numbox">
+									<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+									<input class="mui-input-numbox" type="number" id="per" value="1"/>
+									<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="foot">
+                        <span class="total">总计</span>
+                        <span class="f_orange num"><span id="zx-total">0.00</span></span>
+                    </div>
+            </div>
+                
+        </form>
+    </div>
+</div>
+		</div>	
+		<section class="content-horizontal-padded form-op-section">
+	        <button id="createTrade" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning ">提交</button>
+	      </section>
+		  <script src="__M_JS__/zepto.js"></script>
+		  <script src="__M_JS__/mui.min.js"></script>
+		  <script src="__M_JS__/template.min.js"></script>
+		  <script src="__M_JS__/config.js"></script>
+		  <script src="__M_JS__/app.js"></script>
+		  <script type="text/html" id="counsellor_info">
+		  	<% for(var i=0; i<chartArr.length; i++) { %>
+		  		<% if(chartArr[i].status){ %>
+		  		<li class="mui-table-view-cell <% if(i==0){ %> mui-selected <% } %>" id="<%= chartArr[i].chart %>" val="<%= chartArr[i].price %>">
+					<a class="mui-navigate-right">
+						<h2><%= chartArr[i].show %></h2>
+						<p><%= chartArr[i].price %>元/次</p>
+					</a>
+				</li>
+				<% } %>
+			<% } %>	
+		  </script>	
+		<script>
+			var chart = 'wordchart';
+			var price = 0;
+			var state = app.getState();
+			var counsellor_id = 0;
+			var pertime =0;
+			var result = window.location.href;
+			console.log(state);
+				//价格
+      			counsellor_id = $.getUrlParam(result,'counsellor_id');
+				var param = {
+				  'method': config.apimethod.counsellor,
+				  'source':config.source,
+				  'id': counsellor_id
+				}
+				$.dataRequest(param, function(rs) {
+				  	$('.counsellor-per').html(rs.per);
+				  	pertime = rs.per;
+				  	//方式
+				  	var widgets = template('counsellor_info', rs);
+				  	
+        				$('.mui-table-view-radio').append(widgets);
+        				$('.mui-table-view-radio').children('li').each(function(index, el) {
+        					if($(this).hasClass('mui-selected')){
+        						 price = $(this).attr('val');
+        						 chart = $(this).attr('id');
+        						totalprice(price);
+        					}
+        					
+        				})
+				  	$('.mui-numbox').on('tap', '.mui-btn-numbox-minus,.mui-btn-numbox-plus', function() {
+						totalprice(price);
+			       }).on('focus', '.mui-input-numbox', function(e) {
+						totalprice(price);
+		          }).change('change', '.mui-input-numbox', function(e) {
+		            		totalprice(price);
+		          });
+		         	$('.mui-input-numbox').change(function(){
+		         		if(!isNumber){
+		         			mui.toast('非数字类型');
+		         			$('#per').val(1);
+		         		}
+		         		totalprice(price);
+		         	})
+				})
+				
+			//计总
+			function totalprice(price ){
+				var per = $('#per').val();
+				$('#zx-total').text(Currency.format(price*per));
+			}
+			
+			//计算
+			mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
+				chart = $(this).attr('id'); 
+				price = $(this).attr('val');
+				totalprice(price);	
+			})
+			
+			//提交
+			$('#createTrade').on('tap', function(e) {
+				//price chart accout counsellor_id
+				var param1 = {
+				  'method': config.apimethod.createTrade,
+				  'source':config.source,
+				  'counsellor_id': counsellor_id,
+				  'price': price,
+				  'chart': chart,
+				  'num': $('#per').val(),
+				  'pertime':pertime,
+				  'account': state.token
+				}
+				$.dataRequest(param1, function(rs) {
+					mui.toast('订单创建成功！');
+					window.location.href = "{:url('Checkout/payment')}"+'?price='+price+'&tid='+rs.tid;
+					
+				})
+			})
+			
+			function isNumber(val){
+
+			    var regPos = /^\d+(\.\d+)?$/; //非负浮点数
+			    var regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数
+			    if(regPos.test(val) || regNeg.test(val)){
+			        return true;
+			    }else{
+			        return false;
+			    }
+			
+			}
+		</script>
+	</body>
+</html>

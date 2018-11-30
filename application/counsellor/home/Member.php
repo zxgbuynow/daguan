@@ -89,6 +89,11 @@ class Member extends Home
         return $this->fetch('member/safe/safe'); // 渲染模板
     }
 
+    public function meset()
+    {
+        return $this->fetch(); // 渲染模板
+    }
+
     public function point()
     {
         return $this->fetch('member/point/integral'); // 渲染模板
@@ -112,6 +117,10 @@ class Member extends Home
         return $this->fetch('member/ondate/hour'); // 渲染模板
     }
 
+    public function classes()
+    {
+        return $this->fetch('member/classes/index'); // 渲染模板
+    }
 
     //文章相关
     public function articlein()

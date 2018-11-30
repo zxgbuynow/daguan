@@ -106,14 +106,27 @@
     .mui-fullscreen{
       margin-top: 45px;
     }
+    .bbc-tab-bar .mui-slider-indicator.mui-segmented-control{
+        background: #4883DD;
+        color: #fff;
+    }
+    .bbc-tab-bar .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+          color: #fff;
+          background: #41B8DA;
+      }
+    .bbc-tab-bar .mui-segmented-control.mui-segmented-control-inverted ~ .mui-slider-progress-bar{
+      background-color: #41B8DA;
+    }
     </style>
   </head>
 
   <body>
-    <header class="page-header">
-      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
-      <div class="header-title">我的咨询</div>
-    </header>
+    <header class="page-header nobd">
+        <div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+        <i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+        <h1 class="mui-center mui-title">我的咨询</h1>
+        </div>
+      </header>
     <div class="mui-content">
       <div id="slider" class="mui-slider mui-fullscreen bbc-tab-bar">
         <div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
@@ -178,10 +191,7 @@
             <div id="scroll5" class="mui-scroll-wrapper">
               <div class="mui-scroll" data-count="1" data-total="">
                 <ul class="mui-table-view redpackets-list" data-type="3">
-                  <<!-- div class="mui-loading">
-                    <div class="mui-spinner">
-                    </div>
-                  </div> -->
+                 
                 </ul>
               </div>
             </div>
@@ -199,7 +209,9 @@
     <script src="__M_JS__/app.js"></script>
     <script type="text/html" id="trade_list">
         <% for(var i=0; i<list.length; i++) { %>
-          <li class="mui-table-view-cell mui-media <%if (list[i].status=='2'||list[i].status=='0'){%>click-webview<% } %>" <%if (list[i].status=='0'){%> data-webview="{:url('Member/member')}" data-webparam = '<%= list[i].mobile %>' <%}else{%>data-webview="{:url('Member/evaluate')}" data-webparam = '<%= list[i].id %>' <%}%>> 
+          
+          <li class="mui-table-view-cell mui-media <%if (list[i].status=='2'){%>click-webview<% } %>   " <%if (list[i].status=='2'){%>data-webview="{:url('Counsellor/evaluate')}" data-webparam = {"c_id":<%= list[i].mid %>,"avar":"<%= list[i].avar %>","counsellor":"<%= list[i].counsellor %>"} <%}%>
+
             <div class="box-display">
               <div class="box-item-flex1">
                 <%= list[i].member%><br>
@@ -232,64 +244,9 @@
         $.tabWithPageRequest(param, 'trade_list', 'scroll1', 'status');
         $(window).on('tap', '.click-webview', function() {
           var webview = $(this).data('webview');
-          var webparam = $(this).data('webparam');
-          if(webview && webview != '') {
-            if(webview.indexOf("http") == -1) {
-              if(webview.indexOf("evaluate") > -1) {
-                window.location.href = webview+'?c_id='+webparam;
-              }else{
-                if (!webparam) {
-                  mui.toast('参数缺失');return false;
-                }
-                
-                mui.toast( "发起成功,请等待" );
-                mui.ajax('http://103.20.248.251/perl/phone', {
-                  data: {
-                    'cid':state.account,
-                    'did':webparam.toString(),
-                    'pbx':'P000000001111',
-                    'username':'dgapp',
-                    'password':'hope9995'
-
-                  },
-                  type: 'get',
-                  success: function(response) {
-                    mui.toast( "发起成功,请等待" );
-                  },
-                  error: function(xhr, type, errorThrown) {
-                    //异常处理；
-                    log(xhr.response) 
-                  }
-                });
-              
-              }
-              
-              // clicked(webview, webparam || {});
-            } 
-          }
+          window.location.href = webview;
         })
-      // mui.init({
-      //   swipeBack: true, //启用右滑关闭功能
-      //   gestureConfig: {
-      //     doubletap: true
-      //   },
-      //   subpages: [{
-      //     url: '_www/view/member/record_list.html',
-      //     id: '_www/view/member/record_list.html',
-      //     styles: {
-      //       top: '45px',
-      //       bottom: '0',
-      //     }
-      //   }]
-      // });
-
-      // var contentWebview = null;
-      // document.querySelector('header').addEventListener('doubletap', function() {
-      //   if(contentWebview == null) {
-      //     contentWebview = plus.webview.currentWebview().children()[0];
-      //   }
-      //   contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
-      // });
+      
     </script>
   </body>
 </html>

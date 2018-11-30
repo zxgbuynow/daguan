@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../../css/counsellor.css" />
+    <link rel="stylesheet" href="../../../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../../css/feedback.css" />
+    <style>
+    		
+		.mui-table-cell img{
+			width: 30%;
+			margin-right: 15px;
+		}	
+		.mui-table-view-cell{
+			padding: 1.5rem 1rem;
+
+		}
+		.comment-wraper{
+	    		background: #fff;
+	    		text-align: center;
+	    		
+	    }
+	    .comment-wraper .mui-input-row{
+	    	padding: 1rem;
+	    }
+	    .comment-wraper .mui-input-row #evaluateCotent{
+			height: 15rem;
+			border: 1px solid #999;
+			border-radius: 0;
+	    }
+	    .comment-wraper .mui-input-row{
+	    		display:block
+	    }
+    </style>
+    
+  </head>
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">课程评价</div>
+    </header>
+    <div class="mui-content">
+    	
+		<section class="container section-white clac-info ">
+			<!--<ul class="mui-table-view  mui-table-view-chevron">
+		        <li class="mui-table-view-cell mui-media ">
+		            <div class="mui-table">
+		                <div class="mui-table-cell mui-col-xs-10">
+		                		<img class=" mui-pull-left" src="../../../img/goods_detail_img_01.jpg" >
+		                    <div class="mui-media-body">
+			                    <h4 class="mui-ellipsis mui-h2">信息化推进办公室张彦合同付款信息化</h4>
+			                    <p class="mui-h5 mui-ellipsis">地点：</p>
+			                    <p class="mui-h6 mui-ellipsis">时间：</p>
+		                    </div>
+		                </div>
+		            </div>
+		        </li>
+		     </ul> -->
+		</section>
+		<section class="comment-wraper">
+			<h2 style="padding-top: .5rem;">课程活动评价</h2>
+	    		<div class="icons mui-inline" >
+				<i data-index="1" class="mui-icon mui-icon-star"></i>
+				<i data-index="2" class="mui-icon mui-icon-star"></i>
+				<i data-index="3" class="mui-icon mui-icon-star"></i>
+				<i data-index="4" class="mui-icon mui-icon-star"></i>
+				<i data-index="5" class="mui-icon mui-icon-star"></i>
+			</div>
+			<div class="row mui-input-row">
+				<textarea id='evaluateCotent' class="mui-input-clear " style="width: 100%;" placeholder="对本次咨询是否满意？说说您的想法吧..."></textarea>
+			</div>
+			<div class="mui-content-padded">
+                <button id="evaluate" type="button" class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">提交评价</button>
+            </div>
+	    </section>
+	</div>
+	
+
+  </body>
+  <script src="../../../js/zepto.js"></script>
+  <script src="../../../js/mui.min.js"></script>
+  <script src="../../../js/template.min.js"></script>
+  <script src="../../../config.js"></script>
+  <script src="../../../js/app.js"></script>
+  <script src="../../../js/im/webim.config.js"></script>
+  <script src="../../../js/im/strophe-1.2.8.js"></script>
+  <script src="../../../js/im/websdk-1.4.13.js"></script>
+  <script src="../../../js/im/im.js"></script>
+  <script type="text/html" id="clac_info">
+  		<ul class="mui-table-view  mui-table-view-chevron">
+	        <li class="mui-table-view-cell mui-media ">
+	            <div class="mui-table">
+	                <div class="mui-table-cell mui-col-xs-10">
+	                		<img class=" mui-pull-left" src="<%= $add_server(pic) %>" >
+	                    <div class="mui-media-body">
+		                    <h4 class="mui-ellipsis mui-h2"><%= title %></h4>
+		                    <p class="mui-h5 mui-ellipsis">地点：<%= address %></p>
+		                    <p class="mui-h6 mui-ellipsis">时间：<%= $timestamp_To_Time(start_time) %></p>
+	                    </div>
+	                </div>
+	            </div>
+	        </li>
+	     </ul> 
+  </script>
+  
+  <script>
+    mui.plusReady(function() {
+      var acid = plus.webview.currentWebview().acid;
+	  var actype = plus.webview.currentWebview().actype;
+	  var state = app.getState();
+      var param = {
+          'method': config.apimethod.clcadetail,
+          'source':config.source,
+          'typeid': actype,
+          'acid': acid
+      }
+      log(param);
+      $.dataRequest(param, function(rs) { 
+      	log(rs)  
+      	var widgets = template('clac_info', rs);
+        $('.clac-info').append(widgets);
+        
+      });
+      
+      //获得咨询师头像和用户名
+		mui('.icons').on('tap','i',function(){
+		  	var index = parseInt(this.getAttribute("data-index"));
+		  	var parent = this.parentNode;
+		  	var children = parent.children;
+		  	if(this.classList.contains("mui-icon-star")){
+		  		for(var i=0;i<index;i++){
+	  				children[i].classList.remove('mui-icon-star');
+	  				children[i].classList.add('mui-icon-star-filled');
+		  		}
+		  	}else{
+		  		for (var i = index; i < 5; i++) {
+		  			children[i].classList.add('mui-icon-star')
+		  			children[i].classList.remove('mui-icon-star-filled')
+		  		}
+		  	}
+		  	starIndex = index*2;
+	  });
+	  
+	  //
+	  document.getElementById("evaluate").addEventListener('tap',function(){
+	  
+	  	var param = {
+	  		'method': config.apimethod.clacevaluate,
+	        'account': state.token,
+	        'c_id': acid,
+	        'actype': actype,
+	        'source':config.source,
+	  		'sorce' :starIndex,
+	  		'cotent':document.getElementById("evaluateCotent").value
+	  	}
+		if(!document.getElementById("evaluateCotent").value){
+			mui.toast('内容必填');return false;
+		}
+        	$.dataRequest(param, function(c) {
+        		mui.toast('评分成功')
+        		setTimeout(function(){
+        			var parentview = plus.webview.currentWebview().opener();
+	          	parentview.reload(true);
+	          	var ws = plus.webview.currentWebview();
+	          	plus.webview.close(ws,'slide-out-bottom');
+        		},1000);
+        })
+	  	
+	  })
+    });
+  </script>
+</html>

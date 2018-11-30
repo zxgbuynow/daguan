@@ -31,6 +31,10 @@ class Artical extends Common
     {
         return $this->fetch(); // 渲染模板
     }
+    public function volist()
+    {
+        return $this->fetch(); // 渲染模板
+    }
 
     
 }
