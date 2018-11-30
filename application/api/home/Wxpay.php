@@ -60,26 +60,25 @@ class Wxpay
      * @param null
      * @return boolean
      */
-    public function __construct($app){
-        parent::__construct($app);
+    public function __construct(){
 
         $this->notify_url = 'http://'.$_SERVER['HTTP_HOST'].url('Wxpay/callback');
         #test
         $this->submit_charset = 'UTF-8';
         $this->signtype = 'MD5';
 
-        $certdir = DATA_DIR . '/cert/payment_plugin_wxpayApp/';
-        $this->SSLCERT_PATH = $certdir;
-        $this->SSLKEY_PATH = $certdir;
+        // $certdir = DATA_DIR . '/cert/payment_plugin_wxpayApp/';
+        // $this->SSLCERT_PATH = $certdir;
+        // $this->SSLKEY_PATH = $certdir;
     }
 
-    
+
     /**
      * 提交支付信息的接口
      * @param array 提交信息的数组
      * @return mixed false or null
      */
-    public function dopay($payment)
+    function dopay()
     {
         $appid      = 'wx704f02d6e4b18396';
         $mch_id     = '1501455771';
@@ -110,16 +109,12 @@ class Wxpay
 
         //获取详细内容
         $subject = '商品名1';
-        //金额
-        $price = bcmul($payment['cur_money'],100,0);
-
-
 
         $parameters = array(
             'appid'            => strval($appid),
-            'body'             => strval($subject),
-            'out_trade_no'     => strval( $payment['payment_id'] ),
-            'total_fee'        => $price,
+            'body'             => $payment['title'].'...',
+            'out_trade_no'     => strval( $params['payment_id'] ),
+            'total_fee'        => number_format($payment['payment'],2,".",""),
             'notify_url'       => strval( $this->notify_url ),
             'trade_type'       => 'APP',
             'mch_id'           => strval($mch_id),
@@ -371,4 +366,4 @@ class Wxpay
 
 
    
-}    
+}   
