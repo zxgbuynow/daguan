@@ -80,9 +80,9 @@ class Wxpay
      */
     function dopay()
     {
-        $appid      = 'wx704f02d6e4b18396';
-        $mch_id     = '1501455771';
-        $key        = '643732cb06a13a286fab6b36c5ae72d3';
+        $appid      = 'wxf0cebc77143826bd';
+        $mch_id     = '1487770882';
+        $key        = '35BA52CA342B3AFA81FCC0258CC38BA9';
 
         $request = Request::instance();
         $params = $request->param();
@@ -114,7 +114,7 @@ class Wxpay
             'appid'            => strval($appid),
             'body'             => $payment['title'].'...',
             'out_trade_no'     => strval( $params['payment_id'] ),
-            'total_fee'        => number_format($payment['payment'],2,".",""),
+            'total_fee'        => bcmul($payment['payment'], 100, 0),
             'notify_url'       => strval( $this->notify_url ),
             'trade_type'       => 'APP',
             'mch_id'           => strval($mch_id),
@@ -154,8 +154,8 @@ class Wxpay
      * @return null
      */
     function callback(){
-        $mch_id     = '1501455771';
-        $key        = '643732cb06a13a286fab6b36c5ae72d3';
+        $mch_id     = '1487770882';
+        $key        = '35BA52CA342B3AFA81FCC0258CC38BA9';
 
         $request = Request::instance();
         $params = $request->param();
@@ -301,12 +301,16 @@ class Wxpay
      */
     public function postXmlCurl($xml,$url,$second=30)
     {
-        $response = client::post($url, array(
+        // $response = client::post($url, array(
+        //     'body'   => $xml,
+        // ));
+        $response = $this->https_post($url,array(
             'body'   => $xml,
         ));
+
         // 获取guzzle返回的值的body部分
-        $body = $response->getBody();
-        return  $body;
+        // $body = $response->getBody();
+        return  $response;
     }
 
     /**
@@ -314,8 +318,8 @@ class Wxpay
      */
     function createXml($parameters)
     {
-        $this->parameters["appid"] = WxPayConf_pub::APPID;//公众账号ID
-        $this->parameters["mch_id"] = WxPayConf_pub::MCHID;//商户号
+        $this->parameters["appid"] = 'wxf0cebc77143826bd';//公众账号ID
+        $this->parameters["mch_id"] = '1487770882';//商户号
         $this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
         $this->parameters["sign"] = $this->getSign($this->parameters);//签名
         return  $this->arrayToXml($this->parameters);
@@ -360,6 +364,25 @@ class Wxpay
         }
 
         return $str;
+    }
+
+    function https_post($url,$data)
+    {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url); 
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_NOBODY, FALSE); //表示需要response body
+        $result = curl_exec($curl);
+        if (curl_errno($curl)) {
+           return 'Errno'.curl_error($curl);
+        }
+
+        curl_close($curl);
+        return $result;
     }
 
 //↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑公共函数部分↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
