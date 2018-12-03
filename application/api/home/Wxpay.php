@@ -86,7 +86,7 @@ class Wxpay
 
         $request = Request::instance();
         $params = $request->param();
-
+        error_log(json_encode($params),3,'/home/wwwroot/daguan/wx.log');
         //优惠券
         $price =0;
         //查询订单信息
@@ -115,7 +115,7 @@ class Wxpay
             'body'             => $payment['title'].'...',
             'out_trade_no'     => strval( $params['payment_id'] ),
             'total_fee'        => bcmul($payment['payment'], 100, 0),
-            'notify_url'       => strval( $this->notify_url ),
+            'notify_url'       => $this->notify_url,
             'trade_type'       => 'APP',
             'mch_id'           => strval($mch_id),
             'nonce_str'        => $this->create_noncestr(),
@@ -159,8 +159,7 @@ class Wxpay
 
         $request = Request::instance();
         $params = $request->param();
-
-        
+        error_log(json_encode($params),3,'/home/wwwroot/daguan/wx.log');
         if( $params['return_code'] == 'SUCCESS' && $params['result_code'] == 'SUCCESS' )
         {
             $where['tid'] = $params['out_trade_no'];
