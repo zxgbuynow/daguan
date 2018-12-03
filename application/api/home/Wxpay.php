@@ -156,10 +156,11 @@ class Wxpay
     function callback(){
         $mch_id     = '1516779871';
         $key        = 'daguanxldaguanxldaguanxl12345678';
-
-        $request = Request::instance();
-        $params = $request->param();
-
+        $xml = file_get_contents("php://input");
+        $params = $this->xmlToArray($xml);
+        // $request = Request::instance();
+        // $params = $request->param();
+        error_log(json_encode($params),3,'/home/wwwroot/daguan/wx.log');
         
         if( $params['return_code'] == 'SUCCESS' && $params['result_code'] == 'SUCCESS' )
         {
