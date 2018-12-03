@@ -80,9 +80,9 @@ class Wxpay
      */
     function dopay()
     {
-        $appid      = 'wxf0cebc77143826bd';
-        $mch_id     = '1487770882';
-        $key        = '35BA52CA342B3AFA81FCC0258CC38BA9';
+        $appid      = 'wx704f02d6e4b18396';
+        $mch_id     = '1516779871';
+        $key        = 'daguanxldaguanxldaguanxl12345678';
 
         $request = Request::instance();
         $params = $request->param();
@@ -154,8 +154,8 @@ class Wxpay
      * @return null
      */
     function callback(){
-        $mch_id     = '1487770882';
-        $key        = '35BA52CA342B3AFA81FCC0258CC38BA9';
+        $mch_id     = '1516779871';
+        $key        = 'daguanxldaguanxldaguanxl12345678';
 
         $request = Request::instance();
         $params = $request->param();
@@ -318,8 +318,8 @@ class Wxpay
      */
     function createXml($parameters)
     {
-        $this->parameters["appid"] = 'wxf0cebc77143826bd';//公众账号ID
-        $this->parameters["mch_id"] = '1487770882';//商户号
+        $this->parameters["appid"] = 'wx704f02d6e4b18396';//公众账号ID
+        $this->parameters["mch_id"] = '1516779871';//商户号
         $this->parameters["nonce_str"] = $this->createNoncestr();//随机字符串
         $this->parameters["sign"] = $this->getSign($this->parameters);//签名
         return  $this->arrayToXml($this->parameters);
