@@ -116,7 +116,7 @@ class Index
         $data['mobile'] = trim($params['mobile']);
         // $data['shopid'] = trim($params['agency']);
         $data['create_time'] = time();
-        $data['shopid'] = 0;
+        $data['shopid'] = 39;
 
         $data['birthday'] = trim($params['birthday']);
         $data['sex'] = trim($params['sex']);
