@@ -3030,14 +3030,15 @@ class Index
         $sendid = trim($params['account']);
         $reciveid = trim($params['reciveid']);
 
+        $now = date('Y-m-d',time());
+        
         // $map['sendid'] = $sendid;
         // $map['reciveid'] = $reciveid;
         $map['tag'] = 'u'.$sendid.'c'.$reciveid;
         $info =  db('hx_msg')->where($map)->limit(10)->order('id DESC')->select();
-
         //获得头像处理
-        $now = date('Y-m-d',time());
         foreach ($info as $key => $value) {
+             $ids[$key] = $value['id'];
             if ($value['sendid'] == $sendid) {
                 $info[$key]['isme'] = 1;
                 // @$info[$key]['rcavar'] = is_numeric(db('member')->where(['id'=>$value['reciveid']])->value('avar'))?get_file_path(db('member')->where(['id'=>$value['reciveid']])->value('avar')):db('member')->where(['id'=>$value['reciveid']])->value('avar');
@@ -3052,6 +3053,7 @@ class Index
             @$info[$key]['sdavar'] = is_numeric(db('member')->where(['id'=>$value['sendid']])->value('avar'))?get_file_path(db('member')->where(['id'=>$value['sendid']])->value('avar')):db('member')->where(['id'=>$value['sendid']])->value('avar');
             $info[$key]['times'] = date('Y-m-d',$value['create_time']) == $now? date('H:i:s',$value['create_time']):date('Y-m-d H:i:s',$value['create_time']);
         }
+        array_multisort($ids, SORT_ASC, $info);
         $rs['list'] = $info; 
         //返回信息
         $data = [
