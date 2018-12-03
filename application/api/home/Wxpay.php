@@ -62,7 +62,7 @@ class Wxpay
      */
     public function __construct(){
 
-        $this->notify_url = 'http://'.$_SERVER['HTTP_HOST'].url('Wxpay/callback');
+        $this->notify_url = 'http://daguanxl.com:88/'.url('Wxpay/callback');
         #test
         $this->submit_charset = 'UTF-8';
         $this->signtype = 'MD5';
