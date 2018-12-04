@@ -33,7 +33,7 @@ class Classes extends ThinkModel
             
         }
     }
-    public  function getAgencyAttr($v,$data)
+    static  function getAgencyAttr($v,$data)
     {
         $map['id'] = $data['shopid'];
         return db('shop_agency')->where($map)->value('title');
@@ -41,7 +41,7 @@ class Classes extends ThinkModel
     }
 
 
-    public  function getNumsAttr($v,$data)
+    static  function getNumsAttr($v,$data)
     {
         $map['classid'] = $data['id'];
         $map['paytype'] = 2;
@@ -49,7 +49,7 @@ class Classes extends ThinkModel
         return db('trade')->where($map)->count();
     }
 
-    public  function getCounsollorAttr($v,$data)
+    static  function getCounsollorAttr($v,$data)
     {
         $allot = db('shop_classes_allot')->where(['classid'=>$data['id']])->find();
 
@@ -65,7 +65,7 @@ class Classes extends ThinkModel
         return  number_format($total*$s['scale']/100,1);
     }
 
-    public  function getShopAttr($v,$data)
+    static  function getShopAttr($v,$data)
     {   
         $allot = db('shop_classes_allot')->where(['classid'=>$data['id']])->find();
 
@@ -78,7 +78,7 @@ class Classes extends ThinkModel
         return number_format((db('trade')->where($map)->sum('payment'))*floatval($allot['sscale'])/100,1);
     }
 
-    public  function getAdminAttr($v,$data)
+    static  function getAdminAttr($v,$data)
     {
         $allot = db('shop_classes_allot')->where(['classid'=>$data['id']])->find();
 
@@ -91,7 +91,7 @@ class Classes extends ThinkModel
         return number_format((db('trade')->where($map)->sum('payment'))*floatval($allot['sscale'])/100,1);
     } 
 
-    public  function getCounsollerAttr($v,$data)
+    static  function getCounsollerAttr($v,$data)
     {
         $allot = db('shop_classes_allot')->where(['classid'=>$data['id']])->find();
 
@@ -108,7 +108,7 @@ class Classes extends ThinkModel
     }
 
 
-    public  function getAnumsAttr($v,$data)
+    static  function getAnumsAttr($v,$data)
     {
         $map['classid'] = $data['id'];
         $map['paytype'] = 2;

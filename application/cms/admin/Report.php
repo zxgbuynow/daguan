@@ -222,6 +222,12 @@ class Report extends Admin
         // // 分页数据
         $page = $data_list->render();
 
+        $btncalendar = [
+            // 'class' => 'btn btn-info',
+            'title' => '导出',
+            'icon'  => 'fa fa-fw fa-file-excel-o',
+            'href'  => url('classexport')
+        ];
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
@@ -244,13 +250,44 @@ class Report extends Admin
             ->raw('shop')
             ->raw('admin')
             ->raw('counsoller')
-            // ->addTopButton('add', ['href' => url('add')])
+            ->addTopButton('custom', $btncalendar)
             // ->addRightButton('edit')
             // ->addRightButton('delete', ['data-tips' => '删除后无法恢复。'])// 批量添加右侧按钮
             ->setRowList($data_list)// 设置表格数据
             ->fetch(); // 渲染模板
     }
-
+    /**
+     * [classexport 导出]
+     * @return [type] [description]
+     */
+    public function classexport()
+    {
+        
+        //查询数据
+        $data = ClassModel::all();
+        foreach ($data as $key => $value) {
+            $data[$key]['agency'] = db('shop_agency')->where(['id'=>$value['shopid']])->value('title');
+            $data[$key]['nums'] = db('trade')->where(['classid'=>$value['id'],'paytype'=>2,'status'=>1])->count();
+            $data[$key]['counsollor'] = ClassModel::getCounsollorAttr(null,$value);
+            $data[$key]['shop'] = ClassModel::getShopAttr(null,$value);
+            $data[$key]['admin'] = ClassModel::getAdminAttr(null,$value);
+            $data[$key]['counsoller'] = ClassModel::getCounsollerAttr(null,$value);
+        }
+        // 设置表头信息（对应字段名,宽度，显示表头名称）
+        $cellName = [
+            ['agency', 'auto','分中心'],
+            ['title','auto', '课程'],
+            ['nums', 'auto','参与人数'],
+            ['counsollor', 'auto','导师收入'],
+            ['shop', 'auto','机构收入'],
+            ['admin', 'auto','总公司收入'],
+            ['counsoller', 'auto','导师'],
+            ['start_time', 'auto','时间','datetime'],
+            ['address', 'auto','地点'],
+        ];
+        // 调用插件（传入插件名，[导出文件名、表头信息、具体数据]）
+        plugin_action('Excel/Excel/export', ['课程表', $cellName, $data]);
+    }
     /**
      * 课程列表
      * @return mixed
