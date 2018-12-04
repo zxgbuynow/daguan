@@ -3204,6 +3204,10 @@ class Index
 
         //插入数据
         $me = db('member')->insert($data);
+
+        //生成咨询师默认信息
+        $cdata['memberid'] = $me;
+        db('member_counsellor')->insert($cdata);
         if (!$me) {
             return $this->error('注册失败！请稍后重试');
         }
