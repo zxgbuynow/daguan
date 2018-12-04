@@ -24,7 +24,7 @@ class Caselist extends Shop
      * 咨询师首页
      * @return mixed
      */
-    public function index($id=null)
+    public function index($id=null,$cid=null)
     {
         cookie('__forward__', $_SERVER['REQUEST_URI']);
 
@@ -34,6 +34,9 @@ class Caselist extends Shop
             $map['memberid'] = $id;
         }
 
+        if ($cid) {
+            $map['id'] = $cid;
+        }
         $info = UserModel::where('id', UID)->field('password', true)->find();
         if (!$info['shopid']) {
              $this->error('缺少参数');

@@ -155,7 +155,7 @@ class Trade extends Admin
         // 分页数据
         $page = $data_list->render();
 
-
+        $caseBtn = ['icon' => 'fa fa-fw fa-folder-open', 'title' => '案例查看', 'href' => url('cms/caselist/index', ['cid' => '__id__'])];
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setPageTitle('预约列表') // 设置页面标题
@@ -168,6 +168,7 @@ class Trade extends Admin
                 ['counsollor', '咨询师'],
                 ['start_time', '开始时间', 'datetime'],
                 ['end_time', '结束时间', 'datetime'],
+                ['right_button', '操作', 'btn']
             ])
             ->raw('counsollor')
             ->addTopButton('back', [
@@ -175,6 +176,7 @@ class Trade extends Admin
                 'icon'  => 'fa fa-reply',
                 'href'  => url('trade/index')
             ])
+            ->addRightButton('custom', $caseBtn)
             // ->addTopButtons('delete') // 批量添加顶部按钮
             // ->addRightButtons('delete') // 批量添加右侧按钮
             ->setRowList($data_list) // 设置表格数据

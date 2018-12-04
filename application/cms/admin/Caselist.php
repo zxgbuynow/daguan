@@ -28,7 +28,7 @@ class Caselist extends Admin
      * @TODO 所属机构
      * @return mixed
      */
-    public function index($id=null)
+    public function index($id=null,$cid=null)
     {
         cookie('__forward__', $_SERVER['REQUEST_URI']);
 
@@ -38,7 +38,9 @@ class Caselist extends Admin
         if ($id) {
             $map['memberid'] = $id;
         }
-        
+        if ($cid) {
+            $map['id'] = $cid;
+        }
         // 数据列表
         $data_list = CasetabModel::where($map)->order('id desc')->paginate();
 

@@ -167,6 +167,8 @@ class Trade extends Shop
         // 分页数据
         $page = $data_list->render();
 
+        $caseBtn = ['icon' => 'fa fa-fw fa-folder-open', 'title' => '案例查看', 'href' => url('cms/caselist/index', ['cid' => '__id__'])];
+
         $btncalendar = [
             // 'class' => 'btn btn-info',
             'title' => '评价列表',
@@ -194,6 +196,7 @@ class Trade extends Shop
                 'icon'  => 'fa fa-reply',
                 'href'  => url('trade/index')
             ])
+            ->addRightButton('custom', $caseBtn)
             ->addRightButton('custom', $btncalendar) // 添加右侧按钮
             // ->addTopButtons('delete') // 批量添加顶部按钮
             // ->addRightButtons('delete') // 批量添加右侧按钮
