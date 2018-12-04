@@ -1883,6 +1883,11 @@ class Index
 
         $cates = db('cms_clacategory')->where('status',1)->order('sort DESC,id DESC')->limit(4)->select();
 
+        foreach ($cates as $key => $value) {
+            if (is_numeric($value['cover'])) {
+                $cates[$key]['cover'] = get_file_path($value['cover']);
+            }
+        }
         $rs['data'] = array_values($cates);
         //返回信息
         $data = [
