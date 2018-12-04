@@ -227,6 +227,7 @@ class Advert extends Admin
                 ['daterange', 'start_time,end_time', '开始时间-结束时间'],
                 ['textarea', 'content', '广告内容'],
                 ['image', 'src', '单页封面'],
+                ['text', 'link', '链接', '<code>如文章：article/1.html 咨询师：counsellor/1.html 课程活动：calc/1.html 会员页：member/member.html必填</code>'],
                 ['radio', 'status', '立即启用', '', ['否', '是']]
             ])
             ->setTrigger('timeset', '1', 'start_time')
