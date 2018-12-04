@@ -2993,12 +2993,14 @@ class Index
                 $res[$key]['nickname'] = $su['nickname'];//name
                 $res[$key]['mid'] = $su['id'];//id
                 $res[$key]['account'] = $su['username'];//id
+                $res[$key]['sendid'] = 1;//是发送者
             }else{
                 $su = db('member')->where(['id'=>$value['sendid']])->find();
                 $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
                 $res[$key]['nickname'] = $su['nickname'];//name
                 $res[$key]['mid'] = $su['id'];//id
                 $res[$key]['account'] = $su['username'];//id
+                $res[$key]['sendid'] = 0;//是接受者
             }
             
             //msg
@@ -3128,6 +3130,9 @@ class Index
 
         if ($isshop) {
              session('user_counsellor_auth',$user);
+        }
+        if (is_numeric($user['avar'])) {
+            $user['avar'] = get_file_path($user['avar']);
         }
         $data = [
             'code'=>'1',
@@ -4223,12 +4228,13 @@ class Index
         if(!db('member')->where($map)->update($data)){
             return $this->error('服务器忙，请稍后');
         }
-        
+
+        $info['avar'] = $data['avar'];
         //返回信息
         $data = [
             'code'=>'1',
             'msg'=>'',
-            'data'=>1
+            'data'=>$info
         ];
         return json($data);
     }
@@ -5650,12 +5656,14 @@ class Index
                 $res[$key]['nickname'] = $su['nickname'];//name
                 $res[$key]['mid'] = $su['id'];//id
                 $res[$key]['account'] = $su['username'];//id
+                $res[$key]['sendid'] = 1;//是发送者
             }else{
                 $su = db('member')->where(['id'=>$value['sendid']])->find();
                 $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
                 $res[$key]['nickname'] = $su['nickname'];//name
                 $res[$key]['mid'] = $su['id'];//id
                 $res[$key]['account'] = $su['username'];//id
+                $res[$key]['sendid'] = 0;//是接受者
             }
             
             //msg
