@@ -305,7 +305,12 @@ class Report extends Admin
         // // 分页数据
         $page = $data_list->render();
 
-
+        $btncalendar = [
+            // 'class' => 'btn btn-info',
+            'title' => '导出',
+            'icon'  => 'fa fa-fw fa-file-excel-o',
+            'href'  => url('activexport')
+        ];
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setSearch(['title' => '课程'])// 设置搜索框
@@ -314,10 +319,10 @@ class Report extends Admin
                 ['agency', '分中心'],
                 ['title', '课程'],
                 ['nums', '参与人数'],
-                ['counsollor', '导师收入'],
-                ['shop', '机构收入'],
-                ['admin', '总公司收入'],
-                ['counsoller', '导师'],
+                ['acounsollor', '导师收入'],
+                ['ashop', '机构收入'],
+                ['aadmin', '总公司收入'],
+                ['acounsoller', '导师'],
                 ['start_time', '时间','datetime'],
                 ['address', '地点'],
             ])
@@ -327,11 +332,45 @@ class Report extends Admin
             ->raw('ashop')
             ->raw('aadmin')
             ->raw('acounsoller')
+            ->addTopButton('custom', $btncalendar)
             // ->addTopButton('add', ['href' => url('add')])
             // ->addRightButton('edit')
             // ->addRightButton('delete', ['data-tips' => '删除后无法恢复。'])// 批量添加右侧按钮
             ->setRowList($data_list)// 设置表格数据
             ->fetch(); // 渲染模板
+    }
+
+    /**
+     * [classexport 导出]
+     * @return [type] [description]
+     */
+    public function activexport()
+    {
+        
+        //查询数据
+        $data = ActiveModel::all();
+        foreach ($data as $key => $value) {
+            $data[$key]['agency'] = ActiveModel::getAgencyAttr(null,$value);
+            $data[$key]['nums'] = ActiveModel::getAnumsAttr(null,$value);
+            $data[$key]['counsollor'] = ActiveModel::getAcounsollorAttr(null,$value);
+            $data[$key]['shop'] = ActiveModel::getAshopAttr(null,$value);
+            $data[$key]['admin'] = ActiveModel::getAadminAttr(null,$value);
+            $data[$key]['counsoller'] = ActiveModel::getAcounsollerAttr(null,$value);
+        }
+        // 设置表头信息（对应字段名,宽度，显示表头名称）
+        $cellName = [
+            ['agency', 'auto','分中心'],
+            ['title','auto', '课程'],
+            ['nums', 'auto','参与人数'],
+            ['counsollor', 'auto','导师收入'],
+            ['shop', 'auto','机构收入'],
+            ['admin', 'auto','总公司收入'],
+            ['counsoller', 'auto','导师'],
+            ['start_time', 'auto','时间','datetime'],
+            ['address', 'auto','地点'],
+        ];
+        // 调用插件（传入插件名，[导出文件名、表头信息、具体数据]）
+        plugin_action('Excel/Excel/export', ['活动表', $cellName, $data]);
     }
 
     /**

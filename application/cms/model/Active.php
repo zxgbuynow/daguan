@@ -17,7 +17,7 @@ class Active extends ThinkModel
     // 自动写入时间戳
     protected $autoWriteTimestamp = true;
 
-    public  function getStatustextAttr($v,$data)
+    static  function getStatustextAttr($v,$data)
     {
         $now = time();
         $end = $data['endtime'];
@@ -34,7 +34,7 @@ class Active extends ThinkModel
         }
     }
 
-    public  function getAgencyAttr($v,$data)
+    static  function getAgencyAttr($v,$data)
     {
         $map['id'] = $data['shopid'];
         return db('shop_agency')->where($map)->value('title');
@@ -42,7 +42,7 @@ class Active extends ThinkModel
     }
 
 
-    public  function getNumsAttr($v,$data)
+    static  function getNumsAttr($v,$data)
     {
         $map['classid'] = $data['id'];
         $map['paytype'] = 3;
@@ -50,7 +50,7 @@ class Active extends ThinkModel
         return db('trade')->where($map)->count();
     }
 
-    public  function getCounsollorAttr($v,$data)
+    static  function getCounsollorAttr($v,$data)
     {
         $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
 
@@ -66,7 +66,7 @@ class Active extends ThinkModel
         return  number_format($total*$s['scale']/100,1);
     }
 
-    public  function getShopAttr($v,$data)
+    static  function getShopAttr($v,$data)
     {   
         $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
 
@@ -79,7 +79,7 @@ class Active extends ThinkModel
         return number_format((db('trade')->where($map)->sum('payment'))*floatval($allot['sscale'])/100,1);
     }
 
-    public  function getAdminAttr($v,$data)
+    static  function getAdminAttr($v,$data)
     {
         $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
 
@@ -92,7 +92,7 @@ class Active extends ThinkModel
         return number_format((db('trade')->where($map)->sum('payment'))*floatval($allot['sscale'])/100,1);
     } 
 
-    public  function getCounsollerAttr($v,$data)
+    static  function getCounsollerAttr($v,$data)
     {
         $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
 
@@ -109,7 +109,7 @@ class Active extends ThinkModel
     }
 
 
-    public  function getAnumsAttr($v,$data)
+    static  function getAnumsAttr($v,$data)
     {
         $map['classid'] = $data['id'];
         $map['paytype'] = 3;
@@ -117,7 +117,7 @@ class Active extends ThinkModel
         return db('trade')->where($map)->count();
     }
 
-    public  function getAcounsollorAttr($v,$data)
+    static  function getAcounsollorAttr($v,$data)
     {
         $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
 
@@ -133,7 +133,7 @@ class Active extends ThinkModel
         return  number_format($total*$s['scale']/100,1);
     }
 
-    public  function getAshopAttr($v,$data)
+    static  function getAshopAttr($v,$data)
     {   
         $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
 
@@ -146,7 +146,7 @@ class Active extends ThinkModel
         return number_format((db('trade')->where($map)->sum('payment'))*floatval($allot['sscale'])/100,1);
     }
 
-    public  function getAadminAttr($v,$data)
+    static  function getAadminAttr($v,$data)
     {
         $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
 
@@ -159,7 +159,7 @@ class Active extends ThinkModel
         return number_format((db('trade')->where($map)->sum('payment'))*floatval($allot['sscale'])/100,1);
     } 
 
-    public  function getAcounsollerAttr($v,$data)
+    static  function getAcounsollerAttr($v,$data)
     {
         $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
 
