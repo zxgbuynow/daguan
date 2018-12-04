@@ -50,6 +50,7 @@ class Counsellor extends Shop
         $list_type = AgencyModel::where('status', 1)->column('id,title');
 
         $btnAdd = ['icon' => 'fa fa-plus', 'title' => '积分列表', 'href' => url('point', ['id' => '__id__'])];
+        $caseBtn = ['icon' => 'fa fa-fw fa-folder-open', 'title' => '案例列表', 'href' => url('cms/caselist/index', ['id' => '__id__'])];
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
@@ -70,6 +71,7 @@ class Counsellor extends Shop
             // ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
             ->addRightButtons('edit') // 批量添加右侧按钮
             ->addRightButton('custom', $btnAdd)
+            ->addRightButton('custom', $caseBtn)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面

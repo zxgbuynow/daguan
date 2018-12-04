@@ -24,13 +24,15 @@ class Caselist extends Shop
      * 咨询师首页
      * @return mixed
      */
-    public function index()
+    public function index($id=null)
     {
         cookie('__forward__', $_SERVER['REQUEST_URI']);
 
         // 获取查询条件
         $map = $this->getMap();
-
+        if ($id) {
+            $map['memberid'] = $id;
+        }
 
         $info = UserModel::where('id', UID)->field('password', true)->find();
         if (!$info['shopid']) {

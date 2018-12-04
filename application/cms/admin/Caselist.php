@@ -28,12 +28,16 @@ class Caselist extends Admin
      * @TODO 所属机构
      * @return mixed
      */
-    public function index()
+    public function index($id=null)
     {
         cookie('__forward__', $_SERVER['REQUEST_URI']);
 
         // 获取查询条件
         $map = $this->getMap();
+        
+        if ($id) {
+            $map['memberid'] = $id;
+        }
         
         // 数据列表
         $data_list = CasetabModel::where($map)->order('id desc')->paginate();

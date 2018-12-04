@@ -54,6 +54,7 @@ class Counsellor extends Admin
         $incomeBtn = ['icon' => 'fa fa-fw fa-cny', 'title' => '收列表', 'href' => url('income', ['id' => '__id__'])];
         $articleBtn = ['icon' => 'fa fa-fw fa-file-text-o', 'title' => '文章列表', 'href' => url('cms/page/index', ['id' => '__id__'])];
         $orderBtn = ['icon' => 'fa fa-fw fa-skype', 'title' => '订单列表', 'href' => url('cms/trade/index', ['id' => '__id__'])];
+        $caseBtn = ['icon' => 'fa fa-fw fa-folder-open', 'title' => '案例列表', 'href' => url('cms/caselist/index', ['id' => '__id__'])];
         $btncalendar = [
             // 'class' => 'btn btn-info',
             'title' => '预约列表',
@@ -95,6 +96,7 @@ class Counsellor extends Admin
             ->addRightButton('custom', $articleBtn)
             ->addRightButton('custom', $orderBtn)
             ->addRightButton('custom', $btncalendar)
+            ->addRightButton('custom', $caseBtn)
             // ->addRightButton('custom', $incomeBtn)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
