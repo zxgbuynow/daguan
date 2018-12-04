@@ -2246,6 +2246,7 @@ class Index
         }
         $rs = array();
         foreach ($ret as $k => $v) {
+            $k = intval($k);
             $ret[$k] =in_array(1, $v)?1:0;
             $rs['k'][] = $k;
         }
