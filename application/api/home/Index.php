@@ -1624,7 +1624,7 @@ class Index
         $data = [
             'code'=>'1',
             'msg'=>'',
-            'data'=>1
+            'data'=>$data['avar']
         ];
         return json($data);
     }
@@ -3031,7 +3031,7 @@ class Index
         $reciveid = trim($params['reciveid']);
 
         $now = date('Y-m-d',time());
-        
+
         // $map['sendid'] = $sendid;
         // $map['reciveid'] = $reciveid;
         $map['tag'] = 'u'.$sendid.'c'.$reciveid;
