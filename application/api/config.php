@@ -3,6 +3,7 @@
 
 return [
     'api'=>[
+        'test'=>'test',//test
         'login'=>'user.login',//登录
         'logout'=>'user.logout',//退出
         'register'=>'user.register',//注册
@@ -100,6 +101,7 @@ return [
         'hxmsgtwo'=>'hxmsg.two',
         'hxmsgup'=>'hxmsg.up',
         'counsellorst'=>'counsellor.st',//咨询师
+        'noticemsg'=>'notice.msg',
 
 
 

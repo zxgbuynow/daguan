@@ -3802,7 +3802,7 @@ class Index
             $smap['noticeid'] = $id;
             if (!db('msg')->where($smap)->find()) {
                 $data['title'] = $notice['title'];
-                $data['descrption'] = $notice['title'];
+                $data['descrption'] = $notice['content'];
                 $data['reciveid'] = $account;
                 $data['create_time'] = time();
                 $data['status'] = 1;
@@ -5495,6 +5495,70 @@ class Index
             if (count($ret)>0) {
                 $is = 1;
             }
+        }
+        
+
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$is
+        ];
+        return json($data);
+    }
+
+    /**
+     * [ismsg_shop description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function noticemsg_shop($params)
+    {
+        $account = trim($params['account']);
+
+        //smsg
+        $map['status'] = 1;
+        $msgs = db('cms_notice')->where($map)->order('id DESC')->select();
+
+        $rt = [];
+        foreach ($msgs as $key => $value) {
+            if ($value['obj']!=0) {
+                if (!in_array($account, explode(',', $value['obj']))) {
+                    continue;
+                }
+            }
+            $rt[$key]['id'] = $value['id'];
+            $rt[$key]['title'] = $value['title'];
+            $rt[$key]['create_time'] = $value['create_time'];
+            $rt[$key]['type'] = $value['type']==1?'分中心消息':'平台消息';
+        }
+
+        foreach ($rt as $key => $value) {
+            //查询当前咨询师是否已读
+            if(!db('msg')->where(['status'=>0,'noticeid'=>$value['id'],'reciveid'=>$account])->find()){
+                unset($rt[$key]);
+            }
+        }
+        $is['1'] = 0;
+        if (count($rt)>0) {
+            $is['1'] = 1;
+        }
+
+        //msg
+        $id = trim($params['account']);
+
+        //查询消息
+        $smap['reciveid'] = $id;
+        $smap['status'] = 0;
+        $user =  db('msg')->where($smap)->order('create_time DESC')->select();
+        $ret = [];
+        foreach ($user as $key => $value) {
+            $ret[$value['type']][$key] = $value;
+        }
+
+        if (count($ret)>0) {
+            $is['0'] = 1;
         }
         
 
