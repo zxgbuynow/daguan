@@ -3987,7 +3987,7 @@ class Index
         foreach ($calendar['list'] as $key => $value) {
             $uid  = db('trade')->where(['id'=>$value['tid']])->value('memberid');
             //获得用户信息 
-            $calendar['list']['user'] = db('member')->field('id,username,nickname,avar')->where(['id'=>$uid])->find();
+            $calendar['list'][$key]['user'] = db('member')->field('id,username,nickname,avar')->where(['id'=>$uid])->find();
         }
         
         
