@@ -1738,7 +1738,7 @@ class Index
     {
 
         //查询消息
-        $user['list'] =  db('msg')->where(1)->order('id DESC')->limit('20')->select();
+        $user['list'] =  db('msg')->where(1)->order('id DESC')->limit('30')->select();
         
         //返回信息
         $data = [
@@ -3783,13 +3783,37 @@ class Index
     public function msgup_shop($params)
     {
         $id = trim($params['id']);
+        $type = trim($params['type']);
 
-        //查询消息
-        $map['id'] = $id;
-        $data['status'] = 1;
-        if (!db('msg')->where($map)->update($data)) {
-            $this->error('更新失败！');
+        if ($type==1) {
+            //查询消息
+            $map['id'] = $id;
+            $data['status'] = 1;
+            if (!db('msg')->where($map)->update($data)) {
+                // $this->error('更新失败！');
+            }
+        }else{
+            //查询消息
+            $map['id'] = $id;
+            $notice = db('cms_notice')->where($map)->find();
+            $account = trim($params['account']);
+
+            $smap['reciveid'] = $account;
+            $smap['noticeid'] = $id;
+            if (!db('msg')->where($smap)->find()) {
+                $data['title'] = $notice['title'];
+                $data['descrption'] = $notice['title'];
+                $data['reciveid'] = $account;
+                $data['create_time'] = time();
+                $data['status'] = 1;
+                $data['type'] = 0;
+                $data['noticeid'] = $id;
+                db('msg')->insert($data);
+
+                // $this->error('更新失败！');
+            }
         }
+        
         
 
         //返回信息
@@ -5444,6 +5468,12 @@ class Index
             $rt[$key]['type'] = $value['type']==1?'分中心消息':'平台消息';
         }
 
+        foreach ($rt as $key => $value) {
+            //查询当前咨询师是否已读
+            if(!db('msg')->where(['status'=>0,'noticeid'=>$value['id'],'reciveid'=>$account])->find()){
+                unset($rt[$key]);
+            }
+        }
         $is = 0;
         if (count($rt)>0) {
             $is = 1;
