@@ -1619,12 +1619,12 @@ class Index
         if(!db('member')->where($map)->update($data)){
             return $this->error('服务器忙，请稍后');
         }
-        
+        $info['avar'] = $data['avar'];
         //返回信息
         $data = [
             'code'=>'1',
             'msg'=>'',
-            'data'=>$data['avar']
+            'data'=>$info
         ];
         return json($data);
     }
