@@ -2244,13 +2244,23 @@ class Index
             //candar
             $ret[date('d',$value['ondatetime'])][] = $value['status'];
         }
+        if (!$info) {
+            //返回信息
+            $data = [
+                'code'=>'1',
+                'msg'=>'',
+                'data'=>[]
+            ];
+            return json($data);
+        }
         $rs = array();
+        $res = [];
         foreach ($ret as $k => $v) {
             $k = intval($k);
-            $ret[$k] =in_array(1, $v)?1:0;
+            $res[$k] =in_array(1, $v)?1:0;
             $rs['k'][] = $k;
         }
-        $rs['v'] = $ret;
+        $rs['v'] = $res;
         $rs['k'] = array_unique($rs['k']);
         //返回信息
         $data = [
