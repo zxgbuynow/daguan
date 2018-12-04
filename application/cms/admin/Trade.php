@@ -107,6 +107,7 @@ class Trade extends Admin
                 ['id', 'ID'],
                 ['title', '交易标题'],
                 ['payment', '支付金额'],
+                ['pay_type', '支付方式', 'text', '', ['alipay'=>'支付宝', 'wxpayApp'=>'微信支付',''=>'其他']],
                 ['num', '可约数'],
                 ['process', '进度'],
                 ['shopid', '机构', 'select', $agency_list],
