@@ -61,7 +61,12 @@ class Clactrade extends Admin
             'icon'  => 'fa fa-fw fa-search',
             'href'  => url('look', ['id' => '__id__'])
         ];
-
+        $btncalendar = [
+            // 'class' => 'btn btn-info',
+            'title' => '导出',
+            'icon'  => 'fa fa-fw fa-file-excel-o',
+            'href'  => url('clacexport')
+        ];
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
@@ -81,6 +86,7 @@ class Clactrade extends Admin
                 ['right_button', '操作', 'btn']
                 
             ])
+            ->addTopButton('custom', $btncalendar)
             // ->addTopButtons('delete') // 批量添加顶部按钮
             // ->addRightButtons('cancle,frzee') // 批量添加右侧按钮
             ->addRightButton('custom', $btncancle) // 添加右侧按钮
@@ -90,6 +96,42 @@ class Clactrade extends Admin
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
+    }
+
+    /**
+     * [tradexport 导出]
+     * @return [type] [description]
+     */
+    public function clacexport()
+    {
+        
+        //查询数据
+        $map['paytype'] = array('in','2,3');
+        $data = TradeModel::where($map)->select();
+        $pay_type = ['alipay'=>'支付宝', 'wxpayApp'=>'微信支付',''=>'其他'];
+        $status =  ['0'=>'待支付', '1'=>'已支付', '2'=>'取消', '3'=>'冻结'];
+        foreach ($data as $key => $value) {
+            $data[$key]['shopid'] = db('shop_agency')->where(['id'=>$value['shopid']])->value('title');
+            $data[$key]['memberid'] = db('member')->where(['id'=>$value['memberid']])->value('nickname');
+            $data[$key]['mid'] = db('member')->where(['id'=>$value['mid']])->value('nickname');
+            $data[$key]['pay_type'] = $pay_type[$value['pay_type']];
+            $data[$key]['status'] = $status[$value['status']];
+            
+        }
+        // 设置表头信息（对应字段名,宽度，显示表头名称）
+        $cellName = [
+            ['id','auto', 'ID'],
+            ['title','auto', '交易标题'],
+            ['payment','auto', '支付金额'],
+            ['pay_type','auto', '支付方式'],
+            ['shopid', 'auto','机构'],
+            ['memberid','auto', '用户'],
+            ['mid','auto', '咨询师'],
+            ['created_time','auto', '创建时间', 'datetime'],
+            ['status','auto', '状态']
+        ];
+        // 调用插件（传入插件名，[导出文件名、表头信息、具体数据]）
+        plugin_action('Excel/Excel/export', ['课程活动订单表', $cellName, $data]);
     }
 
     public function look($id = null)
