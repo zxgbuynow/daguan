@@ -5667,12 +5667,10 @@ class Index
         $content = trim($params['content']);
 
         if ($cover) {
-            if (strstr($cover,"http")==false) {
-                $img = explode(',', $cover);
-                $data['fcover'] =$this->_seve_img($img[1]);
-                if (!$data['fcover']) {
-                    return $this->error('封图上传失败，请稍后重试');
-                }
+            $img = explode(',', $cover);
+            $data['fcover'] =$this->_seve_img($img[1]);
+            if (!$data['fcover']) {
+                return $this->error('封图上传失败，请稍后重试');
             }
             
         }
