@@ -58,7 +58,7 @@ class Index
 
         //是否存在
         $map['username'] = $username;
-        $map['status'] = 1;
+        // $map['status'] = 1;
         $map['type'] = 0;
         $user = db('member')->where($map)->find();
         if (!$user) {
