@@ -2722,6 +2722,7 @@ class Index
         $mid = trim($params['account']);
         $map['paytype'] = array('in','2,3');//2课程 或是 3 活动
         $map['memberid']= $mid;
+        $map['status'] = 1;
         //订单数据
         // $info = db('trade')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->select();
         $info = db('trade')->where($map)->select();
