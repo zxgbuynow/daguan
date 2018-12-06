@@ -2052,7 +2052,7 @@ class Index
             $avar = db('member')->where(['id'=>$member['mid']])->value('avar');
             $data[$key]['avar'] =  $avar;
             if (is_numeric($avar)) {
-                $data[$key]['avar'] =  = get_file_path($avar);
+                $data[$key]['avar'] =  get_file_path($avar);
             }
             $data[$key]['counsellor'] =  db('member')->where(['id'=>$member['mid']])->value('nickname');
 
