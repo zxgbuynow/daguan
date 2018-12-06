@@ -819,7 +819,7 @@ class Index
         $is_diamonds = 0;
 
         if ($account) {
-            $is_diamonds = db('member')->where(['username'=>$account])->value('is_diamonds');
+            $is_diamonds = db('member')->where(['id'=>$account])->value('is_diamonds');
         }
         
         
@@ -2435,10 +2435,11 @@ class Index
         
         $map['id'] = $acid;
         if ($type==0) {//课程
-
+            $paytype = 2;
             $info = db('cms_classes')->where($map)->find();
         }
         if ($type==1) {//活动
+            $paytype = 3;
             $info = db('cms_active')->where($map)->find();
         }
 
@@ -2447,7 +2448,14 @@ class Index
             if (is_numeric($info['audio'])) {
                 $info['audio'] = get_file_path($info['audio']);
             }
-            
+
+            $info['islimit'] = 0;
+            //处理可报名数
+            $ispaynum  =  db('trade')->where(['classid'=>$acid,'paytype'=>$paytype,'status'=>1])->count();
+            if ($ispaynum>=$info['limitnum']) {
+                $info['islimit'] = 1;
+            }
+
 
             $info['isfav'] = 0;//是否收藏
 
@@ -2737,6 +2745,7 @@ class Index
         $account = trim($params['account']);
         $paytype = trim($params['paytype']);
 
+
         
         //取商品
         $map['id'] = $clacid;
@@ -2746,6 +2755,7 @@ class Index
         if ($paytype==3) {//活动
             $goodsinfo = db('cms_active')->where($map)->find();
         }
+        
         
 
         //shopid  uid tid payment title paytype
