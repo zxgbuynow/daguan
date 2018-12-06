@@ -76,6 +76,7 @@ return [
         'delfav'=>'fav.del',
         'favlist'=>'fav.list',
         'clacorder'=>'clac.order',
+        'clacsearch'=>'clac.search',
         'createClacTrade'=>'create.clactrade',
         'clcamanger'=>'clca.manger',
         'clcamy'=>'clca.my',

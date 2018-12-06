@@ -2427,6 +2427,38 @@ class Index
     }
 
     /**
+     * [clacsearch_custom description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function clacsearch_custom($params)
+    {
+
+        $kw = trim($params['kw']);
+
+        if ($kw) {
+            $map['title'] = array('like',$kw);
+        }
+        $data = db('cms_clac_temp')->where($map)->order('id DESC')->select();
+        foreach ($data as $key => $value) {
+            $data[$key]['pic'] =  get_file_path($value['pic']);
+        }
+        $pages = array(
+                'total'=>db('cms_clac_temp')->where($map)->count()
+            );
+        $trade['data']['pagers'] = $pages;
+        $trade['data']['list'] = array_values($data);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$trade
+        ];
+        return json($data);
+
+    }
+
+    /**
      * [clcadetail 课程活动祥情]
      * @param  [type] $params [description]
      * @return [type]         [description]
