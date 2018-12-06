@@ -2919,6 +2919,7 @@ class Index
 
         //
         $map['memberid'] = $account;
+        $map['status'] = 0;
         $info = db('cms_coupon')->where($map)->select();
 
         $ret = [];
