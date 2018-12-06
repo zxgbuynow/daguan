@@ -2919,13 +2919,13 @@ class Index
 
         //
         $map['memberid'] = $account;
-        $map['status'] = 0;
+        $map['use'] = 0;
         $info = db('cms_coupon')->where($map)->select();
 
         $ret = [];
         foreach ($info as $key => $value) {
 
-            $ret[$key]['stautstx'] = $value['status']==0?'未使用':'已使用';
+            $ret[$key]['stautstx'] = $value['use']==0?'未使用':'已使用';
             $ret[$key]['title'] = $value['title'];
             $ret[$key]['created_time'] = $value['created_time'];
             $ret[$key]['status'] = $value['status'];
