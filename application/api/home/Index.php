@@ -2435,9 +2435,9 @@ class Index
     {
 
         $kw = trim($params['kw']);
-
+        $map = array();
         if ($kw) {
-            $map['title'] = array('like',$kw);
+            $map['title'] = array('like','%'.$kw.'%');
         }
         $data = db('cms_clac_temp')->where($map)->order('id DESC')->select();
         foreach ($data as $key => $value) {
