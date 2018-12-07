@@ -12,9 +12,9 @@ if (version_compare(PHP_VERSION, '5.5', '<')) {
 define('APP_PATH', __DIR__ . '/../application/');
 
 // 检查是否安装
-if(!is_file('../data/install.lock')){
-    define('BIND_MODULE', 'install');
-}
+// if(!is_file('../data/install.lock')){
+//     define('BIND_MODULE', 'install');
+// }
 
 // 定义入口为admin
 define('ENTRANCE', 'crontab');
@@ -29,7 +29,7 @@ define('ENTRANCE', 'crontab');
 //     \think\App::route(false);
 // }
 // 加载框架基础文件
-require '../thinkphp/base.php';
+require __DIR__.'/../thinkphp/base.php';
 
 // 关闭路由
 \think\App::route(false);
