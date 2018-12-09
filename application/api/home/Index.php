@@ -4197,7 +4197,8 @@ class Index
             }
             // $data = db('calendar')->alias('a')->field('a.*,b.chart')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->limit($startpg, $page_size)->select();
             $data = db('trade')->where($allmap)->order('id DESC')->limit($startpg, $page_size)->select();
-            
+           
+
             foreach ($data as $key => $value) {
                 switch ($value['chart']) {
                     case 'speechchart':
@@ -4214,10 +4215,14 @@ class Index
                         $str = '文字咨询';
                         break;
                 }
+
                 $data[$key]['chartkey'] = $value['chart'];
                 $data[$key]['chart'] = $str;
 
-
+                $record = db('calendar')->where(['tid'=>$value['id']])->count();
+                $data[$key]['process'] =  '当前进度：'.$record.'/'.$value['num'];
+                
+                
                 $counsellor =  db('member')->where(array('id'=>$value['memberid']))->find();
                 $data[$key]['member'] =  $counsellor['nickname'];
                 $data[$key]['mid'] =  $counsellor['id'];
