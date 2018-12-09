@@ -716,7 +716,7 @@ class Index
         $usersort = [];
         foreach ($recommend['list'] as $key => $value) {
             $co = db('member_counsellor')->where(['memberid'=>$value['id']])->find();
-            $usersort[$key] = iconv('UTF-8', 'GB2312',$value['nickname']) ;
+            $usersort[$key] = iconv('UTF-8', 'gbk//TRANSLIT//IGNORE',$value['nickname']) ;
             $recommend['list'][$key]['tearch'] = $co['tearch'];
             $recommend['list'][$key]['leader'] = $co['leader'];
             $recommend['list'][$key]['memberid'] = $co['memberid'];
