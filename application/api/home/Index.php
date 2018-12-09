@@ -716,7 +716,7 @@ class Index
         $usersort = [];
         foreach ($recommend['list'] as $key => $value) {
             $co = db('member_counsellor')->where(['memberid'=>$value['id']])->find();
-            $usersort[$key] = $value['nickname'];
+            $usersort[$key] = iconv('UTF-8', 'GB2312',$value['nickname']) ;
             $recommend['list'][$key]['tearch'] = $co['tearch'];
             $recommend['list'][$key]['leader'] = $co['leader'];
             $recommend['list'][$key]['memberid'] = $co['memberid'];
@@ -762,6 +762,7 @@ class Index
             //分中心
             $recommend['list'][$key]['shopname'] = $value['shopid']?db('shop_agency')->where(['id'=>$value['shopid']])->value('city'):'中国大陆';
         }
+
         $recommend['list'] = array_values($recommend['list']);
         array_multisort($usersort,SORT_ASC,$recommend['list']);
         //返回信息
