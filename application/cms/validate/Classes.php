@@ -16,7 +16,7 @@ class Classes extends Validate
         'title|属性名'      => 'require',
         'cateid|分类'      => 'require',
         'price|金额'      => 'require',
-        'num|参与人数'      => 'require',
+        'limitnum|参与人数'      => 'require',
         'start_time|开始时间'      => 'require',
         'endtime|结束时间'      => 'require',
     ];
@@ -26,7 +26,7 @@ class Classes extends Validate
         'title.require' => '标题不能为空',
         'cateid.require' => '分类不能为空',
         'price.require' => '金额不能为空',
-        'num.require' => '参与人数不能为空',
+        'limitnum.require' => '参与人数不能为空',
         'start_time.require' => '开始时间不能为空',
         'endtime.require' => '结束时间不能为空',
     ];

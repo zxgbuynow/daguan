@@ -711,11 +711,12 @@ class Index
 
         $map['b.online'] = 1;
         // $recommend['list'] = db('member')->alias('a')->field('a.*,b.online,b.memberid,b.tags')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC')->limit($startpg, $page_size)->select();
-        $recommend['list'] = db('member')->where(['status'=>1,'type'=>1,'online'=>1])->page($startpg.','.$page_size)->select();
+        $recommend['list'] = db('member')->where(['status'=>1,'type'=>1,'online'=>1])->page($startpg.','.$page_size)->order('recommond DESC')->select();
         // error_log(db('member')->getlastsql(),3,'/home/wwwroot/daguan/rec.log');
+        $usersort = [];
         foreach ($recommend['list'] as $key => $value) {
             $co = db('member_counsellor')->where(['memberid'=>$value['id']])->find();
-            
+            $usersort[$key] = $value['nickname'];
             $recommend['list'][$key]['tearch'] = $co['tearch'];
             $recommend['list'][$key]['leader'] = $co['leader'];
             $recommend['list'][$key]['memberid'] = $co['memberid'];
@@ -762,6 +763,7 @@ class Index
             $recommend['list'][$key]['shopname'] = $value['shopid']?db('shop_agency')->where(['id'=>$value['shopid']])->value('city'):'中国大陆';
         }
         $recommend['list'] = array_values($recommend['list']);
+        array_multisort($usersort,SORT_ASC,$recommend['list']);
         //返回信息
         $data = [
             'code'=>'1',
@@ -4221,8 +4223,8 @@ class Index
 
                 $record = db('calendar')->where(['tid'=>$value['id']])->count();
                 $data[$key]['process'] =  '当前进度：'.$record.'/'.$value['num'];
-                
-                
+
+
                 $counsellor =  db('member')->where(array('id'=>$value['memberid']))->find();
                 $data[$key]['member'] =  $counsellor['nickname'];
                 $data[$key]['mid'] =  $counsellor['id'];
