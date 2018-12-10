@@ -3053,16 +3053,21 @@ class Index
         $res = [];
         //头像 时间
         foreach ($info as $key => $value) {
+            //msg
+            $smsg['tag'] = $value['tag'];
+            $news = db('hx_msg')->where($smsg)->order('id DESC')->find();
+            $res[$key]['nmsg'] = $news['msg'];
+            
             //avar
-            if ($value['sendid']==$sendid) {//取 rc头像
-                $su = db('member')->where(['id'=>$value['reciveid']])->find();
+            if ($news['sendid']==$sendid) {//取 rc头像
+                $su = db('member')->where(['id'=>$news['reciveid']])->find();
                 $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
                 $res[$key]['nickname'] = $su['nickname'];//name
                 $res[$key]['mid'] = $su['id'];//id
                 $res[$key]['account'] = $su['username'];//id
                 $res[$key]['sendid'] = 1;//是发送者
             }else{
-                $su = db('member')->where(['id'=>$value['sendid']])->find();
+                $su = db('member')->where(['id'=>$news['sendid']])->find();
                 $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
                 $res[$key]['nickname'] = $su['nickname'];//name
                 $res[$key]['mid'] = $su['id'];//id
@@ -3070,10 +3075,7 @@ class Index
                 $res[$key]['sendid'] = 0;//是接受者
             }
             
-            //msg
-            $smsg['tag'] = $value['tag'];
-            $news = db('hx_msg')->where($smsg)->order('id DESC')->find();
-            $res[$key]['nmsg'] = $news['msg'];
+            
 
             //time
             $res[$key]['times'] = date('Y-m-d',$news['create_time']) == $now? date('H:i',$news['create_time']):date('Y-m-d H:i',$news['create_time']);
@@ -5844,7 +5846,7 @@ class Index
             $smsg['tag'] = $value['tag'];
             $news = db('hx_msg')->where($smsg)->order('id DESC')->find();
             $res[$key]['nmsg'] = $news['msg'];
-            
+
             //avar
             if ($news['sendid']==$sendid) {//取 rc头像
                 $su = db('member')->where(['id'=>$news['reciveid']])->find();
