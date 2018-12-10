@@ -189,7 +189,7 @@ class Counsellor extends Admin
             $save['mobile'] = $data['mobile'];
             $save['status'] = $data['status'];
             $save['recommond'] = $data['recommond'];
-            $save['shopids'] = $data['shopis'];
+            $save['shopids'] = implode(',', $data['shopids']) ;
             if ($crid = CounsellorModel::create($save)) {
                 $user = CounsellorModel::get($save['id']);
                 
@@ -271,7 +271,7 @@ class Counsellor extends Admin
             ])
             ->addDatetime('employment', '从业时间', '', '', 'YYYY-MM-DD')
             ->addSelect('tags', '咨询类型', '', $list_type)
-            ->addSelect('shopis', '挂靠分机构', '', $agency_type)
+            ->addSelect('shopids', '挂靠分机构', '', $agency_type)
             ->addUeditor('remark', '祥细说明')
             ->fetch();
     }
@@ -307,7 +307,7 @@ class Counsellor extends Admin
             $save['mobile'] = $data['mobile'];
             $save['status'] = $data['status'];
             $save['recommond'] = $data['recommond'];
-            $save['shopids'] = $data['shopis'];
+            $save['shopids'] = implode(',', $data['shopids']) ;
             if (CounsellorModel::update($save)) {
                 $user = CounsellorModel::get($save['id']);
                 if ($data['bid']) {
@@ -382,7 +382,6 @@ class Counsellor extends Admin
         if (!$info['status']) {
             $info['status'] = 0;
         }
-        // print_r($info);exit;
         $list_type = [];
         if ($info['shopid']) {
             $cids = CateAccessModel::where('shopid', $info['shopid'])->value('cids');
@@ -433,7 +432,7 @@ class Counsellor extends Admin
             ])
             ->addDatetime('employment', '从业时间', '', '', 'YYYY-MM-DD')
             ->addSelect('tags', '咨询类型', '', $list_type,'','multiple')
-            ->addSelect('shopis', '挂靠分机构', '', $agency_type,'','multiple')
+            ->addSelect('shopids', '挂靠分机构', '', $agency_type,'','multiple')
             ->addUeditor('remark', '祥细说明')
             ->setFormData($info) // 设置表单数据
             ->fetch();
