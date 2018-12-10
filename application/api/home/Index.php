@@ -5857,8 +5857,10 @@ class Index
                 $res[$key]['sendid'] = 0;//是接受者
             }
             
+            
             //msg
-            $news = db('hx_msg')->where($map)->order('id DESC')->find();
+            $smsg['tag'] = $value['tag'];
+            $news = db('hx_msg')->where($smsg)->order('id DESC')->find();
             $res[$key]['nmsg'] = $news['msg'];
 
             //time
