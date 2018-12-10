@@ -95,7 +95,7 @@ class Pay
         $mer_key = $this->mer_key;
         $seller_account_name = $this->seller_account_name;
 
-        // $payment['payment'] = 0.01;
+        $payment['payment'] = 0.01;
 
         //if price
         // if ($price) {
@@ -154,7 +154,39 @@ class Pay
             //是否是充值订单
             $info = db('trade')->where($where)->find();
             if ($info['paytype']==1) {
-                db('member')->where(['id'=>$info['memberid']])->update(['is_diamonds'=>1]);
+                //是否注册
+                if ($info['username']) {
+                    if (db('member')->where(['username'=>$info['username']])->find()) {
+                        //周年会员
+                        if ($info['payment']==7) {
+                            $indata['vipday'] = 1;
+                        }else{
+                            $indata['vipday'] = 12;
+                        }
+                        $indata['is_diamonds'] = 1;
+                        $indata['viptime'] = time();
+                        db('member')->where(['username'=>$info['username']])->update($indata);
+                    }else{
+                        //支付日志表
+                        $sdata['memberid'] = $info['memberid'];
+                        $sdata['create_time'] = time();
+                        $sdata['account'] = $info['username'];
+                        $sdata['vip'] = $info['payment']==7?1:12;
+                        db('vip_log')->insert($sdata);
+                    }   
+                }else{
+                    //周年会员
+                    if ($info['payment']==7) {
+                        $indata['vipday'] = 1;
+                    }else{
+                        $indata['vipday'] = 12;
+                    }
+                    $indata['is_diamonds'] = 1;
+                    $indata['viptime'] = time();
+                    $indata['viplastt'] = $indata['vipday']==12?30879000:604800;
+                    db('member')->where(['id'=>$info['memberid']])->update($indata);
+                }
+                
             }
 
             if ($info['paytype']==2) {

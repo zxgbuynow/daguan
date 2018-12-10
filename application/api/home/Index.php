@@ -142,12 +142,20 @@ class Index
         //生成密码
         $data['password'] =  Hash::make((string)trim($params['password']));
 
+        //是否为会员 
+        if($isvip = db('vip_log')->where(['account'=>$data['mobile'],'status'=>0])->find()){
+            $data['vipday'] = $isvip['vip'];
+            $data['viptime'] = time();
+            $data['viplastt'] = $isvip['vip']==12?30879000:604800;
+            $data['is_diamonds']= 1;
+        }
+        
         //插入数据
         $me = db('member')->insert($data);
         if (!$me) {
             return $this->error('注册失败！请稍后重试');
         }
-        
+        db('vip_log')->where(['account'=>$data['mobile']])->update(['status'=>1]);
         //返回信息
         $data = [
             'code'=>'1',
