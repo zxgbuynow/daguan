@@ -189,7 +189,7 @@ class Counsellor extends Admin
             $save['mobile'] = $data['mobile'];
             $save['status'] = $data['status'];
             $save['recommond'] = $data['recommond'];
-            $save['shopids'] = $data['shopids'];
+            $save['shopids'] = $data['shopis'];
             if ($crid = CounsellorModel::create($save)) {
                 $user = CounsellorModel::get($save['id']);
                 
@@ -307,7 +307,7 @@ class Counsellor extends Admin
             $save['mobile'] = $data['mobile'];
             $save['status'] = $data['status'];
             $save['recommond'] = $data['recommond'];
-            $save['shopids'] = $data['shopids'];
+            $save['shopids'] = $data['shopis'];
             if (CounsellorModel::update($save)) {
                 $user = CounsellorModel::get($save['id']);
                 if ($data['bid']) {
