@@ -4198,7 +4198,7 @@ class Index
             $allmap['status'] = 1;
             $tids = db('calendar')->where(['memberid'=>$account])->column('tid');
             if ($tids) {
-                // $allmap['id'] = array('not in',array_unique($tids));
+                $allmap['id'] = array('not in',array_unique($tids));
             }
             // $data = db('calendar')->alias('a')->field('a.*,b.chart')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->limit($startpg, $page_size)->select();
             $data = db('trade')->where($allmap)->order('id DESC')->limit($startpg, $page_size)->select();
