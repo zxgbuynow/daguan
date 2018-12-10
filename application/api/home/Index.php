@@ -2264,7 +2264,7 @@ class Index
         $res = [];
         foreach ($ret as $k => $v) {
             $k = intval($k);
-            $res[$k] =in_array(1, $v)?1:0;
+            $res[$k] =in_array(0, $v)?0:1;
             $rs['k'][] = $k;
         }
         $rs['v'] = $res;
@@ -3057,7 +3057,7 @@ class Index
             $smsg['tag'] = $value['tag'];
             $news = db('hx_msg')->where($smsg)->order('id DESC')->find();
             $res[$key]['nmsg'] = $news['msg'];
-            
+
             //avar
             if ($news['sendid']==$sendid) {//取 rc头像
                 $su = db('member')->where(['id'=>$news['reciveid']])->find();
