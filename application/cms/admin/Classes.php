@@ -46,7 +46,7 @@ class Classes extends Admin
                 ['title', '标题'],
                 ['cateid', '分类名','','',$list_module],
                 ['price', '金额'],
-                ['num', '限定人数'],
+                ['limitnum', '限定人数'],
                 ['start_time', '开始时间','datetime'],
                 ['endtime', '结束时间','datetime'],
                 ['statustext', '状态'],
