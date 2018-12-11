@@ -1930,7 +1930,7 @@ class Index
         if (!db('evaluate')->insert($save)) {
             $this->error('评论失败！');
         }
-        db('calendar')->where(['id'=>$c_id])->update(['status'=>4]);
+        db('calendar')->where(['id'=>$c_id])->update(['status'=>3]);
 
         //返回信息
         $data = [
@@ -2294,7 +2294,10 @@ class Index
     {
         //参数
         $account = trim($params['account']);//id
-
+        $in = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->where(array('b.memberid'=>$account))->order('a.start_time DESC')->find();
+        if ($in['chart']=='wordchart') {
+            return $this->error('文字咨询不能发起语音咨询');
+        }
         $start_time = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->where(array('b.memberid'=>$account))->order('a.start_time DESC')->value('start_time');
         $end_time = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->where(array('b.memberid'=>$account))->order('a.start_time DESC')->value('end_time');
 
@@ -3068,6 +3071,10 @@ class Index
             //avar
             if ($news['sendid']==$sendid) {//取 rc头像
                 $su = db('member')->where(['id'=>$news['reciveid']])->find();
+                if (!$su) {
+                    unset($info[$key]);
+                    continue;
+                }
                 $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
                 $res[$key]['nickname'] = $su['nickname'];//name
                 $res[$key]['mid'] = $su['id'];//id
@@ -3075,6 +3082,10 @@ class Index
                 $res[$key]['sendid'] = 1;//是发送者
             }else{
                 $su = db('member')->where(['id'=>$news['sendid']])->find();
+                if (!$su) {
+                    unset($info[$key]);
+                    continue;
+                }
                 $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
                 $res[$key]['nickname'] = $su['nickname'];//name
                 $res[$key]['mid'] = $su['id'];//id
@@ -3259,6 +3270,7 @@ class Index
         }
 
         $data['type'] = 1;
+        $data['status'] = 0;
 
         //生成密码
         $data['password'] =  Hash::make((string)trim($params['password']));
@@ -5857,6 +5869,10 @@ class Index
             //avar
             if ($news['sendid']==$sendid) {//取 rc头像
                 $su = db('member')->where(['id'=>$news['reciveid']])->find();
+                if (!$su) {
+                    unset($info[$key]);
+                    continue;
+                }
                 $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
                 $res[$key]['nickname'] = $su['nickname'];//name
                 $res[$key]['mid'] = $su['id'];//id
@@ -5864,6 +5880,10 @@ class Index
                 $res[$key]['sendid'] = 1;//是发送者
             }else{
                 $su = db('member')->where(['id'=>$news['sendid']])->find();
+                if (!$su) {
+                    unset($info[$key]);
+                    continue;
+                }
                 $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
                 $res[$key]['nickname'] = $su['nickname'];//name
                 $res[$key]['mid'] = $su['id'];//id
