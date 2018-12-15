@@ -363,10 +363,22 @@ class Index
             }else if (strstr($value['link'], 'clac')) {
                 if ($ismobile) {
                     $lunbo['pic'][$key]['webview'] = "/mobile.php/clac/detail.html";
-                     $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                    $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                    $lunbo['pic'][$key]['webparam1'] = 0;
                 }else{
                     $lunbo['pic'][$key]['webview'] = '_www/view/clac/detail.html';
-                     $lunbo['pic'][$key]['webparam'] = ['acid'=>explode('.',explode('/', $value['link'])[1])[0]];
+                     $lunbo['pic'][$key]['webparam'] = ['acid'=>explode('.',explode('/', $value['link'])[1])[0],'actype'=>0];
+                }
+                
+               
+            }else if (strstr($value['link'], 'act')) {
+                if ($ismobile) {
+                    $lunbo['pic'][$key]['webview'] = "/mobile.php/clac/detail.html";
+                     $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                     $lunbo['pic'][$key]['webparam1'] = 1;
+                }else{
+                    $lunbo['pic'][$key]['webview'] = '_www/view/clac/detail.html';
+                     $lunbo['pic'][$key]['webparam'] = ['acid'=>explode('.',explode('/', $value['link'])[1])[0],'actype'=>1];
                 }
                 
                
@@ -4224,13 +4236,13 @@ class Index
                     if ($tnum>1) {
                         $cnum = db('calendar')->where(['tid'=>$value])->count();
                         if ($cnum<$tnum) {
+
                             unset($tidarr[$key]);
                         }
                     }
                 }
                 $allmap['id'] = array('not in',$tidarr);
             }
-            
             // $data = db('calendar')->alias('a')->field('a.*,b.chart')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->limit($startpg, $page_size)->select();
             $data = db('trade')->where($allmap)->order('id DESC')->limit($startpg, $page_size)->select();
            
