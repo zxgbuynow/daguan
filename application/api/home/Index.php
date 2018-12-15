@@ -862,7 +862,8 @@ class Index
         // $counsellor['employment'] = '从业'.ceil(date('Y',time())-date('Y',$counsellor['employment'])).'年';
         
         //星级
-        $counsellor['start'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where(array('a.id'=>$params['id']))->avg('sorce');
+        // $counsellor['start'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where(array('a.id'=>$params['id']))->avg('sorce');
+        $counsellor['start'] = $counsellor['sources'];
         //少于4星默认 4星
         if ($counsellor['start']<8) {
             $counsellor['start'] = 8;
