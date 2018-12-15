@@ -210,7 +210,7 @@ class Replyclac extends Admin
     public function setStatus($type = '', $record = [])
     {
         $ids        = $this->request->isPost() ? input('post.ids/a') : input('param.ids');
-        $menu_title = CmsReplyModel::where('id', 'in', $ids)->column('title');
+        $menu_title = CmsReplyModel::where('id', 'in', $ids)->column('classid');
         return parent::setStatus($type, ['class_'.$type, 'class', 0, UID, implode('、', $menu_title)]);
     }
 
