@@ -99,7 +99,7 @@ class Wxpay
             $data['payment'] = floatval($payment['payment'])- floatval($price)<0?'0.01':floatval($payment['payment'])- floatval($price);
             $payment['payment'] = $data['payment'];
             db('trade')->where(['tid'=>$params['payment_id']])->update($data);
-            db('cms_coupon')->where(['id'=>$params['couponid']])->update(['use'=>1]);
+            // db('cms_coupon')->where(['id'=>$params['couponid']])->update(['use'=>1]);
         }
         
         
@@ -201,6 +201,7 @@ class Wxpay
                     }
                     $indata['is_diamonds'] = 1;
                     $indata['viptime'] = time();
+                    $indata['viplastt'] = $indata['vipday']==12?30879000:604800;
                     db('member')->where(['id'=>$info['memberid']])->update($indata);
                 }
                 
@@ -213,7 +214,7 @@ class Wxpay
             if ($info['paytype']==3) {
                 db('cms_active')->where(['id'=>$info['classid']])->setInc('num');
             }
-            
+            db('cms_coupon')->where(['id'=>$info['couponid']])->update(['use'=>1]);
             db('trade')->where($where)->update($data);//修改订单状态
             db('msg')->where(['tid'=>$where['tid']])->update(['is_pay'=>1]);//修改订单状态
             echo 'success';
