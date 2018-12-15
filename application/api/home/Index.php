@@ -1975,12 +1975,12 @@ class Index
         // if (!db('clac_evaluate')->insert($save)) {
         //     $this->error('评论失败！');
         // }
-        $save['sorce'] = $sorce;
+        $save['source'] = $sorce;
         $data['classid'] = $c_id;
         $data['type'] = $actype;
-        $data['memberid'] = $account;
+        $data['suid'] = $account;
         $data['msg'] = $cotent;
-        $data['create_time'] = time();
+        $data['created_time'] = time();
 
         db('cms_reply')->insert($data);
 
