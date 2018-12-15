@@ -4217,8 +4217,20 @@ class Index
             $allmap['status'] = 1;
             $tids = db('calendar')->where(['memberid'=>$account])->column('tid');
             if ($tids) {
-                $allmap['id'] = array('not in',array_unique($tids));
+                $tidarr = array_unique($tids);
+                foreach ($tidarr as $key => $value) {
+                    //查出大于1的数据
+                    $tnum = db('trade')->where(['id'=>$value])->value('num');
+                    if ($tnum>1) {
+                        $cnum = db('calendar')->where(['tid'=>$value])->count();
+                        if ($cnum<$tnum) {
+                            unset($tidarr[$key]);
+                        }
+                    }
+                }
+                $allmap['id'] = array('not in',$tidarr);
             }
+            
             // $data = db('calendar')->alias('a')->field('a.*,b.chart')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->limit($startpg, $page_size)->select();
             $data = db('trade')->where($allmap)->order('id DESC')->limit($startpg, $page_size)->select();
            
