@@ -307,10 +307,10 @@ class Index
         }
         $article['list'] = db('cms_page')->where($map)->order('sort ASC, view DESC')->limit(10)->select();
 
-        foreach ($article['list'] as $key => $value) {
-            unset($article['list'][$key]['content']);
-            $article['list'][$key]['author'] = $value['userid']==0?'大观心理':db('member')->where('status',1)->column('nickname');
-        }
+        // foreach ($article['list'] as $key => $value) {
+        //     unset($article['list'][$key]['content']);
+        //     $article['list'][$key]['author'] = $value['userid']==0?'大观心理':db('member')->where('status',1)->column('nickname');
+        // }
         foreach ($article['list'] as $key => $value) {
             unset($article['list'][$key]['content']);
             unset($article['list'][$key]['description']);
@@ -3069,7 +3069,7 @@ class Index
         $sendid = trim($params['account']);
 
         $map['sendid|reciveid'] = $sendid;
-        $info = db('hx_msg')->where($map)->order('id DESC')->group('tag')->select();
+        $info = db('hx_msg')->where($map)->order('create_time DESC')->group('tag')->select();
 
         $now = date('Y-m-d',time());
         $res = [];
@@ -5879,7 +5879,7 @@ class Index
         $sendid = trim($params['account']);
 
         $map['sendid|reciveid'] = $sendid;
-        $info = db('hx_msg')->where($map)->order('id DESC')->group('tag')->select();
+        $info = db('hx_msg')->where($map)->order('create_time DESC')->group('tag')->select();
 
         $now = date('Y-m-d',time());
         $res = [];
