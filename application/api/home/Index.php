@@ -2113,8 +2113,8 @@ class Index
         //参数
         $account = trim($params['account']);
 
-        $ret = Hx::getUserMsgCount($account);
-
+        // $ret = Hx::getUserMsgCount($account);
+        $ret = db('hx_msg')->where(['reciveid'=>$account,'status'=>0])->count();
         //返回信息
         $data = [
             'code'=>'1',
