@@ -3085,6 +3085,7 @@ class Index
                 $su = db('member')->where(['id'=>$news['reciveid']])->find();
                 if (!$su) {
                     unset($info[$key]);
+                    unset($res[$key]);
                     continue;
                 }
                 $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
@@ -3096,6 +3097,7 @@ class Index
                 $su = db('member')->where(['id'=>$news['sendid']])->find();
                 if (!$su) {
                     unset($info[$key]);
+                    unset($res[$key]);
                     continue;
                 }
                 $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
@@ -5895,6 +5897,7 @@ class Index
                 $su = db('member')->where(['id'=>$news['reciveid']])->find();
                 if (!$su) {
                     unset($info[$key]);
+                    unset($res[$key]);
                     continue;
                 }
                 $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
@@ -5906,6 +5909,7 @@ class Index
                 $su = db('member')->where(['id'=>$news['sendid']])->find();
                 if (!$su) {
                     unset($info[$key]);
+                    unset($res[$key]);
                     continue;
                 }
                 $res[$key]['cavar'] = is_numeric($su['avar'])?get_file_path($su['avar']):$su['avar'];
