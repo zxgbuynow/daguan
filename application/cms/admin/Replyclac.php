@@ -44,13 +44,12 @@ class Replyclac extends Admin
                 ['id', 'ID'],
                 ['clactitle', '课程活动标题'],
                 ['suname', '评价人'],
-                ['runame', '回复人'],
                 ['msg', '内容'],
                 ['created_time', '结束时间','datetime'],
-                ['statustext', '状态'],
                 ['right_button', '操作', 'btn']
             ])
             ->raw('clactitle')
+            ->raw('suname')
             // ->addTopButton('add', ['href' => url('add')])
             // ->addRightButton('edit')
             ->addRightButton('delete', ['data-tips' => '删除后无法恢复。'])// 批量添加右侧按钮
