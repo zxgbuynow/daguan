@@ -1967,14 +1967,22 @@ class Index
         $sorce = trim($params['sorce']);
         $cotent = trim($params['cotent']);
 
+        // $save['sorce'] = $sorce;
+        // $save['memberid'] = $account;
+        // $save['cotent'] = $cotent;
+        // $save['cid'] = $c_id;
+        // $save['create_time'] = time();
+        // if (!db('clac_evaluate')->insert($save)) {
+        //     $this->error('评论失败！');
+        // }
         $save['sorce'] = $sorce;
-        $save['memberid'] = $account;
-        $save['cotent'] = $cotent;
-        $save['cid'] = $c_id;
-        $save['create_time'] = time();
-        if (!db('clac_evaluate')->insert($save)) {
-            $this->error('评论失败！');
-        }
+        $data['classid'] = $c_id;
+        $data['type'] = $actype;
+        $data['memberid'] = $account;
+        $data['msg'] = $cotent;
+        $data['create_time'] = time();
+
+        db('cms_reply')->insert($data);
 
         //返回信息
         $data = [
@@ -2783,7 +2791,8 @@ class Index
 
             //查看评价
             $actype = $value['paytype'] ==2?0:1;
-            $data[$key]['claceva'] = db('clac_evaluate')->where(['cid'=>$value['classid'],'actype'=>$actype,'memberid'=>$mid])->count();
+            $data[$key]['claceva'] = db('cms_reply')->where(['classid'=>$value['classid'],'type'=>$actype,'suid'=>$mid])->count();
+            // $data[$key]['claceva'] = db('clac_evaluate')->where(['cid'=>$value['classid'],'actype'=>$actype,'memberid'=>$mid])->count();
         }
         //返回信息
         $res = [
@@ -3007,6 +3016,7 @@ class Index
             $data['ruid'] = $params['ruid'];
         }
 
+        $data['source'] = 8;
         $data['classid'] = $acid;
         $data['type'] = $typeid;
         $data['suid'] = $account;
