@@ -53,12 +53,12 @@ class CounsellorEvaluation extends Admin
             ->setPageTitle('咨询师评价管理') // 设置页面标题
             ->setTableName('evaluate') // 设置数据表名
             ->setSearch(['m.mobile' => '手机号','m.nickname'=>'用户名称','sorce'=>'评分']) // 设置搜索参数
-            ->addFilter('shop_agency.title') // 添加筛选
+            // ->addFilter('shop_agency.title') // 添加筛选
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
                 ['mobile', '手机号'],
                 ['nickname', '咨询师'],
-                ['title', '分中心'],
+                // ['title', '分中心'],
                 ['sorce', '评分'],
                 ['cotent', '评价内容'],
                 ['create_time', '创建时间', 'datetime'],

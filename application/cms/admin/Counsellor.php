@@ -61,7 +61,14 @@ class Counsellor extends Admin
             'icon'  => 'fa fa-fw fa-calendar',
             'href'  => url('calendar', ['id' => '__id__'])
         ];
-       
+        
+        $btnexport = [
+            // 'class' => 'btn btn-info',
+            'title' => '导出',
+            'icon'  => 'fa fa-fw fa-file-excel-o',
+            'href'  => url('export')
+        ];
+
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setPageTitle('咨询师管理') // 设置页面标题
@@ -97,10 +104,50 @@ class Counsellor extends Admin
             ->addRightButton('custom', $orderBtn)
             ->addRightButton('custom', $btncalendar)
             ->addRightButton('custom', $caseBtn)
+            ->addTopButton('custom', $btnexport)
             // ->addRightButton('custom', $incomeBtn)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
+    }
+    /**
+     * [tradexport 导出]
+     * @return [type] [description]
+     */
+    public function export()
+    {
+        
+        //查询数据
+        $map['type'] = 1;
+        $data = CounsellorModel::where($map)->order('id desc')->select();
+        $status = ['0'=>'禁用', '1'=>'启用'];
+        $recommond =  ['0'=>'不推荐', '1'=>'推荐'];
+        foreach ($data as $key => $value) {
+            $data[$key]['shopid'] = db('shop_agency')->where(['id'=>$value['shopid']])->value('title');
+            $data[$key]['ondatenums'] = CounsellorModel::getOndatenumsAttr(null,$value);
+            $data[$key]['recommond'] = $recommond[$value['recommond']];
+            $data[$key]['verifystatus'] = $status[$value['status']];
+            
+        }
+        // 设置表头信息（对应字段名,宽度，显示表头名称）
+        $cellName = [
+            ['id','auto', 'ID'],
+            ['mobile','auto', '手机号'],
+            ['nickname','auto', '姓名'],
+            ['ondatenums','auto', '咨询次数'],
+            ['sources','auto', '星级评分'],
+            ['sex','auto', '性别'],
+            ['qq','auto', 'QQ'],
+            ['weixin','auto', '微信'],
+            ['alipay','auto', '支付宝'],
+            ['shopid','auto', '机构'],
+            ['create_time','auto', '创建时间', 'datetime'],
+            ['verifystatus','auto', '审核状态'],
+            ['recommond','auto', '推荐'],
+            ['sort','auto', '排序'],
+        ];
+        // 调用插件（传入插件名，[导出文件名、表头信息、具体数据]）
+        plugin_action('Excel/Excel/export', ['咨询师表', $cellName, $data]);
     }
 
     /**
