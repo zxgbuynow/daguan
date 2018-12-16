@@ -36,6 +36,12 @@ class Agencyicome extends Admin
         $page = $data_list->render();
 
         $incomeBtn = ['icon' => 'fa fa-fw fa-cny', 'title' => '收入明细', 'href' => url('income', ['id' => '__id__'])];
+        $btnexport = [
+            // 'class' => 'btn btn-info',
+            'title' => '导出',
+            'icon'  => 'fa fa-fw fa-file-excel-o',
+            'href'  => url('export')
+        ];
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
@@ -51,9 +57,35 @@ class Agencyicome extends Admin
             ])
             ->raw('income')
             ->addRightButton('custom', $incomeBtn)
+            ->addTopButton('custom', $btnexport)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
+    }
+
+    /**
+     * [tradexport 导出]
+     * @return [type] [description]
+     */
+    public function export()
+    {
+        
+        //查询数据
+        $map = [];
+        $data = AgencyModel::where($map)->order('id desc')->select();
+        foreach ($data as $key => $value) {
+            $data[$key]['income'] = AgencyModel::getIncomeAttr(null,$value);
+            
+        }
+        // 设置表头信息（对应字段名,宽度，显示表头名称）
+        $cellName = [
+            ['id','auto', 'ID'],
+            ['title','auto', '分机构名'],
+            ['income','auto', '收入'],
+
+        ];
+        // 调用插件（传入插件名，[导出文件名、表头信息、具体数据]）
+        plugin_action('Excel/Excel/export', ['机构收入表', $cellName, $data]);
     }
 
     /**

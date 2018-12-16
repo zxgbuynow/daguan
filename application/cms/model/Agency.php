@@ -19,7 +19,7 @@ class Agency extends Model
      // 自动写入时间戳
     protected $autoWriteTimestamp = true;
 
-    public  function getIncomeAttr($v,$data)
+    static  function getIncomeAttr($v,$data)
     {
        $map['shopid'] = $data['id'];
        $map['status'] = 1;
