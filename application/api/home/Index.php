@@ -5138,6 +5138,47 @@ class Index
     }
 
     /**
+     * [cancleallcalenda_shop description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function cancleallcalenda_shop($params)
+    {   
+        //参数
+        $account = trim($params['account']);
+        $day =  trim($params['day']);
+        $rangetm =  trim($params['range']);
+
+        $timearrr = array('0:00~5:00'=>array('0:00','1:00','2:00','3:00','4:00','5:00'),'6:00~18:00'=>array('6:00','7:00','8:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00'),'19:00~24:00'=>array('19:00','20:00','21:00','22:00','23:00'));
+
+        $rangearr = $timearrr[$rangetm];
+
+        foreach ($rangearr as $key => $value) {
+            $hour = $value;
+            $data['ondatetime'] = strtotime($day.' '.$hour);
+            $data['memberid'] = $account;
+            if (db('connsellor_ondate')->where($data)->find()) {
+                $wmap['memberid'] = $account;
+                $wmap['status'] = array('lt',4);
+                $wmap['start_time'] = strtotime($day.' '.$hour);
+                if (!db('calendar')->where($wmap)->find()) {
+                    db('connsellor_ondate')->where($data)->delete();
+                }
+                
+            }
+            
+        }
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
+
+    /**
      * [getUserMsgCount_shop 获取用户离线消息]
      * @param  [type] $params [description]
      * @return [type]         [description]
