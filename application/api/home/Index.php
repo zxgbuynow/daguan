@@ -3505,6 +3505,31 @@ class Index
                 }
                 
                
+            }else if (strstr($value['link'], 'clac')) {
+                if ($ismobile) {
+                    $lunbo['pic'][$key]['webview'] = "/mobile.php/clac/detail.html";
+                    $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                    $lunbo['pic'][$key]['webparam1'] = 0;
+                }else{
+                    $lunbo['pic'][$key]['webview'] = '_www/view/clac/detail.html';
+                     $lunbo['pic'][$key]['webparam'] = ['acid'=>explode('.',explode('/', $value['link'])[1])[0],'actype'=>0];
+                }
+                
+               
+            }else if (strstr($value['link'], 'act')) {
+                if ($ismobile) {
+                    $lunbo['pic'][$key]['webview'] = "/mobile.php/clac/detail.html";
+                     $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                     $lunbo['pic'][$key]['webparam1'] = 1;
+                }else{
+                    $lunbo['pic'][$key]['webview'] = '_www/view/clac/detail.html';
+                     $lunbo['pic'][$key]['webparam'] = ['acid'=>explode('.',explode('/', $value['link'])[1])[0],'actype'=>1];
+                }
+                
+               
+            }else{
+                $class['pic'][$key]['webview'] = '';
+                $class['pic'][$key]['webparam'] = [];
             }
 
             // if (strstr($value['link'], 'article')) {//文章
