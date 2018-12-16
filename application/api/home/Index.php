@@ -2032,7 +2032,6 @@ class Index
         $uid = db('trade')->where('id',$tid)->value('memberid');
         $mobile = db('member')->where(['id'=>$uid])->value('mobile');
         $sj = strtotime($start_time);
-        $mobile = 18321271831;
         $this->sendadvicemsg($mobile,$content,$sj);
 
         //更新预约表状态
