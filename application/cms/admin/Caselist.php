@@ -39,11 +39,10 @@ class Caselist extends Admin
             $map['memberid'] = $id;
         }
         if ($cid) {
-            $map['id'] = $cid;
+            $map['cid'] = $cid;
         }
         // 数据列表
         $data_list = CasetabModel::where($map)->order('id desc')->paginate();
-
         // 分页数据
         $page = $data_list->render();
         

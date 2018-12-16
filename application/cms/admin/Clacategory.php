@@ -149,10 +149,7 @@ class Clacategory extends Admin
      */
     public function delete($ids = null)
     {
-        // 检查是否有子菜单
-        if (CategoryModel::where('pid', $ids)->find()) {
-            $this->error('请先删除或移动该菜单下的子菜单');
-        }
+        
         return $this->setStatus('delete');
     }
 
