@@ -3381,7 +3381,7 @@ class Index
         }
 
         //更新状态
-        $data['status'] = 1;
+        $data['status'] = 0;
         
         $map['username'] = $username;
         if(!db('member')->where($map)->update($data)){
