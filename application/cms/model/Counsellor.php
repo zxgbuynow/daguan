@@ -28,7 +28,7 @@ class Counsellor extends Model
     }
 
     
-    public  function getIncomeAttr($v,$data)
+    static  function getIncomeAttr($v,$data)
     {
         return number_format(db('trade')->where(['mid'=>$data['id'],'status'=>1])->sum('payment'),1);
     }

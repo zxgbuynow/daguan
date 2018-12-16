@@ -39,6 +39,13 @@ class Counserllericome extends Admin
         
         $incomeBtn = ['icon' => 'fa fa-fw fa-cny', 'title' => '收入明细', 'href' => url('income', ['id' => '__id__'])];
 
+        $btnexport = [
+            // 'class' => 'btn btn-info',
+            'title' => '导出',
+            'icon'  => 'fa fa-fw fa-file-excel-o',
+            'href'  => url('export')
+        ];
+
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setPageTitle('咨询师收入管理') // 设置页面标题
@@ -56,9 +63,35 @@ class Counserllericome extends Admin
             // ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
             // ->addRightButtons('delete,edit') // 批量添加右侧按钮
             ->addRightButton('custom', $incomeBtn)
+            ->addTopButton('custom', $btnexport)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
+    }
+
+    /**
+     * [tradexport 导出]
+     * @return [type] [description]
+     */
+    public function export()
+    {
+        
+        //查询数据
+        $map['type'] = 1;
+        $data = CounsellorModel::where($map)->order('id desc')->select();
+        foreach ($data as $key => $value) {
+            $data[$key]['income'] = CounsellorModel::getIncomeAttr(null,$value);
+            
+        }
+        // 设置表头信息（对应字段名,宽度，显示表头名称）
+        $cellName = [
+            ['id','auto', 'ID'],
+            ['mobile','auto', '手机号'],
+            ['nickname','auto', '姓名'],
+            ['income', 'auto','收入'],            
+        ];
+        // 调用插件（传入插件名，[导出文件名、表头信息、具体数据]）
+        plugin_action('Excel/Excel/export', ['咨询师收入表', $cellName, $data]);
     }
 
     /**
