@@ -17,7 +17,7 @@ class Coupon extends ThinkModel
     // 自动写入时间戳
     protected $autoWriteTimestamp = true;
 
-    public  function getMemberAttr($v,$data)
+    static  function getMemberAttr($v,$data)
     {
         $mid = $data['memberid'];
 

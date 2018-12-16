@@ -37,6 +37,13 @@ class Coupon extends Admin
         // 分页数据
         $page = $data_list->render();
 
+        $btnexport = [
+            // 'class' => 'btn btn-info',
+            'title' => '导出',
+            'icon'  => 'fa fa-fw fa-file-excel-o',
+            'href'  => url('export')
+        ];
+
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setSearch(['title' => '标题'])// 设置搜索框
@@ -52,9 +59,39 @@ class Coupon extends Admin
             ->raw('member')
             // ->addTopButton('add', ['href' => url('add')])
             // ->addRightButton('edit')
+            ->addTopButton('custom', $btnexport)
             ->addRightButton('delete', ['data-tips' => '删除后无法恢复。'])// 批量添加右侧按钮
             ->setRowList($data_list)// 设置表格数据
             ->fetch(); // 渲染模板
+    }
+
+    /**
+     * [tradexport 导出]
+     * @return [type] [description]
+     */
+    public function export()
+    {
+        
+        //查询数据
+        $map = array();
+        $data = CouponModel::where($map)->order('id desc')->select();
+        $status = ['0'=>'未使用', '1'=>'已使用'];
+        foreach ($data as $key => $value) {
+            $data[$key]['member'] = CouponModel::getMemberAttr(null,$value);
+            $data[$key]['use'] = $status[$value['status']];
+            
+        }
+        // 设置表头信息（对应字段名,宽度，显示表头名称）
+        $cellName = [
+            ['id','auto', 'ID'],
+            ['title','auto', '标题'],
+            ['price','auto', '金额'],
+            ['member','auto', '所属会员'],
+            ['created_time','auto', '创建时间', 'datetime'],
+            ['use','auto', '审核状态'],
+        ];
+        // 调用插件（传入插件名，[导出文件名、表头信息、具体数据]）
+        plugin_action('Excel/Excel/export', ['优惠券表', $cellName, $data]);
     }
 
     /**
