@@ -906,7 +906,12 @@ class Index
                 'show'=>'面对面咨询'
             )
         );
-        
+        foreach ($counsellor['chartArr'] as $key => $value) {
+            if (!in_array($value['chart'], explode(',', $counsellor['openchart']))) {
+                unset($counsellor['chartArr'][$key]);
+                continue;
+            }
+        }
         //
         $counsellor['is_diamonds'] = $is_diamonds;
         //登录状态
