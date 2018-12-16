@@ -34,6 +34,8 @@ class Trade extends Admin
             $map['mid'] = $id;
         }
 
+        $map['paytype'] = 0;
+
         if (isset($map['u'])&&$map['u'][1]) {
             $s['nickname'] =array('like',$map['u'][1]);
             $usernames = db('member')->where($s)->column('id');
@@ -94,6 +96,12 @@ class Trade extends Admin
             'href'  => url('calendar', ['id' => '__id__'])
         ];
 
+        $btnexport = [
+            // 'class' => 'btn btn-info',
+            'title' => '导出',
+            'icon'  => 'fa fa-fw fa-file-excel-o',
+            'href'  => url('tradexport')
+        ];
         //约时间
         
         // 使用ZBuilder快速创建数据表格
@@ -122,6 +130,7 @@ class Trade extends Admin
             ])
             ->raw('ondate')
             ->raw('process')
+            ->addTopButton('custom', $btnexport)
             // ->addTopButtons('delete') // 批量添加顶部按钮
             // ->addRightButtons('cancle,frzee') // 批量添加右侧按钮
             ->addRightButton('custom', $btncancle) // 添加右侧按钮
@@ -133,6 +142,47 @@ class Trade extends Admin
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
+    }
+
+    /**
+     * [tradexport 导出]
+     * @return [type] [description]
+     */
+    public function tradexport()
+    {
+        
+        //查询数据
+        $data = TradeModel::where('paytype', 0)->select();
+        $pay_type = ['alipay'=>'支付宝', 'wxpayApp'=>'微信支付',''=>'其他'];
+        $paytype = ['0'=>'预约订单', '1'=>'冲值订单', '2'=>'课程订单', '3'=>'活动订单'];
+        $status =  ['0'=>'待支付', '1'=>'已支付', '2'=>'取消', '3'=>'冻结'];
+        foreach ($data as $key => $value) {
+            $data[$key]['shopid'] = db('shop_agency')->where(['id'=>$value['shopid']])->value('title');
+            $data[$key]['memberid'] = db('member')->where(['id'=>$value['memberid']])->value('nickname');
+            $data[$key]['mid'] = db('member')->where(['id'=>$value['mid']])->value('nickname');
+            $data[$key]['pay_type'] = $pay_type[$value['pay_type']];
+            $data[$key]['paytype'] = $paytype[$value['paytype']];
+            $data[$key]['status'] = $status[$value['status']];
+            
+        }
+        // 设置表头信息（对应字段名,宽度，显示表头名称）
+        $cellName = [
+            ['id','auto', 'ID'],
+            ['title','auto', '交易标题'],
+            ['payment','auto', '支付金额'],
+            ['pay_type','auto', '支付方式'],
+            ['num','auto', '可约数'],
+            ['process','auto', '进度'],
+            ['shopid', 'auto','机构'],
+            ['memberid','auto', '用户'],
+            ['mid','auto', '咨询师'],
+            ['created_time','auto', '创建时间', 'datetime'],
+            ['ondate','auto', '预约时间','datetime'],
+            ['paytype','auto', '来源'],
+            ['status','auto', '状态']
+        ];
+        // 调用插件（传入插件名，[导出文件名、表头信息、具体数据]）
+        plugin_action('Excel/Excel/export', ['咨询订单表', $cellName, $data]);
     }
     /**
      * [calendar description]
