@@ -4174,11 +4174,12 @@ class Index
             if ($value['start_time']<$cstime) {
                 // error_log($value['start_time'].'|||'.$cstime,3,'/home/wwwroot/daguan/time.log');
                 unset($calendar['list'][$key]);
+                continue;
             }
             $uid  = db('trade')->where(['id'=>$value['tid']])->value('memberid');
             //获得用户信息 
             $calendar['list'][$key]['user'] = db('member')->field('id,username,nickname,avar')->where(['id'=>$uid])->find();
-            
+
 
         }
         $calendar['list'] = array_values($calendar['list']);
