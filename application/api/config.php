@@ -103,6 +103,7 @@ return [
         'hxmsgup'=>'hxmsg.up',
         'counsellorst'=>'counsellor.st',//咨询师
         'noticemsg'=>'notice.msg',
+        'cancleallcalenda'=>'cancleall.calenda',//设置批量预约
 
 
 
