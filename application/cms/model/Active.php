@@ -52,7 +52,7 @@ class Active extends ThinkModel
 
     static  function getCounsollorAttr($v,$data)
     {
-        $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
+        $allot = db('shop_acitve_allot')->where(['activeid'=>$data['id']])->find();
 
         if (!$allot) {
             return 0;
@@ -68,7 +68,7 @@ class Active extends ThinkModel
 
     static  function getShopAttr($v,$data)
     {   
-        $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
+        $allot = db('shop_acitve_allot')->where(['activeid'=>$data['id']])->find();
 
         if (!$allot) {
             return 0;
@@ -81,7 +81,7 @@ class Active extends ThinkModel
 
     static  function getAdminAttr($v,$data)
     {
-        $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
+        $allot = db('shop_acitve_allot')->where(['activeid'=>$data['id']])->find();
 
         if (!$allot) {
             return 0;
@@ -94,7 +94,7 @@ class Active extends ThinkModel
 
     static  function getCounsollerAttr($v,$data)
     {
-        $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
+        $allot = db('shop_acitve_allot')->where(['activeid'=>$data['id']])->find();
 
         if (!$allot) {
             return 0;
@@ -119,7 +119,7 @@ class Active extends ThinkModel
 
     static  function getAcounsollorAttr($v,$data)
     {
-        $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
+        $allot = db('shop_acitve_allot')->where(['activeid'=>$data['id']])->find();
 
         if (!$allot) {
             return 0;
@@ -135,7 +135,7 @@ class Active extends ThinkModel
 
     static  function getAshopAttr($v,$data)
     {   
-        $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
+        $allot = db('shop_acitve_allot')->where(['activeid'=>$data['id']])->find();
 
         if (!$allot) {
             return 0;
@@ -148,7 +148,7 @@ class Active extends ThinkModel
 
     static  function getAadminAttr($v,$data)
     {
-        $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
+        $allot = db('shop_acitve_allot')->where(['activeid'=>$data['id']])->find();
 
         if (!$allot) {
             return 0;
@@ -161,7 +161,7 @@ class Active extends ThinkModel
 
     static  function getAcounsollerAttr($v,$data)
     {
-        $allot = db('shop_acitve_allot')->where(['classid'=>$data['id']])->find();
+        $allot = db('shop_acitve_allot')->where(['activeid'=>$data['id']])->find();
 
         if (!$allot) {
             return 0;
