@@ -19,39 +19,39 @@ class Calendar extends Model
      // 自动写入时间戳
     protected $autoWriteTimestamp = true;
 
-    public  function getAgencyAttr($v,$data)
+    static  function getAgencyAttr($v,$data)
     {
        $shopid = db('trade')->where(['id'=>$data['tid']])->value('shopid');
 
        return db('shop_agency')->where(['id'=>$shopid])->value('title');
     }
 
-    public  function getUsernameAttr($v,$data)
+    static  function getUsernameAttr($v,$data)
     {
        $memberid = db('trade')->where(['id'=>$data['tid']])->value('memberid');
        return db('member')->where(['id'=>$memberid])->value('nickname');
 
     }
 
-    public  function getCounsollorAttr($v,$data)
+    static  function getCounsollorAttr($v,$data)
     {
         return db('member')->where(['id'=>$data['memberid']])->value('nickname');
 
     }
 
-    public  function getTidsAttr($v,$data)
+    static  function getTidsAttr($v,$data)
     {
        return db('trade')->where(['id'=>$data['tid']])->value('tid');
 
     }
-    public  function getPlaceAttr($v,$data)
+    static  function getPlaceAttr($v,$data)
     {
        return db('trade')->where(['id'=>$data['tid']])->value('place');
 
     }
 
 
-    public  function getAddressAttr($v,$data)
+    static  function getAddressAttr($v,$data)
     {
         $shopid = db('trade')->where(['id'=>$data['tid']])->value('shopid');
 
@@ -59,7 +59,7 @@ class Calendar extends Model
 
     }
 
-    public  function getChartAttr($v,$data)
+    static  function getChartAttr($v,$data)
     {
       $data = db('trade')->where(['id'=>$data['tid']])->value('chart');
       switch ($data) {

@@ -20,7 +20,7 @@ class Counsellor extends Model
     protected $autoWriteTimestamp = true;
 
 
-    public static function getCounsellorList($id)
+    static function getCounsellorList($id)
     {
         $counsellor =  db('member')->alias('a')->field('a.*,b.*,b.id as bid,a.id as aid')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where(array('a.id'=>$id))->find();
 
@@ -32,19 +32,19 @@ class Counsellor extends Model
     {
         return number_format(db('trade')->where(['mid'=>$data['id'],'status'=>1])->sum('payment'),1);
     }
-    public  function getVerifystatusAttr($v,$data)
+    static  function getVerifystatusAttr($v,$data)
     {
         return $data['status'];
     }
 
-    public  function getAgencyAttr($v,$data)
+    static  function getAgencyAttr($v,$data)
     {
         $map['id'] = $data['shopid'];
         return db('shop_agency')->where($map)->value('title');
 
     }
 
-    public  function getOffnumAttr($v,$data)
+    static  function getOffnumAttr($v,$data)
     {
         $map['chart'] = 'facechart';
         $map['status'] = 1;
@@ -53,7 +53,7 @@ class Counsellor extends Model
 
     }
 
-    public  function getOffincomeAttr($v,$data)
+    static  function getOffincomeAttr($v,$data)
     {
         $map['chart'] = 'facechart';
         $map['status'] = 1;
@@ -62,7 +62,7 @@ class Counsellor extends Model
 
     }
 
-    public  function getWordnumAttr($v,$data)
+    static  function getWordnumAttr($v,$data)
     {
         $map['chart'] = 'wordchart';
         $map['status'] = 1;
@@ -71,7 +71,7 @@ class Counsellor extends Model
 
     }
 
-    public  function getWordincomeAttr($v,$data)
+    static  function getWordincomeAttr($v,$data)
     {
         $map['chart'] = 'wordchart';
         $map['status'] = 1;
@@ -80,7 +80,7 @@ class Counsellor extends Model
 
     }
 
-    public  function getVoicenumAttr($v,$data)
+    static  function getVoicenumAttr($v,$data)
     {
         $map['chart'] = 'speechchart';
         $map['status'] = 1;
@@ -89,7 +89,7 @@ class Counsellor extends Model
 
     }
 
-    public  function getVoiceincomeAttr($v,$data)
+    static  function getVoiceincomeAttr($v,$data)
     {
         $map['chart'] = 'speechchart';
         $map['status'] = 1;
@@ -98,7 +98,7 @@ class Counsellor extends Model
 
     }
 
-    public  function getTalkincomeAttr($v,$data)
+    static  function getTalkincomeAttr($v,$data)
     {
         $map['paytype'] = 0;
         $map['status'] = 1;
@@ -107,14 +107,14 @@ class Counsellor extends Model
 
     }
 
-    public  function getClassnumeAttr($v,$data)
+    static  function getClassnumeAttr($v,$data)
     {
         $map['adminid'] = $data['id'];
         return db('shop_classes_allot')->alias('a')->join('cms_classes b',' b.id = a.classid','LEFT')->where($map)->count();
 
     }
 
-    public  function getClassincomeAttr($v,$data)
+    static  function getClassincomeAttr($v,$data)
     {
         // $map['mid'] = $data['id'];
         // return db('shop_classes_allot')->alias('a')->join('cms_classes b',' b.id = a.classid','LEFT')->where($map)->count();
@@ -122,14 +122,14 @@ class Counsellor extends Model
 
     }
 
-    public  function getActivenumAttr($v,$data)
+    static  function getActivenumAttr($v,$data)
     {
         $map['adminid'] = $data['id'];
         return db('shop_classes_allot')->alias('a')->join('cms_active b',' b.id = a.classid','LEFT')->where($map)->count();
 
     }
 
-    public  function getActiveincomeAttr($v,$data)
+    static  function getActiveincomeAttr($v,$data)
     {
         // $map['mid'] = $data['id'];
         // return db('shop_classes_allot')->alias('a')->join('cms_classes b',' b.id = a.classid','LEFT')->where($map)->count();
@@ -137,7 +137,7 @@ class Counsellor extends Model
 
     }
 
-    public  function getClacincomeAttr($v,$data)
+    static  function getClacincomeAttr($v,$data)
     {
         // $map['mid'] = $data['id'];
         // return db('shop_classes_allot')->alias('a')->join('cms_classes b',' b.id = a.classid','LEFT')->where($map)->count();
@@ -145,7 +145,7 @@ class Counsellor extends Model
 
     }
 
-    public  function getTotalAttr($v,$data)
+    static  function getTotalAttr($v,$data)
     {
         // $map['mid'] = $data['id'];
         // return db('shop_classes_allot')->alias('a')->join('cms_classes b',' b.id = a.classid','LEFT')->where($map)->count();

@@ -84,7 +84,12 @@ class Report extends Admin
         // // 分页数据
         $page = $data_list->render();
 
-
+        $btnexport = [
+            // 'class' => 'btn btn-info',
+            'title' => '导出',
+            'icon'  => 'fa fa-fw fa-file-excel-o',
+            'href'  => url('counsollorex')
+        ];
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setSearch(['title' => '标题'])// 设置搜索框
@@ -100,11 +105,40 @@ class Report extends Admin
             ->raw('rcnum')
             ->raw('bycnum')
             ->raw('rnum')
+            ->addTopButton('custom', $btnexport)
             // ->addTopButton('add', ['href' => url('add')])
             // ->addRightButton('edit')
             // ->addRightButton('delete', ['data-tips' => '删除后无法恢复。'])// 批量添加右侧按钮
             ->setRowList($data_list)// 设置表格数据
             ->fetch(); // 渲染模板
+    }
+    /**
+     * [tradexport 导出]
+     * @return [type] [description]
+     */
+    public function counsollorex()
+    {
+        
+        //查询数据
+        $map = [];
+        $data = AgencyModel::where($map)->order('id desc')->select();
+        foreach ($data as $key => $value) {
+            $data[$key]['dcnum'] = AgencyModel::getDcnumAttr(null,$value);
+            $data[$key]['rcnum'] = AgencyModel::getRcnumAttr(null,$value);
+            $data[$key]['bycnum'] = AgencyModel::getBycnumAttr(null,$value);
+            $data[$key]['rnum'] = AgencyModel::getRnumAttr(null,$value);
+            
+        }
+        // 设置表头信息（对应字段名,宽度，显示表头名称）
+        $cellName = [
+            ['title','auto', '分中心'],
+            ['dcnum','auto', '待审核咨询师人数'],
+            ['rcnum','auto', '正式咨询师人数'],
+            ['bycnum','auto', '正式咨询师咨询数'],
+            ['rnum','auto', '推荐人数'],
+        ];
+        // 调用插件（传入插件名，[导出文件名、表头信息、具体数据]）
+        plugin_action('Excel/Excel/export', ['咨询师报表', $cellName, $data]);
     }
 
     /**
@@ -124,7 +158,12 @@ class Report extends Admin
         // // 分页数据
         $page = $data_list->render();
 
-
+        $btnexport = [
+            // 'class' => 'btn btn-info',
+            'title' => '导出',
+            'icon'  => 'fa fa-fw fa-file-excel-o',
+            'href'  => url('calendarex')
+        ];
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setSearch(['title' => '预约内容'])// 设置搜索框
@@ -141,11 +180,41 @@ class Report extends Admin
             ->raw('username')
             ->raw('counsollor')
             ->raw('address')
+            ->addTopButton('custom', $btnexport)
             // ->addTopButton('add', ['href' => url('add')])
             // ->addRightButton('edit')
             // ->addRightButton('delete', ['data-tips' => '删除后无法恢复。'])// 批量添加右侧按钮
             ->setRowList($data_list)// 设置表格数据
             ->fetch(); // 渲染模板
+    }
+    /**
+     * [calendarex 导出]
+     * @return [type] [description]
+     */
+    public function calendarex()
+    {
+        
+        //查询数据
+        $map = [];
+        $data = CalendarModel::all();
+        foreach ($data as $key => $value) {
+            $data[$key]['agency'] = CalendarModel::getAgencyAttr(null,$value);
+            $data[$key]['username'] = CalendarModel::getUsernameAttr(null,$value);
+            $data[$key]['counsollor'] = CalendarModel::getCounsollorAttr(null,$value);
+            $data[$key]['address'] = CalendarModel::getAddressAttr(null,$value);
+            
+        }
+        // 设置表头信息（对应字段名,宽度，显示表头名称）
+        $cellName = [
+            ['agency', 'auto','分中心'],
+            ['username', 'auto','咨询姓名'],
+            ['counsollor','auto', '咨询师'],
+            ['start_time', 'auto','预约时间','datetime'],
+            ['title', 'auto','预约种类'],
+            ['address','auto', '预约地点'],
+        ];
+        // 调用插件（传入插件名，[导出文件名、表头信息、具体数据]）
+        plugin_action('Excel/Excel/export', ['咨询预约报表', $cellName, $data]);
     }
 
     /**
@@ -165,7 +234,12 @@ class Report extends Admin
         // // 分页数据
         $page = $data_list->render();
 
-
+        $btnexport = [
+            // 'class' => 'btn btn-info',
+            'title' => '导出',
+            'icon'  => 'fa fa-fw fa-file-excel-o',
+            'href'  => url('cincomex')
+        ];
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setSearch(['nickname' => '咨询师'])// 设置搜索框
@@ -201,10 +275,62 @@ class Report extends Admin
             ->raw('activeincome')
             ->raw('clacincome')
             ->raw('total')
+            ->addTopButton('custom', $btnexport)
             ->setRowList($data_list)// 设置表格数据
             ->fetch(); // 渲染模板
     }
 
+    /**
+     * [cincomex 导出]
+     * @return [type] [description]
+     */
+    public function cincomex()
+    {
+        
+        //查询数据
+        $map = [];
+        $data = CounsellorModel::all();
+        foreach ($data as $key => $value) {
+            $data[$key]['agency'] = CounsellorModel::getAgencyAttr(null,$value);
+            $data[$key]['offnum'] = CounsellorModel::getOffnumAttr(null,$value);
+            $data[$key]['offincome'] = CounsellorModel::getOffincomeAttr(null,$value);
+            $data[$key]['wordnum'] = CounsellorModel::getWordnumAttr(null,$value);
+
+            $data[$key]['wordincome'] = CounsellorModel::getWordincomeAttr(null,$value);
+            $data[$key]['voicenum'] = CounsellorModel::getVoicenumAttr(null,$value);
+            $data[$key]['voiceincome'] = CounsellorModel::getVoiceincomeAttr(null,$value);
+            $data[$key]['talkincome'] = CounsellorModel::getTalkincomeAttr(null,$value);
+
+            $data[$key]['classnume'] = CounsellorModel::getClassnumeAttr(null,$value);
+            $data[$key]['classincome'] = CounsellorModel::getClassincomeAttr(null,$value);
+            $data[$key]['activenum'] = CounsellorModel::getActivenumAttr(null,$value);
+            $data[$key]['activeincome'] = CounsellorModel::getActiveincomeAttr(null,$value);
+
+            $data[$key]['clacincome'] = CounsellorModel::getClacincomeAttr(null,$value);
+            $data[$key]['total'] = CounsellorModel::getTotalAttr(null,$value);
+            
+        }
+        // 设置表头信息（对应字段名,宽度，显示表头名称）
+        $cellName = [
+            ['agency','auto', '分中心'],
+            ['nickname','auto', '咨询师姓名'],
+            ['offnum','auto', '线下咨询人次'],
+            ['offincome','auto', '线下咨询收入'],
+            ['wordnum','auto', '文字咨询人次'],
+            ['wordincome', 'auto','文字咨询收入'],
+            ['voicenum','auto', '语音咨询人次'],
+            ['voiceincome','auto', '语音咨询收入'],
+            ['talkincome','auto', '咨询总收入'],
+            ['classnume','auto', '课程数'],
+            ['classincome','auto', '课程收入'],
+            ['activenum','auto', '活动数'],
+            ['activeincome','auto', '活动收入'],
+            ['clacincome','auto', '课程活动收入'],
+            ['total','auto', '总收入'],
+        ];
+        // 调用插件（传入插件名，[导出文件名、表头信息、具体数据]）
+        plugin_action('Excel/Excel/export', ['咨询师收入报表', $cellName, $data]);
+    }
     /**
      * 课程列表
      * @return mixed
@@ -390,7 +516,12 @@ class Report extends Admin
         // // 分页数据
         $page = $data_list->render();
 
-
+        $btncalendar = [
+            // 'class' => 'btn btn-info',
+            'title' => '导出',
+            'icon'  => 'fa fa-fw fa-file-excel-o',
+            'href'  => url('totalincomex')
+        ];
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setSearch(['title' => '标题'])// 设置搜索框
@@ -442,8 +573,68 @@ class Report extends Admin
             // ->addTopButton('add', ['href' => url('add')])
             // ->addRightButton('edit')
             // ->addRightButton('delete', ['data-tips' => '删除后无法恢复。'])// 批量添加右侧按钮
+            ->addTopButton('custom', $btncalendar)
             ->setRowList($data_list)// 设置表格数据
             ->fetch(); // 渲染模板
     }
     
+    /**
+     * [classexport 导出]
+     * @return [type] [description]
+     */
+    public function totalincomex()
+    {
+        
+        //查询数据
+        $data = AgencyModel::all();
+        foreach ($data as $key => $value) {
+            $data[$key]['seeknums'] = AgencyModel::getSeeknumsAttr(null,$value);
+            $data[$key]['wordnums'] = AgencyModel::getWordnumsAttr(null,$value);
+            $data[$key]['voicenums'] = AgencyModel::getVoicenumsAttr(null,$value);
+            $data[$key]['videonums'] = AgencyModel::getVideonumsAttr(null,$value);
+            $data[$key]['wifinums'] = AgencyModel::getWifinumsAttr(null,$value);
+            $data[$key]['facenums'] = AgencyModel::getFacenumsAttr(null,$value);
+            $data[$key]['cincome'] = AgencyModel::getCincomeAttr(null,$value);
+            $data[$key]['sincome'] = AgencyModel::getSincomeAttr(null,$value);
+            $data[$key]['aincome'] = AgencyModel::getAincomeAttr(null,$value);
+            $data[$key]['clnums'] = AgencyModel::getClnumsAttr(null,$value);
+            $data[$key]['clcnums'] = AgencyModel::getClcnumsAttr(null,$value);
+            $data[$key]['clsnums'] = AgencyModel::getClsnumsAttr(null,$value);
+
+            $data[$key]['clanums'] = AgencyModel::getClanumsAttr(null,$value);
+            $data[$key]['acnums'] = AgencyModel::getAcnumsAttr(null,$value);
+            $data[$key]['accincome'] = AgencyModel::getAccincomeAttr(null,$value);
+            $data[$key]['acsincome'] = AgencyModel::getAcsincomeAttr(null,$value);
+            $data[$key]['acaincome'] = AgencyModel::getAcaincomeAttr(null,$value);
+
+            $data[$key]['totalsincome'] = AgencyModel::getTotalsincomeAttr(null,$value);
+            $data[$key]['totalaincome'] = AgencyModel::getTotalaincomeAttr(null,$value);
+            
+        }
+        // 设置表头信息（对应字段名,宽度，显示表头名称）
+        $cellName = [
+            ['title', 'auto','分中心'],
+            ['seeknums','auto', '总咨询人次'],
+            ['wordnums','auto', '文字咨询人次'],
+            ['voicenums','auto', '语音咨询人次'],
+            ['videonums','auto', '视频咨询人次'],
+            ['wifinums','auto', '网络咨询总人次'],
+            ['facenums','auto', '地面咨询人次'],
+            ['cincome','auto', '咨询师收入'],
+            ['sincome','auto', '咨询机构收入'],
+            ['aincome','auto', '咨询平台收入'],
+            ['clnums', 'auto','课程次数'],
+            ['clcnums', 'auto','课程咨询师收入'],
+            ['clsnums','auto', '课程机构收入'],
+            ['clanums','auto', '课程平台收入'],
+            ['acnums', 'auto','活动次数'],
+            ['accincome','auto', '活动咨询师收入'],
+            ['acsincome','auto', '活动机构收入'],
+            ['acaincome','auto', '活动平台收入'],
+            ['totalsincome', 'auto','机构总收入'],
+            ['totalaincome','auto', '平台总收入'],
+        ];
+        // 调用插件（传入插件名，[导出文件名、表头信息、具体数据]）
+        plugin_action('Excel/Excel/export', ['总收入报表', $cellName, $data]);
+    }
 }
