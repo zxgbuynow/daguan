@@ -47,6 +47,12 @@ class Caselist extends Admin
         $page = $data_list->render();
         
         $btnAdd = ['icon' => 'fa fa-fw fa-search', 'title' => '查看', 'href' => url('edit', ['id' => '__id__'])];
+        $btnexport = [
+            // 'class' => 'btn btn-info',
+            'title' => '导出',
+            'icon'  => 'fa fa-fw fa-file-excel-o',
+            'href'  => url('export')
+        ];
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
@@ -70,10 +76,70 @@ class Caselist extends Admin
                 ['right_button', '操作', 'btn']
             ])
             // ->addTopButtons('enable,disable,delete') // 批量添加顶部按钮
+            ->addTopButton('custom', $btnexport)
             ->addRightButton('custom', $btnAdd)
             ->setRowList($data_list) // 设置表格数据
             ->setPages($page) // 设置分页数据
             ->fetch(); // 渲染页面
+    }
+
+    /**
+     * [tradexport 导出]
+     * @return [type] [description]
+     */
+    public function export()
+    {
+        
+        //查询数据
+        $map = [];
+        $data = CasetabModel::where($map)->order('id desc')->select();
+
+        $marital = ['0'=>'否', '1'=>'是'];
+        $sex =  ['0'=>'女', '1'=>'男'];
+        foreach ($data as $key => $value) {
+            $data[$key]['sex'] = $sex[$value['sex']];
+            $data[$key]['marital'] = $marital[$value['marital']];
+            
+        }
+        // 设置表头信息（对应字段名,宽度，显示表头名称）
+        $cellName = [
+            ['id','auto', 'ID'],
+            ['truename','auto', '用户名'],
+
+            ['sex', 'auto','性别'],
+            ['birthday', 'auto','年龄'],
+            ['edu', 'auto','学历'],
+            ['grade', 'auto','年级'],
+            ['marital','auto', '婚姻'],
+            ['profession', 'auto','职业'],
+            ['mobile', 'auto','手机号'],
+            ['timerange','auto', '预约时间', 'datetime'],
+            ['caseStarttime','auto', '开始时间', 'datetime'],
+            ['caseEndtime','auto', '结束时间', 'datetime'],
+
+            ['caseS','auto', 'S'],
+            ['caseR9','auto', 'R9'],
+            ['caseSOR','auto', 'SOR'],
+            ['casePNF', 'auto','PNF'],
+
+            ['Avl','auto', 'A'],
+            ['A2vl','auto', '2A'],
+            ['Bvl','auto', 'B'],
+            ['M1vl','auto', '1M'],
+            ['AMvl','auto', 'A-M'],
+            ['M2vl', 'auto','2M'],
+            ['PLAN','auto', '计划'],
+
+            ['caseMasterQs','auto', '资金投向'],
+            ['casefamilyQs','auto', '家属主诉'],
+            ['caseSkill','auto', '应用技术'],
+            ['caseWork','auto', '作业'],
+            ['caseResult','auto', '效果评估'],
+            ['caseStreng','auto', '加强项目'],
+            ['caseMark', 'auto','备注'],
+        ];
+        // 调用插件（传入插件名，[导出文件名、表头信息、具体数据]）
+        plugin_action('Excel/Excel/export', ['案例表', $cellName, $data]);
     }
 
 
