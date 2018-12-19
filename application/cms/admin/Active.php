@@ -37,7 +37,7 @@ class Active extends Admin
         $page = $data_list->render();
 
 
-        $list_module = CategoryModel::where(1)->order('id desc')->column('id as cateid,title');
+        $list_module = ClacategoryModel::where(1)->order('id desc')->column('id as cateid,title');
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setSearch(['title' => '标题'])// 设置搜索框
