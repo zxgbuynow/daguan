@@ -7,6 +7,7 @@ use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\cms\model\Active as ActiveModel;
 use app\cms\model\Classestemp as ClassestempModel;
+use app\cms\model\Clacategory as ClacategoryModel;
 use app\cms\model\Category as CategoryModel;
 use app\cms\model\Agency as AgencyModel;
 use util\Tree;
@@ -78,7 +79,7 @@ class Active extends Admin
             $data['endtime'] = strtotime($data['endtime']);
             if ($props = ActiveModel::create($data)) {
                 $data['classid'] = $props['id'];
-                $data['type'] = 0;
+                $data['type'] = 1;
                 ClassestempModel::create($data);
                 $this->success('新增成功', url('index'));
             } else {
@@ -88,7 +89,7 @@ class Active extends Admin
 
         $list_type = AgencyModel::where('status', 1)->column('id,title');
 
-        $catelist = CategoryModel::where('status', 1)->column('id,title');
+        $catelist = ClacategoryModel::where('status', 1)->column('id,title');
 
         // 显示添加页面
         return ZBuilder::make('form')
@@ -127,7 +128,7 @@ class Active extends Admin
             $data['endtime'] = strtotime($data['endtime']);
             if (ActiveModel::update($data)) {
                 $data['classid'] = $data['id'];
-                $data['type'] = 0;
+                $data['type'] = 1;
                 unset($data['id']);
 
                 $map['type'] = $data['type'];
@@ -141,7 +142,7 @@ class Active extends Admin
         }
         $list_type = AgencyModel::where('status', 1)->column('id,title');
 
-        $catelist = CategoryModel::where('status', 1)->column('id,title');
+        $catelist = ClacategoryModel::where('status', 1)->column('id,title');
 
         // 显示添加页面
         return ZBuilder::make('form')
