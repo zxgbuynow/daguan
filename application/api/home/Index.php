@@ -929,6 +929,10 @@ class Index
         $evmap['a.id'] = $params['id'];
         $evmap['e.id'] = array('neq','null');
         $counsellor['evalist'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where($evmap)->limit(5)->select();
+        if (isset($params['ismore'])) {
+            $counsellor['evalist'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where($evmap)->select();
+        }
+        
 
         foreach ($counsellor['evalist'] as $key => $value) {
             $u = db('member')->where(['id'=>$value['memberid']])->find();
