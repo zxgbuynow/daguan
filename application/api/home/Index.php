@@ -3131,13 +3131,15 @@ class Index
                 $res[$key]['sendid'] = 0;//是接受者
             }
             
-            
+            //newtime
+            $newtime[$key] = $news['create_time']; 
 
             //time
             $res[$key]['times'] = date('Y-m-d',$news['create_time']) == $now? date('H:i',$news['create_time']):date('Y-m-d H:i',$news['create_time']);
             //状态
             $res[$key]['st'] = $news['status'];
         }
+        array_multisort($newtime, SORT_DESC, $res);
         $rt['list'] = $res;
         //返回信息
         $data = [
@@ -6015,13 +6017,15 @@ class Index
             }
             
             
-
+            //newtime
+            $newtime[$key] = $news['create_time'];
 
             //time
             $res[$key]['times'] = date('Y-m-d',$news['create_time']) == $now? date('H:i',$news['create_time']):date('Y-m-d H:i',$news['create_time']);
             //状态
             $res[$key]['st'] = $news['status'];
         }
+        array_multisort($newtime, SORT_DESC, $res);
         $rt['list'] = $res;
         //返回信息
         $data = [
