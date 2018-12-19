@@ -228,6 +228,7 @@ class Counsellor extends Admin
             $save['username'] = $data['username'];
             $save['nickname'] = $data['nickname'];
             $save['truename'] = $data['truename'];
+            $save['slogan'] = $data['slogan'];
             $save['password'] = $data['password'];
 
             $save['qq'] = $data['qq'];
@@ -288,6 +289,7 @@ class Counsellor extends Admin
                 ['text', 'nickname', '昵称', '可以是中文'],
                 ['image', 'avar', '头像'],
                 ['text', 'truename', '真实姓名', '中文'],
+                ['text', 'slogan', '座右铭'],
                 ['text', 'identifi', '身份证'],
                 ['image', 'diploma', '咨询师证书'],
                 ['radio', 'tearch', '是否是讲师', '', ['否', '是']],
@@ -347,6 +349,7 @@ class Counsellor extends Admin
             $save['weixin'] = $data['weixin'];
             $save['alipay'] = $data['alipay'];
             $save['truename'] = $data['truename'];
+            $save['slogan'] = $data['slogan'];
             $save['cerfornt'] = $data['cerfornt'];
             $save['cerback'] = $data['cerback'];
             $save['identifi'] = $data['identifi'];
@@ -450,6 +453,7 @@ class Counsellor extends Admin
                 ['text', 'nickname', '昵称', '可以是中文'],
                 ['image', 'avar', '头像'],
                 ['text', 'truename', '真实姓名', '中文'],
+                ['text', 'slogan', '座右铭'],
                 ['text', 'identifi', '身份证'],
                 ['image', 'diploma', '咨询师证书'],
                 ['radio', 'tearch', '是否是讲师', '', ['否', '是'],1],
