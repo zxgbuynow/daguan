@@ -5705,7 +5705,7 @@ class Index
 
         foreach ($rt as $key => $value) {
             //查询当前咨询师是否已读
-            if(!db('msg')->where(['status'=>0,'noticeid'=>$value['id'],'reciveid'=>$account])->find()){
+            if(db('msg')->where(['status'=>1,'noticeid'=>$value['id'],'reciveid'=>$account])->find()){
                 unset($rt[$key]);
             }
         }
