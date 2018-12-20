@@ -2293,6 +2293,9 @@ class Index
         //不可约
         
         foreach ($info as $key => $value) {
+            if ($value['ondatetime']<time()) {
+                continue;
+            }
             //candar
             $ret[date('d',$value['ondatetime'])][] = $value['status'];
         }
