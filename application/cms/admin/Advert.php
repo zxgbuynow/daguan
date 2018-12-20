@@ -78,7 +78,7 @@ class Advert extends Admin
             $result = $this->validate($data, 'Advert');
             if (true !== $result) $this->error($result);
             if ($data['ad_type'] != 0) {
-                $data['link'] == '' && $this->error('链接不能为空');
+                $data['links'] == '' && $this->error('链接不能为空');
                 // Validate::is($data['link'], 'url') === false && $this->error('链接不是有效的url地址'); // true
             }
 
@@ -88,7 +88,7 @@ class Advert extends Admin
                     $data['content'] = $data['code'];
                     break;
                 case 1: // 文字
-                    $data['content'] = '<a href="'.$data['link'].'" target="_blank" style="';
+                    $data['content'] = '<a href="'.$data['links'].'" target="_blank" style="';
                     if ($data['size'] != '') {
                         $data['content'] .= 'font-size:'.$data['size'].'px;';
                     }
@@ -99,7 +99,7 @@ class Advert extends Admin
                     break;
                 case 2: // 图片
                     $srcpath = get_file_path($data['src']);
-                    $data['content'] = '<a href="'.$data['link'].'" target="_blank"><img src="'.$srcpath.'" style="';
+                    $data['content'] = '<a href="'.$data['links'].'" target="_blank"><img src="'.$srcpath.'" style="';
                     if ($data['width'] != '') {
                         $data['content'] .= 'width:'.$data['width'].'px;';
                     }
@@ -122,11 +122,11 @@ class Advert extends Admin
                     if ($data['height'] != '') {
                         $data['content'] .= ' height="'.$data['height'].'"';
                     }
-                    $data['content'] .= '><param name="quality" value="high" /><param name="movie" value="'.$data['link'].'" /><embed allowfullscreen="true"';
+                    $data['content'] .= '><param name="quality" value="high" /><param name="movie" value="'.$data['links'].'" /><embed allowfullscreen="true"';
                     if ($data['height'] != '') {
                         $data['content'] .= ' height="'.$data['height'].'"';
                     }
-                    $data['content'] .= ' pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" src="'.$data['link'].'" type="application/x-shockwave-flash"';
+                    $data['content'] .= ' pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" src="'.$data['links'].'" type="application/x-shockwave-flash"';
                     if ($data['width'] != '') {
                         $data['content'] .= ' width="'.$data['width'].'"';
                     }
