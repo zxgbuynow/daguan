@@ -2796,6 +2796,8 @@ class Index
                     $data[$key]['start_time'] =  $r['start_time'];
                     $data[$key]['typeid'] = $value['paytype']==2?0:1;
                     $data[$key]['id'] = $r['id'];
+                }else{
+                    continue;
                 }
                 
             }
@@ -2810,6 +2812,8 @@ class Index
                     $data[$key]['start_time'] =  $r['start_time'];
                     $data[$key]['typeid'] = $value['paytype']==3?1:0;
                     $data[$key]['id'] = $r['id'];
+                }else{
+                    continue;
                 }
                 
             }
@@ -4367,7 +4371,7 @@ class Index
         }else{
             $map['a.status'] = $status;
             if ($status==1||$status==2) {
-                $map['a.status'] = array('in','1,2');
+                $map['a.status'] = array('in','1,2,3');
             }
         }
         $map['a.memberid'] = $account;
