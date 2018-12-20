@@ -2038,6 +2038,10 @@ class Index
         $sj = strtotime($start_time);
         $this->sendadvicemsg($mobile,$content,$sj);
 
+        //发给咨询师
+        $cmobile = db('member')->where(['id'=>$account])->value('mobile');
+        $this->sendadvicemsg($cmobile,$content,$sj);
+
         //更新预约表状态
         db('connsellor_ondate')->where(['memberid'=>$account,'ondatetime'=>strtotime($start_time)])->update(['status'=>1]);
         //返回信息
