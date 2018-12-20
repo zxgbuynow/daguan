@@ -31,35 +31,75 @@ class Report extends Admin
         cookie('__forward__', $_SERVER['REQUEST_URI']);
 
         // 获取查询条件
-        $map = $this->getMap();
-
+        // $map = $this->getMap();
+        $da = db('member')->where(['type'=>0])->select();
+        // print_r($da);exit;
         // 数据列表
-        $data_list = AgencyModel::where($map)->order('id desc')->paginate();
+        // $data_list = AgencyModel::where($map)->order('id desc')->paginate();
+        $runum = db('member')->where(['type'=>0])->count();
+        $dunum = db('member')->where(['type'=>0,'status'=>0])->count();
 
+        $onmap['a.status'] = 1;
+        $onmap['b.paytype'] = 0;
+        $onmap['b.chart'] = array('neq','facechart');
+        $onunum = Db::name('member')->alias('a')->join(' trade b',' b.memberid = a.id','LEFT')->where($onmap)->group('a.id')->count();
+
+        $ofmap['a.status'] = 1;
+        $ofmap['b.paytype'] = 0;
+        $ofmap['b.chart'] = array('eq','facechart');
+        $ofunum = Db::name('member')->alias('a')->join(' trade b',' b.memberid = a.id','LEFT')->where($ofmap)->group('a.id')->count();
+
+        $clmap['a.status'] = 1;
+        $clmap['b.paytype'] = 2;
+        $clunum = Db::name('member')->alias('a')->join(' trade b',' b.memberid = a.id','LEFT')->where($clmap)->group('a.id')->count();
+
+        $acmap['a.status'] = 1;
+        $acmap['b.paytype'] = 3;
+        $acunum = Db::name('member')->alias('a')->join(' trade b',' b.memberid = a.id','LEFT')->where($acmap)->group('a.id')->count();
+
+        $wkvipnum = db('member')->where(['type'=>0,'vipday'=>1])->count();
+        $yrvipnum = db('member')->where(['type'=>0,'vipday'=>12])->count();
+
+        $data_list = array(
+            '0'=>array(
+                'runum'=>$runum,
+                'dunum'=>$dunum,
+                'onunum'=>$onunum,
+                'ofunum'=>$ofunum,
+                'clunum'=>$clunum,
+                'acunum'=>$acunum,
+
+                'wkvipnum'=>$wkvipnum,
+                // 'wklsvipnum'=>$wklsvipnum,
+                'yrvipnum'=>$yrvipnum,
+                // 'yrlsvipnum'=>$yrlsvipnum,
+            )
+            
+
+        );
         // // 分页数据
-        $page = $data_list->render();
+        // $page = $data_list->render();
 
 
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
-            ->setSearch(['title' => '标题'])// 设置搜索框
+            // ->setSearch(['title' => '标题'])// 设置搜索框
             ->hideCheckbox()
             ->addColumns([ // 批量添加数据列
-                ['title', '分中心'],
-                ['runum', '注册用户数'],
-                ['dunum', '停用用户数'],
-                ['onunum', '线上咨询用户数'],
-                ['ofunum', '线下咨询用户数'],
-                ['clunum', '课程用户数'],
-                ['acunum', '活动用户数'],
+                ['runum', '注册用户数', 'link', url('user/member/index')],
+                ['dunum', '停用用户数', 'link', url('user/member/index')],
+                ['onunum', '线上咨询用户数', 'link', url('user/member/index')],
+                ['ofunum', '线下咨询用户数', 'link', url('user/member/index')],
+                ['clunum', '课程用户数', 'link', url('user/member/index')],
+                ['acunum', '活动用户数', 'link', url('user/member/index')],
+
+                ['wkvipnum', '七天会员人数', 'link', url('user/member/index')],
+                // ['wklsvipnum', '七天会员到期人数'],
+                ['yrvipnum', '一年会员人数', 'link', url('user/member/index')],
+                // ['yrlsvipnum', '一年会员到期人数'],
                 // ['right_button', '操作', 'btn']
             ])
-            ->raw('runum')
-            ->raw('dunum')
-            ->raw('onunum')
-            ->raw('ofunum')
-            ->raw('clunum')
-            ->raw('acunum')
+            
             // ->addTopButton('add', ['href' => url('add')])
             // ->addRightButton('edit')
             // ->addRightButton('delete', ['data-tips' => '删除后无法恢复。'])// 批量添加右侧按钮

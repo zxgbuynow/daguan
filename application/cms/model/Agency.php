@@ -101,7 +101,7 @@ class Agency extends Model
         $map['shopid'] = $data['id'];
         $map['paytype'] = 0;
         $map['status'] = 1;
-        return db('trade')->where($map)->group('shopid')->count();
+        return db('trade')->where($map)->count();
     }
 
     static  function getWordnumsAttr($v,$data)
@@ -111,7 +111,7 @@ class Agency extends Model
         $map['paytype'] = 0;
         $map['status'] = 1;
         $map['chart'] = 'wordchart';
-        return db('trade')->where($map)->group('shopid')->count();
+        return db('trade')->where($map)->count();
     }
     static  function getVoicenumsAttr($v,$data)
     {   
@@ -120,7 +120,7 @@ class Agency extends Model
         $map['paytype'] = 0;
         $map['status'] = 1;
         $map['chart'] = 'speechchart';
-        return db('trade')->where($map)->group('shopid')->count();
+        return db('trade')->where($map)->count();
     }
     static  function getVideonumsAttr($v,$data)
     {   
@@ -129,7 +129,7 @@ class Agency extends Model
         $map['paytype'] = 0;
         $map['status'] = 1;
         $map['chart'] = 'videochart';
-        return db('trade')->where($map)->group('shopid')->count();
+        return db('trade')->where($map)->count();
     }
     static  function getFacenumsAttr($v,$data)
     {   
@@ -138,7 +138,7 @@ class Agency extends Model
         $map['paytype'] = 0;
         $map['status'] = 1;
         $map['chart'] = 'facechart';
-        return db('trade')->where($map)->group('shopid')->count();
+        return db('trade')->where($map)->count();
     }
     static  function getWifinumsAttr($v,$data)
     {   
@@ -147,7 +147,7 @@ class Agency extends Model
         $map['paytype'] = 0;
         $map['status'] = 1;
         $map['chart'] = array('in','wordchart,speechchart,videochart');
-        return db('trade')->where($map)->group('shopid')->count();
+        return db('trade')->where($map)->count();
     }
 
     static  function getCincomeAttr($v,$data)
@@ -156,7 +156,7 @@ class Agency extends Model
         $map['shopid'] = $data['id'];
         $map['paytype'] = 0;
         $map['status'] = 1;
-        return number_format(db('trade')->where($map)->group('shopid')->sum('payment'),1);
+        return number_format(db('trade')->where($map)->sum('payment'),1);
     }
 
     static  function getSincomeAttr($v,$data)
@@ -165,7 +165,7 @@ class Agency extends Model
         // $map['shopid'] = $data['id'];
         // $map['paytype'] = 0;
         // $map['status'] = 1;
-        // return number_format(db('trade')->where($map)->group('shopid')->sum('payment'),1);
+        // return number_format(db('trade')->where($map)->sum('payment'),1);
         return 0;
     }
 
@@ -175,7 +175,7 @@ class Agency extends Model
         // $map['shopid'] = $data['id'];
         // $map['paytype'] = 0;
         // $map['status'] = 1;
-        // return number_format(db('trade')->where($map)->group('shopid')->sum('payment'),1);
+        // return number_format(db('trade')->where($map)->sum('payment'),1);
         return 0;
     }
     static  function getClnumsAttr($v,$data)
@@ -183,7 +183,7 @@ class Agency extends Model
         $map['shopid'] = $data['id'];
         $map['paytype'] = 2;
         $map['status'] = 1;
-        return db('trade')->where($map)->group('shopid')->count();
+        return db('trade')->where($map)->count();
     }
 
     static  function getClcnumsAttr($v,$data)
@@ -242,7 +242,7 @@ class Agency extends Model
         $map['shopid'] = $data['id'];
         $map['paytype'] = 3;
         $map['status'] = 1;
-        return db('trade')->where($map)->group('shopid')->count();
+        return db('trade')->where($map)->count();
     }
 
     static  function getAccincomeAttr($v,$data)
