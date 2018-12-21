@@ -21,7 +21,7 @@ use think\Hook;
  * 咨询师默认控制器
  * @package app\member\admin
  */
-class Counsellorevaluation extends Admin
+class CounsellorEvaluation extends Admin
 {
     /**
      * 咨询师首页
