@@ -21,27 +21,23 @@ use think\Hook;
  * 咨询师默认控制器
  * @package app\member\admin
  */
-class CounsellorEvaluation extends Admin
+class ClacEvaluation extends Admin
 {
     /**
      * 咨询师首页
      * @TODO 所属机构
      * @return mixed
      */
-    public function index($id = null)
+    public function index()
     {
         cookie('__forward__', $_SERVER['REQUEST_URI']);
 
         // 获取查询条件
         $map = $this->getMap();
 
-        if ($id) {
-            $map['b.mid'] = $id;
-        }
-
         // 数据列表
-        // $data_list = EvaluateModel::where($map)->order('id desc')->paginate();
-        $data_list = Db::name('evaluate')->alias('a')->field('a.*,m.mobile as mobile,m.nickname as nickname,um.mobile as umobile,um.nickname as unickname,shop_agency.title as title')->join(' calendar c',' c.id = a.cid','LEFT')->join(' trade b',' b.id = c.tid','LEFT')->join(' member m',' m.id = b.mid','LEFT')->join(' member um',' um.id = a.memberid','LEFT')->join(' shop_agency shop_agency',' shop_agency.id = m.shopid','LEFT')->where($map)->order('a.id desc')->paginate();
+        $data_list = EvaluateModel::where($map)->order('id desc')->paginate();
+        
         // 分页数据
         $page = $data_list->render();
 
@@ -56,15 +52,13 @@ class CounsellorEvaluation extends Admin
         return ZBuilder::make('table')
             ->setPageTitle('咨询师评价管理') // 设置页面标题
             ->setTableName('evaluate') // 设置数据表名
-            ->setSearch(['m.mobile' => '手机号','m.nickname'=>'咨询师','sorce'=>'评分']) // 设置搜索参数
-            // ->addFilter('shop_agency.title') // 添加筛选
+            ->setSearch(['m.mobile' => '手机号','m.nickname'=>'用户名称','sorce'=>'评分']) // 设置搜索参数
+            ->addFilter('shop_agency.title') // 添加筛选
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
                 ['mobile', '手机号'],
                 ['nickname', '咨询师'],
-                // ['title', '分中心'],
-                ['unickname', '用户名'],
-                ['umobile', '用户手机'],
+                ['title', '分中心'],
                 ['sorce', '评分'],
                 ['cotent', '评价内容'],
                 ['create_time', '创建时间', 'datetime'],

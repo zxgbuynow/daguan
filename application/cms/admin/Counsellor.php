@@ -61,6 +61,12 @@ class Counsellor extends Admin
             'icon'  => 'fa fa-fw fa-calendar',
             'href'  => url('calendar', ['id' => '__id__'])
         ];
+        $btneval = [
+            // 'class' => 'btn btn-info',
+            'title' => '评价',
+            'icon'  => 'fa fa-fw fa-star',
+            'href'  =>  url('cms/counsellorevaluation/index', ['id' => '__id__'])
+        ];
         
         $btnexport = [
             // 'class' => 'btn btn-info',
@@ -104,6 +110,7 @@ class Counsellor extends Admin
             ->addRightButton('custom', $orderBtn)
             ->addRightButton('custom', $btncalendar)
             ->addRightButton('custom', $caseBtn)
+            ->addRightButton('custom', $btneval)
             ->addTopButton('custom', $btnexport)
             // ->addRightButton('custom', $incomeBtn)
             ->setRowList($data_list) // 设置表格数据
