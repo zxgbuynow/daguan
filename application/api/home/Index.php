@@ -1868,7 +1868,11 @@ class Index
         $ret = array();
 
         $cates = db('cms_articlecategory')->where('status',1)->order('sort DESC,id DESC')->limit(8)->select();
-
+        foreach ($cates as $key => $value) {
+            if (is_numeric($value['cover'])) {
+                $cates[$key]['cover'] = get_file_path($value['cover']);
+            }
+        }
         $rs['data'] = array_values($cates);
         //返回信息
         $data = [
@@ -2263,7 +2267,7 @@ class Index
 
         if (isset($params['cid'])) {
 
-            db('calendar')->where(['id'=>$cid])->update(['status'=>1]);;
+            db('calendar')->where(['id'=>$cid])->update(['status'=>1]);
             
             
         }
