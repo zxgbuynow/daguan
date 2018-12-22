@@ -2421,7 +2421,7 @@ class Index
         foreach ($counsellor['list'] as $key => $value) {
             //今日是否有空
             if (isset($ondate)&&count($ondate)==1) {
-                $isondate = db('connsellor_ondate')->where(['memberid'=>$value['memberid']])->whereTime('ondatetime','today')->find();
+                $isondate = db('connsellor_ondate')->where(['memberid'=>$value['memberid'],'status'=>0])->whereTime('ondatetime','today')->find();
                 if ($ondate[0]==1&&!$isondate) {//在线并 今日没空的删除
                     unset($counsellor['list'][$key]);
                     continue;
