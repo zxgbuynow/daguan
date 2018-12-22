@@ -4952,7 +4952,10 @@ class Index
             db('case')->where(['id'=>$params['caid']])->update($pst);
         }else{
             if (db('case')->insert($pst)) {
-                db('calendar')->where(['id'=>$cid])->update(['status'=>2]);
+                $candar = db('calendar')->where(['id'=>$cid])->value('status');
+                if ($candar<2) {
+                    db('calendar')->where(['id'=>$cid])->update(['status'=>2]);
+                }
             }
         }
         
