@@ -34,7 +34,7 @@ class Trade extends Admin
             $map['mid'] = $id;
         }
 
-        $map['paytype'] = 0;
+        $map['paytype'] = array('in','0,1');
 
         if (isset($map['u'])&&$map['u'][1]) {
             $s['nickname'] =array('like',$map['u'][1]);
