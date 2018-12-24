@@ -2408,14 +2408,14 @@ class Index
         }
         //分中心
         if (array_key_exists("shopid",$params)){
-            if (isset($params['shopid'])&&$params['shopid']!=''&&$params['ondate']!='undefined') {
+            if (isset($params['shopid'])&&$params['shopid']!=''&&$params['shopid']!='undefined') {
                 $shopid = trim($params['shopid']);
                 $map['a.shopid'] = array('in',$shopid);
             }
         }
         //是否在线
         if (array_key_exists("online",$params)){
-            if (isset($params['online'])&&$params['online']!=''&&$params['ondate']!='undefined') {
+            if (isset($params['online'])&&$params['online']!=''&&$params['online']!='undefined') {
                 $online = trim($params['online']);
                 $map['b.online'] = array('in',$online);
             }
