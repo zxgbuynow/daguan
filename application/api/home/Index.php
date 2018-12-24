@@ -2391,28 +2391,41 @@ class Index
     {
         //参数
         //关键字
-        if (isset($params['search_keywords'])&&$params['search_keywords']!=''&&$params['search_keywords']!='undefined') {
-            $keyword = trim($params['search_keywords']);
-            $map['a.nickname|s.title'] = array('like','%'.$keyword.'%');
+        if (array_key_exists("search_keywords",$params)){
+            if (isset($params['search_keywords'])&&$params['search_keywords']!=''&&$params['search_keywords']!='undefined') {
+                $keyword = trim($params['search_keywords']);
+                $map['a.nickname|s.title'] = array('like','%'.$keyword.'%');
+            } 
         }
+
+        
         //性别
-        if (isset($params['sex'])&&$params['sex']!=''&&$params['sex']!='undefined') {
-            $sex = trim($params['sex']);
-            $map['a.sex'] = array('in',$sex);
+        if (array_key_exists("sex",$params)){
+            if (isset($params['sex'])&&$params['sex']!=''&&$params['sex']!='undefined') {
+                $sex = trim($params['sex']);
+                $map['a.sex'] = array('in',$sex);
+            }
         }
         //分中心
-        if (isset($params['shopid'])&&$params['shopid']!=''&&$params['ondate']!='undefined') {
-            $shopid = trim($params['shopid']);
-            $map['a.shopid'] = array('in',$shopid);
+        if (array_key_exists("shopid",$params)){
+            if (isset($params['shopid'])&&$params['shopid']!=''&&$params['ondate']!='undefined') {
+                $shopid = trim($params['shopid']);
+                $map['a.shopid'] = array('in',$shopid);
+            }
         }
         //是否在线
-        if (isset($params['online'])&&$params['online']!=''&&$params['ondate']!='undefined') {
-            $online = trim($params['online']);
-            $map['b.online'] = array('in',$online);
+        if (array_key_exists("online",$params)){
+            if (isset($params['online'])&&$params['online']!=''&&$params['ondate']!='undefined') {
+                $online = trim($params['online']);
+                $map['b.online'] = array('in',$online);
+            }
         }
+
         //今日是否有空
-        if (isset($params['ondate'])&&$params['ondate']!=''&&$params['ondate']!='undefined') {
-            $ondate = explode(',', $params['ondate']);
+        if (array_key_exists("ondate",$params)){
+            if (isset($params['ondate'])&&$params['ondate']!=''&&$params['ondate']!='undefined') {
+                $ondate = explode(',', $params['ondate']);
+            }
         }
         
         $map['a.status'] = 1;
