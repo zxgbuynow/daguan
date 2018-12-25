@@ -730,7 +730,7 @@ class Index
         $startpg = ($page_no-1)*$page_size;
         $map['b.online'] = 1;
         // $recommend['list'] = db('member')->alias('a')->field('a.*,b.online,b.memberid,b.tags')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->where($map)->order('a.sort ASC,a.recommond DESC')->limit($startpg, $page_size)->select();
-        $recommend['list'] = db('member')->where(['status'=>1,'type'=>1,'online'=>1])->limit($startpg.','.$page_size)->order('recommond DESC')->select();
+        $recommend['list'] = db('member')->where(['status'=>1,'type'=>1,'online'=>1])->limit($startpg.','.$page_size)->order('recommond DESC,convert(nickname using gb2312) ASC')->select();
         // error_log(db('member')->getlastsql(),3,'/home/wwwroot/daguan/rec.log');
         $usersort = [];
         foreach ($recommend['list'] as $key => $value) {
@@ -2430,7 +2430,7 @@ class Index
         
         $map['a.status'] = 1;
         $map['a.type'] = 1;
-        $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.shopid = s.id','LEFT')->where($map)->limit(20)->order('recommond DESC')->select();
+        $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.shopid = s.id','LEFT')->where($map)->limit(20)->order('recommond DESC,convert(nickname using gb2312) ASC')->select();
         foreach ($counsellor['list'] as $key => $value) {
             //今日是否有空
             if (isset($ondate)&&count($ondate)==1) {
