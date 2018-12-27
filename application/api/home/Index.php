@@ -963,6 +963,7 @@ class Index
         //预约时间
         $cmap['memberid'] = $params['id'];
         $cmap['ondatetime'] = array('gt',strtotime(date('Y-m-d',time())));
+        $cmap['status'] = 0;
         $counsellor['condate'] = db('connsellor_ondate')->where($cmap)->count();
 
         //挂靠分中心
@@ -3197,7 +3198,8 @@ class Index
         // $map['sendid'] = $sendid;
         // $map['reciveid'] = $reciveid;
         $map['tag'] = 'u'.$sendid.'c'.$reciveid;
-        $info =  db('hx_msg')->where($map)->order('id DESC')->limit(10)->select();
+        // $info =  db('hx_msg')->where($map)->order('id DESC')->limit(10)->select();
+        $info =  db('hx_msg')->where($map)->order('id DESC')->select();
         //获得头像处理
         foreach ($info as $key => $value) {
              $ids[$key] = $value['id'];
@@ -6084,7 +6086,8 @@ class Index
         // $map['sendid'] = $sendid;
         // $map['reciveid'] = $reciveid;
         $map['tag'] = 'u'.$reciveid.'c'.$sendid;
-        $info =  db('hx_msg')->where($map)->order('id DESC')->limit(10)->select();
+        // $info =  db('hx_msg')->where($map)->order('id DESC')->limit(10)->select();
+        $info =  db('hx_msg')->where($map)->order('id DESC')->select();
 
         //获得头像处理
         $now = date('Y-m-d',time());
