@@ -962,7 +962,8 @@ class Index
         
         //预约时间
         $cmap['memberid'] = $params['id'];
-        $cmap['ondatetime'] = array('gt',strtotime(date('Y-m-d',time())));
+        // $cmap['ondatetime'] = array('gt',strtotime(date('Y-m-d',time())));
+        $cmap['ondatetime'] = array('gt',time());
         $cmap['status'] = 0;
         $counsellor['condate'] = db('connsellor_ondate')->where($cmap)->count();
 
