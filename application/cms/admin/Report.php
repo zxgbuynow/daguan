@@ -267,7 +267,7 @@ class Report extends Admin
 
         // 获取查询条件
         $map = $this->getMap();
-
+        $map['type'] = 1;
         // 数据列表
         $data_list = CounsellorModel::where($map)->order('id desc')->paginate();
 
