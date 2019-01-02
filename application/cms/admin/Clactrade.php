@@ -30,6 +30,31 @@ class Clactrade extends Admin
         $map = $this->getMap();
 
         $map['paytype'] = array('in','2,3');
+
+        if (isset($map['u'])&&$map['u'][1]) {
+            $s['nickname'] =array('like',$map['u'][1]);
+            $usernames = db('member')->where($s)->column('id');
+            if ($usernames) {
+                $map['mid']= array('in',$usernames);
+            }
+
+            unset($map['u']);
+            
+        }
+
+        if (isset($map['status'])&&$map['status'][1]=='%待支付%') {
+            $map['status'] = 0;
+        }
+        if (isset($map['status'])&&$map['status'][1]=='%已支付%') {
+            $map['status'] = 1;
+        }
+        if (isset($map['status'])&&$map['status'][1]=='%取消%') {
+            $map['status'] = 2;
+        }
+        if (isset($map['status'])&&$map['status'][1]=='%冻结%') {
+            $map['status'] = 3;
+        }
+        
         // 数据列表
         $data_list = TradeModel::where($map)->order('id desc')->paginate();
 
@@ -72,12 +97,15 @@ class Clactrade extends Admin
         return ZBuilder::make('table')
             ->setPageTitle('课程活动订单管理') // 设置页面标题
             ->setTableName('trade') // 设置数据表名
-            ->setSearch(['id' => '订单编号']) // 设置搜索参数
+            // ->setSearch(['id' => '订单编号']) // 设置搜索参数
+            ->setSearch(['id' => '订单编号','payment'=>'支付金额','u'=>'用户名','status'=>'付费状态','title'=>'订单内容']) // 设置搜索参数
+            ->addTimeFilter('created_time')
             ->hideCheckbox()
             ->addColumns([ // 批量添加列
                 ['id', 'ID'],
                 ['title', '交易标题'],
                 ['payment', '支付金额'],
+                ['pay_type', '支付方式', 'text', '', ['alipay'=>'支付宝', 'wxpayApp'=>'微信支付',''=>'其他']],
                 ['shopid', '机构', 'select', $agency_list],
                 ['memberid', '用户', 'select', $counsellor_list],
                 ['mid', '咨询师', 'select', $counsellor_list],

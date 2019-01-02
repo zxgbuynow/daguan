@@ -120,6 +120,7 @@ class Trade extends Admin
                 ['process', '进度'],
                 ['shopid', '机构', 'select', $agency_list],
                 ['memberid', '用户', 'select', $counsellor_list],
+                ['mobile', '用户电话'],
                 ['mid', '咨询师', 'select', $counsellor_list],
                 ['created_time', '创建时间', 'datetime'],
                 ['ondate', '预约时间','datetime'],
