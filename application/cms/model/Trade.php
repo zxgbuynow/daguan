@@ -24,6 +24,11 @@ class Trade extends Model
        // return 68788878;
        return db('member')->where(['id'=>$data['memberid']])->value('nickname');
     }
+    public  function getMobileAttr($v,$data)
+    {
+       // return 68788878;
+       return db('member')->where(['id'=>$data['memberid']])->value('mobile');
+    }
 
     public  function getMidrawAttr($v,$data)
     {
