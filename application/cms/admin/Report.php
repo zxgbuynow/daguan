@@ -207,6 +207,7 @@ class Report extends Admin
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
             ->setSearch(['title' => '预约内容'])// 设置搜索框
+            ->addTimeFilter('start_time')
             ->hideCheckbox()
             ->addColumns([ // 批量添加数据列
                 ['agency', '分中心'],
