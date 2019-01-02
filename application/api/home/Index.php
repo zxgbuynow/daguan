@@ -5053,6 +5053,9 @@ class Index
             $condatemp['memberid'] = $cid;
             if (db('connsellor_ondate')->where(['memberid'=>$cid])->whereTime('ondatetime', 'between', [ $mbts , $mbte])->find()) {
                 $timebt['0:00~5:00']['s'] = 3;
+                if ($mbte<time()) {
+                    $timebt['0:00~5:00']['s'] = 2;
+                }
             }else{
                 $timebt['0:00~5:00']['s'] = 0;
                 if ($mbte<time()) {
@@ -5066,6 +5069,9 @@ class Index
             $condatemp['memberid'] = $cid;
             if (db('connsellor_ondate')->where(['memberid'=>$cid])->whereTime('ondatetime', 'between', [ $gbts , $gbte])->find()) {
                 $timebt['6:00~18:00']['s'] = 3;
+                if ($gbte<time()) {
+                    $timebt['6:00~18:00']['s'] = 2;
+                }
             }else{
                 $timebt['6:00~18:00']['s'] = 0;
                 if ($gbte<time()) {
@@ -5079,6 +5085,9 @@ class Index
             $condatemp['memberid'] = $cid;
             if (db('connsellor_ondate')->where(['memberid'=>$cid])->whereTime('ondatetime', 'between', [ $ebts , $ebte])->find()) {
                 $timebt['19:00~24:00']['s'] = 3;
+                if ($ebte<time()) {
+                    $timebt['19:00~24:00']['s'] = 2;
+                }
             }else{
                 $timebt['19:00~24:00']['s'] = 0;
                 if ($ebte<time()) {
