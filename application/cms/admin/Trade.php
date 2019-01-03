@@ -156,7 +156,7 @@ class Trade extends Admin
         set_time_limit(0);
         //查询数据
         $map['paytype'] = array('in','0,1');
-        $data = TradeModel::where($map)->select();
+        $data = TradeModel::where($map)->limit(10)->select();
         $pay_type = ['alipay'=>'支付宝', 'wxpayApp'=>'微信支付',''=>'其他'];
         $paytype = ['0'=>'预约订单', '1'=>'冲值订单', '2'=>'课程订单', '3'=>'活动订单'];
         $status =  ['0'=>'待支付', '1'=>'已支付', '2'=>'取消', '3'=>'冻结'];
