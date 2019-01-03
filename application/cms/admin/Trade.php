@@ -100,7 +100,7 @@ class Trade extends Admin
             // 'class' => 'btn btn-info',
             'title' => '导出',
             'icon'  => 'fa fa-fw fa-file-excel-o ajax-get',
-            'href'  => url('tradexport')
+            'href'  => url('tradeexport')
         ];
         //约时间
         
@@ -150,7 +150,7 @@ class Trade extends Admin
      * [tradexport 导出]
      * @return [type] [description]
      */
-    public function tradexport()
+    public function tradeexport()
     {
         ini_set('memory_limit','3072M'); 
         set_time_limit(0);
