@@ -2349,13 +2349,21 @@ class Index
         if ($in['chart']=='wordchart') {
             return $this->error('文字咨询不能发起语音咨询');
         }
-        $start_time = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->where(array('b.memberid'=>$account))->order('a.start_time DESC')->value('start_time');
-        $end_time = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->where(array('b.memberid'=>$account))->order('a.start_time DESC')->value('end_time');
+        // $start_time = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->where(array('b.memberid'=>$account))->order('a.start_time DESC')->value('start_time');
+        // $end_time = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->where(array('b.memberid'=>$account))->order('a.start_time DESC')->value('end_time');
+
 
         $ret = 0;
-        if ($start_time<time()&&time()<$end_time) {
+        $map['b.memberid'] = $account;
+        $map['start_time'] = array('lt',time());
+        $map['end_time'] = array('gt',time());
+        $i = db('calendar')->alias('a')->join('trade b',' b.id = a.tid','LEFT')->where($map)->find();
+        if ($i) {
             $ret = 1;
         }
+        // if ($start_time<time()&&time()<$end_time) {
+        //     $ret = 1;
+        // }
         //返回信息
         $data = [
             'code'=>'1',
