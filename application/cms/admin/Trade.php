@@ -152,7 +152,8 @@ class Trade extends Admin
      */
     public function tradexport()
     {
-        
+        ini_set('memory_limit','3072M'); 
+        set_time_limit(0);
         //查询数据
         $map['paytype'] = array('in','0,1');
         $data = TradeModel::where($map)->select();
