@@ -299,9 +299,9 @@ class Index
         //cid 
         $map['status'] = 1;
         if (isset($params['account'])) {
-            $preference = db('member')->where(['id'=>$params['account']])->column('preference');
-            if ($preference[0]) {
-                $map['cid']= array('in',explode(',', $preference[0]));
+            $preference = db('member')->where(['id'=>$params['account']])->value('preference');
+            if ($preference) {
+                $map['cid']= array('in',explode(',', $preference));
             }
             
         }
