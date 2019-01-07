@@ -146,12 +146,14 @@ class Advert extends Admin
         $list_type = AdvertTypeModel::where('status', 1)->column('id,name');
         array_unshift($list_type, '默认分类');
 
+        $clacdata = db('cms_clac_temp')->where(1)->order('id DESC')->column('id,title');
+
         // 显示添加页面
         return ZBuilder::make('form')
             ->setPageTips('如果出现无法添加的情况，可能由于浏览器将本页面当成了广告，请尝试关闭浏览器的广告过滤功能再试。', 'warning')
             ->addFormItems([
                 ['select', 'typeid', '广告分类', '', $list_type, 0],
-                ['text', 'tagname', '广告位标识', '<code>custom 用户端轮播图 shop 咨询师轮播图 single 固定广告位</code>'],
+                ['text', 'tagname', '广告位标识', '<code>custom 用户端轮播图 shop 咨询师轮播图 single 固定广告位 clac 课程活动</code>'],
                 ['text', 'name', '广告位名称'],
                 ['radio', 'timeset', '时间限制', '', ['永不过期', '在设内时间内有效'], 0],
                 ['daterange', 'start_time,end_time', '开始时间-结束时间'],
@@ -159,13 +161,14 @@ class Advert extends Admin
                 ['textarea', 'code', '代码', '<code>必填</code>，支持html代码'],
                 ['image', 'src', '图片', '<code>必须</code>'],
                 ['text', 'title', '文字内容', '<code>必填</code>'],
-                ['text', 'links', '链接', '<code>如文章：article/1.html 咨询师：counsellor/1.html 课程：clac/1.html 活动：act/1.html 会员页：member/member.html必填</code>'],
+                ['text', 'links', '链接', '<code>如文章：article/1.html 咨询师：counsellor/1.html 课程：clac/1.html 活动：act/1.html 会员页：member/member.html必填 *当广告标识为clac时该处可以随意填写*</code>'],
                 ['colorpicker', 'color', '文字颜色', '', '', 'rgb'],
                 ['text', 'size', '文字大小', '只需填写数字，例如:12，表示12px', '',  ['', 'px']],
                 ['text', 'width', '宽度', '不用填写单位，只需填写具体数字'],
                 ['text', 'height', '高度', '不用填写单位，只需填写具体数字'],
                 ['text', 'alt', '图片描述', '即图片alt的值'],
-                ['radio', 'status', '立即启用', '', ['否', '是'], 1]
+                ['radio', 'status', '立即启用', '', ['否', '是'], 1],
+                ['select', 'clacid', '课程活动', '', $clacdata]
             ])
             ->setTrigger('ad_type', '0', 'code')
             ->setTrigger('ad_type', '1', 'title,color,size')
@@ -173,6 +176,7 @@ class Advert extends Admin
             ->setTrigger('ad_type', '2,3', 'width,height')
             // ->setTrigger('ad_type', '1,2,3', 'link')
             ->setTrigger('timeset', '1', 'start_time')
+            ->setTrigger('tagname', 'clac', 'clacid')
             ->fetch();
     }
 
@@ -210,7 +214,7 @@ class Advert extends Admin
 
         $list_type = AdvertTypeModel::where('status', 1)->column('id,name');
         array_unshift($list_type, '默认分类');
-
+        $clacdata = db('cms_clac_temp')->where(1)->order('id DESC')->column('id,title');
         
         $info['ad_type'] = ['代码', '文字', '图片', 'flash'][$info['ad_type']];
 
@@ -229,9 +233,11 @@ class Advert extends Admin
                 ['textarea', 'content', '广告内容'],
                 ['image', 'src', '单页封面'],
                 ['text', 'link', '链接', '<code>如文章：article/1.html 咨询师：counsellor/1.html 课程：clac/1.html 活动：act/1.html 会员页：member/member.html必填</code>'],
-                ['radio', 'status', '立即启用', '', ['否', '是']]
+                ['radio', 'status', '立即启用', '', ['否', '是']],
+                ['select', 'clacid', '课程活动', '', $clacdata]
             ])
             ->setTrigger('timeset', '1', 'start_time')
+            ->setTrigger('tagname', 'clac', 'clacid')
             ->setFormData($info)
             ->fetch();
     }

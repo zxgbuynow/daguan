@@ -483,37 +483,43 @@ class Index
      */
     public function classList_custom($params)
     {
-        $map['typeid'] = '1';//课程
+        // $map['typeid'] = '1';//课程
         $map['status'] = 1;
+        $map['tagname'] = 'clac';
         $ismobile = trim($params['ismobile']);
         $class['pic'] = db('cms_advert')->where($map)->order('id DESC')->limit(10)->select();
 
         foreach ($class['pic'] as $key => $value) {
-            if (strstr($value['link'], 'article')) {//文章
-                if ($ismobile) {
-                    $class['pic'][$key]['webview'] = "/mobile.php/artical/detail.html";
-                    $class['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
-                }else{
-                    $class['pic'][$key]['webview'] = '_www/view/artical/detail.html';
-                    $class['pic'][$key]['webparam'] = ['article_id'=>explode('.',explode('/', $value['link'])[1])[0]];
-                }
+            $clac = db('cms_clac_temp')->where(['id'=>$value['clacid']])->find();
+            $class['pic'][$key]['classid']= $clac['classid'];
+            $class['pic'][$key]['type']= $clac['type'];
+        }
+        // foreach ($class['pic'] as $key => $value) {
+        //     if (strstr($value['link'], 'article')) {//文章
+        //         if ($ismobile) {
+        //             $class['pic'][$key]['webview'] = "/mobile.php/artical/detail.html";
+        //             $class['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+        //         }else{
+        //             $class['pic'][$key]['webview'] = '_www/view/artical/detail.html';
+        //             $class['pic'][$key]['webparam'] = ['article_id'=>explode('.',explode('/', $value['link'])[1])[0]];
+        //         }
                 
                  
-            }else if (strstr($value['link'], 'counsellor')) {
-                if ($ismobile) {
-                    $class['pic'][$key]['webview'] = "/mobile.php/counsellor/detail.html";
-                     $class['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
-                }else{
-                    $class['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
-                    $class['pic'][$key]['webparam'] = ['counsellor_id'=>explode('.',explode('/', $value['link'])[1])[0]];
-                }
+        //     }else if (strstr($value['link'], 'counsellor')) {
+        //         if ($ismobile) {
+        //             $class['pic'][$key]['webview'] = "/mobile.php/counsellor/detail.html";
+        //              $class['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+        //         }else{
+        //             $class['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
+        //             $class['pic'][$key]['webparam'] = ['counsellor_id'=>explode('.',explode('/', $value['link'])[1])[0]];
+        //         }
                 
                
-            }else{
-                $class['pic'][$key]['webview'] = '';
-                $class['pic'][$key]['webparam'] = [];
-            }
-        }
+        //     }else{
+        //         $class['pic'][$key]['webview'] = '';
+        //         $class['pic'][$key]['webparam'] = [];
+        //     }
+        // }
 
         //返回信息
         $data = [
