@@ -135,9 +135,7 @@ class Page extends Admin
         $list_type = ArticlecategoryModel::where('status', 1)->column('id,title');
         
         $alist = PageModel::where(['status'=>1])->column('id,title');
-        $html = <<<EOF
-            <p>这是一个段落</p>
-EOF;
+        
         // 显示编辑页面
         return ZBuilder::make('form')
             ->addFormItems([
@@ -147,16 +145,17 @@ EOF;
                 ['textarea', 'description', '页面描述', '100字左右'],
                 ['text', 'template', '模板文件名'],
                 ['ckeditor', 'content', '页面内容'],
-                ['gallery', 'cover', '单页封面'],
-                ['gallery', 'fcover', '单页封面1'],
+                // ['gallery', 'cover', '单页封面'],
+                ['gallery', 'fcover', '封面展示'],
+                ['image', 'cover', '单页封面'],
                 ['text', 'view', '阅读量', '', 0],
                 ['radio', 'type', '测试文章模式', '', ['否', '是']],
                 ['radio', 'status', '立即启用', '', ['否', '是']]
             ])
-            ->setExtraHtml($html,'form_top')
+            // ->setExtraHtml($html,'form_top')
             ->addSelect('cid', '文章分类', '', $list_type)
             ->addSelect('conrrelation_id', '关联文章ID', '', $alist)
-            ->setTrigger('userid', '0', 'cover')
+            // ->setTrigger('userid', '0', 'cover')
             ->setFormdata($info)
             ->fetch();
     }
