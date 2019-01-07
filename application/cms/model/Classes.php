@@ -116,7 +116,7 @@ class Classes extends ThinkModel
         return db('trade')->where($map)->count();
     }
 
-    public  function getAcounsollorAttr($v,$data)
+    static  function getAcounsollorAttr($v,$data)
     {
         $allot = db('shop_classes_allot')->where(['classid'=>$data['id']])->find();
 
@@ -132,7 +132,7 @@ class Classes extends ThinkModel
         return  number_format($total*$s['scale']/100,1);
     }
 
-    public  function getAshopAttr($v,$data)
+    static  function getAshopAttr($v,$data)
     {   
         $allot = db('shop_classes_allot')->where(['classid'=>$data['id']])->find();
 
@@ -145,7 +145,7 @@ class Classes extends ThinkModel
         return number_format((db('trade')->where($map)->sum('payment'))*floatval($allot['sscale'])/100,1);
     }
 
-    public  function getAadminAttr($v,$data)
+    static  function getAadminAttr($v,$data)
     {
         $allot = db('shop_classes_allot')->where(['classid'=>$data['id']])->find();
 
@@ -158,7 +158,7 @@ class Classes extends ThinkModel
         return number_format((db('trade')->where($map)->sum('payment'))*floatval($allot['sscale'])/100,1);
     } 
 
-    public  function getAcounsollerAttr($v,$data)
+    static  function getAcounsollerAttr($v,$data)
     {
         $allot = db('shop_classes_allot')->where(['classid'=>$data['id']])->find();
 

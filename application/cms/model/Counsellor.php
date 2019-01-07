@@ -32,6 +32,22 @@ class Counsellor extends Model
     {
         return number_format(db('trade')->where(['mid'=>$data['id'],'status'=>1])->sum('payment'),1);
     }
+
+    static  function getTotalgetAttr($v,$data)
+    {
+        $t = number_format(db('cash')->where(['cid'=>$data['id'],'status'=>1])->sum('payment'),1);
+        return $t;
+    }
+
+    static  function getTotalcashAttr($v,$data)
+    {
+        $g = number_format(db('cash')->where(['cid'=>$data['id'],'status'=>1])->sum('payment'),1);
+        $t =number_format(db('trade')->where(['mid'=>$data['id'],'status'=>1])->sum('payment'),1);
+
+        return number_format(($t-$g),1);
+
+
+    }
     static  function getVerifystatusAttr($v,$data)
     {
         return $data['status'];
