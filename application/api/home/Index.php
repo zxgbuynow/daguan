@@ -3268,6 +3268,26 @@ class Index
         ];
         return json($data);
     }
+
+    /**
+     * [refundlist_custom 退款列表]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function refundlist_custom($params)
+    {
+        $account = trim($params['account']);
+
+        $map['memberid'] = $account ;
+        $list['list'] = db('refund')->where($map)->select();
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$list
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API
