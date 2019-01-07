@@ -3348,7 +3348,6 @@ class Index
         $startpg = ($page_no-1)*$page_size;
         $data = db('cards')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
 
-       echo db('cards')->getlastsql();exit;
         $pages = array(
                 'total'=>db('cards')->where($map)->order('id DESC')->count()
             );
