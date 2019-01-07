@@ -3347,7 +3347,9 @@ class Index
         }
         $startpg = ($page_no-1)*$page_size;
         $data = db('cards')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
-
+        foreach ($data as $key => $value) {
+            $data[$key]['cover'] = get_file_path($value['cover']);
+        }
         $pages = array(
                 'total'=>db('cards')->where($map)->order('id DESC')->count()
             );
