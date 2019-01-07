@@ -3323,6 +3323,47 @@ class Index
         ];
         return json($data);
     }
+
+    /**
+     * [cardlist_custom description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function cardlist_custom($params)
+    {
+
+        $account = trim($params['account']);
+
+        $status = trim($params['status']);
+        $page_no = trim($params['page_no']);
+        $page_size = trim($params['page_size']);
+
+        $map['status'] = 0;
+
+        if ($status == 'all') {
+            $map['memberid'] = '';
+        }else{
+            $map['memberid'] = $account;
+        }
+        $startpg = ($page_no-1)*$page_size;
+        $data = db('cards')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
+
+       
+        $pages = array(
+                'total'=>db('cards')->where($map)->order('id DESC')->count()
+            );
+        $trade['data']['pagers'] = $pages;
+        $trade['data']['list'] = array_values($data);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$trade
+        ];
+        return json($data);
+
+    }
+
     /*
     |--------------------------------------------------------------------------
     | 商家版API

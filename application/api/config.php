@@ -106,6 +106,7 @@ return [
         'cancleallcalenda'=>'cancleall.calenda',//设置批量预约
         'refundlist'=>'refund.list',//退款列表
         'refundapply'=>'refund.apply',//退款申请
+        'cardlist'=>'card.list'
 
 
 
