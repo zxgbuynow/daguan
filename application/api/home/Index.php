@@ -3341,7 +3341,7 @@ class Index
         $map['status'] = 0;
 
         if ($status == 'all') {
-            $map['memberid'] = array('eq',null);
+            $map['memberid'] = null;
         }else{
             $map['memberid'] = $account;
         }
