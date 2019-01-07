@@ -2830,6 +2830,7 @@ class Index
                     $data[$key]['typeid'] = $value['paytype']==2?0:1;
                     $data[$key]['id'] = $r['id'];
                     $data[$key]['tid'] = $value['id'];
+                    $data[$key]['status'] = $value['status'];
                 }else{
                     continue;
                 }
@@ -2847,6 +2848,7 @@ class Index
                     $data[$key]['typeid'] = $value['paytype']==3?1:0;
                     $data[$key]['id'] = $r['id'];
                     $data[$key]['tid'] = $value['id'];
+                    $data[$key]['status'] = $value['status'];
                 }else{
                     continue;
                 }
