@@ -3290,6 +3290,37 @@ class Index
         ];
         return json($data);
     }
+    /**
+     * [refundapply_custom 申请退款]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function refundapply_custom($params)
+    {
+        $account = trim($params['account']);
+        $tid = trim($params['tid']);
+
+        $data['tid'] = $tid;
+        $t = db('trade')->where(['id'=>$tid])->find();
+        if (!$t) {
+            return $this->error('订单不存在');  ;
+        }
+        $data['memberid'] = $account;
+        $data['title'] = $t['title'];
+        $data['payment'] = $t['payment'];
+        db('refund')->insert($data);
+
+        //修改订单状态 4待审核 5退款成功
+        db('trade')->where(['id'=>$tid])->update(['status'=>4]);
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API
