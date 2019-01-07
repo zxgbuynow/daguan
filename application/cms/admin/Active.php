@@ -6,6 +6,8 @@ namespace app\cms\admin;
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\cms\model\Active as ActiveModel;
+use app\cms\model\Counsellor as CounsellorModel;
+use app\shop\model\Activeallot as ActiveallotModel;
 use app\cms\model\Classestemp as ClassestempModel;
 use app\cms\model\Clacategory as ClacategoryModel;
 use app\cms\model\Category as CategoryModel;
@@ -36,7 +38,7 @@ class Active extends Admin
         // 分页数据
         $page = $data_list->render();
 
-
+        $allotAdd = ['icon' => 'fa fa-plus', 'title' => '分配', 'href' => url('allot', ['id' => '__id__'])];
         $list_module = ClacategoryModel::where(1)->order('id desc')->column('id as cateid,title');
         // 使用ZBuilder快速创建数据表格
         return ZBuilder::make('table')
@@ -56,8 +58,67 @@ class Active extends Admin
             ->addTopButton('add', ['href' => url('add')])
             ->addRightButton('edit')
             ->addRightButton('delete', ['data-tips' => '删除后无法恢复。'])// 批量添加右侧按钮
+            ->addRightButton('custom', $allotAdd)
             ->setRowList($data_list)// 设置表格数据
             ->fetch(); // 渲染模板
+    }
+
+    /**
+     * [allot 分配]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function allot($id = null)
+    {
+        if ($id === null) $this->error('缺少参数');
+
+        $users = CounsellorModel::where('status', 1)->column('id,nickname');
+
+        //获取分配ID
+        $map['activeid'] = $id;
+        $info =  ActiveallotModel::where($map)->find();
+
+        // 保存数据
+        if ($this->request->isPost()) {
+            // 表单数据
+            $data = $this->request->post();
+
+            // 验证
+            $data['tearchid'] = implode(',', $data['tearchid']);
+            $data['coachid'] = implode(',', $data['coachid']);
+            if ($info) {//编辑
+                if (ActiveallotModel::update($data)) {
+                    // 记录行为
+                    $this->success('编辑成功', url('index'));
+                } else {
+                    $this->error('编辑失败');
+                }
+
+            }else{//新增
+                $data['activeid'] = $id;
+                $data['shopid'] = 0;
+                if (ActiveallotModel::create($data)) {
+                // 记录行为
+                    $this->success('新增成功', url('index'));
+                } else {
+                    $this->error('新增失败');
+                }
+            }
+            
+        }
+        
+
+        // 显示添加页面
+        return ZBuilder::make('form')
+            ->addFormItems([
+                ['hidden', 'id'],
+
+            ])
+            ->addSelect('adminid', '管理员', '', $users,'')
+            ->addSelect('tearchid', '讲师员', '<code>可多选</code>', $users,'','multiple')
+            ->addSelect('coachid', '辅导员', '<code>可多选</code>', $users,'','multiple')
+            ->setFormData($info)
+            ->fetch();
     }
 
     /**

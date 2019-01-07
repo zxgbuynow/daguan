@@ -6,7 +6,9 @@ namespace app\cms\admin;
 use app\admin\controller\Admin;
 use app\common\builder\ZBuilder;
 use app\cms\model\Classes as ClassModel;
+use app\cms\model\Counsellor as CounsellorModel;
 use app\cms\model\Classestemp as ClassestempModel;
+use app\shop\model\Classesallot as ClassesallotModel;
 use app\cms\model\Clacategory as ClacategoryModel;
 use app\cms\model\Category as CategoryModel;
 use app\cms\model\Agency as AgencyModel;
@@ -36,6 +38,7 @@ class Classes extends Admin
         // 分页数据
         $page = $data_list->render();
 
+        $allotAdd = ['icon' => 'fa fa-plus', 'title' => '分配', 'href' => url('allot', ['id' => '__id__'])];
 
         $list_module = ClacategoryModel::where(1)->order('id desc')->column('id as cateid,title');
         // 使用ZBuilder快速创建数据表格
@@ -56,8 +59,80 @@ class Classes extends Admin
             ->addTopButton('add', ['href' => url('add')])
             ->addRightButton('edit')
             ->addRightButton('delete', ['data-tips' => '删除后无法恢复。'])// 批量添加右侧按钮
+            ->addRightButton('custom', $allotAdd)
             ->setRowList($data_list)// 设置表格数据
             ->fetch(); // 渲染模板
+    }
+
+    /**
+     * [allot 分配]
+     * @param  [type] $id [description]
+     * @return [type]     [description]
+     */
+    public function allot($id = null)
+    {
+        if ($id === null) $this->error('缺少参数');
+
+
+        $users = CounsellorModel::where('status', 1)->column('id,nickname');
+
+        //获取分配ID
+        $map['classid'] = $id;
+        $info =  ClassesallotModel::where($map)->find();
+
+        // 保存数据
+        if ($this->request->isPost()) {
+            // 表单数据
+            $data = $this->request->post();
+            // 验证
+            $data['tearchid'] = implode(',', $data['tearchid']);
+            $data['coachid'] = implode(',', $data['coachid']);
+            if ($info) {//编辑
+                if (ClassesallotModel::update($data)) {
+                    // 记录行为
+                    $this->success('编辑成功', url('index'));
+                } else {
+                    $this->error('编辑失败');
+                }
+
+            }else{//新增
+                $data['classid'] = $id;
+                $data['shopid'] = 0;
+                if (ClassesallotModel::create($data)) {
+                // 记录行为
+                    $this->success('新增成功', url('index'));
+                } else {
+                    $this->error('新增失败');
+                }
+            }
+            
+        }
+        
+
+        // 显示添加页面
+        return ZBuilder::make('form')
+            ->addFormItems([
+                ['hidden', 'id'],
+                // ['select', 'adminid', '管理员', '', $users],
+                // ['text', 'ascale', '管理员分配比例',['%']],
+
+                // ['select', 'tearchid', '讲师员', '<code>可多选</code>', $users,'multiple'],
+                // ['text', 'tscale', '讲师员分配比例','<code>多人时以逗号分隔（10,20）</code>',['', '%']],
+
+                // ['select', 'coachid', '辅导员', '<code>可多选</code>', $users,'multiple'],
+                // ['text', 'cscale', '辅导员分配比例','<code>多人时以逗号分隔（10,20）</code>',['', '%']],
+
+            ])
+            ->addSelect('adminid', '管理员', '', $users,'')
+            ->addSelect('tearchid', '讲师员', '<code>可多选</code>', $users,'','multiple')
+            ->addSelect('coachid', '辅导员', '<code>可多选</code>', $users,'','multiple')
+            // ->addText('ascale', '管理员分配比例', '', '', ['', '%'])
+            // ->addText('tscale', '讲师员分配比例', '<code>多人时以逗号分隔比如10%,20%（写成10,20）</code>', '', ['', '%'])
+            // ->addText('cscale', '辅导员分配比例', '<code>多人时以逗号分隔比如10%,20%（写成10,20）</code>', '', ['', '%'])
+            // ->addText('sscale', '本机构分配比例', '', '', ['', '%'])
+            // ->addText('mscale', '平台分配比例', '', '', ['', '%'])
+            ->setFormData($info)
+            ->fetch();
     }
 
     /**
