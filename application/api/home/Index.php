@@ -390,6 +390,14 @@ class Index
                 }
                 
                
+            }else if (strstr($value['link'], 'cards')) {
+                if ($ismobile) {
+                    $lunbo['pic'][$key]['webview'] = "/mobile.php/member/cards.html";
+                }else{
+                    $lunbo['pic'][$key]['webview'] = '_www/view/member/cards.html';
+                }
+                
+               
             }else{
                 $class['pic'][$key]['webview'] = '_www/view/index.html';
                 $class['pic'][$key]['webparam'] = [];
@@ -3363,6 +3371,30 @@ class Index
         ];
         return json($data);
 
+    }
+
+    /**
+     * [cardetail_custom 卡包祥情]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function cardetail_custom($params)
+    {
+
+        $id = trim($params['id']);
+
+        $map['id'] = $id;
+
+        $i = db('cards')->where($map)->find();
+        $i['cover'] = get_file_path($i['cover']);
+
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$i
+        ];
+        return json($data);
     }
 
     /*
