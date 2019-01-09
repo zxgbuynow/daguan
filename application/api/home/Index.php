@@ -3390,7 +3390,7 @@ class Index
 
         //课程
         $cmp['id'] = array('in',$i['classid']);
-        $i['classes'] = db('cms_clac_temp')->where($cmp)->column('title');
+        $i['classes'] = db('cms_clac_temp')->where($cmp)->field('title,price')->select();
         //等级
         $viparr = array('普通会员','周会员','年会员');
         $ret = [];
@@ -3400,7 +3400,7 @@ class Index
                 $ret[] = $value;
             }
         }
-       $i['classes'] = $ret;
+       $i['member'] = $ret;
         //返回信息
         $data = [
             'code'=>'1',
