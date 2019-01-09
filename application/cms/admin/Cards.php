@@ -44,7 +44,9 @@ class Cards extends Admin
                 ['id', 'ID'],
                 ['title', '标题'],
                 ['payment', '金额'],
-                ['member', '所属会员'],
+                ['price', '售价'],
+                ['num', '库存'],
+                // ['member', '所属会员'],
                 ['vip', '适用等级'],
                 ['start_time', '生效时间','datetime'],
                 ['end_time', '结束时间','datetime'],
@@ -52,7 +54,6 @@ class Cards extends Admin
                 ['use', '使用','','',['未使用','已使用']],
                 ['right_button', '操作', 'btn']
             ])
-            ->raw('member')
             ->raw('vip')
             ->addTopButtons('add,enable,disable') // 批量添加顶部按钮
             // ->addTopButton('custom', $btnexport)
@@ -77,8 +78,9 @@ class Cards extends Admin
             $data['classid'] = implode(',', $data['classid']);
             $data['mvip'] = implode(',', $data['mvip']);
             $data['create_time'] = time();
-            if ($props = CardsModel::create($data)) {
 
+            if ($Cards = CardsModel::create($data)) {
+                
                 $this->success('新增成功', url('index'));
             } else {
                 $this->error('新增失败');
@@ -92,6 +94,8 @@ class Cards extends Admin
             ->addFormItems([
                 ['text', 'title', '标题'],
                 ['text', 'payment', '面值'],
+                ['text', 'price', '售价'],
+                ['number', 'num', '库存'],
                 ['datetime', 'start_time', '开始时间'],
                 ['datetime', 'end_time', '结束时间'],
                 ['image', 'cover', '海报'],
@@ -133,6 +137,8 @@ class Cards extends Admin
                 ['hidden', 'id'],
                 ['text', 'title', '标题'],
                 ['text', 'payment', '面值'],
+                ['text', 'price', '售价'],
+                ['number', 'num', '库存'],
                 ['datetime', 'start_time', '开始时间'],
                 ['datetime', 'end_time', '结束时间'],
                 ['image', 'cover', '海报'],
