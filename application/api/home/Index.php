@@ -3388,6 +3388,19 @@ class Index
         $i = db('cards')->where($map)->find();
         $i['cover'] = get_file_path($i['cover']);
 
+        //课程
+        $cmp['id'] = array('in',$i['classid']);
+        $i['classes'] = db('cms_clac_temp')->where($cmp)->column('title');
+        //等级
+        $viparr = array('普通会员','周会员','年会员');
+        $ret = [];
+        $vp = explode(',', $i['mvip']);
+        foreach ($viparr as $key => $value) {
+            if (in_array($key, $vp)) {
+                $ret[] = $value;
+            }
+        }
+       $i['classes'] = $ret;
         //返回信息
         $data = [
             'code'=>'1',
