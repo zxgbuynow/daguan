@@ -3487,6 +3487,29 @@ class Index
         ];
         return json($data);
     }
+    /**
+     * [cardmy_custom 我的可使用卡包]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function cardmy_custom($params)
+    {
+        $account = trim($params['account']);
+
+        //
+        $map['use'] = 0;
+        $map['memberid'] = $account;
+        $info = db('cards_record')->where($map)->group('classid')->select();
+
+        $rs['list'] = array_values($info);
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$rs
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API
