@@ -3352,6 +3352,23 @@ class Index
             $map['memberid'] = null;
         }else{
             $map['memberid'] = $account;
+            $startpg = ($page_no-1)*$page_size;
+            $data = db('cards_record')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
+            foreach ($data as $key => $value) {
+                $data[$key]['cover'] = get_file_path($value['cover']);
+            }
+            $pages = array(
+                    'total'=>db('cards')->where($map)->order('id DESC')->count()
+                );
+            $trade['data']['pagers'] = $pages;
+            $trade['data']['list'] = array_values($data);
+            //返回信息
+            $data = [
+                'code'=>'1',
+                'msg'=>'',
+                'data'=>$trade
+            ];
+            return json($data);
         }
         $startpg = ($page_no-1)*$page_size;
         $data = db('cards')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
@@ -3453,8 +3470,8 @@ class Index
         }
 
         
-        
-        
+
+
         $ret = array('tid'=>$data['tid'],'price'=>$goodsinfo['price']);
 
         
