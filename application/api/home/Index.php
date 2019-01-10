@@ -888,6 +888,8 @@ class Index
 
         $counsellor['shopname'] = $counsellor['shopid']?db('shop_agency')->where(['id'=>$counsellor['shopid']])->value('city'):'中国大陆';
         
+        $counsellor['wordchartlv'] = $is_diamonds?0:$counsellor['wordchartlv'];
+        $counsellor['speechchartlv'] = $is_diamonds?0:$counsellor['speechchartlv'];
         //沟通方式
         $counsellor['chartArr'] = array(
             array(
