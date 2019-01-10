@@ -107,7 +107,8 @@ return [
         'refundlist'=>'refund.list',//退款列表
         'refundapply'=>'refund.apply',//退款申请
         'cardlist'=>'card.list',
-        'cardetail'=>'card.detail'
+        'cardetail'=>'card.detail',
+        'createCardTrade'=>'create.cardtrade',
 
 
 

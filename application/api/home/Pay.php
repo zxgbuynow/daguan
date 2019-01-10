@@ -196,7 +196,18 @@ class Pay
             if ($info['paytype']==3) {
                 db('cms_active')->where(['id'=>$info['classid']])->setInc('num');
             }
-            
+            if ($info['paytype']==4) {
+                //生成购卡记录
+                $cards = db('cards')->where(['id'=>$info['classid']])->find();
+                if ($cards) {
+                    unset($cards['id']);
+                    unset($cards['modify_time']);
+                    $cards['num'] = 1;
+                    $cards['memberid'] = $info['memberid'];
+                    db('cards_record')->insert($cards);
+                }
+
+            }
             db('cms_coupon')->where(['id'=>$info['couponid']])->update(['use'=>1]);
             
             db('trade')->where($where)->update($data);//修改订单状态

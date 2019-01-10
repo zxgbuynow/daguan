@@ -3410,6 +3410,62 @@ class Index
         return json($data);
     }
 
+    /**
+     * [createCardTrade_custom description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function createCardTrade_custom($params)
+    {
+        $clacid = trim($params['clacid']);
+        $account = trim($params['account']);
+        $paytype = trim($params['paytype']);
+
+        //取商品
+        $map['id'] = $clacid;
+        $goodsinfo = db('cards')->where($map)->find();
+        
+
+        //shopid  uid tid payment title paytype
+        
+        $data['classid'] = $clacid;
+
+        $data['memberid'] = $account;
+        $data['payment'] = $goodsinfo['price'];
+        $data['created_time'] = time();
+        $data['num'] = 1;
+        $data['paytype'] = $paytype;
+
+        
+        $username = db('member')->where('id',$account)->column('nickname');
+
+        $data['title'] = $username[0].'购买了'.$goodsinfo['title'];
+        
+        $data['shopid'] = 0;//总部
+        
+        //订单号
+        $data['tid'] = date('YmdHis',time()).rand(1000,9999);
+        //插入数据
+        $trade = db('trade')->insert($data);
+
+        if (!$trade) {
+            return $this->error('生成订单失败');
+        }
+
+        
+        
+        
+        $ret = array('tid'=>$data['tid'],'price'=>$goodsinfo['price']);
+
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$ret
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 商家版API
