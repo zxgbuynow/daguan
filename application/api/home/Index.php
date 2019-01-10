@@ -3346,12 +3346,14 @@ class Index
         $page_no = trim($params['page_no']);
         $page_size = trim($params['page_size']);
 
-        $map['status'] = 0;
+        
 
         if ($status == 'all') {
+            // $map['status'] = 0;
             $map['memberid'] = null;
         }else{
             $map['memberid'] = $account;
+            $map['use'] = 0;
             $startpg = ($page_no-1)*$page_size;
             $data = db('cards_record')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
             foreach ($data as $key => $value) {
