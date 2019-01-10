@@ -3360,7 +3360,7 @@ class Index
                 $data[$key]['cover'] = get_file_path($value['cover']);
             }
             $pages = array(
-                    'total'=>db('cards')->where($map)->order('id DESC')->count()
+                    'total'=>db('cards_record')->where($map)->order('id DESC')->count()
                 );
             $trade['data']['pagers'] = $pages;
             $trade['data']['list'] = array_values($data);
