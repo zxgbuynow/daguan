@@ -80,12 +80,28 @@ class Pay
         $where['tid'] = $params['payment_id'];
         $payment = db('trade')->where($where)->find();
         if (isset($params['couponid'])) {
-            $price = db('cms_coupon')->where(['id'=>$params['couponid']])->value('price');
-            $data['coupon'] = $price;
-            $data['couponid'] = $params['couponid'];
-            $data['payment'] = floatval($payment['payment'])- floatval($price)<0?'0.01':floatval($payment['payment'])- floatval($price);
-            $payment['payment'] = $data['payment'];
-            db('trade')->where(['tid'=>$params['payment_id']])->update($data);
+            if ($params['couponid']>0) {
+                $price = db('cms_coupon')->where(['id'=>$params['couponid']])->value('price');
+                $data['coupon'] = $price;
+                $data['couponid'] = $params['couponid'];
+                $data['payment'] = floatval($payment['payment'])- floatval($price)<0?'0.01':floatval($payment['payment'])- floatval($price);
+                $payment['payment'] = $data['payment'];
+                db('trade')->where(['tid'=>$params['payment_id']])->update($data);
+            }
+            
+            
+        }
+
+        if (isset($params['cardid'])) {
+            if ($params['cardid']>0) {
+                $price = db('cards_record')->where(['id'=>$params['cardid']])->value('payment');
+                $data['cards'] = $price;
+                $data['cardid'] = $params['cardid'];
+                $data['payment'] = floatval($payment['payment'])- floatval($price)<0?'0.01':floatval($payment['payment'])- floatval($price);
+                $payment['payment'] = $data['payment'];
+                db('trade')->where(['tid'=>$params['payment_id']])->update($data);
+            }
+            
             
         }
         
@@ -208,7 +224,14 @@ class Pay
                 }
 
             }
-            db('cms_coupon')->where(['id'=>$info['couponid']])->update(['use'=>1]);
+            if ($info['couponid']) {
+                db('cms_coupon')->where(['id'=>$info['couponid']])->update(['use'=>1]);
+            }
+
+            if ($info['cardid']) {
+                db('cards_record')->where(['id'=>$info['cardid']])->update(['use'=>1]);
+            }
+            
             
             db('trade')->where($where)->update($data);//修改订单状态
             db('msg')->where(['tid'=>$where['tid']])->update(['is_pay'=>1]);//修改订单状态
