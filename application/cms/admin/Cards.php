@@ -57,8 +57,9 @@ class Cards extends Admin
             ->raw('vip')
             ->addTopButtons('add,enable,disable') // 批量添加顶部按钮
             // ->addTopButton('custom', $btnexport)
-             ->addRightButton('edit' )
+            ->addRightButton('edit')
             ->addRightButton('delete', ['data-tips' => '删除后无法恢复。'])// 批量添加右侧按钮
+            ->replaceRightButton(['start_time' => ['lt', time()]], '<span style="color:red">不可操作</span>')
             ->setRowList($data_list)// 设置表格数据
             ->fetch(); // 渲染模板
     }
