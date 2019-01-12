@@ -3353,6 +3353,7 @@ class Index
         if ($status == 'all') {
             // $map['status'] = 0;
             $map['memberid'] = null;
+            $map['num'] = array('gt',0);
         }else{
             $map['memberid'] = $account;
             $map['use'] = 0;

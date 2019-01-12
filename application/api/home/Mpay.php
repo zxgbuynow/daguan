@@ -218,6 +218,8 @@ gwIDAQAB",
 
             if ($info['cardid']) {
                 db('cards_record')->where(['id'=>$info['cardid']])->update(['use'=>1]);
+                $cardsid = db('cards_record')->where(['id'=>$info['cardid']])->value('id');
+                db('cards')->where(['id'=>$cardsid])->setDec('num');
             }
             db('trade')->where($where)->update($data);//修改订单状态
             db('msg')->where(['tid'=>$where['tid']])->update(['is_pay'=>1]);//修改订单状态

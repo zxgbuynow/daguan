@@ -230,6 +230,8 @@ class Pay
 
             if ($info['cardid']) {
                 db('cards_record')->where(['id'=>$info['cardid']])->update(['use'=>1]);
+                $cardsid = db('cards_record')->where(['id'=>$info['cardid']])->value('id');
+                db('cards')->where(['id'=>$cardsid])->setDec('num');
             }
             
             
