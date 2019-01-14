@@ -3292,13 +3292,27 @@ class Index
     {
         $account = trim($params['account']);
 
-        $map['memberid'] = $account ;
+        $map['memberid'] = $account;
         $list['list'] = db('refund')->where($map)->select();
+        $cls = [];
+        //tid
+        foreach ($list['list'] as $key => $value) {
+            $m['id'] = $value['tid'];
+            $clsi = db('trade')->where($m)->value('classid');//订单
+            if (!$clsi) {
+                continue;
+            }
+            $cls[$key] = db('cms_clac_temp')->where(['id'=>$clsi])->find();
+            $cls[$key]['pic'] = get_file_path($cls[$key]['pic']);
+            $cls[$key]['st'] = $value['status'];
+
+        }
+        $res['list'] = $cls;
         //返回信息
         $data = [
             'code'=>'1',
             'msg'=>'',
-            'data'=>$list
+            'data'=>$res
         ];
         return json($data);
     }
