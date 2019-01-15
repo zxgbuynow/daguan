@@ -47,7 +47,7 @@ class Cards extends Admin
                 ['price', '售价'],
                 ['num', '库存'],
                 // ['member', '所属会员'],
-                ['vip', '适用等级'],
+                ['vip', '会员'],
                 ['start_time', '生效时间','datetime'],
                 ['end_time', '结束时间','datetime'],
                 ['status', '状态','','',['启用','禁用']],
@@ -89,12 +89,11 @@ class Cards extends Admin
         }
 
         $classls = db('cms_clac_temp')->column('id,title');
-        $mvip = array('普通会员','周会员','年会员' );
+        $mvip = array('周会员','年会员' );
         // 显示添加页面
         return ZBuilder::make('form')
             ->addFormItems([
                 ['text', 'title', '标题'],
-                ['text', 'payment', '面值'],
                 ['text', 'price', '售价'],
                 ['number', 'num', '库存'],
                 ['datetime', 'start_time', '开始时间'],
@@ -131,13 +130,12 @@ class Cards extends Admin
         }
         
         $classls = db('cms_clac_temp')->column('id,title');
-        $mvip = array('普通会员','周会员','年会员' );
+        $mvip = array('周会员','年会员' );
         // 显示添加页面
         return ZBuilder::make('form')
             ->addFormItems([
                 ['hidden', 'id'],
                 ['text', 'title', '标题'],
-                ['text', 'payment', '面值'],
                 ['text', 'price', '售价'],
                 ['number', 'num', '库存'],
                 ['datetime', 'start_time', '开始时间'],

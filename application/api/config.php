@@ -109,7 +109,8 @@ return [
         'cardlist'=>'card.list',
         'cardetail'=>'card.detail',
         'createCardTrade'=>'create.cardtrade',
-        'cardmy'=>'card.my'
+        'cardmy'=>'card.my',
+        'exchangerCard'=>'exchanger.card'
 
 
 

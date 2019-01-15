@@ -28,21 +28,16 @@ class Cards extends ThinkModel
 
     static  function getVipAttr($v,$data)
     {
-       $viparr = array(
-        '0'=>'普通会员',
-        '1'=>'周会员',
-        '2'=>'年会员'
-       );
-       $viparr = array('普通会员','周会员','年会员');
-       $ret = [];
-       $vp = explode(',', $data['mvip']);
-       foreach ($viparr as $key => $value) {
+      $viparr = array('周会员','年会员');
+      $ret = [];
+      $vp = explode(',', $data['mvip']);
+      foreach ($viparr as $key => $value) {
         if (in_array($key, $vp)) {
           $ret[] = $value;
         }
         
-       }
-       return implode('|', $ret);
+      }
+      return implode('|', $ret);
 
     }
     

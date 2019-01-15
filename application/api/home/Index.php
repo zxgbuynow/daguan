@@ -3302,7 +3302,7 @@ class Index
             if (!$clsi) {
                 continue;
             }
-            $cls[$key] = db('cms_clac_temp')->where(['id'=>$clsi])->find();
+            $cls[$key] = db('cms_clac_temp')->where(['classid'=>$clsi])->find();
             $cls[$key]['pic'] = get_file_path($cls[$key]['pic']);
             $cls[$key]['st'] = $value['status'];
 
@@ -3373,8 +3373,12 @@ class Index
             $map['use'] = 0;
             $startpg = ($page_no-1)*$page_size;
             $data = db('cards_record')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
+            $now = time();
             foreach ($data as $key => $value) {
                 $data[$key]['cover'] = get_file_path($value['cover']);
+                if ($value['end_time']<$now) {//过期
+                    $data[$key]['use']= 2; 
+                }
             }
             $pages = array(
                     'total'=>db('cards_record')->where($map)->order('id DESC')->count()
@@ -3428,7 +3432,7 @@ class Index
         $cmp['id'] = array('in',$i['classid']);
         $i['classes'] = db('cms_clac_temp')->where($cmp)->field('title,price')->select();
         //等级
-        $viparr = array('普通会员','周会员','年会员');
+        $viparr = array('周会员','年会员');
         $ret = [];
         $vp = explode(',', $i['mvip']);
         foreach ($viparr as $key => $value) {
@@ -3522,6 +3526,235 @@ class Index
             'code'=>'1',
             'msg'=>'',
             'data'=>$rs
+        ];
+        return json($data);
+    }
+
+    /**
+     * [exchangerCard_custom 兑换卡包]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function exchangerCard_custom($params)
+    {
+
+        $account = trim($params['account']);
+        $cardid = trim($params['cardid']);
+
+        //查询需要兑换的卡包
+        $map['use'] = 0;
+        $map['memberid'] = $account;
+        $map['id'] = $cardid;
+        $info = db('cards_record')->where($map)->find();
+
+        if (!$info) {
+            return $this->error('卡包不存在');
+        }
+
+        //兑换 课程活动
+        if ($info['classid']) {
+            $classes = explode(',', $info['classid']);
+            if (is_array($classes)) {
+                foreach ($classes as $key => $value) {
+                    $clacid = $value;
+                    $account = $account;
+                    //取课程活动
+                    $clac = db('cms_clac_temp')->where(['id'=>$clacid])->find();
+
+                    $paytype = $clac['type'];
+
+
+                    
+                    //取商品
+                    $gmap['id'] = $clac['classid'];
+                    if ($paytype==0) {//课程
+                        $goodsinfo = db('cms_classes')->where($gmap)->find();
+                    }
+                    if ($paytype==1) {//活动
+                        $goodsinfo = db('cms_active')->where($gmap)->find();
+                    }
+                    
+                    
+
+                    //shopid  uid tid payment title paytype
+                    
+                    $data['classid'] = $clac['classid'];
+
+                    $data['memberid'] = $account;
+                    $data['payment'] = $goodsinfo['price'];
+                    $data['created_time'] = time();
+                    $data['num'] = 1;
+                    $data['paytype'] = $paytype;
+
+                    
+                    $username = db('member')->where('id',$account)->value('nickname');
+
+                    $data['title'] = $username.'购买了'.$goodsinfo['title'];
+                    
+                    //机构 取咨询师机构counsellor_id
+                    $data['shopid'] = 0;
+                    $data['source'] = 1;
+                    //订单号
+                    $data['tid'] = date('YmdHis',time()).rand(1000,9999);
+                    //插入数据
+                    $trade = db('trade')->insert($data);
+                    if (!$trade) {
+                        return $this->error('生成订单失败');
+                    }
+                }
+
+            }else{
+                $clacid = trim($info['classid']);
+                $account = trim($account);
+                //取课程活动
+                $clac = db('cms_clac_temp')->where(['id'=>$clacid])->find();
+
+                $paytype = trim($clac['type']);
+
+
+                
+                //取商品
+                $gmap['id'] = $clac['classid'];
+                if ($paytype==0) {//课程
+                    $goodsinfo = db('cms_classes')->where($gmap)->find();
+                }
+                if ($paytype==1) {//活动
+                    $goodsinfo = db('cms_active')->where($gmap)->find();
+                }
+                
+                
+
+                //shopid  uid tid payment title paytype
+                
+                $data['classid'] = $clac['classid'];
+
+                $data['memberid'] = $account;
+                $data['payment'] = $goodsinfo['price'];
+                $data['created_time'] = time();
+                $data['num'] = 1;
+                $data['paytype'] = $paytype;
+
+                
+                $username = db('member')->where('id',$account)->value('nickname');
+
+                $data['title'] = $username.'购买了'.$goodsinfo['title'];
+                
+                //机构 取咨询师机构counsellor_id
+                $data['shopid'] = 0;
+                $data['source'] = 1;
+                //订单号
+                $data['tid'] = date('YmdHis',time()).rand(1000,9999);
+                //插入数据
+                $trade = db('trade')->insert($data);
+                if (!$trade) {
+                    return $this->error('生成订单失败');
+                }
+            }
+
+            
+        }
+        //兑换 会员
+        if ($info['mvip']) {
+            $vips = explode(',', $info['mvip']);
+            if (is_array($vips)) {
+                foreach ($vips as $key => $value) {
+                    $data['mid'] = 0;
+                    $data['memberid'] = $account;
+                    $data['payment'] = $value==0?7:36.5;
+                    $data['created_time'] = time();
+                    $data['num'] = 1;
+                    $data['chart'] = '';
+
+                    //冲值订单处理
+                    $buyname = db('member')->where('id',$account)->value('nickname');
+                    $data['title'] = $buyname.'成为心窝会员';
+                    
+                    //订单号
+                    $data['tid'] = date('YmdHis',time()).rand(1000,9999);
+                    //插入数据
+                    $data['paytype'] = 1;
+                    $data['source'] = 1;
+                    $trade = db('trade')->insert($data);
+                    if (!$trade) {
+                        return $this->error('生成订单失败');
+                    }
+
+                    //取当前会员信息
+                    $userinfo = db('member')->where('id',$account)->find();
+                    if ($userinfo['is_diamonds']==1) {//已经是会员
+                        if ($data['payment']==36.5) {
+                            $indata['vipday'] = 12;
+                        }
+
+                        $indata['viptime'] = $indata['vipday']==12? ($userinfo['viptime']+30879000):($userinfo['viptime']+604800);
+                        $indata['viplastt'] = $indata['vipday']==12?30879000:604800;
+                        db('member')->where(['id'=>$info['memberid']])->update($indata);
+                    }else{
+                        if ($data['payment']==7) {
+                            $indata['vipday'] = 1;
+                        }else{
+                            $indata['vipday'] = 12;
+                        }
+                        $indata['is_diamonds'] = 1;
+                        $indata['viptime'] = time();
+                        $indata['viplastt'] = $indata['vipday']==12?30879000:604800;
+                        db('member')->where(['id'=>$info['memberid']])->update($indata);
+
+                    }
+                }
+            }else{
+                $data['mid'] = 0;
+                $data['memberid'] = $account;
+                $data['payment'] = $info['mvip']==0?7:36.5;
+                $data['created_time'] = time();
+                $data['num'] = 1;
+                $data['chart'] = '';
+
+                //冲值订单处理
+                $buyname = db('member')->where('id',$account)->value('nickname');
+                $data['title'] = $buyname.'成为心窝会员';
+                
+                //订单号
+                $data['tid'] = date('YmdHis',time()).rand(1000,9999);
+                //插入数据
+                $data['paytype'] = 1;
+                $trade = db('trade')->insert($data);
+                if (!$trade) {
+                    return $this->error('生成订单失败');
+                }
+
+                //取当前会员信息
+                $userinfo = db('member')->where('id',$account)->find();
+                if ($userinfo['is_diamonds']==1) {//已经是会员
+                    if ($data['payment']==7) {
+                        $indata['vipday'] = 1;
+                    }else{
+                        $indata['vipday'] = 12;
+                    }
+
+                    $indata['viptime'] = $indata['vipday']==12? ($userinfo['viptime']+30879000):($userinfo['viptime']+604800);
+                    $indata['viplastt'] = $indata['vipday']==12?30879000:604800;
+                    db('member')->where(['id'=>$info['memberid']])->update($indata);
+                }else{
+                    if ($data['payment']==7) {
+                        $indata['vipday'] = 1;
+                    }else{
+                        $indata['vipday'] = 12;
+                    }
+                    $indata['is_diamonds'] = 1;
+                    $indata['viptime'] = time();
+                    $indata['viplastt'] = $indata['vipday']==12?30879000:604800;
+                    db('member')->where(['id'=>$info['memberid']])->update($indata);
+
+                }
+                
+            }
+        }
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>1
         ];
         return json($data);
     }
