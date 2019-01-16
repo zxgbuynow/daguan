@@ -45,6 +45,14 @@ class Member extends Home
     {
         return $this->fetch(); // 渲染模板
     }
+    public function smsg()
+    {
+        return $this->fetch(); // 渲染模板
+    }
+    public function smsg_detail()
+    {
+        return $this->fetch(); // 渲染模板
+    }
     public function msg_detail()
     {
         return $this->fetch(); // 渲染模板

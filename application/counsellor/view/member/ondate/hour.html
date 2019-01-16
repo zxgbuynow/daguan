@@ -95,9 +95,6 @@
 					<a data-val="<%= i%>"  class="item <%if (timebt[i].s=='3'){%>on<%}%><%if (timebt[i].s=='0'){%>enble<%}%>"
 						><%= i%></a>
 				<% }%>
-				<!--<a class="item">0:00-6:00</a>
-				<a class="item on">6:00-18:00</a>
-				<a class="item">18:00-24:00</a>-->
 			</div>
 		</div>
 		<div class="time-items mui-clearfix">
@@ -240,7 +237,8 @@
 	      	var dayn = new Date(curdate);
   			var days = dayn.getFullYear()+'-'+(dayn.getMonth()+1)+'-'+dayn.getDate();
   			var rangetm = $(this).data('val');
-  			if(!$(this).hasClass('unable')){
+  			// if(!$(this).hasClass('unable')){
+            if($(this).hasClass('enble')){//设置可预约
   				var param = {
 			          'method': config.apimethod.setallcalenda,
 			          'account': state.token,
@@ -255,7 +253,25 @@
 	        		},500);
 			      })
 
-  			}
+  			}else{
+                if($(this).hasClass('on')){//取消
+
+                    var param = {
+                      'method': config.apimethod.cancleallcalenda,
+                      'account': state.token,
+                      'day': days,
+                      'range':rangetm,
+                      'source':config.source
+                  }
+                  $.dataRequest(param, function(rs) {
+                    mui.toast('批量取消设置成功')
+                    setTimeout(function(){
+                        mui.back();
+                    },500);
+                  })
+//                      console.log('暂不能取消')
+                }
+            }
   			// else{
 
   			// 	if($(this).hasClass('on')){

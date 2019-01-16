@@ -621,7 +621,16 @@ function compatibleAdjust() {
     }
   }, 500);
 }
-
+function goed(url, param) {
+  for(var i in param){
+    if(url.indexOf("?") == -1) {
+      url += '?'+i+'='+param[i]; 
+    }else{
+      url += '&'+i+'='+param[i]; 
+    }
+  }
+  window.location.href = url;
+}
 var _openw = null;
 
 function clicked(id, param, a, s) {
@@ -1110,6 +1119,19 @@ $(function() {
         clicked('_www/view/h5.html', {
           'link': webview
         });
+      }
+    }
+  })
+
+  $(window).on('tap', '.go-webview', function() {
+    var webview = $(this).data('webview');
+    var webparam = $(this).data('webparam');
+    if(webview && webview != '') {
+      if(webview.indexOf("http") == -1) {
+        console.log(webparam);
+  goed(webview, webparam || {});
+      } else {
+        window.location.href = webview
       }
     }
   })

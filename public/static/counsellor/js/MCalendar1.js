@@ -36,10 +36,11 @@
 	
 	var MonthView =(function($){
 		var MonthViewTemplate = '' +
-	   '<div class="mc-toolbar">'+
-			'<button class="mui-btn" id="mc-btn-previous" type="button">前</button>'+
+	   '<div class="mc-toolbar" style="text-align: center;">'+
+			'<button class="mui-btn" id="mc-btn-previous" style="display:inline-block;float:left" type="button"><<</button>'+
 			'<button class="mui-btn" id="mc-btn-today" type="button">今</button>'+
-			'<button class="mui-btn" id="mc-btn-next" type="button">后</button>'+
+			'<button id="mc-date-label" style="display:inline-block;text-align: center;" class=""></button>'+
+			'<button class="mui-btn" id="mc-btn-next" style="display:inline-block;float:right" type="button">>></button>'+
 //			'<span id="mc-date-label" class="mui-pull-right">date</span>'+
 		'</div>'+
 		'<div><table class="mc-table">'+
@@ -117,13 +118,14 @@
 					   	  date_selected = date;
 					   }
 					else{
-						return false;
+						$.removeClass(cell_selected,"mc-cell-selected");
 						changeMonth(date);
 					}
 				}
 				else{
 					changeMonth(date);
-				}
+				}	
+				$('#mc-date-label')[0].innerHTML = (date_selected.getMonth()+1) +'月'
 //				$("#mc-date-label")[0].innerHTML = (date_selected.getMonth()+1) +'月' +date_selected.getFullYear() +'年';
 
 			}
@@ -150,6 +152,12 @@
 					window.location.href = 'hour?counsellor_id='+counsellor_id+'&curdate='+curd.getTime()+'&tid='+tid;
 
 				});
+				$(".mc-toolbar").on('tap','#mc-btn-previous',function(){
+					swipeMonth(-1);
+				})
+				$(".mc-toolbar").on('tap','#mc-btn-next',function(){
+					swipeMonth(1);
+				})
 				var swipeMonth = function(direction){
 					var d = new Date(date_selected);
 					var m = d.getMonth() + direction;
@@ -226,4 +234,4 @@
 	};
 	
 	
-}(mui));
+}(mui))

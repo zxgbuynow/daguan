@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__C_CSS__/style.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+      <div class="header-title">消息详情</div>
+
+    </header>
+    <section class="container section-white">
+    </section>
+  </body>
+  <script src="__C_JS__/zepto.js"></script>
+  <script src="__C_JS__/mui.min.js"></script>
+  <script src="__C_JS__/template.min.js"></script>
+  <script src="__C_JS__/config.js"></script>
+  <script src="__C_JS__/app.js"></script>
+  <script type="text/html" id="content-info">
+    <section class="content-padded border-bottom">
+      <h1 class="content-center content-padded"><%= title %></h1>
+      <section class="content-center fonts font-gray-40"><%= $timestamp_To_Time(create_time) %></section>
+      <div class="fontS font-gray-20 single-img">
+        <%= content %>
+      </div>
+    </section>
+  </script>
+  <script>
+      var state = app.getState();
+      var result = window.location.href;
+      var msg_id = $.getUrlParam(result,'msg_id');
+    //祥情
+      var param = {
+          'method': config.apimethod.smsginfo,
+          'source':config.source,
+          'id': msg_id
+      }
+      $.dataRequest(param, function(rs) {
+        log(rs)
+        var tempEl = template('content-info', rs);
+        $('.container').html(tempEl);
+      });
+      
+       //更新
+      var param1 = {
+          'method': config.apimethod.msgup,
+          'source':config.source,
+          'id': msg_id,
+          'type':0,
+          'account':state.token,
+      }
+      $.dataRequest(param1, function(rs) {
+        log(rs);
+      });
+      
+  </script>
+</html>

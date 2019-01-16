@@ -40,13 +40,13 @@
     </header>
     <div class="container" id="container">
        <ul class="mui-table-view" style="background-color: #FFFFFF;">
-        <li data-webview="{:url('Member/msg_list')}" class="mui-table-view-cell action-webview">
+        <li data-webview="{:url('Member/msg_list')}" class="mui-table-view-cell click-webview">
 	        <a class='mui-navigate-right' href="javascript:;">
 	        <span>订单消息</span>
             <span  class="msg-badge msg-order-badge mui-icon mui-badge mui-badge-danger mui-hidden"></span>
            </a>
         </li>
-        <li data-view="_www/view/counsellor/detail.html" class="mui-table-view-cell ">
+        <li data-webview="{:url('Member/smsg')}" class="mui-table-view-cell click-webview">
         		<a class='mui-navigate-right' href="javascript:;">
 		        <span>系统消息</span>
 	            <span  class="msg-badge msg-sys-badge mui-icon mui-badge mui-badge-danger mui-hidden"></span>
@@ -77,7 +77,7 @@
 	        			$('.msg-sys-badge').removeClass('mui-hidden')
 	        		}
 	        })
-          $(window).on('tap', '.action-webview', function() {
+          $(window).on('tap', '.click-webview', function() {
             var _this = $(this).data('webview');
             if(_this && _this != '') {
                window.location.href = _this
