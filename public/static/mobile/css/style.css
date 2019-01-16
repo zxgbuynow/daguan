@@ -1491,8 +1491,14 @@ input[type="submit"].mui-active:enabled,
     color: #333;
     background-color: rgba(0, 0, 0, 0.15);
     border-radius: 100px;
+   
 }
-
+#msg-count{
+	padding: 8px 6px 4px;
+	float: right;
+    margin-top: -32px;
+    margin-right: -10px;
+}
 .mui-badge.mui-badge-inverted {
     padding: 0 5px 0 0;
     color: #929292;
@@ -5371,7 +5377,7 @@ a {
 	font-weight: bold;
 }
 .bbc-tab-mui-icon.iconfw_normal{
-    font-weight: normal;
+	font-weight: normal;
 }
 .bbc-tab-item.bbc-active .bbc-tab-mui-icon{
 	color: #4782DC;
@@ -9498,7 +9504,7 @@ input[type="search"].header-search {
 .doctor-list-header ul li span.pink, .iconfont-icon-doctype.pink{
 	color: #E95759;
 }
-.doctor-list-header ul li span.pink, .iconfont-icon-doctype.gray{
+.doctor-list-header ul li  .iconfont-icon-doctype.gray{
 	color: #808080;
 }
 .flex-box{
@@ -9566,18 +9572,18 @@ input[type="search"].header-search {
 .doctor-honor{
 	color: #8c8c8c;
 	font-size: 12px;
-	margin: 0 0.6rem;
+	margin: 0 0.3rem;
 	height: 1.2rem;
 	overflow: hidden;
 }
 .doctor-honor span.star{
 	display: inline;
-	padding-left: 0.8rem;
+	padding-left: 0.2rem;
 }
 .d-icon-detail{
 	color: #ff5858;
     font-size: 14px;
-    width: 7rem;
+    width: 53px;
     text-align: right;
     margin-right: 0.2rem;
 }
@@ -9586,7 +9592,7 @@ input[type="search"].header-search {
     color: #fff;
     min-width: 36px;
 	max-width: 36px;
-    height: 1.2rem;
+    height: 1.1rem;
 	padding: 3px 6px;
 	border-radius: 4px;
 	width: auto;

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__M_FONT__/iconfont.css" />
+    <link rel="stylesheet" href="__M_CSS__/style.css" />
+    <link rel="stylesheet" href="__M_CSS__/widgets.css" />
+	<link rel="stylesheet" href="__M_CSS__/counsellor.css" />
+    <style> 
+    		
+    		.mui-table-view .mui-media-object{
+		    max-width: 72px; 
+    			height: 72px;
+    		}
+    		.mui-media-text {
+    			color: #646464;
+    			font-size: 15px;
+    		}
+    		.mui-media-author { 
+    			font-size: 13px;
+    			margin-top: 5px;
+    		} 
+    		.mui-media-action{
+    			font-size: 13px;
+    		}
+    		.float-right{
+    			float: right;
+    		}
+    		.mui-badge{
+    			left: 15px;
+    			top: 25px!important;
+    			right: 0px!important;
+    			width: 35px;
+    		}
+    		.mui-table-view-chevron .mui-table-view-cell{
+    			padding-right:25px;
+    		}
+    		
+		
+		.bbc-pullrefresh-top{
+			top: 45px;
+		}
+		input[type="search"]{
+			text-align:left
+		}
+		.main {
+				margin-right: 10px;
+				position: relative;
+			}
+			.mui-bar .mui-title {
+				width: auto;
+				left: 40px;
+				right: 52px;
+				top: 7px;
+				margin: 0;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: inline-block;
+			}
+			.header-search{
+				color: #666;
+			}
+			header.home-header .mui-input-clear ~ .mui-icon-clear{
+				top: -.5rem;
+			}
+    </style>
+  </head>
+
+  <body>
+  	<!--<header class="home-header">
+      <div class="header-logo"><span class="iconfont icon-logo- icon-home-logo"></span></div>
+      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
+	    <div class="main">
+	        <form onsubmit="return false;">
+	          <div class="mui-input-row header-search-form">
+							<input type="search"  class="header-search mui-input-clear" placeholder="寻找感兴趣的课程活动">
+						</div>
+						<a href="#" class="right-icon-search"><i class="iconfont icon-search icon-home-search"></i></a>
+					</form>
+	      </div>
+	      <p class="service">
+	          <img src="../../img/tel_blue.png">
+	          <i class="search-hide icon-func bbc-icon callmm">客服</i>
+	       </p>
+    </header>-->
+     <header class="home-header">
+			<div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+   		 	<i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+			<div class="mui-center mui-title">
+				列表
+			</div>
+		    	<a class="mui-right  mui-btn  mui-btn-link mui-btn-nav mui-pull-right service">
+		    		<img src="__M_IMG__/tel.png">
+		    		<i class="search-hide icon-func bbc-icon callmm">客服</i>
+		    	</a>
+			</div>
+    </header>
+	
+    <div class="container">
+      <div class="mui-scroll-wrapper bbc-pullrefresh-top" >
+        <div class="mui-scroll">
+         <div class="mui-content content-bottom-padded-nav">
+          	 
+		      <section class="widgets-category-list section-white">
+		        
+		        
+		      </section>
+		      
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script src="__M_JS__/mui.lazyload.js"></script>
+	<script src="__M_JS__/mui.lazyload.img.js"></script>
+	<script type="text/html" id="clac_list">
+		<div class="section-title">
+	      <div class="title-txt">结果列表</div>
+	    </div>
+	    <div class="mui-table-view">
+	      <ul class="mui-table-view mui-table-view-chevron">
+	      	<% for(var i in list) { %>
+			<li class="mui-table-view-cell mui-media  go-webview" data-webview="{:url('Clac/detail')}" data-webparam='{"acid":<%= list[i].classid %>, "actype":<%= list[i].type %>}'>
+				
+				<div class="mui-table">
+					<div class="mui-table-cell mui-col-xs-12">
+						<img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].pic) %>">
+						<div class="mui-media-body">
+							<p>
+								<span class="mui-text-left mui-ellipsis-2"><%= list[i].title %></span>
+							</p>
+							<p class='mui-ellipsis mui-media-text mui-media-author'><%= list[i].intro %></p>
+							<p class="mui-ellipsis mui-media-text mui-media-author">地点：<%= list[i].address %>
+								<span class="mui-pull-right">时间：<%= $timestamp_To_Date(list[i].start_time) %></span>
+							</p>
+						</div>
+					</div>
+					
+				</div>
+			</li>
+			<%}%>
+		  </ul>		
+	    </div>
+	</script>	
+    <script type="text/javascript">
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+	var state = app.getState();
+    var result = window.location.href;
+    var keyword = $.getUrlParam(result,'keyword');
+    var cat_id = $.getUrlParam(result,'catid');
+	  	getclist();
+		function getclist(){
+			var param = {
+	            'method': config.apimethod.clca,
+	            'source':config.source,
+	            'page_no': 1,
+	            'cateid': cat_id,
+	            'page_size': config.pagesize
+	        } 
+	        $.dataRequest(param, function(rs) {
+
+	        	var widgets = template('clac_list', rs.data);
+	            $('.widgets-category-list').append(widgets);
+	            	 // 
+	             mui('.mui-scroll-wrapper').scroll({
+		          indicators: false
+		        });
+	        })
+		}
+	  	
+	  	
+      
+    </script>
+  </body>
+
+</html>

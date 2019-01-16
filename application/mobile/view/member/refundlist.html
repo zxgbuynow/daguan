@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="__M_CSS__/counsellor.css" />
+    <link rel="stylesheet" href="__M_CSS__/style.css" />
+	<link rel="stylesheet" href="__M_CSS__/member.css" />
+    <style>
+		.mui-badge{
+			margin-left: 185px!important;
+			top: 5.5rem!important;
+			position: absolute;
+		}
+		.list .mui-media-object{
+			font-size: .5rem;
+		}
+        .mui-table-view .mui-media-object{
+          max-width: 80px; 
+      height: 80px;
+    }
+    </style>
+    
+  </head>
+  <body class="section-white">
+    <header class="page-header nobd">
+      <div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+      <i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+      <h1 class="mui-center mui-title">我的退款</h1>
+      </div>
+    </header>
+    <div class="counsellor-homepage-content">
+			<!--文章列表 start-->
+				<section class="container section-white counsellor-article-info">
+					<div class="list">
+						<!--<ul class="mui-table-view">
+							<li class="mui-table-view-cell mui-media">
+								<a  class="cell-flex">  
+									<img class="mui-media-object mui-pull-left" src="../../img/60x60.gif">
+									<div class="mui-media-body flex-g2">
+										<h3 class="mui-ellipsis-2" >幸福幸福幸福幸福幸福幸福</h3>
+										<p class="address mui-ellipsis">地点: 上海</p>
+										<p class="time">时间: 2018年10月19日</p>
+									</div> 
+									<div class="mui-media-object">
+										<span class="btn-bg-orange">待审核1</span>
+									</div>
+								</a>
+							</li>
+							<li class="mui-table-view-cell mui-media">
+								<a  class="cell-flex">
+									<img class="mui-media-object mui-pull-left" src="../../img/60x60.gif">
+									<div class="mui-media-body flex-g2">
+										<h3 class="mui-ellipsis-2">幸福幸福幸福幸福幸福幸福幸福</h3>
+										<p class="address mui-ellipsis">地点: 上海</p>
+										<p class="time">时间: 2018年10月19日</p>
+									</div>
+									<div class="mui-media-object">
+										<span class="btn-bg-orange">已完成</span>
+									</div>
+								</a>
+							</li>
+						</ul>-->
+					</div>
+				</section>
+			<!--文章列表 end-->
+	    
+	</div>
+	
+  </body>
+  <script src="__M_JS__/zepto.js"></script>
+  <script src="__M_JS__/mui.min.js"></script>
+  <script src="__M_JS__/template.min.js"></script>
+  <script src="__M_JS__/config.js"></script>
+  <script src="__M_JS__/app.js"></script>
+  <script type="text/html" id="refund_list">
+  	<ul class="mui-table-view">
+        <% for(var i in list) { %>
+    		<li class="mui-table-view-cell mui-media">
+    			<a  class="cell-flex">  
+    				<img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i]['pic'])%>">
+    				<div class="mui-media-body flex-g2">
+    					<h3 class="mui-ellipsis-2" ><%= list[i].title %></h3>
+    					<p class="address mui-ellipsis">地点: <%= list[i].address %></p>
+    					<p class="time">时间: <%= $timestamp_To_Time(list[i].start_time) %></p>
+    				</div> 
+    				<div class="mui-media-object">
+                        <%if(list[i].st==0){%>
+    					<span class="btn-bg-orange">待审核</span>
+                        <% } %> 
+                        <%if(list[i].st==1){%>
+                        <span class="btn-bg-orange">通过</span>
+                        <% } %> 
+                        <%if(list[i].st==2){%>
+                        <span class="btn-bg-orange">完成</span>
+                        <% } %> 
+                        <%if(list[i].st==3){%>
+                        <span class="btn-bg-orange">未通过</span>
+                        <% } %> 
+    				</div>
+    			</a>
+    		</li>
+        <% } %>
+	</ul>
+  </script>
+  
+  <script>
+    	
+      var state = app.getState();
+      var param = {
+          'method': config.apimethod.refundlist,
+          'source':config.source,
+          'account': state.token
+      }
+
+      log(param);
+      $.dataRequest(param, function(rs) {
+      	log(rs)  
+      	var widgets = template('refund_list', rs);
+        $('.list').append(widgets);
+         mui('.list').scroll({
+          indicators: false
+        });
+      });
+      
+  </script>
+</html>

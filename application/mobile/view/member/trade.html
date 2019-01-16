@@ -258,6 +258,9 @@
               </div>
               <div class="box-item-flex2 content-right deposit-detail-amount  font-red">
                   <%if (list[i].status=='1'){%>已支付
+                  <%if (list[i].record<list[i].num){%>
+                  </br>点击可预约
+                  <%}%>
                 <% } %>
                 <%if (list[i].status=='0'){%>未支付
                 <% } %>

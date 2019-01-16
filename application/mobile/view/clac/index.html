@@ -14,54 +14,60 @@
     <style> 
     		
     		.mui-table-view .mui-media-object{
-		    max-width: 72px; 
-    			height: 72px;
-    		}
-    		.mui-media-text {
-    			color: #646464;
-    			font-size: 15px;
-    		}
-    		.mui-media-author { 
-    			font-size: 13px;
-    			margin-top: 5px;
-    		} 
-    		.mui-media-action{
-    			font-size: 13px;
-    		}
-    		.float-right{
-    			float: right;
-    		}
-    		.mui-badge{
-    			left: 15px;
-    			top: 25px!important;
-    			right: 0px!important;
-    			width: 35px;
-    		}
-    		.mui-table-view-chevron .mui-table-view-cell{
-    			padding-right:25px;
-    		}
-    		
-		
-		.bbc-pullrefresh-top{
-			top: 45px;
-		}
-		input[type="search"]{
-			text-align:left
-		}
-		.main {
-				margin-right: 10px;
-				position: relative;
-			}
-			.mui-bar .mui-title {
-				width: auto;
-				left: 40px;
-				right: 52px;
-				top: 7px;
-				margin: 0;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				display: inline-block;
-			}
+            max-width: 72px; 
+                height: 72px;
+            }
+            .mui-media-text {
+                color: #646464;
+                font-size: 15px;
+            }
+            .mui-media-author { 
+                font-size: 13px;
+                margin-top: 5px;
+            } 
+            .mui-media-action{
+                font-size: 13px;
+            }
+            .float-right{
+                float: right;
+            }
+            .mui-badge{
+                left: 15px;
+                top: 25px!important;
+                right: 0px!important;
+                width: 35px;
+            }
+            .mui-table-view-chevron .mui-table-view-cell{
+                padding-right:25px;
+            }
+            
+        
+        .bbc-pullrefresh-top{
+            top: 45px;
+        }
+        input[type="search"]{
+            text-align:left
+        }
+        .main {
+                margin-right: 10px;
+                position: relative;
+            }
+            .mui-bar .mui-title {
+                width: auto;
+                left: 40px;
+                right: 52px;
+                top: 7px;
+                margin: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: inline-block;
+            }
+            .header-search{
+                color: #666;
+            }
+            header.home-header .mui-input-clear ~ .mui-icon-clear{
+                top: -.5rem;
+            }
     </style>
   </head>
 
@@ -110,7 +116,7 @@
 	<script type="text/html" id="nav_list">
 		<ul class="widgets-icons-nav">
 		<% for(var i in data) { %>
-          <li class="" ><i><a ><img src="<%= $add_server(data[i].cover) %>"></a></i><span><%= data[i].title %></li>
+          <li class="go-webview" data-webview="{:url('Clac/tlist')}" data-webparam='{"catid":<%= data[i].id %>}'><i><a ><img src="<%= $add_server(data[i].cover) %>"></a></i><span><%= data[i].title %></li>
         <%}%>
         </ul>
 	</script>
@@ -161,7 +167,7 @@
         $(form).submit(function() {
             keyword = $('input[type="search"]').val();
             sinput.blur();
-            getclist();
+            searchclac();
          })
 
         
@@ -175,7 +181,22 @@
        		var widgets = template('nav_list', rs);
             $('.widgets-category-nav').html(widgets);
 	    })
-	  	
+	  	function searchclac(){
+            var param = {
+                'method': config.apimethod.clacsearch,
+                'kw': keyword,
+                'source':config.source
+            } 
+            $('.widgets-category-list').html('');
+            $.dataRequest(param, function(rs) {
+                var widgets = template('clac_list', rs.data);
+                $('.widgets-category-list').append(widgets);
+                mui('.mui-scroll-wrapper').scroll({
+                  indicators: false
+                });
+            })
+        }
+
 	  	getclist();
 		function getclist(){
 			var param = {

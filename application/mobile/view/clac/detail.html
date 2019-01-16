@@ -467,12 +467,9 @@
 				  'account': state.token 
 				}
 
-				w=plus.nativeUI.showWaiting();
 
 				$.dataRequest(param1, function(rs) {
-					w.close();w=null;
-//					log(rs);return false;
-					clicked('_www/view/checkout/clacpay.html',{
+					goed("{:url('Checkout/clacpay')}",{
 			      		'tid':rs.tid,
 			      		'price':rs.price,
 			      	})
@@ -481,7 +478,7 @@
 	      	}else{
 	      		//去登录 
 				var faid = plus.webview.currentWebview().id;
-		        clicked('_www/view/passport/login.html', {
+		        goed("{:url('passport/login')}", {
 		          'faid': faid
 		        }, 'slide-in-bottom');
 	      	}

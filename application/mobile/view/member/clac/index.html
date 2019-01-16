@@ -92,7 +92,16 @@
 							<%if(!list[i].claceva){%>
 		                    		<a href="{:url('Member/claceval')}?acid=<%= list[i].id %>&actype=<%= list[i].typeid %>"><p><span class="mui-media-text  mui-btn-yellow "  style="color: #FFFFFF;">评价</span></p></a>
 		                    <%}%>
-		                    <span class="mui-media-text bbc-btn-outlined">退款</span> 
+                            <%if(list[i].status==1){%>
+                            <span class="mui-media-text bbc-btn-outlined go-webview" data-webview="{:url('Member/refundform')}" data-webparam='{"acid":<%= list[i].id %>,"actype":<%= list[i].typeid %>,"tid":<%= list[i].tid %>}'>退款</span> 
+                                <% } %> 
+                            <%if(list[i].status==4){%>
+                            <span class="mui-media-text bbc-btn-outlined">退款中</span>
+                            <% } %> 
+                            <%if(list[i].status==5){%>
+                                <span class="mui-media-text bbc-btn-outlined">退款成功</span>
+                            
+                            <% } %> 
 		               </div> 
 					</div>
 				</li>
@@ -112,6 +121,7 @@
 //	            'typeid': 1,
 	            'account': state.token
 	      }
+          console.log(param);
 	       $.dataRequest(param, function(rs) {
 	       		var rt = {};
 	       		if(rs){

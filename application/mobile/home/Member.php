@@ -89,6 +89,26 @@ class Member extends Home
     {
         return $this->fetch('apply'); // 渲染模板
     }
+    public function refundlist()
+    {
+        return $this->fetch(); // 渲染模板
+    }
+    public function refundform()
+    {
+        return $this->fetch(); // 渲染模板
+    }
+    public function cards()
+    {
+        return $this->fetch(); // 渲染模板
+    }
+    public function cardsget()
+    {
+        return $this->fetch(); // 渲染模板
+    }
+    public function cardsex()
+    {
+        return $this->fetch(); // 渲染模板
+    }
     public function share()
     {
         return $this->fetch(); // 渲染模板

@@ -25,4 +25,8 @@ class Checkout extends Home
     {
         return $this->fetch(); // 渲染模板
     }
+    public function cardpay()
+    {
+        return $this->fetch(); // 渲染模板
+    }
 }

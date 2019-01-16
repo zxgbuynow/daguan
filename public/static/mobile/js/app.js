@@ -620,8 +620,20 @@ function compatibleAdjust() {
   }, 500);
 }
 
-var _openw = null;
+function goed(url, param) {
+  for(var i in param){
+    if(url.indexOf("?") == -1) {
+      url += '?'+i+'='+param[i]; 
+    }else{
+      url += '&'+i+'='+param[i]; 
+    }
+  }
+  window.location.href = url;
+}
 
+//clicked
+var _openw = null;
+ 
 function clicked(id, param, a, s) {
   var obj = {
     preate: true
@@ -934,6 +946,7 @@ function preateClear() {
       }
     });
   }
+
   $.getUrlParam = function(link,key){
     var q = link,
         keyValuePairs = new Array();
@@ -1080,8 +1093,21 @@ $(function() {
       }
     }
   })
-});
 
+  $(window).on('tap', '.go-webview', function() {
+    var webview = $(this).data('webview');
+    var webparam = $(this).data('webparam');
+    if(webview && webview != '') {
+      if(webview.indexOf("http") == -1) {
+        console.log(webparam);
+	goed(webview, webparam || {});
+      } else {
+        window.location.href = webview
+      }
+    }
+  })
+});
+ 
 //document.addEventListener('plusready',backreload);
 //function backreload(){
 //var old_back = mui.back;

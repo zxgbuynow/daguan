@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>购买卡</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="__M_CSS__/style.css">
+    <link rel="stylesheet" href="__M_CSS__/member.css">
+    <style type="text/css">
+      .section-white{
+        background: #fff;
+        padding: 2rem 1rem;
+        margin-bottom: 2rem;
+      }
+      
+      .counsellor-head-content{
+        height: 10.5rem;
+        width: 100%;
+        /*background: #fff;*/
+      }
+      .counsellor-head-content img.top-img{
+        width: 100%;
+        height: 100%;
+      }
+     
+      .cards-box {
+        padding: .5rem;
+        background: #fff;
+        margin-bottom: 2rem;
+      }
+      .cards-box p{
+        color: #666666;
+      }
+      .cards-box span{
+        font-size: .9rem;
+        padding: .2rem 1rem;
+        
+      }
+      .cards-box .price{
+        padding: .7rem .1rem;
+      }
+      .cards-box .symbol{
+        text-decoration:line-through;
+        color: palevioletred;
+      }
+      .cards-box .mui-table-view:after{
+        height: 0;
+      }
+      .mui-table-view-cell:after{
+        height: 0;
+      }
+      .mui-table-view-cell{
+        padding: .2rem 1rem;
+      }
+    </style> 
+  </head>
+
+  <body>
+	<header class="page-header nobd">
+		<div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+			<i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+			<h1 class="mui-center mui-title">我的卡包</h1>
+			
+		</div>
+	</header>
+    <section class="container member-apply-body">
+    	
+        <div class="counsellor-head-content">
+			<!--<img class="top-img" src="../../img/xinwo_02.png">
+			<div class="cards-box">
+				<div class="cards-row payments">
+					<p>购买金额</p>
+					<span>￥180</span>
+				</div>
+				<div class="cards-row calsses">
+					<p>适用课程</p>
+					<ul class="mui-table-view ">
+						<li class="mui-table-view-cell" id="1" val="200">
+							<span class="price">大观课程 <em class="symbol">￥200</em></span>
+						</li>
+					</ul>
+				</div>
+				<div class="cards-row members">
+					<p>适用会员等级</p>
+					<ul class="mui-table-view ">
+						<li class="mui-table-view-cell" >
+							<span class="price">周付会员</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="mui-button-row btn-options">
+				<button class="mui-btn  mui-btn-warning bbc-btn-warning" id="get">购买</button>
+				<button class="mui-btn  mui-btn-warning " id="send">增送</button>
+			</div>-->
+		</div>
+        
+    </section>
+    <script src="__M_JS__/zepto.js"></script>
+    <script src="__M_JS__/mui.min.js"></script>
+    <script src="__M_JS__/template.min.js"></script>
+    <script src="__M_JS__/config.js"></script>
+    <script src="__M_JS__/app.js"></script>
+    <script type="text/html" id="card_info">
+    		<img class="top-img" src="<%= $add_server(cover)%>">
+			<div class="cards-box">
+                <div class="cards-row payments">
+                    <p>购买金额</p>
+                    <span>￥<%= price%></span>
+                </div>
+                <div class="cards-row calsses">
+                    <p>卡包福利</p>
+                    <ul class="mui-table-view ">
+                        <% for(var i in classes) { %>
+                        <li class="mui-table-view-cell" >
+                            <span class="price"><%= classes[i].title%> <em class="symbol">￥<%= classes[i].price%></em></span>
+                        </li>
+                        <%}%>
+                        <% for(var i in member) { %>
+                        <li class="mui-table-view-cell" >
+                            <span class="price"><%= member[i]%></span>
+                        </li>
+                        <%}%> 
+                    </ul>
+                </div>
+                <div class="cards-row members">
+                    <p>备注</p>
+                    <span>仅限本人使用</span>
+                </div>
+            </div>
+			<div class="mui-button-row btn-options">
+				<button class="mui-btn  mui-btn-warning bbc-btn-warning" id="get">购买</button>
+				<!--<button class="mui-btn  mui-btn-warning " id="send">增送</button>-->
+			</div>
+    	</script>
+    <script type="text/javascript" charset="utf-8">
+      mui.init({
+        swipeBack: true, //启用右滑关闭功能
+      });
+      var state = app.getState();
+      
+        var result = window.location.href;
+        var cid = $.getUrlParam(result,'cardid');
+
+      	if(state.token){
+      		//
+      		var param = {
+		          'method': config.apimethod.cardetail,
+		          'source':config.source,
+		          'id': cid
+		      }
+		
+		      $.dataRequest(param, function(rs) {
+		      	var widgets = template('card_info', rs);
+        			$('.counsellor-head-content').append(widgets);
+        			//购买
+		      	mui('.counsellor-head-content').on('tap','#get',function(){
+		      		
+		      		//生成订单
+		      		var param1 = {
+					  'method': config.apimethod.createCardTrade,
+					  'source':config.source,
+					  'clacid': cid,
+					  'paytype': 4,
+					  'account': state.token 
+					}
+	
+					$.dataRequest(param1, function(rs) {
+                        mui.toast('订单创建成功！');
+                        window.location.href = "{:url('Checkout/cardpay')}"+'?price='+rs.price+'&tid='+rs.tid;
+					})
+		      	})
+		      })
+      	}else{
+      		mui.toast('请登录')
+      	}
+      	
+    </script>
+  </body>
+
+</html>

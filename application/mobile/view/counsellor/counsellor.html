@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="__M_CSS__/style.css">
     <link rel="stylesheet" href="__M_CSS__/widgets.css">
+    <link rel="stylesheet" href="__M_CSS__/counsellor.css" />
     <style>
       html,
       body {
@@ -17,7 +18,7 @@
       }
 
       p {
-        text-indent: 22px;
+        /*text-indent: 22px;*/
       }
 
       span.mui-icon {
@@ -30,7 +31,7 @@
         top: 44px;
       }
       .mui-bar-nav {
-        background: #FFF;
+        /*background: #FFF;*/
         -webkit-box-shadow: none;
         box-shadow: none;
       }
@@ -58,12 +59,28 @@
         .mui-scroll-wrapper{
           margin-top: 45px;
         }
+        .mui-bar .mui-title {
+                width: auto;
+                left: 40px;
+                right: 52px;
+                top: 7px;
+                margin: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: inline-block;
+            }
+            .header-search{
+                color: #666;
+            }
+            header.home-header .mui-input-clear ~ .mui-icon-clear{
+                top: -.5rem;
+            }
     </style>
   </head>
 
   <body>
 
-    <header class="mui-bar-nav">
+    <!-- <header class="mui-bar-nav">
       <header class="home-header">
         <i class="icon-func bbc-icon bbc-icon-back mui-action-back"></i>
         <div class="main">
@@ -75,6 +92,23 @@
         </div>
       </header>
       
+    </header> -->
+    <header class="home-header">
+      <div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+        <i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+      <div class="mui-center mui-title">
+        <form onsubmit="return false;">
+        <div class="mui-input-row header-search-form">
+          <input type="search"  class="header-search mui-input-clear" placeholder="寻找咨询师">
+        </div>
+        <a href="#" class="right-icon-search"><i class="iconfont icon-search icon-home-search"></i></a>
+      </form>
+      </div>
+          <a class="mui-right  mui-btn  mui-btn-link mui-btn-nav mui-pull-right service">
+            <img src="__M_IMG__/tel.png">
+            <i class="search-hide icon-func bbc-icon callmm">客服</i>
+          </a>
+      </div>
     </header>
     
     <div class="mui-content">
@@ -102,10 +136,16 @@
               <div class="mui-media-body">
                 <p>
                   <span class="mui-text-left"><%= list[i].nickname %></span>
-                  <span class="mui-text-right mui-media-action float-right mui-hidden">立即预约</span>
+                  <% if(list[i].online==1 ){%>
+                    <span class="mui-text-right mui-media-action  mui-badge mui-badge-blue ">在线</span>
+                  <%}else{%>
+                    <span class="mui-text-right mui-media-action  mui-badge mui-badge-gray ">离线</span>
+
+                  <%}%>
                 </p>
-                <p class='mui-ellipsis mui-media-text'><%= list[i].employment %>|<%= list[i].sign %></p>
+                <p class='mui-ellipsis mui-media-text'><%if(list[i].tearch){%>大观讲师 |<%}%><%if(list[i].leader){%>大观Leader<%}%> |<%= list[i].sign %></p>
                 <p class="mui-ellipsis mui-media-text mui-media-author">我在大观心理温暖过<%= list[i].trade %>人次</p>
+                
               </div>
             </a>
           </li>

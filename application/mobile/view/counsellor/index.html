@@ -14,81 +14,106 @@
     <!--<link rel="stylesheet" href="../../css/moon-style.css" />-->
     <style> 
     		.main{
-    			margin-right: 10px;
-					position: relative;
-    		}
-    		.mui-table-view .mui-media-object{
-		    max-width: 72px; 
-    			height: 72px;
-    		}
-    		.mui-media-text {
-    			color: #646464;
-    			font-size: 15px;
-    		}
-    		.mui-media-author { 
-    			font-size: 13px;
-    			margin-top: 5px;
-    		} 
-    		.mui-media-action{
-    			font-size: 13px;
-    		}
-    		.float-right{
-    			float: right;
-    		}
-    		.mui-badge{
-    			left: 15px;
-    			top: 25px!important;
-    			right: 0px!important;
-    			width: 35px;
-    		}
-    		/*#topPopover {
-			position: fixed;
-			top: 33px!important;
-			right: 1px;
-		}
-		#topPopover .mui-popover-arrow {
-			left: auto;
-			right: 1px;
-		}
-		.mui-popover {
-			height: 180px;
-			width: 200px;
-		}
-		#agency{
-			font-size: 15px;
-		}*/
-		header{
-			height: 44px;
-		}
-		.bbc-pullrefresh-top{
-			top: 45px;
-		}
-		.main {
-				margin-right: 10px;
-				position: relative;
-			}
-			.mui-bar .mui-title {
-				width: auto;
-				left: 40px;
-				right: 52px;
-				top: 7px;
-				margin: 0;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				display: inline-block;
-			}
-            .mui-off-canvas-left, .mui-off-canvas-right{
-                background: #efeff4;
+                margin-right: 10px;
+                    position: relative;
             }
-            .filters-options span.checked{
-                background:#4883DD;
+            .mui-table-view .mui-media-object{
+                    max-width: 100%; 
+                /*height: 52px;*/
             }
-            .header.home-header .header-search-form input{
+            
+            .mui-media-text {
+                color: #646464;
+                font-size: 15px;
+            }
+            .mui-media-author { 
+                font-size: 13px;
+                margin-top: 5px;
+            } 
+            .mui-media-action{
+                font-size: 13px;
+            }
+            .float-right{
+                float: right;
+            }
+            .bbc-tab-item .mui-badge{
+                left: 15px;
+                top: 25px!important;
+                right: 0px!important;
+                width: 35px;
+            }
+            /*#topPopover {
+            position: fixed;
+            top: 33px!important;
+            right: 1px;
+        }
+        #topPopover .mui-popover-arrow {
+            left: auto;
+            right: 1px;
+        }
+        .mui-popover {
+            height: 180px;
+            width: 200px;
+        }
+        #agency{
+            font-size: 15px;
+        }*/
+        header{
+            height: 44px;
+        }
+        .bbc-pullrefresh-top{
+            top: 45px;
+        }
+        .main {
+                margin-right: 10px;
+                position: relative;
+            }
+            .mui-bar .mui-title {
+                width: auto;
+                left: 40px;
+                right: 52px;
+                top: 7px;
+                margin: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: inline-block;
+            }
+            .header-search{
                 color: #666;
             }
             header.home-header .mui-input-clear ~ .mui-icon-clear{
-            top: -.4rem;
-          }
+                top: -.5rem;
+            }
+            /*.doctor-honor{
+                height: 2.7em;
+            }*/
+            .widgets-category-nav .mui-table-view-cell{
+                display: inline-flex!important;
+                    width: 100%!important;
+            }
+            .widgets-category-nav .mui-table-view-cell  img{
+                height: 7rem!important;
+                flex: 30.8% 0 0!important;
+                margin-right: 0.8rem!important;
+                border: 1px solid #A7C3E2;
+                border-radius: 8px;
+                width: 30.8%;
+            }
+            .widgets-category-nav .mui-table-view-cell .mui-media-body{
+                width: 65%!important;
+            }
+            .widgets-category-nav .mui-table-view-cell .mui-media-body .info-detail .card-name{
+                font-size: .9rem;
+            }
+            .widgets-category-nav .mui-table-view-cell .mui-media-body .info-detail .card-addrs{
+                font-size: .8rem;
+            }
+            .doctor-sign-list{
+                    margin-bottom: 0px;
+            }
+            .mui-content{
+                margin-bottom: 45px;
+            }
     </style>
   </head>
 
@@ -137,8 +162,9 @@
             <div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper">
                 <div class="mui-scroll contentl">
                     <div class="cag-box-list"></div>
-	         		<div class="deskrecom-box-list"></div>
-	         		<div class="recom-box-list"></div>	
+                    <div class="search-box-list"></div>
+                    <div class="deskrecom-box-list"></div>
+                    <div class="recom-box-list"></div>	
 
                      
 
@@ -200,7 +226,7 @@
 	        <ul class="widgets-icons-nav">
 	        	<% for(var i=0; i<list.length; i++) { %>
 	        		<%if(i<8){%>
-	          <li class="action-clickview" data-webview="{:url('Counsellor/counsellor')}" data-webparam='<%= list[i].id %>'><i><a href="#"><img src="<%= $add_server(list[i].cover) %>"></a></i><span><%= list[i].title %></li>
+	          <li class="go-webview" data-webview="{:url('Counsellor/counsellor')}" data-webparam='<%= list[i].id %>'><i><a href="#"><img src="<%= $add_server(list[i].cover) %>"></a></i><span><%= list[i].title %></li>
 	       		<%}%>
 	       	<% } %>
 	        </ul>
@@ -257,9 +283,8 @@
 											
 											<p class="doctor-honor flex-g2 ">
 												<span>住进 <%= list[i].trade %> 个人的心窝</span>
-												<span class="star">好评率：<%= list[i].start %></span>
 											</p>
-											<p class="d-icon-detail action-clickview flex-g1" data-webview="{:url('Counsellor/detail')}"data-webparam='<%= list[i].memberid %>'>详情》</p>
+											<p class="d-icon-detail go-webview flex-g1" data-webview="{:url('Counsellor/detail')}" data-webparam='{"counsellor_id":<%= list[i].id %>}'>详情》</p>
 										</div>
 								</div>
 						</div>
@@ -271,6 +296,65 @@
 	</section>
 	<!--平台推荐 end-->
 	</script>
+    <script type="text/html" id="widget_recommends">
+    <!--人气排行 start-->
+    <section class="widgets-category-nav section-white ">
+        <div class="section-title mui-list-bd-headline">
+            <div class="title-txt">搜索结果</div>
+        </div>
+        <div class="mui-table-view">
+            <ul class="mui-table-view mui-table-view-chevron">
+                <% for(var i in list) { %>
+                <li class="mui-table-view-cell mui-media pad-rt " data-webview="_www/view/counsellor/detail.html" data-webparam='{"counsellor_id":<%= list[i].memberid %>}'>
+                    <img class="mui-media-object mui-pull-left " src="<%= $add_server(list[i].avar) %>" >
+                    <div class="mui-media-body pad-rt">
+                        <div class="flex flex-hb flex-dc info-detail">
+                                <div class="card-new-info">
+                                    <div class="flex-box">
+                                        <p class="card-name flex-g2 card-ellispse"><%= list[i].nickname %>
+                                            <i class="iconfont icon-renzhengzixunshi- iconfont-icon-doctype small blue"></i>
+                                            <%if(list[i].tearch){%> 
+                                                <i class="iconfont icon-renzhengjiangshi- iconfont-icon-doctype small orange"></i>
+                                            <%}%>
+                                            <%if(list[i].leader){%>
+                                                <i class="iconfont icon-xiaotuantiLeader- iconfont-icon-doctype small pink"></i>
+                                            <%}%>
+                                        </p>
+                                        <p class="doctor-address flex-g1 card-ellispse">
+                                            <i class="iconfont icon-dizhi- iconfont-icon-doctype small gray rt1"></i>
+                                            <span><%= list[i].shopname %></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="doctor-sign-list">
+                                    <% for(var m in list[i].signarr) { %>
+                                        <span><%= list[i].signarr[m] %></span>
+                                    <%}%>
+                                </div>
+                                <p class="card-addrs card-ellispse"><%= list[i].slogan %></p>
+                                <div class="card-new-content">
+                                    <div class="flex-box card-new-opre">
+                                        <% if(list[i].online==1 ){%>
+                                            <p class="mui-badge mui-badge-blue flex-g1">在线</p>
+                                        <%}else{%>
+                                            <p class="mui-badge mui-badge-gray flex-g1">离线</p>
+                                        <%}%>
+                                        <!--<p class="mui-badge mui-badge-blue flex-g1">在线</p>-->
+                                        <!-- <p class="mui-badge mui-badge-gray flex-g1">离线</p> -->
+                                        <p class="doctor-honor flex-g2 ">
+                                            <span>住进 <%= list[i].trade %> 个人的心窝</span>
+                                        </p>
+                                        <p class="d-icon-detail go-webview flex-g1" data-webview="{:url('Counsellor/detail')}" data-webparam='{"counsellor_id":<%= list[i].id %>}'>详情》</p>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </li>
+                <% } %>
+            </ul>       
+        </div>
+    </section>
+    </script>
 	<script type="text/html" id="widget_recommend">
 	<!--人气排行 start-->
 	<section class="widgets-category-nav section-white ">
@@ -317,9 +401,8 @@
 										
 										<p class="doctor-honor flex-g2 ">
 											<span>住进 <%= list[i].trade %> 个人的心窝</span>
-											<span class="star">好评率：<%= list[i].start %></span>
 										</p>
-										<p class="d-icon-detail action-clickview flex-g1" data-webview="{:url('Counsellor/detail')}"data-webparam='<%= list[i].memberid %>'>详情》</p>
+										<p class="d-icon-detail go-webview flex-g1" data-webview="{:url('Counsellor/detail')}"data-webparam='{"counsellor_id":<%= list[i].id %>}'>详情》</p>
 									</div>
 								</div>
 						</div>
@@ -331,6 +414,69 @@
 	</section>
 	<!--人气排行 end-->
 	</script>
+    <script type="text/html" id="widget_recommend_app">
+    <!--人气排行 start-->
+    <section class="widgets-category-nav section-white ">
+
+        <div class="mui-table-view">
+            <ul class="mui-table-view mui-table-view-chevron">
+                <% for(var i in list) { %>
+                <li class="mui-table-view-cell mui-media pad-rt action-webview" data-webview="_www/view/counsellor/detail.html" data-webparam='{"counsellor_id":<%= list[i].memberid %>}'>
+                    <img class="mui-media-object mui-pull-left " src="<%= $add_server(list[i].avar) %>" >
+                    <div class="mui-media-body pad-rt">
+                        <div class="flex flex-hb flex-dc info-detail">
+                                <div class="card-new-info">
+                                    <div class="flex-box">
+                                        <p class="card-name flex-g2 card-ellispse"><%= list[i].nickname %>
+                                            <i class="iconfont icon-renzhengzixunshi- iconfont-icon-doctype small blue"></i>
+                                            <%if(list[i].tearch){%> 
+                                                <i class="iconfont icon-renzhengjiangshi- iconfont-icon-doctype small orange"></i>
+                                            <%}%>
+                                            <%if(list[i].leader){%>
+                                                <i class="iconfont icon-xiaotuantiLeader- iconfont-icon-doctype small pink"></i>
+                                            <%}%>
+                                        </p>
+                                        <p class="doctor-address flex-g1 card-ellispse">
+                                            <i class="iconfont icon-dizhi- iconfont-icon-doctype small gray rt1"></i>
+                                            <span><%= list[i].shopname %></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="doctor-sign-list">
+                                    <% for(var m in list[i].signarr) { %>
+                                        <span><%= list[i].signarr[m] %></span>
+                                    <%}%>
+                                    <!--<span>两性情爱</span>
+                                    <span>职场冲突</span>
+                                    <span>亲自咨询</span>-->
+                                </div>
+                                <p class="card-addrs card-ellispse"><%= list[i].slogan %></p>
+                                <div class="card-new-content">
+                                    <div class="flex-box card-new-opre">
+                                        <% if(list[i].online==1 ){%>
+                                            <p class="mui-badge mui-badge-blue flex-g1">在线</p>
+                                        <%}else{%>
+                                            <p class="mui-badge mui-badge-gray flex-g1">离线</p>
+                                        <%}%>
+                                        <!--<p class="mui-badge mui-badge-blue flex-g1">在线</p>-->
+                                        <!-- <p class="mui-badge mui-badge-gray flex-g1">离线</p> -->
+                                        <p class="doctor-honor flex-g2 ">
+                                            <span>住进 <%= list[i].trade %> 个人的心窝</span>
+                                            <!--<span class="star">好评率：<%= list[i].start %></span>-->
+                                        </p>
+                                        <p class="d-icon-detail go-webview flex-g1" data-webview="{:url('Counsellor/detail')}" data-webparam='{"counsellor_id":<%= list[i].id %>}'>详情》</p>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </li>
+                <% } %>
+            </ul>       
+        </div>
+    </section>
+    
+    <!--人气排行 end-->
+    </script>
     
      <script type="text/html" id="filters_list">
         <div class="filters-options mui-content-padded clearfix" style="height: auto;">
@@ -366,7 +512,54 @@
      </script>
     <script type="text/javascript">
      
-       mui.init();
+       //分页初始化
+         mui.init({
+            pullRefresh: {
+                container: '#pullrefresh',
+                up: {
+                  contentdown: '',
+                  contentrefresh: '正在加载...',
+                  callback: pullupRefresh
+                }
+            }
+        });
+        //定义上拉加载更多方法
+        var no = 2;
+        function pullupRefresh() {
+            setTimeout(function(){
+                
+               //专家
+                var aparam2 = {
+                    'method': config.apimethod.recommend,
+                    'source':config.source,
+                    'page_no':no,
+                    'page_size':10
+                }
+                $.dataRequest(aparam2, function(rs) { 
+                        for (var i in rs['list']) {
+                            if(rs['list'][i].avar==''){
+                                rs['list'][i].avar = 'static/admin/img/none.png';
+                            }
+                        }
+                        var widgetss = template('widget_recommend_app', rs);
+                    $('.recom-box-list').append(widgetss);
+                         
+                    console.log(rs['list'].length)
+                    if(10>rs['list'].length){
+                        mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+                    }else{
+                        mui('#pullrefresh').pullRefresh().endPullupToRefresh(false);
+                    }
+                         // 
+                     mui('.mui-scroll-wrapper').scroll({
+                      indicators: false
+                    });
+                    
+                   no++; 
+                 })
+            },1000)
+
+        }
              //侧滑容器父节点
             var offCanvasWrapper = mui('#offCanvasWrapper');
              //主界面容器
@@ -449,9 +642,12 @@
                 //recommond
                 var aparam = {
                     'method': config.apimethod.recommend,
-                    'source':config.source
+                    'source':config.source,
+                    'page_no':1,
+                    'page_size':10
                 }
                 $.dataRequest(aparam, function(rs) {
+                    console.log(rs)
                     var widgets = template('widget_recommend', rs);
                     $('.recom-box-list').append(widgets);
                     mui('.mui-scroll-wrapper').scroll({
@@ -507,8 +703,9 @@
                                 rt['list'][i].avar = 'static/admin/img/none.png';
                             }
                         }
-                        var widgets = template('widget_recommend', rt);
-                        $('.recom-box-list').append(widgets);
+                        var widgets = template('widget_recommends', rt);
+                        // $('.recom-box-list').append(widgets);
+                        $('.search-box-list').append(widgets);
                          mui('.mui-scroll-wrapper').scroll({
                           indicators: false
                         });
@@ -642,8 +839,9 @@
                                 rt['list'][i].avar = 'static/admin/img/none.png';
                             }
                         }
-                        var widgets = template('widget_recommend', rt);
-                        $('.recom-box-list').append(widgets);
+                        var widgets = template('widget_recommends', rt);
+                        // $('.recom-box-list').append(widgets);
+                        $('.search-box-list').append(widgets);
                         mui('.mui-scroll-wrapper').scroll({
                           indicators: false
                         });

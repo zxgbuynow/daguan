@@ -9,18 +9,58 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <link rel="stylesheet" href="__M_CSS__/style.css">
+        <link href="__M_CSS__/pay.css" rel="stylesheet" />
     <style type="text/css">
         
     </style>
   </head>
 
-  <body>
+  <body class="section-white">
     <header class="page-header">
-      <i class="header-left icon-func bbc-icon bbc-icon-back mui-action-back"></i>
-      <div class="header-title">订单支付</div>
+      <div class="mui-navbar-inner mui-bar mui-bar-nav mui-navbar-center">
+                <i class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left bbc-icon bbc-icon-back"></i>
+                <h1 class="mui-center mui-title">订单支付</h1>
+                <a class="mui-right  mui-btn  mui-btn-link mui-btn-nav mui-pull-right service">
+                    <img src="__M_IMG__/tel.png">
+                    <i class="search-hide icon-func bbc-icon callmm">客服</i>
+                </a>
+      </div>
     </header>
-    <section class="container">
-
+    <section class="container section-gray">
+            <!--<div class="pay-options">
+                <div class="clearfix">
+                    <p class="mui-pull-left">应付金额:</p>
+                    <p class="mui-pull-right red-txt">￥500.00</p>
+                </div>
+                <div class="" style="margin-top: 3rem;">
+                    <p>请选择支付方式:</p>
+                    <div class="pay-type-item clearfix">
+                        <p class="mui-pull-left title bbc-icon-weixin">
+                            <span class="txt">微信</span>
+                        </p>
+                        <div class="mui-pull-right">
+                            <div class="mui-input-row mui-radio mui-left">
+                                <label>&nbsp;</label>
+                                <input name="radio1" type="radio">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pay-type-item clearfix">
+                        <p class="mui-pull-left title bbc-icon-zhifubao">
+                            <span class="txt">支付宝</span>
+                        </p>
+                        <div class="mui-pull-right">
+                            <div class="mui-input-row mui-radio mui-left ">
+                                <label>&nbsp;</label>
+                                <input name="radio1" type="radio">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-options section-white">
+                <button class="mui-btn mui-btn-block mui-btn-warning bbc-btn-warning">确定支付</button>
+            </div>-->
     </section>
   </body>
   <script src="__M_JS__/zepto.js"></script>
@@ -38,19 +78,6 @@
         </div>
       </section>
       
-      <section class="section-white pay-style">
-        <div class="section-title order-goods-header">
-          <div class="title-txt">优惠券</div>
-        </div>
-        <div class="mui-input-group coupon-lists" style="font-size: 13px;">
-          <div class="mui-input-row mui-radio bbc-radio ">
-            <label>不使用</label>
-            <input class="coupon-radio" name="coupon" type="radio" value="0" checked="" price="0">
-          </div>
-          
-
-        </div>
-      </section>
       
       <section class="section-white pay-style">
         <div class="section-title order-goods-header">
@@ -62,7 +89,7 @@
             <label><i class="bbc-icon bbc-icon-zhifubao pay-style-zhifubao"></i> 支付宝</label>
             <input name="payment" type="radio" value="alipayApp" >
           </div>
-          <div class="mui-input-row mui-radio bbc-radio mui-hidden">
+          <div class="mui-input-row mui-radio bbc-radio">
             <label><i class="bbc-icon bbc-icon-weixin pay-style-weixin"></i> 微信</label>
             <input name="payment" type="radio" value="wxpayApp">
           </div>
@@ -84,7 +111,7 @@
   </script>
 
   <script>
-      var state = app.getState();
+    var state = app.getState();
       var result = window.location.href;
       var tid = $.getUrlParam(result,'tid');
       var price = $.getUrlParam(result,'price');
@@ -94,16 +121,16 @@
       
       
       //优惠券
-      var state = app.getState();
-      var param = {
-          'method': config.apimethod.couponmy,
-          'account': state.token,
-          'source':config.source
-      }
-      $.dataRequest(param, function(rs) {
-        var widgets = template('coupon_list', rs);
-        $('.coupon-lists').append(widgets);
-      })
+      // var state = app.getState();
+      // var param = {
+      //     'method': config.apimethod.couponmy,
+      //     'account': state.token,
+      //     'source':config.source
+      // }
+      // $.dataRequest(param, function(rs) {
+      //   var widgets = template('coupon_list', rs);
+      //   $('.coupon-lists').append(widgets);
+      // })
       if(tid) {
         fetchPayment(tid);
       }
@@ -116,26 +143,26 @@
           var tempEl = template('payment', rs);
           $('.container').html(tempEl);
           var total = price;
-          $(window).on('click', '.coupon-radio', function() {
-            couponid = $(this).val();
-            var price = $(this).attr('price');
-            if(parseFloat(total)-parseFloat(price)<0){
-              couponid = 0;
-              mui.toast('不能使用该优惠券');return false;
-              $('.pay-num').text('￥0.01')
+          // $(window).on('click', '.coupon-radio', function() {
+          //   couponid = $(this).val();
+          //   var price = $(this).attr('price');
+          //   if(parseFloat(total)-parseFloat(price)<0){
+          //     couponid = 0;
+          //     mui.toast('不能使用该优惠券');return false;
+          //     $('.pay-num').text('￥0.01')
               
-            }else{
-              $('.pay-num').text('￥'+(parseFloat(total)-parseFloat(price)).toFixed(2))
-            }
+          //   }else{
+          //     $('.pay-num').text('￥'+(parseFloat(total)-parseFloat(price)).toFixed(2))
+          //   }
             
-          })
+          // })
           $(window).on('tap', '.action-pay', function() {
               if($('input[name="payment"]:checked').length == 0) {
                 mui.alert('请选择支付方式');
                 return
               }
               pay_id = $('input[name="payment"]:checked').val();
-              var SERVER = config.server +  '/Mpay/dopay?accessToken=' + state.token + '&payment_id=' + pid + '&method=' + config.apimethod.tradepay + '&pay_app_id=' + pay_id+'&source='+config.source+"&couponid="+couponid;
+              var SERVER = config.server +  '/Mpay/dopay?accessToken=' + state.token + '&payment_id=' + pid + '&method=' + config.apimethod.tradepay + '&pay_app_id=' + pay_id+'&source='+config.source;
               //更新优惠券
               //发起支付
               pay(SERVER, pay_id, pid, total);
@@ -174,7 +201,6 @@
         xhr.open('GET', PAYSERVER);
         xhr.send();
       }
-
 
       
   </script>

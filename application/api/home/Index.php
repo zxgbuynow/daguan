@@ -3366,7 +3366,7 @@ class Index
 
         if ($status == 'all') {
             // $map['status'] = 0;
-            $map['memberid'] = null;
+            // $map['memberid'] = null;
             $map['num'] = array('gt',0);
         }else{
             $map['memberid'] = $account;
@@ -3584,7 +3584,7 @@ class Index
                     $data['payment'] = $goodsinfo['price'];
                     $data['created_time'] = time();
                     $data['num'] = 1;
-                    $data['paytype'] = $paytype;
+                    $data['paytype'] = $paytype==0?2:3;
 
                     
                     $username = db('member')->where('id',$account)->value('nickname');
@@ -3594,10 +3594,12 @@ class Index
                     //机构 取咨询师机构counsellor_id
                     $data['shopid'] = 0;
                     $data['source'] = 1;
+                    $data['status'] = 1;
                     //订单号
                     $data['tid'] = date('YmdHis',time()).rand(1000,9999);
                     //插入数据
                     $trade = db('trade')->insert($data);
+                    unset($data);
                     if (!$trade) {
                         return $this->error('生成订单失败');
                     }
@@ -3632,7 +3634,7 @@ class Index
                 $data['payment'] = $goodsinfo['price'];
                 $data['created_time'] = time();
                 $data['num'] = 1;
-                $data['paytype'] = $paytype;
+                $data['paytype'] = $paytype==0?2:3;
 
                 
                 $username = db('member')->where('id',$account)->value('nickname');
@@ -3642,10 +3644,12 @@ class Index
                 //机构 取咨询师机构counsellor_id
                 $data['shopid'] = 0;
                 $data['source'] = 1;
+                $data['status'] = 1;
                 //订单号
                 $data['tid'] = date('YmdHis',time()).rand(1000,9999);
                 //插入数据
                 $trade = db('trade')->insert($data);
+                unset($data);
                 if (!$trade) {
                     return $this->error('生成订单失败');
                 }
@@ -3674,7 +3678,9 @@ class Index
                     //插入数据
                     $data['paytype'] = 1;
                     $data['source'] = 1;
+                    $data['status'] = 1;
                     $trade = db('trade')->insert($data);
+
                     if (!$trade) {
                         return $this->error('生成订单失败');
                     }
@@ -3701,6 +3707,7 @@ class Index
                         db('member')->where(['id'=>$info['memberid']])->update($indata);
 
                     }
+                    unset($data);
                 }
             }else{
                 $data['mid'] = 0;
@@ -3718,6 +3725,8 @@ class Index
                 $data['tid'] = date('YmdHis',time()).rand(1000,9999);
                 //插入数据
                 $data['paytype'] = 1;
+                $data['source'] = 1;
+                $data['status'] = 1;
                 $trade = db('trade')->insert($data);
                 if (!$trade) {
                     return $this->error('生成订单失败');
@@ -3747,9 +3756,12 @@ class Index
                     db('member')->where(['id'=>$info['memberid']])->update($indata);
 
                 }
+                unset($data);
                 
             }
         }
+
+        db('cards_record')->where($map)->update(['use'=>1]);
         //返回信息
         $data = [
             'code'=>'1',
