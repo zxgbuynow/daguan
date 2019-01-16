@@ -928,6 +928,7 @@ class Index
                 continue;
             }
         }
+        $counsellor['chartArr'] = array_values($counsellor['chartArr']);
         //
         $counsellor['is_diamonds'] = $is_diamonds;
         //登录状态
@@ -2456,7 +2457,7 @@ class Index
         
         $map['a.status'] = 1;
         $map['a.type'] = 1;
-        $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.shopid = s.id','LEFT')->where($map)->limit(20)->order('recommond DESC,convert(nickname using gb2312) ASC')->select();
+        $counsellor['list'] =  db('member')->alias('a')->field('a.*,b.*')->join(' member_counsellor b',' b.memberid = a.id','LEFT')->join(' shop_agency s',' a.shopid = s.id','LEFT')->where($map)->order('recommond DESC,convert(nickname using gb2312) ASC')->select();
         foreach ($counsellor['list'] as $key => $value) {
             //今日是否有空
             if (isset($ondate)&&count($ondate)==1) {
