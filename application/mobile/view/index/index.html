@@ -606,7 +606,7 @@
       </div>
       </script>
     
-        
+
     	<script type="text/html" id="class_list">
         <% if(pic){%>
         <section class="widgets-category-nav section-white swiper-wrapper-new">
@@ -618,8 +618,11 @@
             <div class="swiper-wrapper">
                 <% for(var m in pic) { %>
 
-                  <div class="swiper-slide swiper-slide-class swiper-slide-custom">
-                    <a href="<%= pic[m].webview%>" class="action-webview"  data-webview="_www/view/artical/ad.html" data-webparam='{"link":"<%= pic[m].webparam%>"}'><img src="<%= $add_server(pic[m]['cover'])%>" style="height: 150px;"/></a>
+                  <div class="swiper-slide  swiper-slide-custom">
+                    <a href="<%= pic[m].webview%>" class="action-webview"  data-webview="_www/view/artical/ad.html" data-webparam='{"link":"<%= pic[m].webparam%>"}'>
+                        <img src="<%= $add_server(pic[m]['cover'])%>" class="main-img"/>
+                                    <p class="slide-text"><%= pic[m].name %></p>
+                    </a>
                   </div>
               <%}%>
              </div> 
