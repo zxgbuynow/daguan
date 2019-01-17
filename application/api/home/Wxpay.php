@@ -118,7 +118,7 @@ class Wxpay
         }
 
 
-        $payment['payment'] = 0.01;
+        // $payment['payment'] = 0.01;
 
         //获取详细内容
         $subject = '商品名1';
@@ -229,14 +229,38 @@ class Wxpay
             }
 
             if ($info['paytype']==4) {
-                //生成购卡记录
-                $cards = db('cards')->where(['id'=>$info['classid']])->find();
-                if ($cards) {
-                    unset($cards['id']);
-                    unset($cards['modify_time']);
-                    $cards['num'] = 1;
-                    $cards['memberid'] = $info['memberid'];
-                    db('cards_record')->insert($cards);
+                //是否注册
+                if ($info['username']) {
+                    if ($usr =db('member')->where(['username'=>$info['username']])->find()) {
+                        //生成购卡记录
+                        $cards = db('cards')->where(['id'=>$info['classid']])->find();
+                        if ($cards) {
+                            $cards['cardis'] = $cards['id'];
+                            unset($cards['id']);
+                            unset($cards['modify_time']);
+                            $cards['num'] = 1;
+                            $cards['memberid'] = $usr['id'];
+                            db('cards_record')->insert($cards);
+                        }
+                    }else{
+                        //支付日志表
+                        $sdata['memberid'] = $info['memberid'];//赠送人
+                        $sdata['create_time'] = time();
+                        $sdata['account'] = $info['username'];//被赠人
+                        $sdata['cards'] = $info['classid'];
+                        db('card_log')->insert($sdata);
+                    }   
+                }else{
+                    //生成购卡记录
+                    $cards = db('cards')->where(['id'=>$info['classid']])->find();
+                    if ($cards) {
+                        $cards['cardis'] = $cards['id'];
+                        unset($cards['id']);
+                        unset($cards['modify_time']);
+                        $cards['num'] = 1;
+                        $cards['memberid'] = $info['memberid'];
+                        db('cards_record')->insert($cards);
+                    }
                 }
 
             }

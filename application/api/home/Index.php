@@ -149,11 +149,33 @@ class Index
             $data['viplastt'] = $isvip['vip']==12?30879000:604800;
             $data['is_diamonds']= 1;
         }
-        
+
+
         //插入数据
-        $me = db('member')->insert($data);
+        $me = db('member')->insertGetId($data);
         if (!$me) {
             return $this->error('注册失败！请稍后重试');
+        }
+
+        //赠送卡包
+        if($cards = db('card_log')->where(['account'=>$data['mobile'],'status'=>0])->select()){
+            foreach ($cards as $key => $value) {
+                //生成卡包记录
+                $icards = db('cards')->where(['id'=>$value['cards']])->find();
+                if ($icards) {
+                    $icards['cardis'] = $icards['id'];
+                    unset($icards['id']);
+                    unset($icards['modify_time']);
+                    $icards['num'] = 1;
+                    $icards['create_time'] = time();
+                    $icards['memberid'] = $me;
+                    db('cards_record')->insert($icards);
+                }
+                //更新
+                db('card_log')->where(['id'=>$value['id']])->update(['status'=>1]);
+            }
+            
+
         }
         db('vip_log')->where(['account'=>$data['mobile']])->update(['status'=>1]);
         //返回信息
@@ -3461,6 +3483,10 @@ class Index
         $clacid = trim($params['clacid']);
         $account = trim($params['account']);
         $paytype = trim($params['paytype']);
+        if (isset($params['username'])) {
+           $data['username'] = trim($params['username']);
+        }
+        
 
         //取商品
         $map['id'] = $clacid;

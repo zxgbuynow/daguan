@@ -133,7 +133,7 @@
             </div>
 			<div class="mui-button-row btn-options">
 				<button class="mui-btn  mui-btn-warning bbc-btn-warning" id="get">购买</button>
-				<!--<button class="mui-btn  mui-btn-warning " id="send">增送</button>-->
+				<button class="mui-btn  mui-btn-warning " id="send">增送</button>
 			</div>
     	</script>
     <script type="text/javascript" charset="utf-8">
@@ -157,23 +157,50 @@
 		      	var widgets = template('card_info', rs);
         			$('.counsellor-head-content').append(widgets);
         			//购买
-		      	mui('.counsellor-head-content').on('tap','#get',function(){
-		      		
-		      		//生成订单
-		      		var param1 = {
-					  'method': config.apimethod.createCardTrade,
-					  'source':config.source,
-					  'clacid': cid,
-					  'paytype': 4,
-					  'account': state.token 
-					}
-	
-					$.dataRequest(param1, function(rs) {
-                        mui.toast('订单创建成功！');
-                        window.location.href = "{:url('Checkout/cardpay')}"+'?price='+rs.price+'&tid='+rs.tid;
-					})
+  		      	mui('.counsellor-head-content').on('tap','#get',function(){
+  		      		//生成订单
+  		      		var param1 = {
+      					  'method': config.apimethod.createCardTrade,
+      					  'source':config.source,
+      					  'clacid': cid,
+      					  'paytype': 4,
+      					  'account': state.token 
+      					}
+      					$.dataRequest(param1, function(rs) {
+                              mui.toast('订单创建成功！');
+                              window.location.href = "{:url('Checkout/cardpay')}"+'?price='+rs.price+'&tid='+rs.tid;
+      					})
 		      	})
+            //赠送
+            mui('.counsellor-head-content').on('tap','#send',function(e){
+              e.detail.gesture.preventDefault(); 
+              var btnArray = ['取消', '确定'];
+                mui.prompt('请输入手机号：',  '', '赠送卡包', btnArray, function(e) {
+                  if (e.index == 1) {
+                    if(!e.value){
+                      mui.toast('请输入手机号');return false;
+                    }
+                    //生成订单
+                    var param1 = {
+                      'method': config.apimethod.createCardTrade,
+                      'source':config.source,
+                      'clacid': cid,
+                      'paytype': 4,
+                      'username':e.value,
+                      'account': state.token
+                    }
+            
+                    $.dataRequest(param1, function(rs) {
+                      mui.toast('订单创建成功！');
+                      window.location.href = "{:url('Checkout/cardpay')}"+'?price='+rs.price+'&tid='+rs.tid;
+                    })
+                  } 
+                })
+              
+            })
+
 		      })
+
       	}else{
       		mui.toast('请登录')
       	}
