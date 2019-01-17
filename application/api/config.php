@@ -110,7 +110,9 @@ return [
         'cardetail'=>'card.detail',
         'createCardTrade'=>'create.cardtrade',
         'cardmy'=>'card.my',
-        'exchangerCard'=>'exchanger.card'
+        'exchangerCard'=>'exchanger.card',
+        'jssdk'=>'js.sdk'
+
 
 
 

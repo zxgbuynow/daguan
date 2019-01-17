@@ -89,7 +89,7 @@
             <label><i class="bbc-icon bbc-icon-zhifubao pay-style-zhifubao"></i> 支付宝</label>
             <input name="payment" type="radio" value="alipayApp" >
           </div>
-          <div class="mui-input-row mui-radio bbc-radio mui-hidden">
+          <div class="mui-input-row mui-radio bbc-radio ">
             <label><i class="bbc-icon bbc-icon-weixin pay-style-weixin"></i> 微信</label>
             <input name="payment" type="radio" value="wxpayApp">
           </div>
@@ -165,7 +165,55 @@
               var SERVER = config.server +  '/Mpay/dopay?accessToken=' + state.token + '&payment_id=' + pid + '&method=' + config.apimethod.tradepay + '&pay_app_id=' + pay_id+'&source='+config.source;
               //更新优惠券
               //发起支付
-              pay(SERVER, pay_id, pid, total);
+              var ua = window.navigator.userAgent.toLowerCase();
+              if(ua.match(/MicroMessenger/i) != 'micromessenger'){ 
+                  // 走不在小程序的逻辑
+                  console.log('pay1');
+                  //jssdk
+                    var param = {
+                        'method': config.apimethod.jssdk,
+                        'url': document.location.href,
+                        'source':config.source
+                    }
+                    $.dataRequest(param, function(rs) {
+                      //点击微信支付后，调取统一下单接口生成微信小程序支付需要的支付参数
+                      var params = '?timestamp='+rs.timestamp+'&nonceStr='+rs.nonceStr
+                                   +'&signType='+rs.signType
+                                   +'&paySign='+rs.signature+'&orderId='+pid+'&pType=0';
+                        console.log(params);
+                      //定义path 与小程序的支付页面的路径相对应
+                      // var path = '/pages/wxpay/wxpay'+params;
+                      //通过JSSDK的api使小程序跳转到指定的小程序页面
+                      // wx.miniProgram.navigateTo({url: path});
+                    })
+                  // pay(SERVER, pay_id, pid, total);
+              }
+              else{
+                  wx.miniProgram.getEnv(function(res) {
+                      if (res.miniProgram) {
+                        //jssdk
+                          var param = {
+                              'method': config.apimethod.jssdk,
+                              'url': document.location.href,
+                              'source':config.source
+                          }
+                          $.dataRequest(param, function(rs) {
+                            //点击微信支付后，调取统一下单接口生成微信小程序支付需要的支付参数
+                            var params = '?timestamp='+rs.timestamp+'&nonceStr='+rs.nonceStr
+                                         +'&signType='+rs.signType
+                                         +'&paySign='+rs.signature+'&orderId='+pid+'&pType=0';
+                            //定义path 与小程序的支付页面的路径相对应
+                            var path = '/pages/wxpay/wxpay'+params;
+                            //通过JSSDK的api使小程序跳转到指定的小程序页面
+                            wx.miniProgram.navigateTo({url: path});
+                          })
+                      } else {
+                        console.log('pay');
+                        // pay(SERVER, pay_id, pid, total);
+                      }
+                  })
+              }
+              
 
           });
 
