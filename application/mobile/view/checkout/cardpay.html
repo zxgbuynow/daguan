@@ -203,9 +203,9 @@
                                          +'&signType='+rs.signType
                                          +'&paySign='+rs.signature+'&orderId='+pid+'&pType=0';
                             //定义path 与小程序的支付页面的路径相对应
-                            var path = '/pages/wxpay/wxpay'+params;
+                            // var path = '/pages/wxpay/wxpay'+params;
                             //通过JSSDK的api使小程序跳转到指定的小程序页面
-                            wx.miniProgram.navigateTo({url: path});
+                            // wx.miniProgram.navigateTo({url: path});
                           })
                       } else {
                         console.log('pay');
