@@ -1093,7 +1093,7 @@ $(function() {
       }
     }
   })
-
+ 
   $(window).on('tap', '.go-webview', function() {
     var webview = $(this).data('webview');
     var webparam = $(this).data('webparam');
