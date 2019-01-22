@@ -3141,6 +3141,15 @@ class Index
     {
         $sendid = trim($params['account']);
         $reciveid = trim($params['reciveid']);
+
+        $preg_phone='/^1[34578]\d{9}$/ims';
+        if(preg_match($preg_phone,$reciveid)){
+            $sendid = db('member')->where(['username'=>$sendid])->value('id');
+        }
+        if(preg_match($preg_phone,$reciveid)){
+            $reciveid = db('member')->where(['username'=>$reciveid])->value('id');
+        }
+        
         $msg = trim($params['msg']);
         $status = $params['status'];
         // $status = 0;
