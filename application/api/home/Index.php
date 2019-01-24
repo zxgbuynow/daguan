@@ -1512,7 +1512,7 @@ class Index
 
         $data['mid'] = $counsellor_id;
         $data['memberid'] = $account;
-        $data['payment'] = $price;
+        $data['payment'] = $price*$num;
         $data['created_time'] = time();
         $data['num'] = $num;
         $data['chart'] = $chart;
