@@ -189,7 +189,9 @@
 					</div>
 					<div class="mui-input-row">
 						<label>时间：</label>
-						<input type="date" id="consolletime" class="mui-input-clear pickTime" placeholder="请选择时间">
+						
+
+						<input type="text" id="consolletime" class="mui-input-clear pickTime" placeholder="请选择时间">
 					</div>
 					<div class="mui-button-row btn-options clearfix">
 						<div class="mui-input-row mui-radio mui-left lb-tip">
@@ -553,31 +555,7 @@
           }, false);
         });
 
-//       	document.getElementById("consolletime").addEventListener('tap', function() {
-// 			var dTime = new Date();
-// 			plus.nativeUI.pickDate(function(e) {
-// 				var d = e.date;
-// 				$('#consolletime').val( d.getFullYear() + "-" + (d.getMonth() + 1));
-// 			}, function(e) {
-// 				mui.toast('请选择日期')
-// 			}, {
-// 				title: "请选择日期",
-// 				date: dTime
-// 			});
-// 		});
-// 		document.getElementById("birthday").addEventListener('tap', function() {
-// 			var dTime = new Date();
-// //			dTime.setHours(6, 0);
-// 			plus.nativeUI.pickDate(function(e) {
-// 				var d = e.date;
-// 				$('#birthday').val( d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate());
-// 			}, function(e) {
-// 				mui.toast('请选择日期')
-// 			}, {
-// 				title: "请选择日期",
-// 				time: dTime
-// 			});
-// 		});
+
 
       	$('.signup-step2').hide()
       	$('.signup-step3').hide()
@@ -683,7 +661,7 @@
 	              'consolletime': consolletime,
 	              'preference':preference
 	           }
-	          // 环信SDK注册
+	          	// 环信SDK注册
 	            var options = {
 	                username : mobile,
 	                password : '123456',
@@ -706,7 +684,7 @@
 	                    mui.toast('稍后重试,同步失败：'+e.error);
 	                }
 	            };
-	            conn.registerUser(options); 
+	            conn.registerUser(options);
 	         
 	          
 	        });
