@@ -1008,9 +1008,15 @@ class Index
 
         //挂靠分中心
         // $agmap['id'] = $counsellor['openshop']?array('in',$counsellor['openshop']):array('in',$counsellor['shopids']);
-        $agmap['id'] = array('in',$counsellor['openshop']);
-        $counsellor['shopidsnm'] = array_filter(db('shop_agency')->where($agmap)->column('city'));
-        $counsellor['shopidsmap'] = array_filter(db('shop_agency')->where($agmap)->column('map_address'));
+        if ($counsellor['openshop']=='99999') {
+            $counsellor['shopidsnm'][0] = $counsellor['province'];
+            $counsellor['shopidsmap'][0] = $counsellor['city'];
+        }else{
+            $agmap['id'] = array('in',$counsellor['openshop']);
+            $counsellor['shopidsnm'] = array_filter(db('shop_agency')->where($agmap)->column('city'));
+            $counsellor['shopidsmap'] = array_filter(db('shop_agency')->where($agmap)->column('map_address'));
+        }
+        
         //是否好友 下过单就是
         if ($account) {
             $ismap['memberid'] = $account;
@@ -4298,6 +4304,11 @@ class Index
         }
         $sm['id'] = array('in',$counsellor['spids']);
         $shopnm = db('shop_agency')->where($sm)->select();
+        if ($counsellor['province']) {
+            $cc['id'] = '99999';//
+            $cc['city'] = $counsellor['province'];
+            array_push($shopnm, $cc);
+        }
         foreach ($shopnm as $key => $value) {
             $shopnm[$key]['ischecked'] = in_array($value['id'], explode(',', $counsellor['openshop']))?1:0;
             

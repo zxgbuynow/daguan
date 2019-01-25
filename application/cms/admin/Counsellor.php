@@ -92,6 +92,8 @@ class Counsellor extends Admin
                 ['qq', 'QQ'],
                 ['weixin', '微信'],
                 ['alipay', '支付宝'],
+                ['province', '咨询地点','text.edit'],
+                ['city', '咨询详细地址','text.edit'],
                 ['shopid', '机构', 'select', $list_type],
                 ['create_time', '创建时间', 'datetime'],
                 ['verifystatus', '审核状态', '', '', ['待审核', '上线']],
