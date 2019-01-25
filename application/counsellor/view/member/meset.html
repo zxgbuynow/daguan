@@ -60,7 +60,11 @@
 		.mui-navigate p{
 			min-width: 70px;
 		}
-		
+		#chart_addr select{
+            margin-bottom: 0px!important;
+            padding: 2px 15px!important;
+            background-color: #ACACB4;
+        }
 	</style>
   </head>
 
@@ -97,19 +101,23 @@
 					</div>
 				</div>
 			</li>
-			<li id="chart_addr" class="mui-table-view-cell">
-				<div class="mui-navigate flex-box">
-					<p>咨询地点</p>
-					<div class="mui-check-list flex-g3 mui-clearfix">
-						<% for(var i in shopnm) { %>
-							<div class="mui-input-row mui-checkbox mui-left">
-								<label><%= shopnm[i].city%></label>
-								<input name="shopids" value="<%= shopnm[i].id%>" type="checkbox" <%if(shopnm[i].ischecked==1){%>checked<%}%>>
-							</div>
-						<%}%>
-					</div>
-				</div>
-			</li>
+			
+            <li id="chart_addr" class="mui-table-view-cell">
+                <div class="mui-navigate flex-box">
+                    <p>咨询地点</p>
+                    <div class="mui-check-list flex-g3 mui-clearfix">
+                        <select name="shopids" id="shopids">
+                        <% for(var i in shopnm) { %>
+                            <option value="<%= shopnm[i].id%>" <%if(shopnm[i].ischecked==1){%>selected<%}%>><%= shopnm[i].city%></option>
+                            <!--<div class="mui-input-row mui-checkbox mui-left">
+                                <label><%= shopnm[i].city%></label>
+                                <input name="shopids" value="<%= shopnm[i].id%>" type="checkbox" <%if(shopnm[i].ischecked==1){%>checked<%}%>>
+                            </div>-->
+                        <%}%>
+                        </select>
+                    </div>
+                </div>
+            </li>
 			<li class="mui-table-view-cell">
 				在线状态
 				<div class="mui-switch <% if( online){ %> mui-active <%}%> mui-switch-mini" >
@@ -154,15 +162,16 @@
 	        chartarr.push($(this).val()); 
 	    	});
 	    	
-	    	var shopidsarr =[]; 
-	    	$('input[name="shopids"]:checked').each(function(){ 
-	        shopidsarr.push($(this).val()); 
-	    	});
+	    	// var shopidsarr =[]; 
+	    	// $('input[name="shopids"]:checked').each(function(){ 
+	     //    shopidsarr.push($(this).val()); 
+	    	// });
+            var shopids = $('#shopids').val();
 	    	var param = {
 	          'method': config.apimethod.counsellorst,
 	          'id': state.token,
 	          'online': isonline,
-	          'shopids': shopidsarr.join(','),
+	          'shopids': shopids,
 	          'openchart': chartarr.join(','),
 	          'source':config.source
 	      }
