@@ -1518,7 +1518,7 @@ class Index
 
         $data['mid'] = $counsellor_id;
         $data['memberid'] = $account;
-        $data['payment'] = $price*$num;
+        $data['payment'] = $price;
         $data['created_time'] = time();
         $data['num'] = $num;
         $data['chart'] = $chart;
@@ -1580,7 +1580,7 @@ class Index
         if ($userinfo['is_diamonds']) {
             $price = $goodsinfo[$chart.'lv'];
         }
-        $data['payment'] = $price;
+        $data['payment'] = $price*$num;
         //交易标题
         $str = '文字咨询';
         switch ($chart) {
