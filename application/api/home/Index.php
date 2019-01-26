@@ -1638,7 +1638,7 @@ class Index
         $msg['tid'] = $data['tid'];
 
         $lastid = $this->create_msg($msg);
-        $ret = array('tid'=>$data['tid'],'price'=>$price);
+        $ret = array('tid'=>$data['tid'],'price'=>$data['payment']);
         //价格为0
         if ($price == 0) {
             db('trade')->where(['tid'=>$data['tid']])->update(['status'=>1]);//修改订单状态
