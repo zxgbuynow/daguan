@@ -4297,23 +4297,31 @@ class Index
         }
 
         //咨询地点 
-        $counsellor['spids'] = $counsellor['id'];
-        if ($counsellor['shopids']) {
-            $spids = $counsellor['shopids'].','.$counsellor['shopid'];
-            $counsellor['spids'] = implode(',', array_unique(explode(',', $spids))) ;
-        }
-        $sm['id'] = array('in',$counsellor['spids']);
-        $shopnm = db('shop_agency')->where($sm)->select();
-        if ($counsellor['province']) {
-            $cc['id'] = '99999';//
-            $cc['city'] = $counsellor['province'];
-            array_push($shopnm, $cc);
-        }
-        foreach ($shopnm as $key => $value) {
-            $shopnm[$key]['ischecked'] = in_array($value['id'], explode(',', $counsellor['openshop']))?1:0;
+        // $counsellor['spids'] = $counsellor['id'];
+        // if ($counsellor['shopids']) {
+        //     $spids = $counsellor['shopids'].','.$counsellor['shopid'];
+        //     $counsellor['spids'] = implode(',', array_unique(explode(',', $spids))) ;
+        // }
+        // $sm['id'] = array('in',$counsellor['spids']);
+        // $shopnm = db('shop_agency')->where($sm)->select();
+        // if ($counsellor['province']) {
+        //     $cc['id'] = '99999';//
+        //     $cc['city'] = $counsellor['province'];
+        //     array_push($shopnm, $cc);
+        // }
+        // foreach ($shopnm as $key => $value) {
+        //     $shopnm[$key]['ischecked'] = in_array($value['id'], explode(',', $counsellor['openshop']))?1:0;
             
+        // }
+        // $counsellor['shopnm'] = $shopnm;
+
+        //咨询地点 new $counsellor['openshop']
+        $counsellor['shopnm'] = '';
+        if ($counsellor['openshop']) {
+           $counsellor['shopnm'] = db('cms_addr')->where(['id'=>$counsellor['openshop']])->find();
         }
-        $counsellor['shopnm'] = $shopnm;
+        
+
         //咨询方式
         $chartarr = array(
             array(
