@@ -731,7 +731,8 @@ class Index
             //从业时间
             // $recommend['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
             //分中心
-            $recommend['list'][$key]['shopname'] = $value['shopid']?db('shop_agency')->where(['id'=>$value['shopid']])->value('city'):'中国大陆';
+            // $recommend['list'][$key]['shopname'] = $value['shopid']?db('shop_agency')->where(['id'=>$value['shopid']])->value('city'):'中国大陆';
+            $recommend['list'][$key]['shopname'] = $value['openshop']?db('cms_addr')->where(['id'=>$value['openshop']])->value('shotnm'):'暂无';
         }
         $recommend['list'] = array_values($recommend['list']);
         //返回信息
@@ -815,7 +816,9 @@ class Index
             //从业时间
             // $recommend['list'][$key]['employment'] = '从业'.ceil(date('Y',time())-date('Y',$value['employment'])).'年';
             //分中心
-            $recommend['list'][$key]['shopname'] = $value['shopid']?db('shop_agency')->where(['id'=>$value['shopid']])->value('city'):'中国大陆';
+            // $recommend['list'][$key]['shopname'] = $value['shopid']?db('shop_agency')->where(['id'=>$value['shopid']])->value('city'):'中国大陆';
+            //咨询地址
+            $recommend['list'][$key]['shopname'] = $value['openshop']?db('cms_addr')->where(['id'=>$value['openshop']])->value('shotnm'):'暂无';
         }
 
         $recommend['list'] = array_values($recommend['list']);
@@ -1008,14 +1011,18 @@ class Index
 
         //挂靠分中心
         // $agmap['id'] = $counsellor['openshop']?array('in',$counsellor['openshop']):array('in',$counsellor['shopids']);
-        if ($counsellor['openshop']=='99999') {
-            $counsellor['shopidsnm'][0] = $counsellor['province'];
-            $counsellor['shopidsmap'][0] = $counsellor['city'];
-        }else{
-            $agmap['id'] = array('in',$counsellor['openshop']);
-            $counsellor['shopidsnm'] = array_filter(db('shop_agency')->where($agmap)->column('city'));
-            $counsellor['shopidsmap'] = array_filter(db('shop_agency')->where($agmap)->column('map_address'));
-        }
+        // if ($counsellor['openshop']=='99999') {
+        //     $counsellor['shopidsnm'][0] = $counsellor['province'];
+        //     $counsellor['shopidsmap'][0] = $counsellor['city'];
+        // }else{
+        //     $agmap['id'] = array('in',$counsellor['openshop']);
+        //     $counsellor['shopidsnm'] = array_filter(db('shop_agency')->where($agmap)->column('city'));
+        //     $counsellor['shopidsmap'] = array_filter(db('shop_agency')->where($agmap)->column('map_address'));
+        // }
+
+        //咨询地点 new 
+        $counsellor['shopidsnm'][] = $value['openshop']?db('cms_addr')->where(['id'=>$value['openshop']])->value('shotnm'):'暂无';
+        $counsellor['shopidsmap'][] = $value['openshop']?db('cms_addr')->where(['id'=>$value['openshop']])->value('fullnm'):'暂无';
         
         //是否好友 下过单就是
         if ($account) {
