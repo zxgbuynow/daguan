@@ -3,6 +3,8 @@
 
 // 门户模块公共函数库
 use think\Db;
+use Overtrue\Pinyin\Pinyin;
+
 
 if (!function_exists('get_column_name')) {
     /**
@@ -147,4 +149,90 @@ if (!function_exists('time_tran')) {
             }
         }
     }
+
+}
+/**
+ * [convertfpy 首字母]
+ * @param  [type] $string [description]
+ * @return [type]         [description]
+ */
+function convertfpy($string)
+{
+    $pinyin = new Pinyin();
+    if (!$string) {
+        return '';
+    }
+    return $pinyin->abbr($string);
+
+}
+/**
+ * [convertfpy 字母拼接]
+ * @param  [type] $string [description]
+ * @return [type]         [description]
+ */
+function convertpy($string)
+{
+    $pinyin = new Pinyin();
+    if (!$string) {
+        return '';
+    }
+    return $pinyin->permalink($string,'');
+
+}
+/**
+ * @desc 将字符串转换成拼音字符串
+ * @param $string 汉字字符串
+ * @param $upper 是否大写
+ * @return string
+ * 
+ * 例如：getChineseChar('我是作者'); 全部字符串+小写
+ * return "wo shi zuo zhe"
+ * 
+ * 例如：getChineseChar('我是作者',true); 首字母+小写
+ * return "w s z z"
+ * 
+ * 例如：getChineseChar('我是作者',true,true); 首字母+大写
+ * return "W S Z Z"
+ * 
+ * 例如：getChineseChar('我是作者',false,true); 首字母+大写
+ * return "WO SHI ZUO ZHE"
+ */
+function getChineseChar($string,$isOne=false,$upper=false) {
+    global $spellArray;
+    $str_arr = utf8_str_split($string,1); //将字符串拆分成数组
+    $result = array();
+    foreach($str_arr as $char)
+    {
+        // if(preg_match('/^[\x{4e00}-\x{9fa5}]+$/u',$char))
+        // {
+        //     $chinese = $spellArray[$char];
+        //     $chinese  = $chinese[0];
+        // }else{
+        //     $chinese = $char;
+        // }
+        $chinese = $char;
+        $chinese = $isOne ? substr($chinese,0,1) : $chinese;
+        $result[] = $upper ? strtoupper($chinese) : $chinese;
+    }
+    return implode('',$result);
+}
+/**
+ * @desc 将字符串转换成数组
+ * @param $str 要转换的数组
+ * @param $split_len
+ * @return array
+ */
+function utf8_str_split($str,$split_len=1) {
+    if(!preg_match('/^[0-9]+$/', $split_len) || $split_len < 1) {
+        return FALSE;
+    }
+
+    $len = mb_strlen($str, 'UTF-8');
+
+    if ($len <= $split_len) {
+        return array($str);
+    }
+    preg_match_all('/.{'.$split_len.'}|[^\x00]{1,'.$split_len.'}$/us', $str, $ar);
+
+    return $ar[0];
 }

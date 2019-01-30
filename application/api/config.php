@@ -111,7 +111,8 @@ return [
         'createCardTrade'=>'create.cardtrade',
         'cardmy'=>'card.my',
         'exchangerCard'=>'exchanger.card',
-        'jssdk'=>'js.sdk'
+        'jssdk'=>'js.sdk',
+        'addrilist'=>'addr.ilist',
 
 
 

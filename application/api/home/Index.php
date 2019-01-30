@@ -6785,6 +6785,42 @@ class Index
         ];
         return json($data);
     }
+    /**
+     * [addrilist_shop description]
+     * @param  [type] $params [description]
+     * @return [type]         [description]
+     */
+    public function addrilist_shop($params)
+    {
+
+        //地址列表
+        $info = db('cms_addr')->where(['status'=>1])->select();
+
+        //分组
+        $ret = [];
+        foreach ($info as $key => $value) {
+            $upstr = strtoupper($value['shortpy'])[0];
+            $ret[$upstr]['kg'][$key] = $upstr;
+
+            $ret[$upstr]['body'][$key]['shortpy'] = $value['shortpy']; 
+            $ret[$upstr]['body'][$key]['fullpy'] = $value['fullpy']; 
+            $ret[$upstr]['body'][$key]['fullnm'] = $value['fullnm']; 
+            // if (isset($ret[$upstr])) {
+            //     array_push($ret[$upstr], $value['shortpy']);
+            // }else{
+            //     $ret[$upstr][] = $value['shortpy']; 
+            // }
+
+        }
+        
+        //返回信息
+        $data = [
+            'code'=>'1',
+            'msg'=>'',
+            'data'=>$ret
+        ];
+        return json($data);
+    }
     /*
     |--------------------------------------------------------------------------
     | 公用方法

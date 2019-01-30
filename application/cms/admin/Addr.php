@@ -43,7 +43,8 @@ class Addr extends Admin
                 ['right_button', '操作', 'btn']
             ])
             ->addTopButtons('add,enable,disable') // 批量添加顶部按钮
-            ->addRightButtons('edit,delete')
+            ->addRightButton('edit')
+            ->addRightButton('delete', ['data-tips' => '删除后无法恢复。'])// 批量添加右侧按钮
             ->setRowList($data_list)// 设置表格数据
             ->fetch(); // 渲染模板
     }
@@ -58,7 +59,11 @@ class Addr extends Admin
         if ($this->request->isPost()) {
             // 表单数据
             $data = $this->request->post();
-
+            // 验证
+            $result = $this->validate($data, 'Addr');
+            if(true !== $result) $this->error($result);
+            $data['shortpy']= convertfpy($data['shotnm']);
+            $data['fullpy']= convertpy($data['shotnm']);
             if ($Cards = AddrModel::create($data)) {
                 
                 $this->success('新增成功', url('index'));
@@ -89,6 +94,12 @@ class Addr extends Admin
         if ($this->request->isPost()) {
             // 表单数据
             $data = $this->request->post();
+            // 验证
+            $result = $this->validate($data, 'Addr');
+            if(true !== $result) $this->error($result);
+
+            $data['shortpy']= convertfpy($data['shotnm']);
+            $data['fullpy']= convertpy($data['shotnm']);
             if (AddrModel::update($data)) {
                 $this->success('编辑成功', url('index'));
             } else {
@@ -155,6 +166,7 @@ class Addr extends Admin
         $menu_title = AddrModel::where('id', 'in', $ids)->column('shotnm');
         return parent::setStatus($type, ['AddrModel_'.$type, 'class', 0, UID, implode('、', $menu_title)]);
     }
+
 
     
 }
