@@ -6804,7 +6804,8 @@ class Index
 
             $ret[$upstr]['body'][$key]['shortpy'] = $value['shortpy']; 
             $ret[$upstr]['body'][$key]['fullpy'] = $value['fullpy']; 
-            $ret[$upstr]['body'][$key]['fullnm'] = $value['fullnm']; 
+            $ret[$upstr]['body'][$key]['fullnm'] = $value['fullnm'];
+            $ret[$upstr]['body'][$key]['aid'] = $value['id'];
             // if (isset($ret[$upstr])) {
             //     array_push($ret[$upstr], $value['shortpy']);
             // }else{
@@ -6812,7 +6813,6 @@ class Index
             // }
 
         }
-        
         //返回信息
         $data = [
             'code'=>'1',
