@@ -2514,6 +2514,8 @@ class Index
             //标识
             $smap['id'] = array('in',$value['tags']);
             $counsellor['list'][$key]['sign'] = implode('|', db('cms_category')->where($smap)->column('title')) ;
+            // 咨询地点 shopname
+            $counsellor['list'][$key]['shopname'] = $value['openshop']?db('cms_addr')->where(['id'=>$value['openshop']])->value('shotnm'):'暂无';
         }
 
         //返回信息
