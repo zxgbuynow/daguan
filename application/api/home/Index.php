@@ -1021,8 +1021,8 @@ class Index
         // }
 
         //咨询地点 new 
-        $counsellor['shopidsnm'][] = $counsellor['openshop']?db('cms_addr')->where(['id'=>$value['openshop']])->value('shotnm'):'暂无';
-        $counsellor['shopidsmap'][] = $counsellor['openshop']?db('cms_addr')->where(['id'=>$value['openshop']])->value('fullnm'):'暂无';
+        $counsellor['shopidsnm'][] = $counsellor['openshop']?db('cms_addr')->where(['id'=>$counsellor['openshop']])->value('shotnm'):'暂无';
+        $counsellor['shopidsmap'][] = $counsellor['openshop']?db('cms_addr')->where(['id'=>$counsellor['openshop']])->value('fullnm'):'暂无';
         
         //是否好友 下过单就是
         if ($account) {
