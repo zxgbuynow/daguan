@@ -2167,6 +2167,10 @@ class Index
             $data[$key]['counsellor'] =  db('member')->where(['id'=>$member['mid']])->value('nickname');
 
             $data[$key]['st'] = date('Y-m-d H:i',$value['start_time']);
+            //咨询地点
+            $openshop =  db('member')->where(['id'=>$member['mid']])->value('nickname');
+            $data[$key]['shopname'] = $openshop?db('cms_addr')->where(['id'=>$openshop])->value('shotnm'):'暂无';
+
         }
         $pages = array(
                 'total'=>db('calendar')->alias('a')->field('a.*')->join('trade b',' b.id = a.tid','LEFT')->where($map)->order('a.id DESC')->limit($startpg, $page_size)->count()

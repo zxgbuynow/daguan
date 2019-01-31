@@ -301,8 +301,8 @@ class Counsellor extends Admin
                 ['text', 'slogan', '座右铭'],
                 ['text', 'identifi', '身份证'],
                 ['image', 'diploma', '咨询师证书'],
-                ['radio', 'tearch', '是否是讲师', '', ['否', '是']],
-                ['radio', 'leader', '是否是团队Leader', '', ['否', '是']],
+                ['radio', 'tearch', '大观心理', '', ['否', '是']],
+                ['radio', 'leader', '燕园博思', '', ['否', '是']],
 
                 ['password', 'password', '密码', '必填，6-20位'],
                 ['text', 'mobile', '手机号'],
@@ -465,8 +465,8 @@ class Counsellor extends Admin
                 ['text', 'slogan', '座右铭'],
                 ['text', 'identifi', '身份证'],
                 ['image', 'diploma', '咨询师证书'],
-                ['radio', 'tearch', '是否是讲师', '', ['否', '是'],1],
-                ['radio', 'leader', '是否是团队Leader', '', ['否', '是'],1],
+                ['radio', 'tearch', '大观心理', '', ['否', '是']],
+                ['radio', 'leader', '燕园博思', '', ['否', '是']],
 
                 ['password', 'password', '密码', '必填，6-20位'],
                 ['text', 'mobile', '手机号'],
