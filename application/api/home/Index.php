@@ -2168,7 +2168,7 @@ class Index
 
             $data[$key]['st'] = date('Y-m-d H:i',$value['start_time']);
             //咨询地点
-            $openshop =  db('member')->where(['id'=>$member['mid']])->value('nickname');
+            $openshop =  db('member')->where(['id'=>$member['mid']])->value('openshop');
             $data[$key]['shopname'] = $openshop?db('cms_addr')->where(['id'=>$openshop])->value('shotnm'):'暂无';
 
         }
