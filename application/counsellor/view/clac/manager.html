@@ -157,7 +157,7 @@
     <script src="__C_JS__/config.js"></script>
     <script src="__C_JS__/app.js"></script>
     <script type="text/html" id="u_list">
-        <% for(var i=0; i<nlist.length; i++) { %>
+        <% for(var i in nlist) { %>
         <li class="mui-table-view-cell mui-media action-clickview" data-webview="{:url('Clac/userlist')}" data-actype="<%= nlist[i].typeid %>" data-acid="<%= nlist[i].id %>" >
             <a class="mui-navigate-right">
                 <img class="mui-media-object mui-pull-left" src="<%= $add_server(nlist[i].pic) %>" >
@@ -173,7 +173,7 @@
         <% } %>
     </script>
     <script type="text/html" id="f_list">
-        <% for(var i=0; i<flist.length; i++) { %>
+        <% for(var i in flist) { %>
         <li class="mui-table-view-cell mui-media  action-clickview" data-webview="{:url('Clac/userlist')}" data-actype="<%= flist[i].typeid %>" data-acid="<%= flist[i].id %>" >
             <a class="mui-navigate-right">
                 <img class="mui-media-object mui-pull-left" src="<%= $add_server(flist[i].pic) %>" >
