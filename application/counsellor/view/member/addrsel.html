@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title></title>
+
+        <link rel="stylesheet" href="__C_CSS__/style.css">
+        <link href="__C_CSS__/mui.indexedlist.css" rel="stylesheet" />
+        <style>
+            html,
+            body {
+                height: 100%;
+                overflow: hidden;
+            }
+            .mui-bar {
+                -webkit-box-shadow: none;
+                box-shadow: none;
+            }
+            
+            .mui-bar-nav{
+                background-color: #FF699C;
+            }
+            .mui-bar .mui-title{
+                color: #fff;
+            }
+            .mui-bar .mui-icon-left-nav{
+                height: 2.8rem;
+                color: #fff;
+                font-size: 1.2rem;
+            }
+            .mui-bar .mui-btn-link{
+                color: #fff;
+            }
+            .mui-table-view-cell.mui-radio input[type=radio], .mui-table-view-cell.mui-checkbox input[type=checkbox]{
+                top: 50%;
+            }
+            
+        </style>
+    </head>
+
+    <body>
+
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">选择地址</h1>
+            <a id='done' class="mui-btn mui-btn-link mui-pull-right  mui-disabled">完成</a>
+        </header>
+        <div class="mui-content">
+            <div id='list' class="mui-indexed-list">
+                <div class="mui-indexed-list-search mui-input-row mui-search" style="height:  2.2rem;">
+                    <input type="search" class="mui-input-clear mui-indexed-list-search-input" placeholder="搜索地址" style="width: 200%;">
+                </div>
+                <div class="mui-indexed-list-bar">
+                    <a>A</a>
+                    <a>B</a>
+                    <a>C</a>
+                    <a>D</a>
+                    <a>E</a>
+                    <a>F</a>
+                    <a>G</a>
+                    <a>H</a>
+                    <a>I</a>
+                    <a>J</a>
+                    <a>K</a>
+                    <a>L</a>
+                    <a>M</a>
+                    <a>N</a>
+                    <a>O</a>
+                    <a>P</a>
+                    <a>Q</a>
+                    <a>R</a>
+                    <a>S</a>
+                    <a>T</a>
+                    <a>U</a>
+                    <a>V</a>
+                    <a>W</a>
+                    <a>X</a>
+                    <a>Y</a>
+                    <a>Z</a>
+                </div>
+                <div class="mui-indexed-list-alert"></div>
+                <div class="mui-indexed-list-inner">
+                    <div class="mui-indexed-list-empty-alert">没有数据</div>
+                    <ul class="mui-table-view citylist">
+                        <!--<li data-group="A" class="mui-table-view-divider mui-indexed-list-group">A</li>
+                        <li data-value="AKU" data-tags="AKeSu" class="mui-table-view-cell mui-indexed-list-item mui-checkbox mui-left">
+                            <input type="checkbox" />阿克苏机场</li>-->
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="__C_JS__/zepto.js"></script>
+        <script src="__C_JS__/mui.min.js"></script>
+        <script src="__C_JS__/mui.indexedlist.js"></script>
+        <script src="__C_JS__/template.min.js"></script>
+        <script src="__C_JS__/config.js"></script>
+        <script src="__C_JS__/app.js"></script>
+        <script type="text/html" id="city_list">
+            <% for(var i in list) { %>
+            <li data-group="<%= i%>" class="mui-table-view-divider mui-indexed-list-group"><%= i%></li>
+            <% for(var m in list[i].body) { %>
+            <li data-value="<%= list[i].body[m].shortpy %>" data-tags="<%= list[i].body[m].fullpy %>" class="mui-table-view-cell mui-indexed-list-item mui-checkbox mui-left">
+                <input type="checkbox" value="<%= list[i].body[m].aid %>" /><%= list[i].body[m].fullnm %></li>
+            <% } %>
+            <% } %>
+        </script>
+        <script type="text/javascript" charset="utf-8">
+            mui.init();
+                
+                var header = document.querySelector('header.mui-bar');
+                var list = document.getElementById('list');
+                var done = document.getElementById('done');
+                var param = {
+                    'method': config.apimethod.addrilist,
+                    'source':config.source
+                }
+                log(param)
+                $.dataRequest(param, function(rs) {
+                    var ret = {
+                        'list':rs
+                    }
+                    var widgets = template('city_list', ret);
+                        $('.citylist').append(widgets);      
+
+                        //calc hieght
+                    list.style.height = (document.body.offsetHeight - header.offsetHeight) + 'px';
+                    //create
+                    window.indexedList = new mui.IndexedList(list);
+                    //done event
+                    done.addEventListener('tap', function() {
+                        var checkboxArray = [].slice.call(list.querySelectorAll('input[type="checkbox"]'));
+                        var checkedValues = [];
+                        var checkedIds = [];
+                        checkboxArray.forEach(function(box) {
+                            if (box.checked) {
+                                checkedValues.push(box.parentNode.innerText);
+                                checkedIds.push(box.value);
+                            }
+                        });
+                        if (checkedValues.length > 0) {
+                            mui.toast('你选择了: ' + checkedValues);
+                            window.location.href = "{:url('Member/meset')}?aid="+checkedIds+"&checkedValues="+checkedValues
+                            console.log(checkedIds)
+                            // var meset = plus.webview.getWebviewById('_www/view/member/meset.html');
+                            // mui.fire(meset,'getAddress',{name:checkedValues,checkedId:checkedIds});
+                            // plus.webview.currentWebview().close();
+                        } else {
+                            mui.alert('你没选择任何地址');
+                        }
+                    }, false);
+                    mui('.mui-indexed-list-inner').on('change', 'input', function() {
+                        var count = list.querySelectorAll('input[type="checkbox"]:checked').length;
+                        var value = count ? "完成(" + count + ")" : "完成";
+                        done.innerHTML = value;
+                        if(count>1){
+                            mui.toast('只能选择一条')
+                        }
+                        if (count==1) {
+                            if (done.classList.contains("mui-disabled")) {
+                                done.classList.remove("mui-disabled");
+                            }
+                        } else {
+                            if (!done.classList.contains("mui-disabled")) {
+                                done.classList.add("mui-disabled");
+                            }
+                        }
+                        
+                    });
+                })
+
+                
+                
+        </script>
+    </body>
+
+</html>
