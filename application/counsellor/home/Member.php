@@ -57,6 +57,10 @@ class Member extends Home
     {
         return $this->fetch(); // 渲染模板
     }
+    public function addrsel()
+    {
+        return $this->fetch(); // 渲染模板
+    }
     public function income()
     {
         return $this->fetch('member/income/index'); // 渲染模板
