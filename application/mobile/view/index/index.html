@@ -576,7 +576,7 @@
            
             <% for(var i=0; i<list.length; i++) { %>
               <%if(i<8){%>
-                <li class="action-webview" data-webview="_www/view/counsellor/list.html" data-webparam='{"cat_id":<%= list[i].id %>}'><i><a href="{:url('Counsellor/index')}?cat_id=<%= list[i].id %>"><img src="<%= $add_server(list[i].cover) %>"></a></i><span><%= list[i].title %></li>
+                <li class="go-webview" data-webview="{:url('Counsellor/index')}" data-webparam='{"cat_id":<%= list[i].id %>}'><i><a href="{:url('Counsellor/index')}?cat_id=<%= list[i].id %>"><img src="<%= $add_server(list[i].cover) %>"></a></i><span><%= list[i].title %></li>
               <%}%> 
             <% } %>
           
