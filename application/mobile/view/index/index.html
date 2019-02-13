@@ -545,20 +545,20 @@
             <div class="mui-slider-group mui-slider-loop widgets-slider">
                 <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
                 <div class="mui-slider-item mui-slider-item-duplicate">
-                    <a class="go-webview" data-webview="<%= pic[pic.length-1].webview %>" data-webparam='<%= pic[pic.length-1].webparam %>'>
+                    <a class="go-webview" data-webview="<%= pic[pic.length-1].webview %>" data-webparam='<%= $json_string(pic[pic.length-1].webparam) %>'>
               <img src="<%= $add_server(pic[pic.length-1].cover) %>">
             </a>
                 </div>
                 <% for(var i in pic) { %>
                     <div class="mui-slider-item">
-                        <a class="go-webview" data-webview="<%= pic[i].webview %>" data-webparam='<%= pic[i].webparam %>'>
+                        <a class="go-webview" data-webview="<%= pic[i].webview %>" data-webparam='<%= $json_string(pic[i].webparam) %>'>
                           <img src="<%= $add_server(pic[i].cover) %>">
                         </a>
                     </div>
                     <% } %>
                         <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
                         <div class="mui-slider-item mui-slider-item-duplicate">
-                            <a class="go-webview" data-webview="<%= pic[0].webview %>" data-webparam='<%= pic[0].webparam %>'>
+                            <a class="go-webview" data-webview="<%= pic[0].webview %>" data-webparam='<%= $json_string(pic[0].webparam) %>'>
               <img src="<%= $add_server(pic[0].cover) %>">
             </a>
                         </div>
