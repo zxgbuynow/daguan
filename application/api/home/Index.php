@@ -365,7 +365,8 @@ class Index
             if (strstr($value['link'], 'article')) {//文章
                 if ($ismobile) {
                     $lunbo['pic'][$key]['webview'] = "/mobile.php/artical/detail.html";
-                    $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                    $lunbo['pic'][$key]['webparam'] = ['article_id'=>explode('.',explode('/', $value['link'])[1])[0]];
+                    // $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
                 }else{
                     $lunbo['pic'][$key]['webview'] = '_www/view/artical/detail.html';
                     $lunbo['pic'][$key]['webparam'] = ['article_id'=>explode('.',explode('/', $value['link'])[1])[0]];
@@ -375,7 +376,8 @@ class Index
             }else if (strstr($value['link'], 'counsellor')) {
                 if ($ismobile) {
                     $lunbo['pic'][$key]['webview'] = "/mobile.php/counsellor/detail.html";
-                     $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                    // $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                    $lunbo['pic'][$key]['webparam'] = ['counsellor_id'=>explode('.',explode('/', $value['link'])[1])[0]];
                 }else{
                     $lunbo['pic'][$key]['webview'] = '_www/view/counsellor/detail.html';
                      $lunbo['pic'][$key]['webparam'] = ['counsellor_id'=>explode('.',explode('/', $value['link'])[1])[0]];
@@ -385,22 +387,24 @@ class Index
             }else if (strstr($value['link'], 'clac')) {
                 if ($ismobile) {
                     $lunbo['pic'][$key]['webview'] = "/mobile.php/clac/detail.html";
-                    $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                    // $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
                     $lunbo['pic'][$key]['webparam1'] = 0;
+                    $lunbo['pic'][$key]['webparam'] = ['acid'=>explode('.',explode('/', $value['link'])[1])[0],'actype'=>0];
                 }else{
                     $lunbo['pic'][$key]['webview'] = '_www/view/clac/detail.html';
-                     $lunbo['pic'][$key]['webparam'] = ['acid'=>explode('.',explode('/', $value['link'])[1])[0],'actype'=>0];
+                    $lunbo['pic'][$key]['webparam'] = ['acid'=>explode('.',explode('/', $value['link'])[1])[0],'actype'=>0];
                 }
                 
                
             }else if (strstr($value['link'], 'act')) {
                 if ($ismobile) {
                     $lunbo['pic'][$key]['webview'] = "/mobile.php/clac/detail.html";
-                     $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
+                     // $lunbo['pic'][$key]['webparam'] = explode('.',explode('/', $value['link'])[1])[0];
                      $lunbo['pic'][$key]['webparam1'] = 1;
+                     $lunbo['pic'][$key]['webparam'] = ['acid'=>explode('.',explode('/', $value['link'])[1])[0],'actype'=>1];
                 }else{
                     $lunbo['pic'][$key]['webview'] = '_www/view/clac/detail.html';
-                     $lunbo['pic'][$key]['webparam'] = ['acid'=>explode('.',explode('/', $value['link'])[1])[0],'actype'=>1];
+                    $lunbo['pic'][$key]['webparam'] = ['acid'=>explode('.',explode('/', $value['link'])[1])[0],'actype'=>1];
                 }
                 
                
@@ -1059,7 +1063,6 @@ class Index
         $evmap['a.id'] = $id;
         $evmap['e.id'] = array('neq','null');
         $counsellor['evalist'] = db('member')->alias('a')->field('e.*')->join(' trade b',' b.mid = a.id','LEFT')->join(' calendar c',' c.tid = b.id','LEFT')->join(' evaluate e',' e.cid = c.id','LEFT')->where($evmap)->select();
-
         foreach ($counsellor['evalist'] as $key => $value) {
             $u = db('member')->where(['id'=>$value['memberid']])->find();
             if (!$u) {
@@ -1133,7 +1136,6 @@ class Index
         }
         $startpg = ($page_no-1)*$page_size;
         $data = db('trade')->where($map)->order('id DESC')->limit($startpg, $page_size)->select();
-
         foreach ($data as $key => $value) {
             $record = db('calendar')->where(['tid'=>$value['id']])->count();
             $data[$key]['process'] =  '当前进度：'.$record.'/'.$value['num'];
