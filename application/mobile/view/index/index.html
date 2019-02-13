@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="__M_CSS__/swiper.min.css" />
     <!--<link rel="stylesheet" href="../css/moon-style.css" />-->
     <style>
+            * { touch-action: pan-y; }
     		header.home-header{
                 background: #fff;
                     height: 44px;
@@ -544,20 +545,20 @@
             <div class="mui-slider-group mui-slider-loop widgets-slider">
                 <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
                 <div class="mui-slider-item mui-slider-item-duplicate">
-                    <a class="action-clickview" data-webview="<%= pic[pic.length-1].webview %>" data-webparam='<%= pic[pic.length-1].webparam %>'>
+                    <a class="go-webview" data-webview="<%= pic[pic.length-1].webview %>" data-webparam='<%= pic[pic.length-1].webparam %>'>
               <img src="<%= $add_server(pic[pic.length-1].cover) %>">
             </a>
                 </div>
                 <% for(var i in pic) { %>
                     <div class="mui-slider-item">
-                        <a class="action-clickview" data-webview="<%= pic[i].webview %>" data-webparam='<%= pic[i].webparam %>'>
+                        <a class="go-webview" data-webview="<%= pic[i].webview %>" data-webparam='<%= pic[i].webparam %>'>
                           <img src="<%= $add_server(pic[i].cover) %>">
                         </a>
                     </div>
                     <% } %>
                         <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
                         <div class="mui-slider-item mui-slider-item-duplicate">
-                            <a class="action-clickview" data-webview="<%= pic[0].webview %>" data-webparam='<%= pic[0].webparam %>'>
+                            <a class="go-webview" data-webview="<%= pic[0].webview %>" data-webparam='<%= pic[0].webparam %>'>
               <img src="<%= $add_server(pic[0].cover) %>">
             </a>
                         </div>
@@ -665,7 +666,7 @@
 				    <div class="swiper-wrapper">
 				    		<% for(var i=0; i<list.length; i++) { %>
 					    		<div class="swiper-slide swiper-slide-custom action-webview" >
-					    			<a class="action-webview" data-webview="{:url('Artical/detail')}" data-webparam = '<%= list[i].id %>'>
+					    			<a class="go-webview" data-webview="{:url('Artical/detail')}" data-webparam = '<%= list[i].id %>'>
 					    				<img src="<%= $add_server(list[i]['cover'])%>" class="main-img "/>
 					    			</a>
 					    			<p class="slide-text"><%= list[i].keywords %></p>
@@ -721,7 +722,7 @@
 	   
 	    <ul class="mui-table-view-chevron">
 	    		<% for(var i=0; i<list.length; i++) { %>
-			<li class="card-wrapper card-wrapper-new " data-webview="{:url('Counsellor/detail')}" data-webparam='{"counsellor_id":<%= list[i].id %>}'>
+			<li class="card-wrapper card-wrapper-new go-webview" data-webview="{:url('Counsellor/detail')}" data-webparam='{"counsellor_id":<%= list[i].id %>}'>
 				<div class="avatar">
 						<img src="<%= $add_server(list[i].avar) %>">
 				</div>
@@ -774,7 +775,7 @@
     <section class="widgets-category-nav">
         <ul class="mui-table-view-chevron widget-counsellors-append">
                 <% for(var i=0; i<list.length; i++) { %>
-            <li class="card-wrapper card-wrapper-new action-webview" data-webview="_www/view/counsellor/detail.html" data-webparam='{"counsellor_id":<%= list[i].id %>}'>
+            <li class="card-wrapper card-wrapper-new go-webview" data-webview="_www/view/counsellor/detail.html" data-webparam='{"counsellor_id":<%= list[i].id %>}'>
                 <div class="avatar">
                         <img src="<%= $add_server(list[i].avar) %>">
                 </div>
@@ -828,7 +829,7 @@
         </section>
     </script>
 	<script type="text/html" id="widget_single_pic">
-        <section class="single-img action-webview" data-webview="<%= webview %>" data-webparam='<%= $json_string(webparam) %>'>
+        <section class="single-img go-webview" data-webview="<%= webview %>" data-webparam='<%= $json_string(webparam) %>'>
             <img src="<%= $add_server(cover) %>">
         </section>
     </script>
