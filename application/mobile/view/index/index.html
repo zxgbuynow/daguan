@@ -666,7 +666,7 @@
 				    <div class="swiper-wrapper">
 				    		<% for(var i=0; i<list.length; i++) { %>
 					    		<div class="swiper-slide swiper-slide-custom action-webview" >
-					    			<a class="go-webview" data-webview="{:url('Artical/detail')}" data-webparam = '<%= list[i].id %>'>
+					    			<a class="go-webview" data-webview="{:url('Artical/detail')}" data-webparam = '"article_id":<%= list[i].id %>'>
 					    				<img src="<%= $add_server(list[i]['cover'])%>" class="main-img "/>
 					    			</a>
 					    			<p class="slide-text"><%= list[i].keywords %></p>
