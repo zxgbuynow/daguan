@@ -68,7 +68,7 @@
     <script src="__M_JS__/app.js"></script>
     <script src="__M_JS__/swiper.min.js"></script>
     
-    <script type="text/html" id="artical_list">
+    <script type="text/html" id="artical_list1">
     		<% for(var i=0; i<data.length; i++) { %>
     		<% if(data[i]['list']){%>
     		<section class="widgets-category-nav section-white">
@@ -91,6 +91,33 @@
       	<%}%>
       	<%}%>
     	</script>
+      <script type="text/html" id="artical_list">
+        <% for(var i=0; i<data.length; i++) { %>
+        <% if(data[i]['list']){%>
+        <section class="widgets-category-nav section-white swiper-wrapper-new">
+          <div class="section-title">
+            <div class="title-txt"><%= data[i]['name']%></div>
+            <div class="more-link action-webview" data-webview="_www/view/artical/list.html" data-webparam='{"cat_id":<%= data[i].cid %>}'><i class="bbc-icon bbc-icon-forward"></i></div>
+          </div>
+          <div class="swiper-container swiper-container1">
+          <div class="swiper-wrapper">
+              <% for(var m=0; m<data[i]['list'].length; m++) { %>
+                <div class="swiper-slide swiper-slide-custom">
+                  <a class="action-webview"data-webview="_www/view/artical/detail.html" data-webparam='{"article_id":<%= data[i]["list"][m].id %>}'>
+                    <img src="<%= $add_server(data[i]['list'][m]['cover'])%>" class="main-img"/>
+                    <p class="slide-text"><%= data[i]['list'][m]['title']%></p>
+                  </a>
+                  
+                </div>
+            <%}%>
+           </div> 
+            <div class="swiper-pagination swiper-pagination-custom"></div>
+        </div>
+        
+        </section>
+        <%}%>
+        <%}%>
+      </script>
     <script>
     		
       	var param = {
