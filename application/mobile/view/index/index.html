@@ -613,14 +613,14 @@
         <section class="widgets-category-nav section-white swiper-wrapper-new">
           <div class="section-title">
             <div class="title-txt">课程</div>
-          <a href="{:url('Category/category')}?cat_id=18"><div class="more-link go-webview" data-webview="{:url('Clac/index')}" data-webparam='{"cat_id":18}'>更多</div></a>
+          <div class="more-link go-webview" data-webview="{:url('Clac/index')}" data-webparam='{"cat_id":18}'>更多</div>
           </div>
           <div class="swiper-container swiper-container1">
             <div class="swiper-wrapper">
                 <% for(var m in pic) { %>
 
                   <div class="swiper-slide  swiper-slide-custom">
-                    <a href="<%= pic[m].webview%>" class="go-webview"  data-webview="{:url('Clac/detail')}" data-webparam='{"acid":"<%= pic[m].classid%>","actype":"<%= pic[m].type%>"}'>
+                    <a href="javascript:;" class="go-webview"  data-webview="{:url('Clac/detail')}" data-webparam='{"acid":"<%= pic[m].classid%>","actype":"<%= pic[m].type%>"}'>
                         <img src="<%= $add_server(pic[m]['cover'])%>" class="main-img"/>
                                     <p class="slide-text"><%= pic[m].name %></p>
                     </a>
