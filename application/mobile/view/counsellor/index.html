@@ -245,7 +245,7 @@
 		<div class="mui-table-view">
 			<ul class="mui-table-view mui-table-view-chevron ">
 				<% for(var i=0; i<list.length; i++) { %>
-				<li class="mui-table-view-cell mui-media pad-rt">
+				<li class="mui-table-view-cell mui-media pad-rt go-webview" data-webview="{:url('Counsellor/detail')}" data-webparam='{"counsellor_id":<%= list[i].memberid %>}'>
 					<img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].avar) %>">
 					<div class="mui-media-body pad-rt">
 						<div class="flex flex-hb flex-dc info-detail">
@@ -306,7 +306,7 @@
         <div class="mui-table-view">
             <ul class="mui-table-view mui-table-view-chevron">
                 <% for(var i in list) { %>
-                <li class="mui-table-view-cell mui-media pad-rt " data-webview="_www/view/counsellor/detail.html" data-webparam='{"counsellor_id":<%= list[i].memberid %>}'>
+                <li class="mui-table-view-cell mui-media pad-rt go-webview" data-webview="{:url('Counsellor/detail')}" data-webparam='{"counsellor_id":<%= list[i].id %>}'>
                     <img class="mui-media-object mui-pull-left " src="<%= $add_server(list[i].avar) %>" >
                     <div class="mui-media-body pad-rt">
                         <div class="flex flex-hb flex-dc info-detail">
@@ -366,7 +366,7 @@
 		<div class="mui-table-view">
 			<ul class="mui-table-view mui-table-view-chevron">
 				<% for(var i in list) { %>
-				<li class="mui-table-view-cell mui-media pad-rt">
+				<li class="mui-table-view-cell mui-media pad-rt go-webview" data-webview="{:url('Counsellor/detail')}"data-webparam='{"counsellor_id":<%= list[i].id %>}'>
 					<img class="mui-media-object mui-pull-left" src="<%= $add_server(list[i].avar) %>">
 					<div class="mui-media-body pad-rt">
 						<div class="flex flex-hb flex-dc info-detail">
@@ -424,7 +424,7 @@
         <div class="mui-table-view">
             <ul class="mui-table-view mui-table-view-chevron">
                 <% for(var i in list) { %>
-                <li class="mui-table-view-cell mui-media pad-rt action-webview" data-webview="_www/view/counsellor/detail.html" data-webparam='{"counsellor_id":<%= list[i].memberid %>}'>
+                <li class="mui-table-view-cell mui-media pad-rt go-webview" data-webview="{:url('Counsellor/detail')}" data-webparam='{"counsellor_id":<%= list[i].id %>}'>
                     <img class="mui-media-object mui-pull-left " src="<%= $add_server(list[i].avar) %>" >
                     <div class="mui-media-body pad-rt">
                         <div class="flex flex-hb flex-dc info-detail">
