@@ -339,11 +339,11 @@
 				</div>
 				<div class="cons-submit-options">
 					<% if(is_diamonds==0){ %>
-						<a class="cons-btn icon-heart action-webview" data-webview="_www/view/member/updatelv.html">
+						<a class="cons-btn icon-heart go-webview" data-webview="{:url('Member/updatelv')}" data-webparam='{"type":1}'>
 							成为心窝会员
 						</a>
 					<% } %>
-					<a class="cons-btn icon-free-heart action-webview" data-webview="_www/view/member/updatelv.html">
+					<a class="cons-btn icon-free-heart go-webview" data-webview="{:url('Member/updatelv')}" data-webparam='{"type":2}'>
 						赠送心窝会员
 					</a>
 				</div>
