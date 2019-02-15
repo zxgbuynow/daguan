@@ -495,7 +495,10 @@
       <div class="header-logo"><span class="iconfont icon-logo- icon-home-logo"></span></div> 
       <div class="main" >
         <form onsubmit="return false;">
-          <div class="mui-input-row header-search-form"><i class="iconfont icon-search icon-home-search"></i><input type="search" onfocus="toSearch(this,'/mobile.php/artical/index.html')" class="header-search mui-input-clear" placeholder="寻找感兴趣的内容"></div>
+          <div class="mui-input-row header-search-form">
+            <i class="iconfont icon-search icon-home-search"></i>
+            <input type="search" class="header-search mui-input-clear" placeholder="寻找感兴趣的内容">
+          </div>
         </form>
       </div>
       <p class="service">
@@ -1039,11 +1042,16 @@
         })
         
        
-	  	
+	   var form = $('input[type="search"]').parents('form');
+        $(form).submit(function() { 
+            var keyword = $('input[type="search"]').val();
+            window.location.href = "{:url('Artical/volist')}?keyword="+keyword
+            // clicked('_www/view/artical/volist.html',{keyword:keyword});
+        })
 	  
-       $('.callmm').on('tap',function(){
-       	plus.device.dial( "4001001355", false );
-       })
+       // $('.callmm').on('tap',function(){
+       // 	plus.device.dial( "4001001355", false );
+       // })
       
     </script>
   </body>
